@@ -19,7 +19,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -218,27 +218,31 @@
       <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set ASR=$(SolutionDir)Troschuetz.Random.Packager.Unchecked/ASR/AssemblyRenamer.exe
 set ASR_ARGS=--out:ASR
 set ASR_IN=Troschuetz.Random
 set ASR_OUT=Troschuetz.Random.Unchecked
 
+set dir="$(SolutionDir)Troschuetz.Random.Packager.Unchecked/lib/net40-client"
+if not exist %25dir%25 mkdir %25dir%25
+set dir="$(SolutionDir)Troschuetz.Random.Packager/lib/net40-client"
+if not exist %25dir%25 mkdir %25dir%25
+
 if $(ConfigurationName) == Release.Unchecked (
     mkdir ASR
     %25ASR%25 %25ASR_ARGS%25 %25ASR_IN%25 %25ASR_OUT%25
     copy %25ASR_IN%25.xml "ASR/%25ASR_OUT%25.xml"
-    copy "ASR\%25ASR_OUT%25.dll" "$(SolutionDir)Troschuetz.Random.Packager.Unchecked/lib/portable-win8+net45+sl5+wp8"
-    copy "ASR\%25ASR_OUT%25.xml" "$(SolutionDir)Troschuetz.Random.Packager.Unchecked/lib/portable-win8+net45+sl5+wp8"
+    copy "ASR\%25ASR_OUT%25.dll" "$(SolutionDir)Troschuetz.Random.Packager.Unchecked/lib/net40-client"
+    copy "ASR\%25ASR_OUT%25.xml" "$(SolutionDir)Troschuetz.Random.Packager.Unchecked/lib/net40-client"
 )
 
 if $(ConfigurationName) == Release (
-    copy "%25ASR_IN%25.dll" "$(SolutionDir)Troschuetz.Random.Packager/lib/portable-win8+net45+sl5+wp8"
-    copy "%25ASR_IN%25.xml" "$(SolutionDir)Troschuetz.Random.Packager/lib/portable-win8+net45+sl5+wp8"
+    copy "%25ASR_IN%25.dll" "$(SolutionDir)Troschuetz.Random.Packager/lib/net40-client"
+    copy "%25ASR_IN%25.xml" "$(SolutionDir)Troschuetz.Random.Packager/lib/net40-client"
 )</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

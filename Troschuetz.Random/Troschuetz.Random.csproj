@@ -212,7 +212,6 @@
     <Compile Include="TRandom.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Packages.config" />
     <None Include="Troschuetz.Random.doxyfile" />
     <Content Include="Troschuetz.Random.ico" />
   </ItemGroup>
@@ -229,6 +228,11 @@ set ASR_ARGS=--out:ASR
 set ASR_IN=Troschuetz.Random
 set ASR_OUT=Troschuetz.Random.Unchecked
 
+set dir="$(SolutionDir)Troschuetz.Random.Packager.Unchecked/lib/portable-win8+net45+sl5+wp8"
+if not exist %25dir%25 mkdir %25dir%25
+set dir="$(SolutionDir)Troschuetz.Random.Packager/lib/portable-win8+net45+sl5+wp8"
+if not exist %25dir%25 mkdir %25dir%25
+
 if $(ConfigurationName) == Release.Unchecked (
     mkdir ASR
     %25ASR%25 %25ASR_ARGS%25 %25ASR_IN%25 %25ASR_OUT%25
@@ -242,7 +246,6 @@ if $(ConfigurationName) == Release (
     copy "%25ASR_IN%25.xml" "$(SolutionDir)Troschuetz.Random.Packager/lib/portable-win8+net45+sl5+wp8"
 )</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

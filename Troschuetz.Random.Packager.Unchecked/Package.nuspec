@@ -3,7 +3,7 @@
 <package>
   <metadata>
     <id>Troschuetz.Random.Unchecked</id>
-    <version>2.1.0</version>
+    <version>2.1.1</version>
     <title>Troschuetz.Random (unchecked)</title>
     <authors>Stefan Troschütz &lt;stefan@troschuetz.de&gt;</authors>
     <owners>Alessio Parma &lt;alessio.parma@gmail.com&gt;</owners>
@@ -19,14 +19,12 @@ You can find the modified source code and the available documentation at this ad
     </releaseNotes>
     <summary>Fully managed library providing various random number generators and distributions.</summary>
     <language>en-US</language>
-    <projectUrl>http://www.codeproject.com/Articles/15102/NET-random-number-generators-and-distributions</projectUrl>
-    <iconUrl>http://pomma89.altervista.it/troschuetz/logo-nuget.png</iconUrl>
+    <projectUrl>https://bitbucket.org/pomma89/troschuetz.random</projectUrl>
+    <iconUrl>http://pomma89.altervista.it/troschuetz/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>http://opensource.org/licenses/lgpl-2.1.php</licenseUrl>
     <copyright>Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)</copyright>
-      <dependencies>
-          <dependency id="JetBrains.Annotations.Portable" version="8.0.5185.29681" />
-      </dependencies>
+    <dependencies></dependencies>
     <references></references>
     <tags>random distribution generator normal exponential python</tags>
   </metadata>

@@ -70,9 +70,7 @@
   <ItemGroup>
     <Content Include="LICENSE.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="lib\portable-win8+net45+sl5+wp8\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
