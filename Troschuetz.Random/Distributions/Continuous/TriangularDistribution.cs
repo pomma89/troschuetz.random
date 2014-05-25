@@ -42,7 +42,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of triangular distributed random numbers.
@@ -52,7 +51,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Triangular_distribution">Wikipedia - Triangular distribution</a>
     ///   and the implementation in the <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
     /// </remarks>
-    [PublicAPI]
     public class TriangularDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, 
                                                        IBetaDistribution<double>, IGammaDistribution<double>
         where TGen : IGenerator
@@ -337,7 +335,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Triangular_distribution">Wikipedia - Triangular distribution</a>
     ///   and the implementation in the <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class TriangularDistribution : TriangularDistribution<IGenerator>
     {
         #region Construction

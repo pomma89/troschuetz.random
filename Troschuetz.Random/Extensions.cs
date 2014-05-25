@@ -22,12 +22,10 @@ namespace Troschuetz.Random
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Module containing extension methods for many interfaces exposed by this library.
     /// </summary>
-    [PublicAPI]
     public static class Extensions
     {
         #region IContinuousDistribution Extensions
@@ -37,7 +35,7 @@ namespace Troschuetz.Random
         ///   Therefore, the series obtained will follow given distribution.
         /// </summary>
         /// <returns>An infinites series of random double numbers, following given distribution.</returns>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<double> DistributedDoubles<T>(this T dist) where T : IContinuousDistribution
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(dist, null), ErrorMessages.NullDistribution);
@@ -56,7 +54,7 @@ namespace Troschuetz.Random
         ///   Therefore, the series obtained will follow given distribution.
         /// </summary>
         /// <returns>An infinites series of random numbers, following given distribution.</returns>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<int> DistributedIntegers<T>(this T dist) where T : IDiscreteDistribution
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(dist, null), ErrorMessages.NullDistribution);
@@ -80,7 +78,7 @@ namespace Troschuetz.Random
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
         /// <returns>An infinite sequence random Boolean values.</returns>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<bool> Booleans<TGen>(this TGen generator) where TGen : IGenerator
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
@@ -101,7 +99,7 @@ namespace Troschuetz.Random
         /// <param name="generator">The generator from which random numbers are drawn.</param>
         /// <param name="buffer">An array of bytes to contain random numbers.</param>
         /// <returns>An infinite sequence of true values.</returns>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<bool> Bytes<TGen>(this TGen generator, byte[] buffer) where TGen : IGenerator
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
@@ -123,7 +121,7 @@ namespace Troschuetz.Random
         /// <returns>A random item belonging to given list.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         /// <exception cref="InvalidOperationException"><paramref name="list"/> is empty.</exception>
-        [CanBeNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static TItem Choice<TGen, TItem>(this TGen generator, IList<TItem> list) where TGen : IGenerator
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
@@ -145,7 +143,7 @@ namespace Troschuetz.Random
         /// <returns>An infinite sequence of random items belonging to given list.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         /// <exception cref="InvalidOperationException"><paramref name="list"/> is empty.</exception>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<TItem> Choices<TGen, TItem>(this TGen generator, IList<TItem> list) where TGen : IGenerator
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
@@ -169,7 +167,7 @@ namespace Troschuetz.Random
         ///   An infinite sequence of double-precision floating point numbers greater than or equal to 0.0, 
         ///   and less than 1.0; that is, the range of return values includes 0.0 but not 1.0. 
         /// </returns>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<double> Doubles<TGen>(this TGen generator) where TGen : IGenerator
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
@@ -198,7 +196,7 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentException">
         ///   <paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.
         /// </exception>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<double> Doubles<TGen>(this TGen generator, double maxValue) where TGen : IGenerator
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
@@ -234,7 +232,7 @@ namespace Troschuetz.Random
         ///   The range between <paramref name="minValue"/> and <paramref name="maxValue"/> 
         ///   must be less than or equal to <see cref="double.PositiveInfinity"/>.
         /// </exception>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<double> Doubles<TGen>(this TGen generator, double minValue, double maxValue) where TGen : IGenerator
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
@@ -256,7 +254,7 @@ namespace Troschuetz.Random
         ///   and less than <see cref="int.MaxValue"/>; that is, the range of return values
         ///   includes 0 but not <see cref="int.MaxValue"/>.
         /// </returns>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<int> Integers<TGen>(this TGen generator) where TGen : IGenerator
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
@@ -282,7 +280,7 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to 0. 
         /// </exception>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<int> Integers<TGen>(this TGen generator, int maxValue) where TGen : IGenerator
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
@@ -312,7 +310,7 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static IEnumerable<int> Integers<TGen>(this TGen generator, int minValue, int maxValue) where TGen : IGenerator
         {
             Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);

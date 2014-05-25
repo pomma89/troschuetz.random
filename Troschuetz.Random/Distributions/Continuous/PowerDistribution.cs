@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of power distributed random numbers.
@@ -32,7 +31,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="PowerDistribution"/> type bases upon information presented on
     ///   <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class PowerDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, 
                                            IBetaDistribution<double>
         where TGen : IGenerator
@@ -251,7 +249,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="PowerDistribution"/> type bases upon information presented on
     ///   <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class PowerDistribution : PowerDistribution<IGenerator>
     {
         #region Construction

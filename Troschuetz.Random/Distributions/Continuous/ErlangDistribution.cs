@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of erlang distributed random numbers.
@@ -33,7 +32,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Erlang_distribution">Wikipedia - Erlang distribution</a> and
     ///   <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class ErlangDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, ILambdaDistribution<double>
         where TGen : IGenerator
     {
@@ -278,7 +276,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Erlang_distribution">Wikipedia - Erlang distribution</a> and
     ///   <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class ErlangDistribution : ErlangDistribution<IGenerator>
     {
         #region Construction

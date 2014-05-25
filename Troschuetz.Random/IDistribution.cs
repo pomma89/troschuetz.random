@@ -23,7 +23,6 @@ namespace Troschuetz.Random
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using Contracts;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Declares common functionality for all random number distributions.
@@ -388,7 +387,7 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets or sets the parameter weights which is used for generation of distributed random numbers.
         /// </summary>
-        [NotNull, System.Diagnostics.Contracts.Pure]
+        [Pure]
         ICollection<T> Weights { get; set; }
 
         /// <summary>
@@ -399,7 +398,7 @@ namespace Troschuetz.Random
         ///   <see langword="true"/> if value is valid for parameter <see cref="Weights"/>;
         ///   otherwise, <see langword="false"/>.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         bool AreValidWeights(IEnumerable<T> values);
     }
 }

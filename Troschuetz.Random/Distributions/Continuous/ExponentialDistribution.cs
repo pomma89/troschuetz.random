@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of exponential distributed random numbers.
@@ -32,7 +31,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="ExponentialDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Exponential_distribution">Wikipedia - Exponential distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class ExponentialDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, ILambdaDistribution<double>
         where TGen : IGenerator
     {
@@ -192,7 +190,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="ExponentialDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Exponential_distribution">Wikipedia - Exponential distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class ExponentialDistribution : ExponentialDistribution<IGenerator>
     {
         #region Construction

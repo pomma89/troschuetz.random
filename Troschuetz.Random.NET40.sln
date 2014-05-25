@@ -1,25 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random", "Troschuetz.Random\Troschuetz.Random.csproj", "{A1FF7728-605F-401A-A9FC-51FA56852E9E}"
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NET40", "Troschuetz.Random\Troschuetz.Random.NET40.csproj", "{A1FF7728-605F-401A-A9FC-51FA56852E9E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48147844-A87B-45D7-A428-1909094301B2}"
-	ProjectSection(SolutionItems) = preProject
-		GPL.txt = GPL.txt
-		LGPL.txt = LGPL.txt
-		LICENSE.md = LICENSE.md
-		Logo.32.png = Logo.32.png
-		Logo.64.png = Logo.64.png
-		Logo.png = Logo.png
-		README.md = README.md
-		Troschuetz.Random.sln.DotSettings = Troschuetz.Random.sln.DotSettings
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Tests.NET40", "Troschuetz.Random.Tests\Troschuetz.Random.Tests.NET40.csproj", "{B748E3AB-68DE-40E9-9BD0-0C113C70D260}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Tester", "Troschuetz.Random.Tester\Troschuetz.Random.Tester.csproj", "{598F64C2-1343-4202-B6A7-A91CF3248D0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Packager", "Troschuetz.Random.Packager\Troschuetz.Random.Packager.csproj", "{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Tests", "Troschuetz.Random.Tests\Troschuetz.Random.Tests.csproj", "{B748E3AB-68DE-40E9-9BD0-0C113C70D260}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Packager.Unchecked", "Troschuetz.Random.Packager.Unchecked\Troschuetz.Random.Packager.Unchecked.csproj", "{1236AE07-9311-4E57-A1EF-ACC807877CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,12 +22,6 @@ Global
 		{A1FF7728-605F-401A-A9FC-51FA56852E9E}.Release.Unchecked|Any CPU.Build.0 = Release.Unchecked|Any CPU
 		{A1FF7728-605F-401A-A9FC-51FA56852E9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1FF7728-605F-401A-A9FC-51FA56852E9E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Release.Unchecked|Any CPU.ActiveCfg = Release.Unchecked|Any CPU
-		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Release.Unchecked|Any CPU.Build.0 = Release.Unchecked|Any CPU
-		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Release.Unchecked|Any CPU.ActiveCfg = Release.Unchecked|Any CPU
@@ -49,10 +31,8 @@ Global
 		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Release.Unchecked|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{1236AE07-9311-4E57-A1EF-ACC807877CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1236AE07-9311-4E57-A1EF-ACC807877CB9}.Release.Unchecked|Any CPU.ActiveCfg = Debug|Any CPU
-		{1236AE07-9311-4E57-A1EF-ACC807877CB9}.Release.Unchecked|Any CPU.Build.0 = Debug|Any CPU
 		{1236AE07-9311-4E57-A1EF-ACC807877CB9}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

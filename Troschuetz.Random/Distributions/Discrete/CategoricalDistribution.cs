@@ -55,7 +55,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Diagnostics.Contracts;
     using System.Linq;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Implements the categorical distribution. For details about this distribution, see 
@@ -67,7 +66,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   does not have to be normalized and sum to 1. The reason is that some vectors can't be exactly normalized
     ///   to sum to 1 in floating point representation.
     /// </remarks>
-    [PublicAPI]
     public class CategoricalDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IWeightsDistribution<double>
         where TGen : IGenerator
     {
@@ -395,7 +393,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   does not have to be normalized and sum to 1. The reason is that some vectors can't be exactly normalized
     ///   to sum to 1 in floating point representation.
     /// </remarks>
-    [PublicAPI]
     public sealed class CategoricalDistribution : CategoricalDistribution<IGenerator>
     {
         #region Construction

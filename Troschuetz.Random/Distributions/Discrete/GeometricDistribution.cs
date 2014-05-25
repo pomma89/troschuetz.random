@@ -77,7 +77,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of geometric distributed random numbers.
@@ -89,7 +88,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
     ///   Communication Networks Class Library</a>.
     /// </remarks>
-    [PublicAPI]
     public class GeometricDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>
         where TGen : IGenerator
     {
@@ -263,7 +261,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
     ///   Communication Networks Class Library</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class GeometricDistribution : GeometricDistribution<IGenerator>
     {
         #region Construction

@@ -22,25 +22,24 @@ namespace Troschuetz.Random
     using System;
     using System.Diagnostics.Contracts;
     using Contracts;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Declares common functionality for all random number generators.
     /// </summary>
-    [ContractClass(typeof(GeneratorContract)), PublicAPI]
+    [ContractClass(typeof(GeneratorContract))]
     public interface IGenerator
     {
         /// <summary>
         ///   The seed value used by the generator.
         /// </summary>
-        [CLSCompliant(false), System.Diagnostics.Contracts.Pure]
+        [CLSCompliant(false), Pure]
         uint Seed { get; }
 
         /// <summary>
         ///   Gets a value indicating whether the random number generator can be reset, 
         ///   so that it produces the same random number sequence again.
         /// </summary>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         bool CanReset { get; }
 
         /// <summary>

@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of t-distributed random numbers.
@@ -33,7 +32,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Student%27s_t-distribution">Wikipedia - Student's t-distribution</a> and
     ///   <a href="http://www.xycoon.com/stt_random.htm">Xycoon - Student t Distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class StudentsTDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, INuDistribution<int>
         where TGen : IGenerator
     {
@@ -210,7 +208,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Student%27s_t-distribution">Wikipedia - Student's t-distribution</a> and
     ///   <a href="http://www.xycoon.com/stt_random.htm">Xycoon - Student t Distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class StudentsTDistribution : StudentsTDistribution<IGenerator>
     {
         #region Construction

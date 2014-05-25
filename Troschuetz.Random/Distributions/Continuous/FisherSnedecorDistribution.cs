@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of Fisher-Snedecor distributed random numbers.
@@ -32,7 +31,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="FisherSnedecorDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/F-distribution">Wikipedia - F-distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class FisherSnedecorDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, IBetaDistribution<int>
         where TGen : IGenerator
     {
@@ -259,7 +257,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="FisherSnedecorDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/F-distribution">Wikipedia - F-distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class FisherSnedecorDistribution : FisherSnedecorDistribution<IGenerator>
     {
         #region Construction

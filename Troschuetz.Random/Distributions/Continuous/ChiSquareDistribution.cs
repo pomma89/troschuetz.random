@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of chi-square distributed random numbers.
@@ -32,7 +31,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="ChiSquareDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Chi-square_distribution">Wikipedia - Chi-square distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class ChiSquareDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>
         where TGen : IGenerator
     {
@@ -205,7 +203,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="ChiSquareDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Chi-square_distribution">Wikipedia - Chi-square distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class ChiSquareDistribution : ChiSquareDistribution<IGenerator>
     {
         #region Construction

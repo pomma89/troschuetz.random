@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of gamma distributed random numbers.
@@ -32,7 +31,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="GammaDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class GammaDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IThetaDistribution<double>
         where TGen : IGenerator
     {
@@ -265,7 +263,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="GammaDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class GammaDistribution : GammaDistribution<IGenerator>
     {
         #region Construction

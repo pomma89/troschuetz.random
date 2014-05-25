@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of laplace distributed random numbers.
@@ -32,7 +31,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="LaplaceDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Laplace_distribution">Wikipedia - Laplace distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class LaplaceDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, 
                                              IMuDistribution<double>
         where TGen : IGenerator
@@ -240,7 +238,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="LaplaceDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Laplace_distribution">Wikipedia - Laplace distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class LaplaceDistribution : LaplaceDistribution<IGenerator>
     {
         #region Construction

@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of discrete uniformly distributed random numbers.
@@ -34,7 +33,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28discrete%29">
     ///   Wikipedia - Uniform distribution (discrete)</a>.
     /// </remarks>
-    [PublicAPI]
     public class DiscreteUniformDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<int>,
                                                             IBetaDistribution<int>
         where TGen : IGenerator
@@ -254,7 +252,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28discrete%29">
     ///   Wikipedia - Uniform distribution (discrete)</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class DiscreteUniformDistribution : DiscreteUniformDistribution<IGenerator>
     {
         #region Construction

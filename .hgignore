@@ -134,6 +134,7 @@ UpgradeLog*.htm
 ## NuGet
 packages/
 *.nupkg
+*Packager*/lib
 
 ## Miscellaneous Ignores
 

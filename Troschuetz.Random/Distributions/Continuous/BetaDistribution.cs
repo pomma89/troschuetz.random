@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of beta distributed random numbers.
@@ -33,7 +32,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Beta_distribution">Wikipedia - Beta distribution</a> and
     ///   <a href="http://www.xycoon.com/beta_randomnumbers.htm">Xycoon - Beta Distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class BetaDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>
         where TGen : IGenerator
     {
@@ -258,7 +256,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Beta_distribution">Wikipedia - Beta distribution</a> and
     ///   <a href="http://www.xycoon.com/beta_randomnumbers.htm">Xycoon - Beta Distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class BetaDistribution : BetaDistribution<IGenerator>
     {
         #region Construction

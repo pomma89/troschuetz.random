@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of bernoulli distributed random numbers.
@@ -33,7 +32,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   The implementation of the <see cref="BernoulliDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Bernoulli_distribution">Wikipedia - Bernoulli distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class BernoulliDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>
         where TGen : IGenerator
     {
@@ -207,7 +205,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   The implementation of the <see cref="BernoulliDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Bernoulli_distribution">Wikipedia - Bernoulli distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class BernoulliDistribution : BernoulliDistribution<IGenerator>
     {
         #region Construction

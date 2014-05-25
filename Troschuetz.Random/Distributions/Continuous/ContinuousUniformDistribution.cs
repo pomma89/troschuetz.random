@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of continuous uniformly distributed random numbers.
@@ -33,7 +32,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28continuous%29"> 
     ///   Wikipedia - Uniform distribution (continuous)</a>.
     /// </remarks>
-    [PublicAPI]
     public class ContinuousUniformDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
                                                        IBetaDistribution<double>
         where TGen : IGenerator
@@ -246,7 +244,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28continuous%29"> 
     ///   Wikipedia - Uniform distribution (continuous)</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class ContinuousUniformDistribution : ContinuousUniformDistribution<IGenerator>
     {
         #region Construction

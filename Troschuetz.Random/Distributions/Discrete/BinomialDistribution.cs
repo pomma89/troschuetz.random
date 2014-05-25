@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
-    using JetBrains.Annotations;
 
     /// <summary>
     ///   Provides generation of binomial distributed random numbers.
@@ -33,7 +32,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   The implementation of the <see cref="BinomialDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/binomial_distribution">Wikipedia - Binomial distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public class BinomialDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>,
                                                      IBetaDistribution<int>
         where TGen : IGenerator
@@ -256,7 +254,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   The implementation of the <see cref="BinomialDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/binomial_distribution">Wikipedia - Binomial distribution</a>.
     /// </remarks>
-    [PublicAPI]
     public sealed class BinomialDistribution : BinomialDistribution<IGenerator>
     {
         #region Construction
