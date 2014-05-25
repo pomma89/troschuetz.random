@@ -15,7 +15,7 @@ All the hard work behind this library was done by Stefan Troschütz, and for whi
 You can find the modified source code and the available documentation at this address: http://goo.gl/vIV2G
     </description>
     <releaseNotes>
-* Library is fully portable.
+* Library is fully portable, but it also works on .NET 4.0, client profile.
     </releaseNotes>
     <summary>Fully managed library providing various random number generators and distributions.</summary>
     <language>en-US</language>
