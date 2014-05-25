@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<package>
+  <metadata>
+    <id>Troschuetz.Random</id>
+    <version>2.1.0</version>
+    <title>Troschuetz.Random</title>
+    <authors>Stefan Troschütz &lt;stefan@troschuetz.de&gt;</authors>
+    <owners>Alessio Parma &lt;alessio.parma@gmail.com&gt;</owners>
+    <description>
+Fully managed library providing various random number generators and distributions.
+More precisely, this library offers four generators (ALF, MT19937, Standard, XorShift128), six discrete distributions (Bernoulli, Binomial, Categorical, DiscreteUniform, Geometric, Poisson) and twenty continuous distributions (like Normal, Exponential, ChiSquare, Beta, and so on); moreover, it offers a random class similar to the one Python offers (TRandom).
+All the hard work behind this library was done by Stefan Troschütz, and for which I thank him very much. What I am doing with his great project, is simply to refactor and improve his code, while offering the new random class similar to the one Python offers.
+You can find the modified source code and the available documentation at this address: http://goo.gl/vIV2G
+NOTICE: If you need more performance, please have a look at the Troschuetz.Random.Unchecked package. It is a release where all integrity checks have been stripped away.
+    </description>
+    <releaseNotes>
+* Library is fully portable.
+    </releaseNotes>
+    <summary>Fully managed library providing various random number generators and distributions.</summary>
+    <language>en-US</language>
+    <projectUrl>http://www.codeproject.com/Articles/15102/NET-random-number-generators-and-distributions</projectUrl>
+    <iconUrl>http://pomma89.altervista.it/troschuetz/logo-nuget.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://opensource.org/licenses/lgpl-2.1.php</licenseUrl>
+    <copyright>Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)</copyright>
+      <dependencies>
+          <dependency id="JetBrains.Annotations.Portable" version="8.0.5185.29681" />
+      </dependencies>
+    <references></references>
+    <tags>random distribution generator normal exponential python</tags>
+  </metadata>
+  <files>
+    <file src="lib\" target="lib" />
+    <file src="LICENSE.txt" target="LICENSE.txt" />
+  </files>
+</package>
