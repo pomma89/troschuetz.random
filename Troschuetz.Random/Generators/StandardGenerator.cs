@@ -157,11 +157,36 @@ namespace Troschuetz.Random.Generators
             return minValue + _generator.NextDouble()*(maxValue - minValue);
         }
 
+        [CLSCompliant(false)]
         public uint NextUInt()
         {
             // UInt32 requires four bytes in order to be built.
             NextBytes(_uintBuffer ?? (_uintBuffer = new byte[4]));
             return BitConverter.ToUInt32(_uintBuffer, 0);
+        }
+
+        [CLSCompliant(false)]
+        public uint NextUInt(uint maxValue)
+        {
+            // UInt32 requires four bytes in order to be built.
+            NextBytes(_uintBuffer ?? (_uintBuffer = new byte[4]));
+            var x = BitConverter.ToUInt32(_uintBuffer, 0);
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return (uint) ((int) (x >> 1)*IntToDoubleMultiplier*maxValue);
+        }
+
+        [CLSCompliant(false)]
+        public uint NextUInt(uint minValue, uint maxValue)
+        {
+            // UInt32 requires four bytes in order to be built.
+            NextBytes(_uintBuffer ?? (_uintBuffer = new byte[4]));
+            var x = BitConverter.ToUInt32(_uintBuffer, 0);
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return minValue + (uint) ((int) (x >> 1)*IntToDoubleMultiplier*(maxValue - minValue));
         }
 
         public bool NextBoolean()

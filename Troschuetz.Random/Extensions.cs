@@ -322,14 +322,12 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Returns an infinite sequence of nonnegative random numbers less than <see cref="int.MaxValue"/>.
+        ///   Returns an infinite sequence of unsigned random numbers.
         /// </summary>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
         /// <returns>
-        ///   An infinite sequence of 32-bit signed integers greater than or equal to 0,
-        ///   and less than <see cref="int.MaxValue"/>; that is, the range of return values
-        ///   includes 0 but not <see cref="int.MaxValue"/>.
+        ///   An infinite sequence of 32-bit unsigned integers.
         /// </returns>
         [Pure]
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator) where TGen : IGenerator
@@ -338,6 +336,58 @@ namespace Troschuetz.Random
             while (true)
             {
                 yield return generator.NextUInt();
+            }
+        }
+
+        /// <summary>
+        ///   Returns an infinite sequence of unsigned random numbers less than the specified maximum.
+        /// </summary>
+        /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
+        /// <param name="generator">The generator from which random numbers are drawn.</param>
+        /// <param name="maxValue">
+        ///   The exclusive upper bound of the random number to be generated. 
+        /// </param>
+        /// <returns>
+        ///   An infinite sequence of 32-bit unsigned integers greater than or equal to 0,
+        ///   and less than <paramref name="maxValue"/>; that is, the range of return values
+        ///   includes 0 but not <paramref name="maxValue"/>. 
+        /// </returns>
+        [Pure]
+        public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator, uint maxValue) where TGen : IGenerator
+        {
+            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
+            while (true)
+            {
+                yield return generator.NextUInt(maxValue);
+            }
+        }
+
+        /// <summary>
+        ///   Returns an infinite sequence of unsigned random numbers within the specified range.
+        /// </summary>
+        /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
+        /// <param name="generator">The generator from which random numbers are drawn.</param>
+        /// <param name="minValue">
+        ///   The inclusive lower bound of the random number to be generated. 
+        /// </param>
+        /// <param name="maxValue">
+        ///   The exclusive upper bound of the random number to be generated. 
+        /// </param>
+        /// <returns>
+        ///   An infinite sequence of 32-bit unsigned integers greater than or equal to <paramref name="minValue"/>, 
+        ///   and less than <paramref name="maxValue"/>; that is, the range of return values includes 
+        ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </exception>
+        [Pure]
+        public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator, uint minValue, uint maxValue) where TGen : IGenerator
+        {
+            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
+            while (true)
+            {
+                yield return generator.NextUInt(minValue, maxValue);
             }
         }
 

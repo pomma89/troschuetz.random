@@ -98,6 +98,9 @@ namespace Troschuetz.Random
         ///   <paramref name="maxValue"/>; that is, the range of return values includes <paramref name="minValue"/> but 
         ///   not <paramref name="maxValue"/>. 
         /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </exception>
         int Next(int minValue, int maxValue);
 
         /// <summary>
@@ -158,6 +161,40 @@ namespace Troschuetz.Random
         /// </returns>
         [CLSCompliant(false)]
         uint NextUInt();
+
+        /// <summary>
+        ///   Returns an unsigned random number less than the specified maximum.
+        /// </summary>
+        /// <param name="maxValue">
+        ///   The exclusive upper bound of the random number to be generated. 
+        /// </param>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="UInt32.MinValue"/> and 
+        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes 
+        ///   <see cref="UInt32.MinValue"/> but not <paramref name="maxValue"/>. 
+        /// </returns>
+        [CLSCompliant(false)]
+        uint NextUInt(uint maxValue);
+
+        /// <summary>
+        ///   Returns an unsigned random number within the specified range.
+        /// </summary>
+        /// <param name="minValue">
+        ///   The inclusive lower bound of the random number to be generated. 
+        /// </param>
+        /// <param name="maxValue">
+        ///   The exclusive upper bound of the random number to be generated. 
+        /// </param>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <paramref name="minValue"/> and 
+        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes <paramref name="minValue"/> but 
+        ///   not <paramref name="maxValue"/>. 
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </exception>
+        [CLSCompliant(false)]
+        uint NextUInt(uint minValue, uint maxValue);
 
         /// <summary>
         ///   Returns a random Boolean value.

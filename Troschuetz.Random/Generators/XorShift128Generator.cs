@@ -330,6 +330,36 @@ namespace Troschuetz.Random.Generators
             return (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8)));
         }
 
+        [CLSCompliant(false)]
+        public uint NextUInt(uint maxValue)
+        {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            var t = (_x ^ (_x << 11));
+            _x = _y;
+            _y = _z;
+            _z = _w;
+            var w = (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8)));
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return (uint) ((int) (w >> 1)*IntToDoubleMultiplier*maxValue);
+        }
+
+        [CLSCompliant(false)]
+        public uint NextUInt(uint minValue, uint maxValue)
+        {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            var t = (_x ^ (_x << 11));
+            _x = _y;
+            _y = _z;
+            _z = _w;
+            var w = (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8)));
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return minValue + (uint) ((int) (w >> 1)*IntToDoubleMultiplier*(maxValue - minValue));
+        }
+
         public bool NextBoolean()
         {
             if (_bitCount == 0) {

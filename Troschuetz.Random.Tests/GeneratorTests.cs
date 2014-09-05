@@ -106,25 +106,6 @@ namespace Troschuetz.Random.Tests
                 Assert.AreEqual(b2, b1);
             }
         }
-        
-        [Test]
-        [Repeat(RepetitionCount)]
-        public void UnsignedIntegers_SameOutputAsNextUInt()
-        {
-            var otherGen = GetGenerator(_generator.Seed);
-            Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(b => b == otherGen.NextUInt()));
-        }
-
-        [Test]
-        [Repeat(RepetitionCount)]
-        public void Booleans_SameOutputAsNextUInt_AfterReset()
-        {
-            var otherGen = GetGenerator(_generator.Seed);
-            Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(b => b == otherGen.NextUInt()));
-            _generator.Reset();
-            otherGen.Reset();
-            Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(b => b == otherGen.NextUInt()));
-        }
 
         /*=============================================================================
             DistributedDoubles
@@ -380,6 +361,114 @@ namespace Troschuetz.Random.Tests
             _generator.Reset();
             otherGen.Reset();
             Assert.True(_generator.Integers().Take(Iterations).All(x => x == otherGen.Next()));
+        }
+
+
+
+
+
+
+        
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void UnsignedIntegers_BetweenBounds()
+        {
+            Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(x => x <= uint.MaxValue));
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void UnsignedIntegers_MaxValue_BetweenBounds()
+        {
+            var max = Rand.NextUInt() + 1U; // To avoid zero
+            Assert.True(_generator.UnsignedIntegers(max).Take(Iterations).All(x => x < max));
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void Integers_MaxValue_SameOutputAsNextUInt()
+        {
+            var max = Rand.NextUInt() + 1U; // To avoid zero
+            var otherGen = GetGenerator(_generator.Seed);
+            Assert.True(_generator.UnsignedIntegers(max).Take(Iterations).All(x => x == otherGen.NextUInt(max)));
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void UnsignedIntegers_MaxValue_SameOutputAsNextUInt_AfterReset()
+        {
+            var max = Rand.NextUInt() + 1U; // To avoid zero
+            var otherGen = GetGenerator(_generator.Seed);
+            Assert.True(_generator.UnsignedIntegers(max).Take(Iterations).All(x => x == otherGen.NextUInt(max)));
+            _generator.Reset();
+            otherGen.Reset();
+            Assert.True(_generator.UnsignedIntegers(max).Take(Iterations).All(x => x == otherGen.NextUInt(max)));
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void UnsignedIntegers_MinMaxValue_BetweenBounds()
+        {
+            var min = Rand.NextUInt(100);
+            var max = Rand.NextUInt(100, 1000);
+            Assert.True(_generator.UnsignedIntegers(min, max).Take(Iterations).All(x => x >= min && x < max));
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void UnsignedIntegers_MinMaxValue_MaxLessThanMin_LargeDiff()
+        {
+            _generator.UnsignedIntegers((uint) LargePos, 0).GetEnumerator().MoveNext();
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void UnsignedIntegers_MinMaxValue_MaxLessThanMin_SmallDiff()
+        {
+            _generator.UnsignedIntegers((uint) LargePos, (uint) LargePos - 1U).GetEnumerator().MoveNext();
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void UnsignedIntegers_MinMaxValue_SameOutputAsNextUInt()
+        {
+            var min = Rand.NextUInt(100);
+            var max = Rand.NextUInt(100, 1000);
+            var otherGen = GetGenerator(_generator.Seed);
+            Assert.True(_generator.UnsignedIntegers(min, max).Take(Iterations).All(x => x == otherGen.NextUInt(min, max)));
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void UnsignedIntegers_MinMaxValue_SameOutputAsNextUInt_AfterReset()
+        {
+            var min = Rand.NextUInt(100);
+            var max = Rand.NextUInt(100, 1000);
+            var otherGen = GetGenerator(_generator.Seed);
+            Assert.True(_generator.UnsignedIntegers(min, max).Take(Iterations).All(x => x == otherGen.NextUInt(min, max)));
+            _generator.Reset();
+            otherGen.Reset();
+            Assert.True(_generator.UnsignedIntegers(min, max).Take(Iterations).All(x => x == otherGen.NextUInt(min, max)));
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void UnsignedIntegers_SameOutputAsNextUInt()
+        {
+            var otherGen = GetGenerator(_generator.Seed);
+            Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(x => x == otherGen.NextUInt()));
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void UnsignedIntegers_SameOutputAsNextUInt_AfterReset()
+        {
+            var otherGen = GetGenerator(_generator.Seed);
+            Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(x => x == otherGen.NextUInt()));
+            _generator.Reset();
+            otherGen.Reset();
+            Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(x => x == otherGen.NextUInt()));
         }
 
         /*=============================================================================

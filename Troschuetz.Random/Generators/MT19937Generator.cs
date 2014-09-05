@@ -500,6 +500,46 @@ namespace Troschuetz.Random.Generators
             return (y ^ (y >> 18));
         }
 
+        [CLSCompliant(false)]
+        public uint NextUInt(uint maxValue)
+        {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return (uint) ((int) (y >> 1)*IntToDoubleMultiplier*maxValue);
+        }
+
+        [CLSCompliant(false)]
+        public uint NextUInt(uint minValue, uint maxValue)
+        {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return minValue + (uint) ((int) (y >> 1)*IntToDoubleMultiplier*(maxValue - minValue));
+        }
+
         public bool NextBoolean()
         {
             if (_bitCount == 32) {

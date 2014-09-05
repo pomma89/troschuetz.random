@@ -87,6 +87,19 @@ namespace Troschuetz.Random.Contracts
             return default(uint);
         }
 
+        public uint NextUInt(uint maxValue)
+        {           
+            Contract.Ensures(Contract.Result<uint>() < maxValue);
+            return default(int);
+        }
+
+        public uint NextUInt(uint minValue, uint maxValue)
+        {
+            Contract.Requires<ArgumentOutOfRangeException>(maxValue >= minValue, ErrorMessages.MinValueGreaterThanMaxValue);
+            Contract.Ensures(Contract.Result<uint>() >= minValue && Contract.Result<uint>() < maxValue);
+            return default(int);
+        }
+
         public abstract bool NextBoolean();
 
         public void NextBytes(byte[] buffer)

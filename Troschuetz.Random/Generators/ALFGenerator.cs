@@ -368,6 +368,34 @@ namespace Troschuetz.Random.Generators
             return _x[_i++];
         }
 
+        [CLSCompliant(false)]
+        public uint NextUInt(uint maxValue)
+        {
+            if (_i >= _longLag)
+            {
+                Fill();
+            }
+            var x = _x[_i++];
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return (uint) ((int) (x >> 1)*IntToDoubleMultiplier*maxValue);
+        }
+
+        [CLSCompliant(false)]
+        public uint NextUInt(uint minValue, uint maxValue)
+        {
+            if (_i >= _longLag)
+            {
+                Fill();
+            }
+            var x = _x[_i++];
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return minValue + (uint) ((int) (x >> 1)*IntToDoubleMultiplier*(maxValue - minValue));
+        }
+
         public bool NextBoolean()
         {
             if (_bitCount == 0) {
