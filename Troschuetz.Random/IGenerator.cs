@@ -141,6 +141,16 @@ namespace Troschuetz.Random
         double NextDouble(double minValue, double maxValue);
 
         /// <summary>
+        ///   Returns an unsigned random number.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="UInt32.MinValue"/> and 
+        ///   less than or equal to <see cref="UInt32.MaxValue"/>.
+        /// </returns>
+        [CLSCompliant(false)]
+        uint NextUInt();
+
+        /// <summary>
         ///   Returns a random Boolean value.
         /// </summary>
         /// <remarks>

@@ -207,23 +207,6 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
-        ///   Returns an unsigned random number.
-        /// </summary>
-        /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="UInt32.MinValue"/> and 
-        ///   less than or equal to <see cref="UInt32.MaxValue"/>.
-        /// </returns>
-        [CLSCompliant(false)]
-        public uint NextUInt()
-        {
-            var t = (_x ^ (_x << 11));
-            _x = _y;
-            _y = _z;
-            _z = _w;
-            return (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8)));
-        }
-
-        /// <summary>
         ///   Returns a nonnegative random number less than or equal to <see cref="Int32.MaxValue"/>.
         /// </summary>
         /// <returns>
@@ -356,6 +339,16 @@ namespace Troschuetz.Random.Generators
             // The shift operation and extra int cast before the first multiplication give better performance.
             // See comment in NextDouble().
             return minValue + (int) (w >> 1)*IntToDoubleMultiplier*(maxValue - minValue);
+        }
+
+        [CLSCompliant(false)]
+        public uint NextUInt()
+        {
+            var t = (_x ^ (_x << 11));
+            _x = _y;
+            _y = _z;
+            _z = _w;
+            return (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8)));
         }
 
         public bool NextBoolean()

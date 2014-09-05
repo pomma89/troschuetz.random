@@ -334,29 +334,6 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
-        ///   Returns an unsigned random number.
-        /// </summary>
-        /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="UInt32.MinValue"/> and 
-        ///   less than or equal to <see cref="UInt32.MaxValue"/>.
-        /// </returns>
-        [CLSCompliant(false)]
-        public uint NextUInt()
-        {
-            if (_mti >= N) {
-                // Generate N words at one time
-                GenerateNUInts();
-            }
-
-            var y = _mt[_mti++];
-            // Tempering
-            y ^= (y >> 11);
-            y ^= (y << 7) & 0x9d2c5680U;
-            y ^= (y << 15) & 0xefc60000U;
-            return (y ^ (y >> 18));
-        }
-
-        /// <summary>
         ///   Returns a nonnegative random number less than or equal to <see cref="Int32.MaxValue"/>.
         /// </summary>
         /// <returns>
@@ -524,6 +501,23 @@ namespace Troschuetz.Random.Generators
             // The shift operation and extra int cast before the first multiplication give better performance.
             // See comment in NextDouble().
             return minValue + (int) (y >> 1)*IntToDoubleMultiplier*(maxValue - minValue);
+        }
+
+        [CLSCompliant(false)]
+        public uint NextUInt()
+        {
+            if (_mti >= N)
+            {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            return (y ^ (y >> 18));
         }
 
         public bool NextBoolean()

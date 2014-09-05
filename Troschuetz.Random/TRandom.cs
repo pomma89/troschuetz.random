@@ -1711,6 +1711,11 @@ namespace Troschuetz.Random
             return _gen.NextDouble(minValue, maxValue);
         }
 
+        public uint NextUInt()
+        {
+            return _gen.NextUInt();
+        }
+
         public bool NextBoolean()
         {
             return _gen.NextBoolean();

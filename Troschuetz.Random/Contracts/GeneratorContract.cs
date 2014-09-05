@@ -76,6 +76,11 @@ namespace Troschuetz.Random.Contracts
             return default(double);
         }
 
+        public uint NextUInt()
+        {
+            return default(uint);
+        }
+
         public abstract bool NextBoolean();
 
         public void NextBytes(byte[] buffer)

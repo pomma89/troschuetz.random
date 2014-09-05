@@ -147,6 +147,11 @@ namespace Troschuetz.Random.Generators
             return minValue + _generator.NextDouble()*(maxValue - minValue);
         }
 
+        public uint NextUInt()
+        {
+            return (uint) _generator.Next();
+        }
+
         public bool NextBoolean()
         {
             if (_bitCount == 0) {
