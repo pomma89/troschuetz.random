@@ -106,6 +106,25 @@ namespace Troschuetz.Random.Tests
                 Assert.AreEqual(b2, b1);
             }
         }
+        
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void UnsignedIntegers_SameOutputAsNextUInt()
+        {
+            var otherGen = GetGenerator(_generator.Seed);
+            Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(b => b == otherGen.NextUInt()));
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void Booleans_SameOutputAsNextUInt_AfterReset()
+        {
+            var otherGen = GetGenerator(_generator.Seed);
+            Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(b => b == otherGen.NextUInt()));
+            _generator.Reset();
+            otherGen.Reset();
+            Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(b => b == otherGen.NextUInt()));
+        }
 
         /*=============================================================================
             DistributedDoubles

@@ -321,6 +321,26 @@ namespace Troschuetz.Random
             }
         }
 
+        /// <summary>
+        ///   Returns an infinite sequence of nonnegative random numbers less than <see cref="int.MaxValue"/>.
+        /// </summary>
+        /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
+        /// <param name="generator">The generator from which random numbers are drawn.</param>
+        /// <returns>
+        ///   An infinite sequence of 32-bit signed integers greater than or equal to 0,
+        ///   and less than <see cref="int.MaxValue"/>; that is, the range of return values
+        ///   includes 0 but not <see cref="int.MaxValue"/>.
+        /// </returns>
+        [Pure]
+        public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator) where TGen : IGenerator
+        {
+            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
+            while (true)
+            {
+                yield return generator.NextUInt();
+            }
+        }
+
         #endregion
     }
 }

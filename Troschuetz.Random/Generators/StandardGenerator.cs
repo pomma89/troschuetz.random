@@ -38,6 +38,11 @@ namespace Troschuetz.Random.Generators
         int _bitBuffer;
 
         /// <summary>
+        ///   Stores a byte array used to compute the result of <see cref="NextUInt"/>, starting from the output of <see cref="NextBytes"/>.
+        /// </summary>
+        byte[] _uintBuffer;
+
+        /// <summary>
         ///   Stores how many random <see cref="bool"/> values still can be generated from <see cref="_bitBuffer"/>.
         /// </summary>
         int _bitCount;
@@ -154,7 +159,9 @@ namespace Troschuetz.Random.Generators
 
         public uint NextUInt()
         {
-            return (uint) _generator.Next();
+            // UInt32 requires four bytes in order to be built.
+            NextBytes(_uintBuffer ?? (_uintBuffer = new byte[4]));
+            return BitConverter.ToUInt32(_uintBuffer, 0);
         }
 
         public bool NextBoolean()
