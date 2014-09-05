@@ -173,6 +173,7 @@
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="Extensions.cs" />
+    <Compile Include="Generators\GeneratorBase.cs" />
     <Compile Include="IDistribution.cs" />
     <Compile Include="Distributions\Continuous\BetaDistribution.cs" />
     <Compile Include="Distributions\Continuous\BetaPrimeDistribution.cs" />
