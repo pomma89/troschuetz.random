@@ -40,6 +40,12 @@ namespace Troschuetz.Random.Contracts
             return default(int);
         }
 
+        public int NextInclusiveMaxValue()
+        {
+            Contract.Ensures(Contract.Result<int>() >= 0 && Contract.Result<int>() <= int.MaxValue);
+            return default(int);
+        }
+
         public int Next(int maxValue)
         {           
             Contract.Requires<ArgumentOutOfRangeException>(maxValue >= 0, ErrorMessages.NegativeMaxValue);

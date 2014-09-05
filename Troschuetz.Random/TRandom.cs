@@ -1686,6 +1686,11 @@ namespace Troschuetz.Random
             return _gen.Next();
         }
 
+        public int NextInclusiveMaxValue()
+        {
+            return _gen.NextInclusiveMaxValue();
+        }
+
         public int Next(int maxValue)
         {
             return _gen.Next(maxValue);

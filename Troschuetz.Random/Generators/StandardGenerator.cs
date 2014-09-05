@@ -122,6 +122,11 @@ namespace Troschuetz.Random.Generators
             return _generator.Next();
         }
 
+        public int NextInclusiveMaxValue()
+        {
+            return _generator.Next();
+        }
+
         public int Next(int maxValue)
         {
             return _generator.Next(maxValue);

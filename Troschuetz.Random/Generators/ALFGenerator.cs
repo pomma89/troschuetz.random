@@ -255,24 +255,6 @@ namespace Troschuetz.Random.Generators
             _i = 0;
         }
 
-        /// <summary>
-        ///   Returns a nonnegative random number less than or equal to <see cref="Int32.MaxValue"/>.
-        /// </summary>
-        /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to <see cref="Int32.MaxValue"/>; 
-        ///   that is, the range of return values includes 0 and <see cref="Int32.MaxValue"/>.
-        /// </returns>
-        public int NextInclusiveMaxValue()
-        {
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            if (_i >= _longLag) {
-                Fill();
-            }
-            var x = _x[_i++];
-
-            return (int) (x >> 1);
-        }
-
         #endregion
 
         #region IGenerator Members
@@ -305,6 +287,18 @@ namespace Troschuetz.Random.Generators
             var result = (int) (x >> 1);
             // Exclude Int32.MaxValue from the range of return values.
             return result == Int32.MaxValue ? Next() : result;
+        }
+
+        public int NextInclusiveMaxValue()
+        {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_i >= _longLag)
+            {
+                Fill();
+            }
+            var x = _x[_i++];
+
+            return (int)(x >> 1);
         }
 
         public int Next(int maxValue)

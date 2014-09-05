@@ -60,6 +60,15 @@ namespace Troschuetz.Random
         int Next();
 
         /// <summary>
+        ///   Returns a nonnegative random number less than or equal to <see cref="Int32.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to <see cref="Int32.MaxValue"/>; 
+        ///   that is, the range of return values includes 0 and <see cref="Int32.MaxValue"/>.
+        /// </returns>
+        int NextInclusiveMaxValue();
+
+        /// <summary>
         ///   Returns a nonnegative random number less than the specified maximum.
         /// </summary>
         /// <param name="maxValue">
