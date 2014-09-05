@@ -52,27 +52,9 @@ namespace Troschuetz.Random.Generators
     ///   <a href="http://en.wikipedia.org/wiki/Lagged_Fibonacci_generator">Wikipedia - Lagged Fibonacci generator</a>.
     /// </remarks>
 // ReSharper disable InconsistentNaming
-    public sealed class ALFGenerator : IGenerator
+    public sealed class ALFGenerator : GeneratorBase, IGenerator
 // ReSharper restore InconsistentNaming
     {
-        #region Class Fields
-
-        /// <summary>
-        ///   Represents the multiplier that computes a double-precision 
-        ///   floating point number greater than or equal to 0.0 and less than 1.0
-        ///   when it gets applied to a nonnegative 32-bit signed integer.
-        /// </summary>
-        const double IntToDoubleMultiplier = 1.0/(int.MaxValue + 1.0);
-
-        /// <summary>
-        ///   Represents the multiplier that computes a double-precision 
-        ///   floating point number greater than or equal to 0.0 and less than 1.0
-        ///   when it gets applied to a nonnegative 32-bit unsigned integer.
-        /// </summary>
-        const double UIntToDoubleMultiplier = 1.0/(uint.MaxValue + 1.0);
-
-        #endregion
-
         #region Instance Fields
 
         /// <summary>

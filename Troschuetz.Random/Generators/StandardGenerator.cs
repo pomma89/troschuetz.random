@@ -28,7 +28,7 @@ namespace Troschuetz.Random.Generators
     ///   The <see cref="StandardGenerator"/> type internally uses an instance of the
     ///   <see cref="System.Random"/> type to generate pseudo-random numbers.
     /// </remarks>
-    public sealed class StandardGenerator : IGenerator
+    public sealed class StandardGenerator : GeneratorBase, IGenerator
     {
         #region Instance Fields
 

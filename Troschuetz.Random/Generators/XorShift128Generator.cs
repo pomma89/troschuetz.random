@@ -71,23 +71,9 @@ namespace Troschuetz.Random.Generators
     ///   and the theoretical background on xorshift random number generators published by George Marsaglia 
     ///   in this paper "<a href="http://www.jstatsoft.org/v08/i14/xorshift.pdf">Xorshift RNGs</a>".
     /// </remarks>
-    public sealed class XorShift128Generator : IGenerator
+    public sealed class XorShift128Generator : GeneratorBase, IGenerator
     {
         #region Class Fields
-
-        /// <summary>
-        ///   Represents the multiplier that computes a double-precision 
-        ///   floating point number greater than or equal to 0.0 and less than 1.0
-        ///   when it gets applied to a nonnegative 32-bit signed integer.
-        /// </summary>
-        const double IntToDoubleMultiplier = 1.0/(int.MaxValue + 1.0);
-
-        /// <summary>
-        ///   Represents the multiplier that computes a double-precision 
-        ///   floating point number greater than or equal to 0.0 and less than 1.0
-        ///   when it gets applied to a nonnegative 32-bit unsigned integer.
-        /// </summary>
-        const double UIntToDoubleMultiplier = 1.0/(uint.MaxValue + 1.0);
 
         /// <summary>
         ///   Represents the seed for the <see cref="_y"/> variable. This field is constant.

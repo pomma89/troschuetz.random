@@ -78,24 +78,10 @@ namespace Troschuetz.Random.Generators
     ///   <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">Mersenne Twister Home Page</a>.
     /// </remarks>
 // ReSharper disable InconsistentNaming
-    public sealed class MT19937Generator : IGenerator
+    public sealed class MT19937Generator : GeneratorBase, IGenerator
 // ReSharper restore InconsistentNaming
     {
         #region Class Fields
-
-        /// <summary>
-        ///   Represents the multiplier that computes a double-precision 
-        ///   floating point number greater than or equal to 0.0 and less than 1.0
-        ///   when it gets applied to a nonnegative 32-bit signed integer.
-        /// </summary>
-        const double IntToDoubleMultiplier = 1.0/(int.MaxValue + 1.0);
-
-        /// <summary>
-        ///   Represents the multiplier that computes a double-precision 
-        ///   floating point number greater than or equal to 0.0 and less than 1.0
-        ///   when it gets applied to a nonnegative 32-bit unsigned integer.
-        /// </summary>
-        const double UIntToDoubleMultiplier = 1.0/(uint.MaxValue + 1.0);
 
         /// <summary>
         ///   Represents the number of unsigned random numbers generated at one time. This field is constant.
