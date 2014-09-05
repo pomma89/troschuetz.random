@@ -92,9 +92,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Troschuetz.Random\Troschuetz.Random.csproj">
+    <ProjectReference Include="..\Troschuetz.Random\Troschuetz.Random.NET40.csproj">
       <Project>{A1FF7728-605F-401A-A9FC-51FA56852E9E}</Project>
-      <Name>Troschuetz.Random</Name>
+      <Name>Troschuetz.Random.NET40</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

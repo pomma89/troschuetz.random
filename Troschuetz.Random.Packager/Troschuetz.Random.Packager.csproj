@@ -62,15 +62,18 @@
     <None Include="Package.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Troschuetz.Random\Troschuetz.Random.csproj">
+    <ProjectReference Include="..\Troschuetz.Random\Troschuetz.Random.NET40.csproj">
       <Project>{a1ff7728-605f-401a-a9fc-51fa56852e9e}</Project>
-      <Name>Troschuetz.Random</Name>
+      <Name>Troschuetz.Random.NET40</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="LICENSE.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="lib\net40-client\" />
+    <Folder Include="lib\portable-win8+net45+sl5+wp8\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
