@@ -32,6 +32,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Beta_distribution">Wikipedia - Beta distribution</a> and
     ///   <a href="http://www.xycoon.com/beta_randomnumbers.htm">Xycoon - Beta Distribution</a>.
     /// </remarks>
+    [Serializable]
     public class BetaDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>
         where TGen : IGenerator
     {
@@ -256,6 +257,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Beta_distribution">Wikipedia - Beta distribution</a> and
     ///   <a href="http://www.xycoon.com/beta_randomnumbers.htm">Xycoon - Beta Distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class BetaDistribution : BetaDistribution<IGenerator>
     {
         #region Construction

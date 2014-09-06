@@ -31,6 +31,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="GammaDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
     /// </remarks>
+    [Serializable]
     public class GammaDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IThetaDistribution<double>
         where TGen : IGenerator
     {
@@ -263,6 +264,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="GammaDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class GammaDistribution : GammaDistribution<IGenerator>
     {
         #region Construction

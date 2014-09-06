@@ -51,6 +51,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Log-normal_distribution">Wikipedia - Lognormal Distribution</a> and
     ///   the implementation in the <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
     /// </remarks>
+    [Serializable]
     public class LognormalDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IMuDistribution<double>, 
                                                ISigmaDistribution<double>
         where TGen : IGenerator
@@ -259,6 +260,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Log-normal_distribution">Wikipedia - Lognormal Distribution</a> and
     ///   the implementation in the <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
     /// </remarks>
+    [Serializable]
     public sealed class LognormalDistribution : LognormalDistribution<IGenerator>
     {
         #region Construction

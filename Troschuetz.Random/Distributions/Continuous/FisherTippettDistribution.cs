@@ -31,6 +31,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="FisherTippettDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Laplace_distribution">Wikipedia - Fisher-Tippett distribution</a>.
     /// </remarks>
+    [Serializable]
     public class FisherTippettDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, 
                                                    IMuDistribution<double>
         where TGen : IGenerator
@@ -240,6 +241,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="FisherTippettDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Laplace_distribution">Wikipedia - Fisher-Tippett distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class FisherTippettDistribution : FisherTippettDistribution<IGenerator>
     {
         #region Construction

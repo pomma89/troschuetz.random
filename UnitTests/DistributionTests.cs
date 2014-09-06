@@ -20,6 +20,7 @@ namespace Troschuetz.Random.Tests
 {
     using System;
     using NUnit.Framework;
+    using PommaLabs.KVLite;
     using Random.Generators;
 
     public abstract class DistributionTests<TDist> : TestBase where TDist : IDistribution
@@ -196,6 +197,24 @@ namespace Troschuetz.Random.Tests
             Assert.True(Dist.Reset());
             Assert.AreEqual(d, Dist.NextDouble());
         }
+
+        /*=============================================================================
+            Serialization
+        =============================================================================*/
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void NextDouble_Serialization_AfterManyRand()
+        {
+            for (var i = 0; i < Iterations; ++i) {
+                Dist.NextDouble();
+            }
+            PersistentCache.DefaultInstance.AddStatic("Distribution", Dist);
+            var otherDist = PersistentCache.DefaultInstance.Get("Distribution") as TDist;
+            for (var i = 0; i < Iterations; ++i) {
+                Assert.AreEqual(Dist.NextDouble(), otherDist.NextDouble());
+            }
+        }
     }
 
     public abstract class DiscreteDistributionTests<TDist> : DistributionTests<TDist>
@@ -315,6 +334,24 @@ namespace Troschuetz.Random.Tests
             Assert.True(Dist.Reset());
             Assert.True(Dist.Reset());
             Assert.AreEqual(d, Dist.Next());
+        }
+
+        /*=============================================================================
+            Serialization
+        =============================================================================*/
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void Next_Serialization_AfterManyRand()
+        {
+            for (var i = 0; i < Iterations; ++i) {
+                Dist.Next();
+            }
+            PersistentCache.DefaultInstance.AddStatic("Distribution", Dist);
+            var otherDist = PersistentCache.DefaultInstance.Get("Distribution") as TDist;
+            for (var i = 0; i < Iterations; ++i) {
+                Assert.AreEqual(Dist.Next(), otherDist.Next());
+            }
         }
     }
 }

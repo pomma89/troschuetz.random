@@ -87,6 +87,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
     ///   Communication Networks Class Library</a>.
     /// </remarks>
+    [Serializable]
     public class NormalDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IMuDistribution<double>, ISigmaDistribution<double>
         where TGen : IGenerator
     {
@@ -302,6 +303,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
     ///   Communication Networks Class Library</a>.
     /// </remarks>
+    [Serializable]
     public sealed class NormalDistribution : NormalDistribution<IGenerator>
     {
         #region Construction

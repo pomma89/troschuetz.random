@@ -31,6 +31,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="WeibullDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Weibull_distribution">Wikipedia - Weibull distribution</a>.
     /// </remarks>
+    [Serializable]
     public class WeibullDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, 
                                                     ILambdaDistribution<double>
         where TGen : IGenerator
@@ -273,6 +274,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="WeibullDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Weibull_distribution">Wikipedia - Weibull distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class WeibullDistribution : WeibullDistribution<IGenerator>
     {
         #region Construction

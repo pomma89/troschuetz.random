@@ -31,6 +31,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="BetaPrimeDistribution"/> type bases upon information presented on
     ///   <a href="http://www.xycoon.com/ibeta.htm">Xycoon - Inverted Beta Distribution</a>.
     /// </remarks>
+    [Serializable]
     public class BetaPrimeDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>
         where TGen : IGenerator
     {
@@ -247,6 +248,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="BetaPrimeDistribution"/> type bases upon information presented on
     ///   <a href="http://www.xycoon.com/ibeta.htm">Xycoon - Inverted Beta Distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class BetaPrimeDistribution : BetaPrimeDistribution<IGenerator>
     {
         #region Construction

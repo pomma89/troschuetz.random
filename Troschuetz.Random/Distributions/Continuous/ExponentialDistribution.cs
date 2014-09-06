@@ -31,6 +31,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="ExponentialDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Exponential_distribution">Wikipedia - Exponential distribution</a>.
     /// </remarks>
+    [Serializable]
     public class ExponentialDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, ILambdaDistribution<double>
         where TGen : IGenerator
     {
@@ -190,6 +191,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="ExponentialDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Exponential_distribution">Wikipedia - Exponential distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class ExponentialDistribution : ExponentialDistribution<IGenerator>
     {
         #region Construction

@@ -32,6 +32,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Pareto_distribution">Wikipedia - Pareto distribution</a> and
     ///   <a href="http://www.xycoon.com/par_random.htm">Xycoon - Pareto Distribution</a>.
     /// </remarks>
+    [Serializable]
     public class ParetoDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, 
                                             IBetaDistribution<double>
         where TGen : IGenerator
@@ -254,6 +255,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Pareto_distribution">Wikipedia - Pareto distribution</a> and
     ///   <a href="http://www.xycoon.com/par_random.htm">Xycoon - Pareto Distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class ParetoDistribution : ParetoDistribution<IGenerator>
     {
         #region Construction

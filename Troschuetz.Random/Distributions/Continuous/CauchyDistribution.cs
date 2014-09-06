@@ -32,6 +32,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Cauchy_distribution">Wikipedia - Cauchy distribution</a> and
     ///   <a href="http://www.xycoon.com/cauchy2p_random.htm">Xycoon - Cauchy Distribution</a>.
     /// </remarks>
+    [Serializable]
     public class CauchyDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IGammaDistribution<double>
         where TGen : IGenerator
     {
@@ -238,6 +239,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Cauchy_distribution">Wikipedia - Cauchy distribution</a> and
     ///   <a href="http://www.xycoon.com/cauchy2p_random.htm">Xycoon - Cauchy Distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class CauchyDistribution : CauchyDistribution<IGenerator>
     {
         #region Construction

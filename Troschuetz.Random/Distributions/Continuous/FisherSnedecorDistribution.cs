@@ -31,6 +31,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="FisherSnedecorDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/F-distribution">Wikipedia - F-distribution</a>.
     /// </remarks>
+    [Serializable]
     public class FisherSnedecorDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, IBetaDistribution<int>
         where TGen : IGenerator
     {
@@ -257,6 +258,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="FisherSnedecorDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/F-distribution">Wikipedia - F-distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class FisherSnedecorDistribution : FisherSnedecorDistribution<IGenerator>
     {
         #region Construction

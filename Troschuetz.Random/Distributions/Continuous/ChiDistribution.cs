@@ -31,6 +31,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="ChiDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Chi_distribution">Wikipedia - Chi distribution</a>.
     /// </remarks>
+    [Serializable]
     public class ChiDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>
         where TGen : IGenerator
     {
@@ -223,6 +224,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="ChiDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Chi_distribution">Wikipedia - Chi distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class ChiDistribution : ChiDistribution<IGenerator>
     {
         #region Construction

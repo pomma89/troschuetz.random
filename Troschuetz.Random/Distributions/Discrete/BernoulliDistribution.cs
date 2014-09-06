@@ -32,6 +32,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   The implementation of the <see cref="BernoulliDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Bernoulli_distribution">Wikipedia - Bernoulli distribution</a>.
     /// </remarks>
+    [Serializable]
     public class BernoulliDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>
         where TGen : IGenerator
     {
@@ -205,6 +206,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   The implementation of the <see cref="BernoulliDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Bernoulli_distribution">Wikipedia - Bernoulli distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class BernoulliDistribution : BernoulliDistribution<IGenerator>
     {
         #region Construction

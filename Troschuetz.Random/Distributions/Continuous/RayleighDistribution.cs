@@ -31,6 +31,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="RayleighDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Rayleigh_distribution">Wikipedia - Rayleigh Distribution</a>.
     /// </remarks>
+    [Serializable]
     public class RayleighDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, ISigmaDistribution<double>
         where TGen : IGenerator
     {
@@ -194,6 +195,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="RayleighDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Rayleigh_distribution">Wikipedia - Rayleigh Distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class RayleighDistribution : RayleighDistribution<IGenerator>
     {
         #region Construction

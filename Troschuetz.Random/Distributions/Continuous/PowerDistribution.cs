@@ -31,6 +31,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="PowerDistribution"/> type bases upon information presented on
     ///   <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
     /// </remarks>
+    [Serializable]
     public class PowerDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, 
                                            IBetaDistribution<double>
         where TGen : IGenerator
@@ -249,6 +250,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="PowerDistribution"/> type bases upon information presented on
     ///   <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
     /// </remarks>
+    [Serializable]
     public sealed class PowerDistribution : PowerDistribution<IGenerator>
     {
         #region Construction

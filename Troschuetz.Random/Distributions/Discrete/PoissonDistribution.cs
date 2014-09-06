@@ -88,6 +88,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
     ///   Communication Networks Class Library</a>.
     /// </remarks>
+    [Serializable]
     public class PoissonDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, ILambdaDistribution<double>
         where TGen : IGenerator
     {
@@ -264,6 +265,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
     ///   Communication Networks Class Library</a>.
     /// </remarks>
+    [Serializable]
     public sealed class PoissonDistribution : PoissonDistribution<IGenerator>
     {
         #region Construction
