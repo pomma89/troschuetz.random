@@ -1723,6 +1723,12 @@ namespace Troschuetz.Random
         }
 
         [CLSCompliant(false)]
+        public uint NextUIntExclusiveMaxValue()
+        {
+            return _gen.NextUIntExclusiveMaxValue();
+        }
+
+        [CLSCompliant(false)]
         public uint NextUInt(uint maxValue)
         {
             return _gen.NextUInt(maxValue);

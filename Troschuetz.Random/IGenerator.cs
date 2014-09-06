@@ -163,6 +163,16 @@ namespace Troschuetz.Random
         uint NextUInt();
 
         /// <summary>
+        ///   Returns an unsigned random number less than <see cref="UInt32.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="UInt32.MinValue"/> and 
+        ///   less than <see cref="UInt32.MaxValue"/>.
+        /// </returns>
+        [CLSCompliant(false)]
+        uint NextUIntExclusiveMaxValue();
+
+        /// <summary>
         ///   Returns an unsigned random number less than the specified maximum.
         /// </summary>
         /// <param name="maxValue">

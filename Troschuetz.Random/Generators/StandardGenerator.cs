@@ -28,7 +28,7 @@ namespace Troschuetz.Random.Generators
     ///   The <see cref="StandardGenerator"/> type internally uses an instance of the
     ///   <see cref="System.Random"/> type to generate pseudo-random numbers.
     /// </remarks>
-    public sealed class StandardGenerator : GeneratorBase, IGenerator
+    public sealed class StandardGenerator : GeneratorBase<StandardGenerator>, IGenerator
     {
         #region Instance Fields
 
@@ -38,7 +38,7 @@ namespace Troschuetz.Random.Generators
         int _bitBuffer;
 
         /// <summary>
-        ///   Stores a byte array used to compute the result of <see cref="NextUInt"/>, starting from the output of <see cref="NextBytes"/>.
+        ///   Stores a byte array used to compute the result of <see cref="NextUInt()"/>, starting from the output of <see cref="NextBytes"/>.
         /// </summary>
         byte[] _uintBuffer;
 

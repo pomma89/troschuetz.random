@@ -19,7 +19,9 @@
 
 namespace Troschuetz.Random.Generators
 {
-    public abstract class GeneratorBase
+    using System;
+
+    public abstract class GeneratorBase<TGen> where TGen : GeneratorBase<TGen>, IGenerator
     {
         #region Class Fields
 
@@ -36,6 +38,27 @@ namespace Troschuetz.Random.Generators
         ///   when it gets applied to a nonnegative 32-bit unsigned integer.
         /// </summary>
         protected const double UIntToDoubleMultiplier = 1.0 / (uint.MaxValue + 1.0);
+
+        #endregion
+
+        #region IGenerator Members
+
+        [CLSCompliant(false)]
+        public uint NextUIntExclusiveMaxValue()
+        {
+            uint x;
+            while ((x = Generator.NextUInt()) == uint.MaxValue) {}
+            return x;
+        }
+
+        #endregion
+
+        #region Private Members
+
+        private TGen Generator
+        {
+            get { return this as TGen; }
+        }
 
         #endregion
     }

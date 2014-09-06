@@ -363,13 +363,6 @@ namespace Troschuetz.Random.Tests
             Assert.True(_generator.Integers().Take(Iterations).All(x => x == otherGen.Next()));
         }
 
-
-
-
-
-
-        
-
         [Test]
         [Repeat(RepetitionCount)]
         public void UnsignedIntegers_BetweenBounds()
@@ -469,6 +462,32 @@ namespace Troschuetz.Random.Tests
             _generator.Reset();
             otherGen.Reset();
             Assert.True(_generator.UnsignedIntegers().Take(Iterations).All(x => x == otherGen.NextUInt()));
+        }
+
+        /*=============================================================================
+            NextUIntExclusiveMaxValue
+        =============================================================================*/
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void NextUIntExclusiveMaxValue_NoMaxValue()
+        {
+            for (var i = 0; i < Iterations; ++i) {
+                Assert.AreNotEqual(uint.MaxValue, _generator.NextUIntExclusiveMaxValue());
+            }
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void NextUIntExclusiveMaxValue_NoMaxValue_AfterReset()
+        {
+            for (var i = 0; i < Iterations; ++i) {
+                Assert.AreNotEqual(uint.MaxValue, _generator.NextUIntExclusiveMaxValue());
+            }
+            _generator.Reset();
+            for (var i = 0; i < Iterations; ++i) {
+                Assert.AreNotEqual(uint.MaxValue, _generator.NextUIntExclusiveMaxValue());
+            }
         }
 
         /*=============================================================================

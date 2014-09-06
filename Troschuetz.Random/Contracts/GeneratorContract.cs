@@ -84,7 +84,14 @@ namespace Troschuetz.Random.Contracts
 
         public uint NextUInt()
         {
+            Contract.Ensures(Contract.Result<uint>() <= uint.MaxValue);
             return default(uint);
+        }
+
+        public uint NextUIntExclusiveMaxValue()
+        {
+            Contract.Ensures(Contract.Result<uint>() < uint.MaxValue);
+            return default(int);
         }
 
         public uint NextUInt(uint maxValue)
