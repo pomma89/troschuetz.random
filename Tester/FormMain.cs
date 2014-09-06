@@ -1520,13 +1520,14 @@ namespace Troschuetz.Random.Tester
         {
             groupBoxDistribution2.Controls.Clear();
 
-            var propertyInfos =
-                currentDistribution.GetType()
-                                   .GetProperties(BindingFlags.Public | BindingFlags.Instance |
-                                                  BindingFlags.DeclaredOnly);
+            // We get IDistribution properties, so we can eliminate them from the specific distribution type.
+            var distProps = typeDistribution.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var distPropsSet = new HashSet<string>(distProps.Select(p => p.Name));
+
+            var propertyInfos = currentDistribution.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var count = 0;
             foreach (var propertyInfo in propertyInfos) {
-                if ((propertyInfo.PropertyType != typeof(double) && propertyInfo.PropertyType != typeof(int)) ||
+                if (distPropsSet.Contains(propertyInfo.Name) || (propertyInfo.PropertyType != typeof(double) && propertyInfo.PropertyType != typeof(int)) ||
                     !propertyInfo.CanRead || !propertyInfo.CanWrite) {
                     continue;
                 }
