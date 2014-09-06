@@ -296,27 +296,27 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set ASR=$(SolutionDir)Troschuetz.Random.Packager.Unchecked/ASR/AssemblyRenamer.exe
+    <PostBuildEvent>set ASR=$(SolutionDir)NuGetPackager.Unchecked/ASR/AssemblyRenamer.exe
 set ASR_ARGS=--out:ASR
 set ASR_IN=Troschuetz.Random
 set ASR_OUT=Troschuetz.Random.Unchecked
 
-set dir="$(SolutionDir)Troschuetz.Random.Packager.Unchecked/lib/net40-client"
+set dir="$(SolutionDir)NuGetPackager.Unchecked/lib/net40-client"
 if not exist %25dir%25 mkdir %25dir%25
-set dir="$(SolutionDir)Troschuetz.Random.Packager/lib/net40-client"
+set dir="$(SolutionDir)NuGetPackager/lib/net40-client"
 if not exist %25dir%25 mkdir %25dir%25
 
 if $(ConfigurationName) == Release.Unchecked (
     mkdir ASR
     %25ASR%25 %25ASR_ARGS%25 %25ASR_IN%25 %25ASR_OUT%25
     copy %25ASR_IN%25.xml "ASR/%25ASR_OUT%25.xml"
-    copy "ASR\%25ASR_OUT%25.dll" "$(SolutionDir)Troschuetz.Random.Packager.Unchecked/lib/net40-client"
-    copy "ASR\%25ASR_OUT%25.xml" "$(SolutionDir)Troschuetz.Random.Packager.Unchecked/lib/net40-client"
+    copy "ASR\%25ASR_OUT%25.dll" "$(SolutionDir)NuGetPackager.Unchecked/lib/net40-client"
+    copy "ASR\%25ASR_OUT%25.xml" "$(SolutionDir)NuGetPackager.Unchecked/lib/net40-client"
 )
 
 if $(ConfigurationName) == Release (
-    copy "%25ASR_IN%25.dll" "$(SolutionDir)Troschuetz.Random.Packager/lib/net40-client"
-    copy "%25ASR_IN%25.xml" "$(SolutionDir)Troschuetz.Random.Packager/lib/net40-client"
+    copy "%25ASR_IN%25.dll" "$(SolutionDir)NuGetPackager/lib/net40-client"
+    copy "%25ASR_IN%25.xml" "$(SolutionDir)NuGetPackager/lib/net40-client"
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
