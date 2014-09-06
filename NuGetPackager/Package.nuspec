@@ -15,7 +15,8 @@ You can find the modified source code and the available documentation at this ad
 NOTICE: If you need more performance, please have a look at the Troschuetz.Random.Unchecked package. It is a release where all integrity checks have been stripped away.
     </description>
     <releaseNotes>
-* Exposed new methods (like NextUInt) through the IGenerator interface. Many thanks to Franklin Ross (alpha_cast) for the suggestion.
+* Exposed new method NextUIntExclusiveMaxValue through the IGenerator interface.
+* Fixed broken "unchecked" package.
     </releaseNotes>
     <summary>Fully managed library providing various random number generators and distributions.</summary>
     <language>en-US</language>

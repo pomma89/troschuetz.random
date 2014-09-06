@@ -15,7 +15,8 @@ All the hard work behind this library was done by Stefan Troschütz, and for whi
 You can find the modified source code and the available documentation at this address: https://bitbucket.org/pomma89/troschuetz.random.
     </description>
     <releaseNotes>
-* Exposed new methods (like NextUInt) through the IGenerator interface. Many thanks to Franklin Ross (alpha_cast) for the suggestion.
+* Exposed new method NextUIntExclusiveMaxValue through the IGenerator interface.
+* Fixed broken "unchecked" package.
     </releaseNotes>
     <summary>Fully managed library providing various random number generators and distributions.</summary>
     <language>en-US</language>
