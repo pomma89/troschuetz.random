@@ -63,11 +63,14 @@
     <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
     <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
-    <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <CodeContractsRedundantTests>True</CodeContractsRedundantTests>
+    <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
+    <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>
@@ -97,7 +100,7 @@
     <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
     <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
     <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
-    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
     <CodeContractsCustomRewriterAssembly />
     <CodeContractsCustomRewriterClass />
     <CodeContractsLibPaths />
@@ -108,15 +111,19 @@
     <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
     <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
     <CodeContractsRuntimeCheckingLevel>ReleaseRequires</CodeContractsRuntimeCheckingLevel>
-    <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <CodeContractsRedundantTests>True</CodeContractsRedundantTests>
+    <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
+    <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.Unchecked|AnyCPU'">
     <OutputPath>bin\Release.Unchecked\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <Optimize>True</Optimize>
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -157,6 +164,7 @@
     <CodeContractsRuntimeCheckingLevel>None</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Troschuetz.Random.ico</ApplicationIcon>
@@ -309,13 +317,16 @@ if not exist %25dir%25 mkdir %25dir%25
 if $(ConfigurationName) == Release.Unchecked (
     mkdir ASR
     %25ASR%25 %25ASR_ARGS%25 %25ASR_IN%25 %25ASR_OUT%25
+    copy %25ASR_IN%25.pdb "ASR/%25ASR_OUT%25.pdb"
     copy %25ASR_IN%25.xml "ASR/%25ASR_OUT%25.xml"
     copy "ASR\%25ASR_OUT%25.dll" "$(SolutionDir)NuGetPackager.Unchecked/lib/net40-client"
+    copy "ASR\%25ASR_OUT%25.pdb" "$(SolutionDir)NuGetPackager.Unchecked/lib/net40-client"
     copy "ASR\%25ASR_OUT%25.xml" "$(SolutionDir)NuGetPackager.Unchecked/lib/net40-client"
 )
 
 if $(ConfigurationName) == Release (
     copy "%25ASR_IN%25.dll" "$(SolutionDir)NuGetPackager/lib/net40-client"
+    copy "%25ASR_IN%25.pdb" "$(SolutionDir)NuGetPackager/lib/net40-client"
     copy "%25ASR_IN%25.xml" "$(SolutionDir)NuGetPackager/lib/net40-client"
 )</PostBuildEvent>
   </PropertyGroup>
