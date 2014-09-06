@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A1FF7728-605F-401A-A9FC-51FA56852E9E}</ProjectGuid>
+    <ProjectGuid>{6B947182-CF4B-45FE-A1AE-47A28C514040}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Troschuetz.Random</RootNamespace>
@@ -165,59 +165,134 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\DistributionContracts.cs" />
-    <Compile Include="Contracts\GeneratorContract.cs" />
-    <Compile Include="ErrorMessages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ErrorMessages.resx</DependentUpon>
+    <Compile Include="..\Troschuetz.Random\Contracts\DistributionContracts.cs">
+      <Link>Contracts\DistributionContracts.cs</Link>
     </Compile>
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Generators\GeneratorBase.cs" />
-    <Compile Include="IDistribution.cs" />
-    <Compile Include="Distributions\Continuous\BetaDistribution.cs" />
-    <Compile Include="Distributions\Continuous\BetaPrimeDistribution.cs" />
-    <Compile Include="Distributions\Continuous\CauchyDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ChiDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ChiSquareDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ContinuousUniformDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ErlangDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ExponentialDistribution.cs" />
-    <Compile Include="Distributions\Continuous\FisherSnedecorDistribution.cs" />
-    <Compile Include="Distributions\Continuous\FisherTippettDistribution.cs" />
-    <Compile Include="Distributions\Continuous\GammaDistribution.cs" />
-    <Compile Include="Distributions\Continuous\LaplaceDistribution.cs" />
-    <Compile Include="Distributions\Continuous\LognormalDistribution.cs" />
-    <Compile Include="Distributions\Continuous\NormalDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ParetoDistribution.cs" />
-    <Compile Include="Distributions\Continuous\PowerDistribution.cs" />
-    <Compile Include="Distributions\Continuous\RayleighDistribution.cs" />
-    <Compile Include="Distributions\Continuous\StudentsTDistribution.cs" />
-    <Compile Include="Distributions\Continuous\TriangularDistribution.cs" />
-    <Compile Include="Distributions\Continuous\WeibullDistribution.cs" />
-    <Compile Include="Distributions\Discrete\BernoulliDistribution.cs" />
-    <Compile Include="Distributions\Discrete\BinomialDistribution.cs" />
-    <Compile Include="Distributions\Discrete\CategoricalDistribution.cs" />
-    <Compile Include="Distributions\Discrete\DiscreteUniformDistribution.cs" />
-    <Compile Include="Distributions\Discrete\GeometricDistribution.cs" />
-    <Compile Include="Distributions\Discrete\PoissonDistribution.cs" />
-    <Compile Include="IGenerator.cs" />
+    <Compile Include="..\Troschuetz.Random\Contracts\GeneratorContract.cs">
+      <Link>Contracts\GeneratorContract.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\BetaDistribution.cs">
+      <Link>Distributions\Continuous\BetaDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\BetaPrimeDistribution.cs">
+      <Link>Distributions\Continuous\BetaPrimeDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\CauchyDistribution.cs">
+      <Link>Distributions\Continuous\CauchyDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ChiDistribution.cs">
+      <Link>Distributions\Continuous\ChiDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ChiSquareDistribution.cs">
+      <Link>Distributions\Continuous\ChiSquareDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ContinuousUniformDistribution.cs">
+      <Link>Distributions\Continuous\ContinuousUniformDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ErlangDistribution.cs">
+      <Link>Distributions\Continuous\ErlangDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ExponentialDistribution.cs">
+      <Link>Distributions\Continuous\ExponentialDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\FisherSnedecorDistribution.cs">
+      <Link>Distributions\Continuous\FisherSnedecorDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\FisherTippettDistribution.cs">
+      <Link>Distributions\Continuous\FisherTippettDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\GammaDistribution.cs">
+      <Link>Distributions\Continuous\GammaDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\LaplaceDistribution.cs">
+      <Link>Distributions\Continuous\LaplaceDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\LognormalDistribution.cs">
+      <Link>Distributions\Continuous\LognormalDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\NormalDistribution.cs">
+      <Link>Distributions\Continuous\NormalDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ParetoDistribution.cs">
+      <Link>Distributions\Continuous\ParetoDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\PowerDistribution.cs">
+      <Link>Distributions\Continuous\PowerDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\RayleighDistribution.cs">
+      <Link>Distributions\Continuous\RayleighDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\StudentsTDistribution.cs">
+      <Link>Distributions\Continuous\StudentsTDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\TriangularDistribution.cs">
+      <Link>Distributions\Continuous\TriangularDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\WeibullDistribution.cs">
+      <Link>Distributions\Continuous\WeibullDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\BernoulliDistribution.cs">
+      <Link>Distributions\Discrete\BernoulliDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\BinomialDistribution.cs">
+      <Link>Distributions\Discrete\BinomialDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\CategoricalDistribution.cs">
+      <Link>Distributions\Discrete\CategoricalDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\DiscreteUniformDistribution.cs">
+      <Link>Distributions\Discrete\DiscreteUniformDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\GeometricDistribution.cs">
+      <Link>Distributions\Discrete\GeometricDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\PoissonDistribution.cs">
+      <Link>Distributions\Discrete\PoissonDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\ErrorMessages.Designer.cs">
+      <Link>ErrorMessages.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Extensions.cs">
+      <Link>Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\ALFGenerator.cs">
+      <Link>Generators\ALFGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\GeneratorBase.cs">
+      <Link>Generators\GeneratorBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\MT19937Generator.cs">
+      <Link>Generators\MT19937Generator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\StandardGenerator.cs">
+      <Link>Generators\StandardGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\XorShift128Generator.cs">
+      <Link>Generators\XorShift128Generator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\IDistribution.cs">
+      <Link>IDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\IGenerator.cs">
+      <Link>IGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\TRandom.cs">
+      <Link>TRandom.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Generators\ALFGenerator.cs" />
-    <Compile Include="Generators\MT19937Generator.cs" />
-    <Compile Include="Generators\StandardGenerator.cs" />
-    <Compile Include="Generators\XorShift128Generator.cs" />
-    <Compile Include="TRandom.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Troschuetz.Random.doxyfile" />
-    <Content Include="Troschuetz.Random.ico" />
+    <None Include="..\Troschuetz.Random\Troschuetz.Random.doxyfile">
+      <Link>Troschuetz.Random.doxyfile</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ErrorMessages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="..\Troschuetz.Random\ErrorMessages.resx">
+      <Link>ErrorMessages.resx</Link>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Troschuetz.Random.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

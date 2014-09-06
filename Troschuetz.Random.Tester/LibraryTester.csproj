@@ -32,7 +32,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -110,9 +110,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Troschuetz.Random\Troschuetz.Random.csproj">
-      <Project>{A1FF7728-605F-401A-A9FC-51FA56852E9E}</Project>
-      <Name>Troschuetz.Random</Name>
+    <ProjectReference Include="..\Troschuetz.Random.NET40\Troschuetz.Random.NET40.csproj">
+      <Project>{6b947182-cf4b-45fe-a1ae-47a28c514040}</Project>
+      <Name>Troschuetz.Random.NET40</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

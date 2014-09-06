@@ -60,12 +60,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Troschuetz.Random\Troschuetz.Random.NET40.csproj">
-      <Project>{a1ff7728-605f-401a-a9fc-51fa56852e9e}</Project>
-      <Name>Troschuetz.Random.NET40</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ASR\AssemblyRenamer.exe" />
     <Content Include="ASR\Mono.Cecil.dll" />
     <Content Include="ASR\Mono.Cecil.Mdb.dll" />
