@@ -144,6 +144,23 @@ namespace Troschuetz.Random.Tester
         Type typeGenerator;
 
         DataGridViewTextBoxColumn unit;
+        private DataGridViewTextBoxColumn Generator;
+        private DataGridViewTextBoxColumn Next;
+        private DataGridViewTextBoxColumn NextMax;
+        private DataGridViewTextBoxColumn NextMinMax;
+        private DataGridViewTextBoxColumn NextDouble;
+        private DataGridViewTextBoxColumn NextDoubleMax;
+        private DataGridViewTextBoxColumn NextDoubleMinMax;
+        private DataGridViewTextBoxColumn Integers;
+        private DataGridViewTextBoxColumn IntegersMax;
+        private DataGridViewTextBoxColumn IntegersMinMax;
+        private DataGridViewTextBoxColumn Doubles;
+        private DataGridViewTextBoxColumn DoublesMax;
+        private DataGridViewTextBoxColumn DoublesMinMax;
+        private DataGridViewTextBoxColumn NextBoolean;
+        private DataGridViewTextBoxColumn Booleans;
+        private DataGridViewTextBoxColumn NextBytes;
+        private DataGridViewTextBoxColumn Unit;
 
         ZedGraphControl zedGraphControl;
 
@@ -160,8 +177,15 @@ namespace Troschuetz.Random.Tester
         void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.tabPageGenerators = new System.Windows.Forms.TabPage();
+            this.checkBoxBooleans = new System.Windows.Forms.CheckBox();
+            this.checkBoxDoublesMinMax = new System.Windows.Forms.CheckBox();
+            this.checkBoxDoublesMax = new System.Windows.Forms.CheckBox();
+            this.checkBoxDoubles = new System.Windows.Forms.CheckBox();
+            this.checkBoxIntegersMinMax = new System.Windows.Forms.CheckBox();
+            this.checkBoxIntegersMax = new System.Windows.Forms.CheckBox();
+            this.checkBoxIntegers = new System.Windows.Forms.CheckBox();
             this.checkBoxNextBytes = new System.Windows.Forms.CheckBox();
             this.checkBoxNextBoolean = new System.Windows.Forms.CheckBox();
             this.checkBoxNextDoubleMinMax = new System.Windows.Forms.CheckBox();
@@ -171,23 +195,23 @@ namespace Troschuetz.Random.Tester
             this.checkBoxNextMax = new System.Windows.Forms.CheckBox();
             this.checkBoxNext = new System.Windows.Forms.CheckBox();
             this.dataGridViewGenerators = new System.Windows.Forms.DataGridView();
-            this.generator = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.next = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nextMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nextMinMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nextDouble = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nextDoubleMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nextDoubleMinMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.integers = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.integersMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.integersMinMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.doubles = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.doublesMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.doublesMinMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nextBoolean = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.booleans = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nextBytes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Generator = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Next = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NextMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NextMinMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NextDouble = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NextDoubleMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NextDoubleMinMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Integers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IntegersMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IntegersMinMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Doubles = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DoublesMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DoublesMinMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NextBoolean = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Booleans = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NextBytes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numericUpDownGenSamples = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.buttonTestGenerators = new System.Windows.Forms.Button();
@@ -228,23 +252,16 @@ namespace Troschuetz.Random.Tester
             this.richTextBoxTest = new System.Windows.Forms.RichTextBox();
             this.zedGraphControl = new ZedGraph.ZedGraphControl();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.checkBoxIntegers = new System.Windows.Forms.CheckBox();
-            this.checkBoxIntegersMax = new System.Windows.Forms.CheckBox();
-            this.checkBoxIntegersMinMax = new System.Windows.Forms.CheckBox();
-            this.checkBoxDoublesMinMax = new System.Windows.Forms.CheckBox();
-            this.checkBoxDoublesMax = new System.Windows.Forms.CheckBox();
-            this.checkBoxDoubles = new System.Windows.Forms.CheckBox();
-            this.checkBoxBooleans = new System.Windows.Forms.CheckBox();
             this.tabPageGenerators.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.dataGridViewGenerators)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownGenSamples)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGenerators)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGenSamples)).BeginInit();
             this.tabPageDistributions2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownSamples2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSamples2)).BeginInit();
             this.tabPageDistributions1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownSamples)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownSteps)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownMinimum)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownMaximum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSamples)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSteps)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximum)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -275,15 +292,96 @@ namespace Troschuetz.Random.Tester
             this.tabPageGenerators.Controls.Add(this.buttonDeselect);
             this.tabPageGenerators.Location = new System.Drawing.Point(4, 22);
             this.tabPageGenerators.Name = "tabPageGenerators";
-            this.tabPageGenerators.Size = new System.Drawing.Size(1008, 710);
+            this.tabPageGenerators.Size = new System.Drawing.Size(1244, 710);
             this.tabPageGenerators.TabIndex = 1;
             this.tabPageGenerators.Text = "Generators";
             this.tabPageGenerators.UseVisualStyleBackColor = true;
             // 
+            // checkBoxBooleans
+            // 
+            this.checkBoxBooleans.AutoSize = true;
+            this.checkBoxBooleans.Location = new System.Drawing.Point(936, 48);
+            this.checkBoxBooleans.Name = "checkBoxBooleans";
+            this.checkBoxBooleans.Size = new System.Drawing.Size(76, 17);
+            this.checkBoxBooleans.TabIndex = 20;
+            this.checkBoxBooleans.Text = "Booleans()";
+            this.checkBoxBooleans.UseVisualStyleBackColor = true;
+            this.checkBoxBooleans.CheckedChanged += new System.EventHandler(this.CheckBoxBooleans_CheckedChanged);
+            // 
+            // checkBoxDoublesMinMax
+            // 
+            this.checkBoxDoublesMinMax.AutoSize = true;
+            this.checkBoxDoublesMinMax.Location = new System.Drawing.Point(779, 72);
+            this.checkBoxDoublesMinMax.Name = "checkBoxDoublesMinMax";
+            this.checkBoxDoublesMinMax.Size = new System.Drawing.Size(151, 17);
+            this.checkBoxDoublesMinMax.TabIndex = 19;
+            this.checkBoxDoublesMinMax.Text = "DistributedDoubles(-99,99)";
+            this.checkBoxDoublesMinMax.UseVisualStyleBackColor = true;
+            this.checkBoxDoublesMinMax.CheckedChanged += new System.EventHandler(this.CheckBoxDoublesMinMax_CheckedChanged);
+            // 
+            // checkBoxDoublesMax
+            // 
+            this.checkBoxDoublesMax.AutoSize = true;
+            this.checkBoxDoublesMax.Location = new System.Drawing.Point(779, 48);
+            this.checkBoxDoublesMax.Name = "checkBoxDoublesMax";
+            this.checkBoxDoublesMax.Size = new System.Drawing.Size(133, 17);
+            this.checkBoxDoublesMax.TabIndex = 18;
+            this.checkBoxDoublesMax.Text = "DistributedDoubles(99)";
+            this.checkBoxDoublesMax.UseVisualStyleBackColor = true;
+            this.checkBoxDoublesMax.CheckedChanged += new System.EventHandler(this.CheckBoxDoublesMax_CheckedChanged);
+            // 
+            // checkBoxDoubles
+            // 
+            this.checkBoxDoubles.AutoSize = true;
+            this.checkBoxDoubles.Checked = true;
+            this.checkBoxDoubles.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxDoubles.Location = new System.Drawing.Point(779, 24);
+            this.checkBoxDoubles.Name = "checkBoxDoubles";
+            this.checkBoxDoubles.Size = new System.Drawing.Size(121, 17);
+            this.checkBoxDoubles.TabIndex = 17;
+            this.checkBoxDoubles.Text = "DistributedDoubles()";
+            this.checkBoxDoubles.UseVisualStyleBackColor = true;
+            this.checkBoxDoubles.CheckedChanged += new System.EventHandler(this.CheckBoxDoubles_CheckedChanged);
+            // 
+            // checkBoxIntegersMinMax
+            // 
+            this.checkBoxIntegersMinMax.AutoSize = true;
+            this.checkBoxIntegersMinMax.Location = new System.Drawing.Point(625, 72);
+            this.checkBoxIntegersMinMax.Name = "checkBoxIntegersMinMax";
+            this.checkBoxIntegersMinMax.Size = new System.Drawing.Size(150, 17);
+            this.checkBoxIntegersMinMax.TabIndex = 16;
+            this.checkBoxIntegersMinMax.Text = "DistributedIntegers(-99,99)";
+            this.checkBoxIntegersMinMax.UseVisualStyleBackColor = true;
+            this.checkBoxIntegersMinMax.CheckedChanged += new System.EventHandler(this.CheckBoxIntegersMinMax_CheckedChanged);
+            // 
+            // checkBoxIntegersMax
+            // 
+            this.checkBoxIntegersMax.AutoSize = true;
+            this.checkBoxIntegersMax.Location = new System.Drawing.Point(625, 48);
+            this.checkBoxIntegersMax.Name = "checkBoxIntegersMax";
+            this.checkBoxIntegersMax.Size = new System.Drawing.Size(132, 17);
+            this.checkBoxIntegersMax.TabIndex = 15;
+            this.checkBoxIntegersMax.Text = "DistributedIntegers(99)";
+            this.checkBoxIntegersMax.UseVisualStyleBackColor = true;
+            this.checkBoxIntegersMax.CheckedChanged += new System.EventHandler(this.CheckBoxIntegersMax_CheckedChanged);
+            // 
+            // checkBoxIntegers
+            // 
+            this.checkBoxIntegers.AutoSize = true;
+            this.checkBoxIntegers.Checked = true;
+            this.checkBoxIntegers.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxIntegers.Location = new System.Drawing.Point(625, 24);
+            this.checkBoxIntegers.Name = "checkBoxIntegers";
+            this.checkBoxIntegers.Size = new System.Drawing.Size(120, 17);
+            this.checkBoxIntegers.TabIndex = 13;
+            this.checkBoxIntegers.Text = "DistributedIntegers()";
+            this.checkBoxIntegers.UseVisualStyleBackColor = true;
+            this.checkBoxIntegers.CheckedChanged += new System.EventHandler(this.CheckBoxIntegers_CheckedChanged);
+            // 
             // checkBoxNextBytes
             // 
             this.checkBoxNextBytes.AutoSize = true;
-            this.checkBoxNextBytes.Location = new System.Drawing.Point(839, 72);
+            this.checkBoxNextBytes.Location = new System.Drawing.Point(936, 71);
             this.checkBoxNextBytes.Name = "checkBoxNextBytes";
             this.checkBoxNextBytes.Size = new System.Drawing.Size(118, 17);
             this.checkBoxNextBytes.TabIndex = 12;
@@ -296,7 +394,7 @@ namespace Troschuetz.Random.Tester
             this.checkBoxNextBoolean.AutoSize = true;
             this.checkBoxNextBoolean.Checked = true;
             this.checkBoxNextBoolean.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxNextBoolean.Location = new System.Drawing.Point(839, 24);
+            this.checkBoxNextBoolean.Location = new System.Drawing.Point(936, 25);
             this.checkBoxNextBoolean.Name = "checkBoxNextBoolean";
             this.checkBoxNextBoolean.Size = new System.Drawing.Size(93, 17);
             this.checkBoxNextBoolean.TabIndex = 12;
@@ -313,8 +411,7 @@ namespace Troschuetz.Random.Tester
             this.checkBoxNextDoubleMinMax.TabIndex = 12;
             this.checkBoxNextDoubleMinMax.Text = "NextDouble(-99,99)";
             this.checkBoxNextDoubleMinMax.UseVisualStyleBackColor = true;
-            this.checkBoxNextDoubleMinMax.CheckedChanged +=
-                new System.EventHandler(this.CheckBoxNextDoubleMinMax_CheckedChanged);
+            this.checkBoxNextDoubleMinMax.CheckedChanged += new System.EventHandler(this.CheckBoxNextDoubleMinMax_CheckedChanged);
             // 
             // checkBoxNextDoubleMax
             // 
@@ -325,8 +422,7 @@ namespace Troschuetz.Random.Tester
             this.checkBoxNextDoubleMax.TabIndex = 12;
             this.checkBoxNextDoubleMax.Text = "NextDouble(99)";
             this.checkBoxNextDoubleMax.UseVisualStyleBackColor = true;
-            this.checkBoxNextDoubleMax.CheckedChanged +=
-                new System.EventHandler(this.CheckBoxNextDoubleMax_CheckedChanged);
+            this.checkBoxNextDoubleMax.CheckedChanged += new System.EventHandler(this.CheckBoxNextDoubleMax_CheckedChanged);
             // 
             // checkBoxNextMinMax
             // 
@@ -382,175 +478,194 @@ namespace Troschuetz.Random.Tester
             this.dataGridViewGenerators.AllowUserToDeleteRows = false;
             this.dataGridViewGenerators.AllowUserToResizeColumns = false;
             this.dataGridViewGenerators.AllowUserToResizeRows = false;
-            this.dataGridViewGenerators.AutoSizeColumnsMode =
-                System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dataGridViewGenerators.AutoSizeRowsMode =
-                System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dataGridViewGenerators.ColumnHeadersHeightSizeMode =
-                System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewGenerators.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dataGridViewGenerators.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridViewGenerators.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewGenerators.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-                                                                                                           this.generator, this.next, this.nextMax, this.nextMinMax,
-                                                                                                           this.nextDouble, this.nextDoubleMax, this.nextDoubleMinMax,
-                                                                                                           this.integers, this.integersMax, this.integersMinMax,
-                                                                                                           this.doubles, this.doublesMax, this.doublesMinMax,
-                                                                                                           this.nextBoolean, this.booleans, this.nextBytes, this.unit
-                                                                                                       });
+            this.Generator,
+            this.Next,
+            this.NextMax,
+            this.NextMinMax,
+            this.NextDouble,
+            this.NextDoubleMax,
+            this.NextDoubleMinMax,
+            this.Integers,
+            this.IntegersMax,
+            this.IntegersMinMax,
+            this.Doubles,
+            this.DoublesMax,
+            this.DoublesMinMax,
+            this.NextBoolean,
+            this.Booleans,
+            this.NextBytes,
+            this.Unit});
             this.dataGridViewGenerators.Location = new System.Drawing.Point(208, 128);
             this.dataGridViewGenerators.Name = "dataGridViewGenerators";
             this.dataGridViewGenerators.ReadOnly = true;
-            this.dataGridViewGenerators.RowHeadersWidthSizeMode =
-                System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
+            this.dataGridViewGenerators.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dataGridViewGenerators.ShowEditingIcon = false;
-            this.dataGridViewGenerators.Size = new System.Drawing.Size(792, 545);
+            this.dataGridViewGenerators.Size = new System.Drawing.Size(1033, 545);
             this.dataGridViewGenerators.TabIndex = 11;
             // 
             // Generator
             // 
-            this.generator.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.generator.Frozen = true;
-            this.generator.HeaderText = "Generator";
-            this.generator.Name = "Generator";
-            this.generator.ReadOnly = true;
-            this.generator.Width = 79;
+            this.Generator.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Generator.Frozen = true;
+            this.Generator.HeaderText = "Generator";
+            this.Generator.Name = "Generator";
+            this.Generator.ReadOnly = true;
+            this.Generator.Width = 79;
             // 
             // Next
             // 
-            this.next.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.next.HeaderText = "Next()";
-            this.next.Name = "Next";
-            this.next.ReadOnly = true;
-            this.next.Width = 60;
+            this.Next.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Next.HeaderText = "Next()";
+            this.Next.Name = "Next";
+            this.Next.ReadOnly = true;
+            this.Next.Width = 60;
             // 
             // NextMax
             // 
-            this.nextMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nextMax.HeaderText = "Next(99)";
-            this.nextMax.Name = "NextMax";
-            this.nextMax.ReadOnly = true;
-            this.nextMax.Visible = false;
+            this.NextMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.NextMax.HeaderText = "Next(99)";
+            this.NextMax.Name = "NextMax";
+            this.NextMax.ReadOnly = true;
+            this.NextMax.Visible = false;
             // 
             // NextMinMax
             // 
-            this.nextMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nextMinMax.HeaderText = "Next(-99,99)";
-            this.nextMinMax.Name = "NextMinMax";
-            this.nextMinMax.ReadOnly = true;
-            this.nextMinMax.Visible = false;
+            this.NextMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.NextMinMax.HeaderText = "Next(-99,99)";
+            this.NextMinMax.Name = "NextMinMax";
+            this.NextMinMax.ReadOnly = true;
+            this.NextMinMax.Visible = false;
             // 
             // NextDouble
             // 
-            this.nextDouble.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nextDouble.HeaderText = "NextDouble()";
-            this.nextDouble.Name = "NextDouble";
-            this.nextDouble.ReadOnly = true;
-            this.nextDouble.Width = 94;
+            this.NextDouble.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.NextDouble.HeaderText = "NextDouble()";
+            this.NextDouble.Name = "NextDouble";
+            this.NextDouble.ReadOnly = true;
+            this.NextDouble.Width = 94;
             // 
             // NextDoubleMax
             // 
-            this.nextDoubleMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nextDoubleMax.HeaderText = "NextDouble(99)";
-            this.nextDoubleMax.Name = "NextDoubleMax";
-            this.nextDoubleMax.ReadOnly = true;
-            this.nextDoubleMax.Visible = false;
+            this.NextDoubleMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.NextDoubleMax.HeaderText = "NextDouble(99)";
+            this.NextDoubleMax.Name = "NextDoubleMax";
+            this.NextDoubleMax.ReadOnly = true;
+            this.NextDoubleMax.Visible = false;
             // 
             // NextDoubleMinMax
             // 
-            this.nextDoubleMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nextDoubleMinMax.HeaderText = "NextDouble(-99,99)";
-            this.nextDoubleMinMax.Name = "NextDoubleMinMax";
-            this.nextDoubleMinMax.ReadOnly = true;
-            this.nextDoubleMinMax.Visible = false;
+            this.NextDoubleMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.NextDoubleMinMax.HeaderText = "NextDouble(-99,99)";
+            this.NextDoubleMinMax.Name = "NextDoubleMinMax";
+            this.NextDoubleMinMax.ReadOnly = true;
+            this.NextDoubleMinMax.Visible = false;
             // 
-            // integers
+            // Integers
             // 
-            this.integers.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.integers.HeaderText = "DistributedIntegers()";
-            this.integers.Name = "Integers";
-            this.integers.ReadOnly = true;
-            this.integers.Width = 60;
+            this.Integers.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Integers.HeaderText = "DistributedIntegers()";
+            this.Integers.Name = "Integers";
+            this.Integers.ReadOnly = true;
+            this.Integers.Width = 126;
             // 
-            // integersMax
+            // IntegersMax
             // 
-            this.integersMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.integersMax.HeaderText = "DistributedIntegers(99)";
-            this.integersMax.Name = "IntegersMax";
-            this.integersMax.ReadOnly = true;
-            this.integersMax.Visible = false;
+            this.IntegersMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.IntegersMax.HeaderText = "DistributedIntegers(99)";
+            this.IntegersMax.Name = "IntegersMax";
+            this.IntegersMax.ReadOnly = true;
+            this.IntegersMax.Visible = false;
             // 
-            // integersMinMax
+            // IntegersMinMax
             // 
-            this.integersMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.integersMinMax.HeaderText = "DistributedIntegers(-99,99)";
-            this.integersMinMax.Name = "IntegersMinMax";
-            this.integersMinMax.ReadOnly = true;
-            this.integersMinMax.Visible = false;
+            this.IntegersMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.IntegersMinMax.HeaderText = "DistributedIntegers(-99,99)";
+            this.IntegersMinMax.Name = "IntegersMinMax";
+            this.IntegersMinMax.ReadOnly = true;
+            this.IntegersMinMax.Visible = false;
             // 
-            // doubles
+            // Doubles
             // 
-            this.doubles.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.doubles.HeaderText = "DistributedDoubles()";
-            this.doubles.Name = "Doubles";
-            this.doubles.ReadOnly = true;
-            this.doubles.Width = 60;
+            this.Doubles.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Doubles.HeaderText = "DistributedDoubles()";
+            this.Doubles.Name = "Doubles";
+            this.Doubles.ReadOnly = true;
+            this.Doubles.Width = 127;
             // 
-            // doublesMax
+            // DoublesMax
             // 
-            this.doublesMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.doublesMax.HeaderText = "DistributedDoubles(99)";
-            this.doublesMax.Name = "DoublesMax";
-            this.doublesMax.ReadOnly = true;
-            this.doublesMax.Visible = false;
+            this.DoublesMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.DoublesMax.HeaderText = "DistributedDoubles(99)";
+            this.DoublesMax.Name = "DoublesMax";
+            this.DoublesMax.ReadOnly = true;
+            this.DoublesMax.Visible = false;
             // 
-            // doublesMinMax
+            // DoublesMinMax
             // 
-            this.doublesMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.doublesMinMax.HeaderText = "DistributedDoubles(-99,99)";
-            this.doublesMinMax.Name = "DoublesMinMax";
-            this.doublesMinMax.ReadOnly = true;
-            this.doublesMinMax.Visible = false;
+            this.DoublesMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.DoublesMinMax.HeaderText = "DistributedDoubles(-99,99)";
+            this.DoublesMinMax.Name = "DoublesMinMax";
+            this.DoublesMinMax.ReadOnly = true;
+            this.DoublesMinMax.Visible = false;
             // 
             // NextBoolean
             // 
-            this.nextBoolean.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nextBoolean.HeaderText = "NextBoolean()";
-            this.nextBoolean.Name = "NextBoolean";
-            this.nextBoolean.ReadOnly = true;
-            this.nextBoolean.Width = 93;
+            this.NextBoolean.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.NextBoolean.HeaderText = "NextBoolean()";
+            this.NextBoolean.Name = "NextBoolean";
+            this.NextBoolean.ReadOnly = true;
+            this.NextBoolean.Width = 99;
             // 
-            // booleans
+            // Booleans
             // 
-            this.booleans.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.booleans.HeaderText = "Booleans()";
-            this.booleans.Name = "Booleans";
-            this.booleans.ReadOnly = true;
-            this.booleans.Visible = false;
+            this.Booleans.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Booleans.HeaderText = "Booleans()";
+            this.Booleans.Name = "Booleans";
+            this.Booleans.ReadOnly = true;
+            this.Booleans.Visible = false;
             // 
             // NextBytes
             // 
-            this.nextBytes.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nextBytes.HeaderText = "NextBytes(byte[64])";
-            this.nextBytes.Name = "NextBytes";
-            this.nextBytes.ReadOnly = true;
-            this.nextBytes.Visible = false;
+            this.NextBytes.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.NextBytes.HeaderText = "NextBytes(byte[64])";
+            this.NextBytes.Name = "NextBytes";
+            this.NextBytes.ReadOnly = true;
+            this.NextBytes.Visible = false;
             // 
             // Unit
             // 
-            this.unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.unit.HeaderText = "";
-            this.unit.Name = "Unit";
-            this.unit.ReadOnly = true;
-            this.unit.Width = 19;
+            this.Unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Unit.HeaderText = "";
+            this.Unit.Name = "Unit";
+            this.Unit.ReadOnly = true;
+            this.Unit.Width = 19;
             // 
             // numericUpDownGenSamples
             // 
             this.numericUpDownGenSamples.Location = new System.Drawing.Point(312, 64);
-            this.numericUpDownGenSamples.Maximum = new decimal(new int[] {100000000, 0, 0, 0});
-            this.numericUpDownGenSamples.Minimum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numericUpDownGenSamples.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.numericUpDownGenSamples.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numericUpDownGenSamples.Name = "numericUpDownGenSamples";
             this.numericUpDownGenSamples.Size = new System.Drawing.Size(80, 20);
             this.numericUpDownGenSamples.TabIndex = 9;
             this.numericUpDownGenSamples.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownGenSamples.Value = new decimal(new int[] {10000000, 0, 0, 0});
+            this.numericUpDownGenSamples.Value = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
             // 
             // label7
             // 
@@ -618,7 +733,7 @@ namespace Troschuetz.Random.Tester
             this.tabPageDistributions2.Location = new System.Drawing.Point(4, 22);
             this.tabPageDistributions2.Name = "tabPageDistributions2";
             this.tabPageDistributions2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDistributions2.Size = new System.Drawing.Size(1008, 710);
+            this.tabPageDistributions2.Size = new System.Drawing.Size(1244, 710);
             this.tabPageDistributions2.TabIndex = 2;
             this.tabPageDistributions2.Text = "Distributions II";
             this.tabPageDistributions2.UseVisualStyleBackColor = true;
@@ -644,20 +759,32 @@ namespace Troschuetz.Random.Tester
             this.richTextBoxDistributionTest.Location = new System.Drawing.Point(208, 88);
             this.richTextBoxDistributionTest.Name = "richTextBoxDistributionTest";
             this.richTextBoxDistributionTest.ReadOnly = true;
-            this.richTextBoxDistributionTest.Size = new System.Drawing.Size(792, 584);
+            this.richTextBoxDistributionTest.Size = new System.Drawing.Size(1030, 584);
             this.richTextBoxDistributionTest.TabIndex = 18;
             this.richTextBoxDistributionTest.Text = "";
             // 
             // numericUpDownSamples2
             // 
             this.numericUpDownSamples2.Location = new System.Drawing.Point(504, 24);
-            this.numericUpDownSamples2.Maximum = new decimal(new int[] {10000000, 0, 0, 0});
-            this.numericUpDownSamples2.Minimum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numericUpDownSamples2.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numericUpDownSamples2.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numericUpDownSamples2.Name = "numericUpDownSamples2";
             this.numericUpDownSamples2.Size = new System.Drawing.Size(80, 20);
             this.numericUpDownSamples2.TabIndex = 17;
             this.numericUpDownSamples2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownSamples2.Value = new decimal(new int[] {1000000, 0, 0, 0});
+            this.numericUpDownSamples2.Value = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             // 
             // label17
             // 
@@ -734,7 +861,7 @@ namespace Troschuetz.Random.Tester
             this.tabPageDistributions1.Controls.Add(this.zedGraphControl);
             this.tabPageDistributions1.Location = new System.Drawing.Point(4, 22);
             this.tabPageDistributions1.Name = "tabPageDistributions1";
-            this.tabPageDistributions1.Size = new System.Drawing.Size(1008, 710);
+            this.tabPageDistributions1.Size = new System.Drawing.Size(1244, 710);
             this.tabPageDistributions1.TabIndex = 0;
             this.tabPageDistributions1.Text = "Distributions I";
             this.tabPageDistributions1.UseVisualStyleBackColor = true;
@@ -826,24 +953,48 @@ namespace Troschuetz.Random.Tester
             // numericUpDownSamples
             // 
             this.numericUpDownSamples.Location = new System.Drawing.Point(112, 337);
-            this.numericUpDownSamples.Maximum = new decimal(new int[] {10000000, 0, 0, 0});
-            this.numericUpDownSamples.Minimum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numericUpDownSamples.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numericUpDownSamples.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numericUpDownSamples.Name = "numericUpDownSamples";
             this.numericUpDownSamples.Size = new System.Drawing.Size(96, 20);
             this.numericUpDownSamples.TabIndex = 7;
             this.numericUpDownSamples.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownSamples.Value = new decimal(new int[] {1000000, 0, 0, 0});
+            this.numericUpDownSamples.Value = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             // 
             // numericUpDownSteps
             // 
             this.numericUpDownSteps.Location = new System.Drawing.Point(112, 361);
-            this.numericUpDownSteps.Maximum = new decimal(new int[] {10000, 0, 0, 0});
-            this.numericUpDownSteps.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numericUpDownSteps.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownSteps.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownSteps.Name = "numericUpDownSteps";
             this.numericUpDownSteps.Size = new System.Drawing.Size(96, 20);
             this.numericUpDownSteps.TabIndex = 7;
             this.numericUpDownSteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownSteps.Value = new decimal(new int[] {100, 0, 0, 0});
+            this.numericUpDownSteps.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // checkBoxSmooth
             // 
@@ -863,20 +1014,31 @@ namespace Troschuetz.Random.Tester
             this.checkBoxHistogramBounds.Size = new System.Drawing.Size(200, 16);
             this.checkBoxHistogramBounds.TabIndex = 9;
             this.checkBoxHistogramBounds.Text = "Specify fixed histogram bounds";
-            this.checkBoxHistogramBounds.CheckedChanged +=
-                new System.EventHandler(this.CheckBoxHistogramBounds_CheckedChanged);
+            this.checkBoxHistogramBounds.CheckedChanged += new System.EventHandler(this.CheckBoxHistogramBounds_CheckedChanged);
             // 
             // numericUpDownMinimum
             // 
             this.numericUpDownMinimum.Enabled = false;
             this.numericUpDownMinimum.Location = new System.Drawing.Point(120, 425);
-            this.numericUpDownMinimum.Maximum = new decimal(new int[] {-1, -1, -1, 0});
-            this.numericUpDownMinimum.Minimum = new decimal(new int[] {-1, -1, -1, -2147483648});
+            this.numericUpDownMinimum.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
+            this.numericUpDownMinimum.Minimum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            -2147483648});
             this.numericUpDownMinimum.Name = "numericUpDownMinimum";
             this.numericUpDownMinimum.Size = new System.Drawing.Size(88, 20);
             this.numericUpDownMinimum.TabIndex = 7;
             this.numericUpDownMinimum.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownMinimum.Value = new decimal(new int[] {50, 0, 0, -2147483648});
+            this.numericUpDownMinimum.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            -2147483648});
             this.numericUpDownMinimum.ValueChanged += new System.EventHandler(this.NumericUpDownMinimum_ValueChanged);
             this.numericUpDownMinimum.Validated += new System.EventHandler(this.NumericUpDownMinimum_Validated);
             // 
@@ -892,13 +1054,25 @@ namespace Troschuetz.Random.Tester
             // 
             this.numericUpDownMaximum.Enabled = false;
             this.numericUpDownMaximum.Location = new System.Drawing.Point(120, 449);
-            this.numericUpDownMaximum.Maximum = new decimal(new int[] {-1, -1, -1, 0});
-            this.numericUpDownMaximum.Minimum = new decimal(new int[] {-1, -1, -1, -2147483648});
+            this.numericUpDownMaximum.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            0});
+            this.numericUpDownMaximum.Minimum = new decimal(new int[] {
+            -1,
+            -1,
+            -1,
+            -2147483648});
             this.numericUpDownMaximum.Name = "numericUpDownMaximum";
             this.numericUpDownMaximum.Size = new System.Drawing.Size(88, 20);
             this.numericUpDownMaximum.TabIndex = 7;
             this.numericUpDownMaximum.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownMaximum.Value = new decimal(new int[] {50, 0, 0, 0});
+            this.numericUpDownMaximum.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             this.numericUpDownMaximum.ValueChanged += new System.EventHandler(this.NumericUpDownMaximum_ValueChanged);
             this.numericUpDownMaximum.Validated += new System.EventHandler(this.NumericUpDownMaximum_Validated);
             // 
@@ -930,7 +1104,7 @@ namespace Troschuetz.Random.Tester
             this.zedGraphControl.ScrollMinX = 0D;
             this.zedGraphControl.ScrollMinY = 0D;
             this.zedGraphControl.ScrollMinY2 = 0D;
-            this.zedGraphControl.Size = new System.Drawing.Size(784, 630);
+            this.zedGraphControl.Size = new System.Drawing.Size(1025, 630);
             this.zedGraphControl.TabIndex = 0;
             // 
             // tabControl1
@@ -941,113 +1115,33 @@ namespace Troschuetz.Random.Tester
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1016, 736);
+            this.tabControl1.Size = new System.Drawing.Size(1252, 736);
             this.tabControl1.TabIndex = 11;
-            // 
-            // checkBoxIntegers
-            // 
-            this.checkBoxIntegers.AutoSize = true;
-            this.checkBoxIntegers.Checked = true;
-            this.checkBoxIntegers.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxIntegers.Location = new System.Drawing.Point(625, 24);
-            this.checkBoxIntegers.Name = "checkBoxIntegers";
-            this.checkBoxIntegers.Size = new System.Drawing.Size(70, 17);
-            this.checkBoxIntegers.TabIndex = 13;
-            this.checkBoxIntegers.Text = "DistributedIntegers()";
-            this.checkBoxIntegers.UseVisualStyleBackColor = true;
-            this.checkBoxIntegers.CheckedChanged += new System.EventHandler(this.CheckBoxIntegers_CheckedChanged);
-            // 
-            // checkBoxIntegersMax
-            // 
-            this.checkBoxIntegersMax.AutoSize = true;
-            this.checkBoxIntegersMax.Location = new System.Drawing.Point(625, 48);
-            this.checkBoxIntegersMax.Name = "checkBoxIntegersMax";
-            this.checkBoxIntegersMax.Size = new System.Drawing.Size(82, 17);
-            this.checkBoxIntegersMax.TabIndex = 15;
-            this.checkBoxIntegersMax.Text = "DistributedIntegers(99)";
-            this.checkBoxIntegersMax.UseVisualStyleBackColor = true;
-            this.checkBoxIntegersMax.CheckedChanged += new System.EventHandler(this.CheckBoxIntegersMax_CheckedChanged);
-            // 
-            // checkBoxIntegersMinMax
-            // 
-            this.checkBoxIntegersMinMax.AutoSize = true;
-            this.checkBoxIntegersMinMax.Location = new System.Drawing.Point(625, 72);
-            this.checkBoxIntegersMinMax.Name = "checkBoxIntegersMinMax";
-            this.checkBoxIntegersMinMax.Size = new System.Drawing.Size(100, 17);
-            this.checkBoxIntegersMinMax.TabIndex = 16;
-            this.checkBoxIntegersMinMax.Text = "DistributedIntegers(-99,99)";
-            this.checkBoxIntegersMinMax.UseVisualStyleBackColor = true;
-            this.checkBoxIntegersMinMax.CheckedChanged += new EventHandler(this.CheckBoxIntegersMinMax_CheckedChanged);
-            // 
-            // checkBoxDoublesMinMax
-            // 
-            this.checkBoxDoublesMinMax.AutoSize = true;
-            this.checkBoxDoublesMinMax.Location = new System.Drawing.Point(733, 72);
-            this.checkBoxDoublesMinMax.Name = "checkBoxDoublesMinMax";
-            this.checkBoxDoublesMinMax.Size = new System.Drawing.Size(101, 17);
-            this.checkBoxDoublesMinMax.TabIndex = 19;
-            this.checkBoxDoublesMinMax.Text = "DistributedDoubles(-99,99)";
-            this.checkBoxDoublesMinMax.UseVisualStyleBackColor = true;
-            this.checkBoxDoublesMinMax.CheckedChanged += new EventHandler(this.CheckBoxDoublesMinMax_CheckedChanged);
-            // 
-            // checkBoxDoublesMax
-            // 
-            this.checkBoxDoublesMax.AutoSize = true;
-            this.checkBoxDoublesMax.Location = new System.Drawing.Point(733, 48);
-            this.checkBoxDoublesMax.Name = "checkBoxDoublesMax";
-            this.checkBoxDoublesMax.Size = new System.Drawing.Size(83, 17);
-            this.checkBoxDoublesMax.TabIndex = 18;
-            this.checkBoxDoublesMax.Text = "DistributedDoubles(99)";
-            this.checkBoxDoublesMax.UseVisualStyleBackColor = true;
-            this.checkBoxDoublesMax.CheckedChanged += new EventHandler(this.CheckBoxDoublesMax_CheckedChanged);
-            // 
-            // checkBoxDoubles
-            // 
-            this.checkBoxDoubles.AutoSize = true;
-            this.checkBoxDoubles.Checked = true;
-            this.checkBoxDoubles.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxDoubles.Location = new System.Drawing.Point(733, 24);
-            this.checkBoxDoubles.Name = "checkBoxDoubles";
-            this.checkBoxDoubles.Size = new System.Drawing.Size(71, 17);
-            this.checkBoxDoubles.TabIndex = 17;
-            this.checkBoxDoubles.Text = "DistributedDoubles()";
-            this.checkBoxDoubles.UseVisualStyleBackColor = true;
-            this.checkBoxDoubles.CheckedChanged += new EventHandler(this.CheckBoxDoubles_CheckedChanged);
-            // 
-            // checkBoxBooleans
-            // 
-            this.checkBoxBooleans.AutoSize = true;
-            this.checkBoxBooleans.Location = new System.Drawing.Point(839, 47);
-            this.checkBoxBooleans.Name = "checkBoxBooleans";
-            this.checkBoxBooleans.Size = new System.Drawing.Size(76, 17);
-            this.checkBoxBooleans.TabIndex = 20;
-            this.checkBoxBooleans.Text = "Booleans()";
-            this.checkBoxBooleans.UseVisualStyleBackColor = true;
-            this.checkBoxBooleans.CheckedChanged += new EventHandler(this.CheckBoxBooleans_CheckedChanged);
             // 
             // FormMain
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(1015, 698);
+            this.ClientSize = new System.Drawing.Size(1264, 730);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Troschuetz.Random Tester";
             this.tabPageGenerators.ResumeLayout(false);
             this.tabPageGenerators.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.dataGridViewGenerators)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownGenSamples)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGenerators)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGenSamples)).EndInit();
             this.tabPageDistributions2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownSamples2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSamples2)).EndInit();
             this.tabPageDistributions1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownSamples)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownSteps)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownMinimum)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDownMaximum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSamples)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSteps)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinimum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximum)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -1120,10 +1214,13 @@ namespace Troschuetz.Random.Tester
                             typeGenerator = t;
                             break;
                         default:
-                            if (t.IsSubclassOf(typeof(IDistribution))) {
-                                distributions.Add(t.Name, t); // The type inherits from Distribution type.
-                            } else if (t.IsSubclassOf(typeof(IGenerator))) {
-                                generators.Add(t.Name, t); // The type inherits from Generator type.
+                            if (t.IsInterface || t.IsAbstract || t.IsGenericType) {
+                                continue;
+                            }
+                            if (typeof(IDistribution).IsAssignableFrom(t)) {
+                                distributions.Add(t.Name, t); // The type implements the IDistribution type.
+                            } else if (typeof(IGenerator).IsAssignableFrom(t)) {
+                                generators.Add(t.Name, t); // The type implements the IGenerator type.
                             }
                             break;
                     }
@@ -1218,7 +1315,7 @@ namespace Troschuetz.Random.Tester
             var watch = new Stopwatch();
             watch.Start();
             for (var index = 0; index < samples.Length; index++) {
-                // samples[index] = distribution.NextDouble(); TODO FIXME
+                samples[index] = distribution.NextDouble();
             }
             watch.Stop();
             var duration = watch.ElapsedTicks/(double) Stopwatch.Frequency;
@@ -1386,15 +1483,20 @@ namespace Troschuetz.Random.Tester
 
                 var propertyInfo = currentDistribution.GetType().GetProperty(label.Name);
                 if (propertyInfo.PropertyType == typeof(double)) {
-                    var value = (double) propertyInfo.GetValue(currentDistribution, null);
-                    if (double.IsNaN(value)) {
+                    try {
+                        var value = (double) propertyInfo.GetValue(currentDistribution, null);
+                        if (double.IsNaN(value)) {
+                            label.Text = "Undefined";
+                        } else if (double.IsPositiveInfinity(value)) {
+                            label.Text = "Pos. infinity";
+                        } else if (double.IsNegativeInfinity(value)) {
+                            label.Text = "Neg. infinity";
+                        } else {
+                            label.Text = FormatDouble(value);
+                        }
+                    } catch {
+                        // Undefined properties should now throw an exception, rather then returning NaN.
                         label.Text = "Undefined";
-                    } else if (double.IsPositiveInfinity(value)) {
-                        label.Text = "Pos. infinity";
-                    } else if (double.IsNegativeInfinity(value)) {
-                        label.Text = "Neg. infinity";
-                    } else {
-                        label.Text = FormatDouble(value);
                     }
                 } else if (propertyInfo.PropertyType == typeof(double[])) {
                     var values = (double[]) propertyInfo.GetValue(currentDistribution, null);
@@ -1736,7 +1838,7 @@ namespace Troschuetz.Random.Tester
             // Guess this needs to be done due to scheduling behaviour of the OS.
             IDistribution distribution = new ContinuousUniformDistribution();
             for (var index2 = 0; index2 < 10000000; index2++) {
-                // distribution.NextDouble(); TODO FIXME
+                distribution.NextDouble();
             }
 
             // Iterate over the list of random number distributions and test all that are checked in the ListBox.
@@ -1764,7 +1866,7 @@ namespace Troschuetz.Random.Tester
                     watch.Reset();
                     watch.Start();
                     for (var index2 = 0; index2 < samples; index2++) {
-                        // distribution.NextDouble(); TODO FIXME
+                        distribution.NextDouble();
                     }
                     watch.Stop();
                     var duration = watch.ElapsedTicks/(double) Stopwatch.Frequency;
