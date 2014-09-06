@@ -31,6 +31,7 @@ namespace Troschuetz.Random
     ///   and functions returning random numbers according to a particular kind of distribution.
     /// </summary>
 // ReSharper disable InconsistentNaming
+    [Serializable]
     public class TRandom<TGen> : IGenerator where TGen : IGenerator
 // ReSharper restore InconsistentNaming
     {
@@ -1793,6 +1794,7 @@ namespace Troschuetz.Random
     ///   and functions returning random numbers according to a particular kind of distribution.
     /// </summary>
 // ReSharper disable InconsistentNaming
+    [Serializable]
     public sealed class TRandom : TRandom<IGenerator>
 // ReSharper restore InconsistentNaming
     {

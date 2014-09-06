@@ -71,6 +71,7 @@ namespace Troschuetz.Random.Generators
     ///   and the theoretical background on xorshift random number generators published by George Marsaglia 
     ///   in this paper "<a href="http://www.jstatsoft.org/v08/i14/xorshift.pdf">Xorshift RNGs</a>".
     /// </remarks>
+    [Serializable]
     public sealed class XorShift128Generator : GeneratorBase<XorShift128Generator>, IGenerator
     {
         #region Class Fields

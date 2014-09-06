@@ -394,3 +394,16 @@ namespace Troschuetz.Random
         #endregion
     }
 }
+
+#if PORTABLE
+namespace System
+{
+    /// <summary>
+    ///   Fake, this is used only to allow serialization on portable platforms.
+    /// </summary>
+    public sealed class SerializableAttribute : Attribute
+    {
+        // This does nothing and should do nothing.
+    }
+}
+#endif

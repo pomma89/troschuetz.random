@@ -22,6 +22,7 @@ namespace Troschuetz.Random.Tests
     using System.Collections.Generic;
     using System.Linq;
     using NUnit.Framework;
+    using PommaLabs.KVLite;
 
     public abstract class GeneratorTests : TestBase
     {
@@ -102,6 +103,33 @@ namespace Troschuetz.Random.Tests
             otherGen.Reset();
             bytesEn.MoveNext();
             for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext()) {
+                otherGen.NextBytes(b2);
+                Assert.AreEqual(b2, b1);
+            }
+        }
+
+        /*=============================================================================
+            Serializable
+        =============================================================================*/
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void Bytes_SameOutputAsNextBytes_WithSerialization()
+        {
+            var b1 = new byte[5];
+            var b2 = new byte[5];
+            var otherGen = GetGenerator(_generator.Seed);
+            var bytesEn = _generator.Bytes(b1).GetEnumerator();
+            bytesEn.MoveNext();
+            for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext())
+            {
+                otherGen.NextBytes(b2);
+                Assert.AreEqual(b2, b1);
+            }
+            PersistentCache.DefaultInstance.AddStatic("Generator", _generator);
+            _generator = PersistentCache.DefaultInstance.Get("Generator") as IGenerator;
+            for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext())
+            {
                 otherGen.NextBytes(b2);
                 Assert.AreEqual(b2, b1);
             }

@@ -52,6 +52,7 @@ namespace Troschuetz.Random.Generators
     ///   <a href="http://en.wikipedia.org/wiki/Lagged_Fibonacci_generator">Wikipedia - Lagged Fibonacci generator</a>.
     /// </remarks>
 // ReSharper disable InconsistentNaming
+    [Serializable]
     public sealed class ALFGenerator : GeneratorBase<ALFGenerator>, IGenerator
 // ReSharper restore InconsistentNaming
     {

@@ -27,7 +27,7 @@
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;PORTABLE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -70,8 +70,7 @@
     <DebugType>none</DebugType>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants>PORTABLE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Troschuetz.Random.xml</DocumentationFile>
@@ -113,8 +112,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.Unchecked|AnyCPU'">
     <OutputPath>bin\Release.Unchecked\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants>PORTABLE</DefineConstants>
     <Optimize>True</Optimize>
     <DebugType>none</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>

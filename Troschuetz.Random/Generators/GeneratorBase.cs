@@ -21,6 +21,7 @@ namespace Troschuetz.Random.Generators
 {
     using System;
 
+    [Serializable]
     public abstract class GeneratorBase<TGen> where TGen : GeneratorBase<TGen>, IGenerator
     {
         #region Class Fields

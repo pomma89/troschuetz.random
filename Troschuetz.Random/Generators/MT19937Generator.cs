@@ -78,6 +78,7 @@ namespace Troschuetz.Random.Generators
     ///   <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">Mersenne Twister Home Page</a>.
     /// </remarks>
 // ReSharper disable InconsistentNaming
+    [Serializable]
     public sealed class MT19937Generator : GeneratorBase<MT19937Generator>, IGenerator
 // ReSharper restore InconsistentNaming
     {
