@@ -1,9 +1,9 @@
 ﻿/*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * 
- * This file is part of "Troschuetz.RandomTester".
+ * This file is part of "Troschuetz.Random.Tester".
  * 
- * "Troschuetz.RandomTester" is free software; you can redistribute it and/or
+ * "Troschuetz.Random.Tester" is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License or any later version.
@@ -1127,7 +1127,7 @@ namespace Troschuetz.Random.Tester
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Troschuetz.Random Tester";
+            this.Text = "CodeProject Troschuetz.Random Tester";
             this.tabPageGenerators.ResumeLayout(false);
             this.tabPageGenerators.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGenerators)).EndInit();
