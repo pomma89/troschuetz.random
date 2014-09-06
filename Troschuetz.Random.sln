@@ -1,12 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random", "Troschuetz.Random\Troschuetz.Random.csproj", "{A1FF7728-605F-401A-A9FC-51FA56852E9E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48147844-A87B-45D7-A428-1909094301B2}"
 	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
 		GPL.txt = GPL.txt
 		LGPL.txt = LGPL.txt
 		LICENSE.md = LICENSE.md
@@ -46,14 +45,6 @@ Global
 		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Release.Unchecked|Any CPU.Build.0 = Release.Unchecked|Any CPU
 		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Release.Unchecked|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{1236AE07-9311-4E57-A1EF-ACC807877CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1236AE07-9311-4E57-A1EF-ACC807877CB9}.Release.Unchecked|Any CPU.ActiveCfg = Debug|Any CPU
-		{1236AE07-9311-4E57-A1EF-ACC807877CB9}.Release.Unchecked|Any CPU.Build.0 = Debug|Any CPU
-		{1236AE07-9311-4E57-A1EF-ACC807877CB9}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
