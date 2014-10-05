@@ -7,6 +7,7 @@ syntax: glob
 
 *.suo
 *.user
+*.userprefs
 *.sln.docstates
 
 ## Build results
@@ -135,6 +136,7 @@ UpgradeLog*.htm
 ## NuGet
 packages/
 *.nupkg
+*.nupkg.bak
 *Packager*/lib
 
 ## Miscellaneous Ignores
