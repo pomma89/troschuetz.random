@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,7 +13,7 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random
@@ -31,8 +31,8 @@ namespace Troschuetz.Random
         #region IContinuousDistribution Extensions
 
         /// <summary>
-        ///   Returns an infinites series of random double numbers, by repeating calls to NextDouble.
-        ///   Therefore, the series obtained will follow given distribution.
+        ///   Returns an infinites series of random double numbers, by repeating calls to
+        ///   NextDouble. Therefore, the series obtained will follow given distribution.
         /// </summary>
         /// <returns>An infinites series of random double numbers, following given distribution.</returns>
         [Pure]
@@ -45,13 +45,13 @@ namespace Troschuetz.Random
             }
         }
 
-        #endregion
+        #endregion IContinuousDistribution Extensions
 
         #region IDiscreteDistribution Extensions
 
         /// <summary>
-        ///   Returns an infinites series of random numbers, by repeating calls to Next.
-        ///   Therefore, the series obtained will follow given distribution.
+        ///   Returns an infinites series of random numbers, by repeating calls to Next. Therefore,
+        ///   the series obtained will follow given distribution.
         /// </summary>
         /// <returns>An infinites series of random numbers, following given distribution.</returns>
         [Pure]
@@ -64,7 +64,7 @@ namespace Troschuetz.Random
             }
         }
 
-        #endregion
+        #endregion IDiscreteDistribution Extensions
 
         #region IGenerator Extensions
 
@@ -72,8 +72,8 @@ namespace Troschuetz.Random
         ///   Returns an infinite sequence random Boolean values.
         /// </summary>
         /// <remarks>
-        ///   Buffers 31 random bits for future calls, so the random number generator
-        ///   is only invoked once in every 31 calls.
+        ///   Buffers 31 random bits for future calls, so the random number generator is only
+        ///   invoked once in every 31 calls.
         /// </remarks>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
@@ -89,11 +89,11 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Repeatedly fills the elements of a specified array of bytes with random numbers. 
+        ///   Repeatedly fills the elements of a specified array of bytes with random numbers.
         /// </summary>
         /// <remarks>
-        ///   Each element of the array of bytes is set to a random number greater than or equal to 0, 
-        ///   and less than or equal to <see cref="byte.MaxValue"/>.
+        ///   Each element of the array of bytes is set to a random number greater than or equal to
+        ///   0, and less than or equal to <see cref="byte.MaxValue"/>.
         /// </remarks>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
@@ -164,8 +164,8 @@ namespace Troschuetz.Random
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
         /// <returns>
-        ///   An infinite sequence of double-precision floating point numbers greater than or equal to 0.0, 
-        ///   and less than 1.0; that is, the range of return values includes 0.0 but not 1.0. 
+        ///   An infinite sequence of double-precision floating point numbers greater than or equal
+        ///   to 0.0, and less than 1.0; that is, the range of return values includes 0.0 but not 1.0.
         /// </returns>
         [Pure]
         public static IEnumerable<double> Doubles<TGen>(this TGen generator) where TGen : IGenerator
@@ -178,24 +178,21 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Returns an infinite sequence of nonnegative floating point random numbers less than the specified maximum.
+        ///   Returns an infinite sequence of nonnegative floating point random numbers less than
+        ///   the specified maximum.
         /// </summary>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated.
-        /// </param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   An infinite sequence of double-precision floating point numbers greater than or equal to 0.0, 
-        ///   and less than <paramref name="maxValue"/>; that is, the range of return values
-        ///   includes 0 but not <paramref name="maxValue"/>. 
+        ///   An infinite sequence of double-precision floating point numbers greater than or equal
+        ///   to 0.0, and less than <paramref name="maxValue"/>; that is, the range of return values
+        ///   includes 0 but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to 0.0.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.
-        /// </exception>
+        /// <exception cref="ArgumentException"><paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.</exception>
         [Pure]
         public static IEnumerable<double> Doubles<TGen>(this TGen generator, double maxValue) where TGen : IGenerator
         {
@@ -209,28 +206,23 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Returns an infinite sequence of floating point random numbers within the specified range. 
+        ///   Returns an infinite sequence of floating point random numbers within the specified range.
         /// </summary>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
-        /// <param name="minValue">
-        ///   The inclusive lower bound of the random number to be generated. 
-        /// </param>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated. 
-        /// </param>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   Returns an infinite sequence of double-precision floating point numbers
-        ///   greater than or equal to <paramref name="minValue"/>,
-        ///   and less than <paramref name="maxValue"/>; that is, the range of return values 
-        ///   includes <paramref name="minValue"/> but not <paramref name="maxValue"/>. 
+        ///   Returns an infinite sequence of double-precision floating point numbers greater than
+        ///   or equal to <paramref name="minValue"/>, and less than <paramref name="maxValue"/>;
+        ///   that is, the range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///   The range between <paramref name="minValue"/> and <paramref name="maxValue"/> 
-        ///   must be less than or equal to <see cref="double.PositiveInfinity"/>.
+        ///   The range between <paramref name="minValue"/> and <paramref name="maxValue"/> must be
+        ///   less than or equal to <see cref="double.PositiveInfinity"/>.
         /// </exception>
         [Pure]
         public static IEnumerable<double> Doubles<TGen>(this TGen generator, double minValue, double maxValue) where TGen : IGenerator
@@ -250,9 +242,9 @@ namespace Troschuetz.Random
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
         /// <returns>
-        ///   An infinite sequence of 32-bit signed integers greater than or equal to 0,
-        ///   and less than <see cref="int.MaxValue"/>; that is, the range of return values
-        ///   includes 0 but not <see cref="int.MaxValue"/>.
+        ///   An infinite sequence of 32-bit signed integers greater than or equal to 0, and less
+        ///   than <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but
+        ///   not <see cref="int.MaxValue"/>.
         /// </returns>
         [Pure]
         public static IEnumerable<int> Integers<TGen>(this TGen generator) where TGen : IGenerator
@@ -269,16 +261,14 @@ namespace Troschuetz.Random
         /// </summary>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random numbers to be generated.
-        /// </param>
+        /// <param name="maxValue">The exclusive upper bound of the random numbers to be generated.</param>
         /// <returns>
-        ///   An infinite sequence of 32-bit signed integers greater than or equal to 0,
-        ///   and less than <paramref name="maxValue"/>; that is, the range of return values
-        ///   includes 0 but not <paramref name="maxValue"/>. 
+        ///   An infinite sequence of 32-bit signed integers greater than or equal to 0, and less
+        ///   than <paramref name="maxValue"/>; that is, the range of return values includes 0 but
+        ///   not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to 0. 
+        ///   <paramref name="maxValue"/> must be greater than or equal to 0.
         /// </exception>
         [Pure]
         public static IEnumerable<int> Integers<TGen>(this TGen generator, int maxValue) where TGen : IGenerator
@@ -292,20 +282,16 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Returns an infinite sequence of random numbers within the specified range. 
+        ///   Returns an infinite sequence of random numbers within the specified range.
         /// </summary>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
-        /// <param name="minValue">
-        ///   The inclusive lower bound of the random number to be generated. 
-        /// </param>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated. 
-        /// </param>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   An infinite sequence of 32-bit signed integers greater than or equal to <paramref name="minValue"/>, 
-        ///   and less than <paramref name="maxValue"/>; that is, the range of return values includes 
-        ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>. 
+        ///   An infinite sequence of 32-bit signed integers greater than or equal to
+        ///   <paramref name="minValue"/>, and less than <paramref name="maxValue"/>; that is, the
+        ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
@@ -326,9 +312,7 @@ namespace Troschuetz.Random
         /// </summary>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
-        /// <returns>
-        ///   An infinite sequence of 32-bit unsigned integers.
-        /// </returns>
+        /// <returns>An infinite sequence of 32-bit unsigned integers.</returns>
         [Pure]
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator) where TGen : IGenerator
         {
@@ -344,13 +328,11 @@ namespace Troschuetz.Random
         /// </summary>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated. 
-        /// </param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   An infinite sequence of 32-bit unsigned integers greater than or equal to 0,
-        ///   and less than <paramref name="maxValue"/>; that is, the range of return values
-        ///   includes 0 but not <paramref name="maxValue"/>. 
+        ///   An infinite sequence of 32-bit unsigned integers greater than or equal to 0, and less
+        ///   than <paramref name="maxValue"/>; that is, the range of return values includes 0 but
+        ///   not <paramref name="maxValue"/>.
         /// </returns>
         [Pure]
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator, uint maxValue) where TGen : IGenerator
@@ -367,16 +349,12 @@ namespace Troschuetz.Random
         /// </summary>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
-        /// <param name="minValue">
-        ///   The inclusive lower bound of the random number to be generated. 
-        /// </param>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated. 
-        /// </param>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   An infinite sequence of 32-bit unsigned integers greater than or equal to <paramref name="minValue"/>, 
-        ///   and less than <paramref name="maxValue"/>; that is, the range of return values includes 
-        ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        ///   An infinite sequence of 32-bit unsigned integers greater than or equal to
+        ///   <paramref name="minValue"/>, and less than <paramref name="maxValue"/>; that is, the
+        ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
@@ -391,19 +369,22 @@ namespace Troschuetz.Random
             }
         }
 
-        #endregion
+        #endregion IGenerator Extensions
     }
 }
 
 #if PORTABLE
+
 namespace System
 {
     /// <summary>
     ///   Fake, this is used only to allow serialization on portable platforms.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
     public sealed class SerializableAttribute : Attribute
     {
         // This does nothing and should do nothing.
     }
 }
+
 #endif
