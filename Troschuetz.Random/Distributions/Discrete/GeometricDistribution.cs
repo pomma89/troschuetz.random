@@ -78,6 +78,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Diagnostics.Contracts;
     using Generators;
     using Core;
+    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of geometric distributed random numbers.
@@ -144,8 +145,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public GeometricDistribution(TGen generator, double alpha) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(IsValidParam(alpha), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(alpha), ErrorMessages.InvalidParams);
             _alpha = alpha;
         }
 

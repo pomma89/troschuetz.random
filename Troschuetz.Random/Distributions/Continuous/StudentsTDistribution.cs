@@ -24,6 +24,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics.Contracts;
     using Generators;
     using Core;
+    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of t-distributed random numbers.
@@ -88,8 +89,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </exception>
         public StudentsTDistribution(TGen generator, int nu) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(IsValidParam(nu), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(nu), ErrorMessages.InvalidParams);
             _nu = nu;
         }
 

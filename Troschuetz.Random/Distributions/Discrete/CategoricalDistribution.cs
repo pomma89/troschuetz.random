@@ -56,6 +56,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Linq;
     using Generators;
     using Core;
+    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Implements the categorical distribution. For details about this distribution, see 
@@ -143,8 +144,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public CategoricalDistribution(TGen generator, int valueCount) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator); 
-            Contract.Requires<ArgumentNullException>(valueCount != 0, ErrorMessages.InvalidParams);
+            RaiseArgumentOutOfRangeException.IfIsEqual(valueCount, 0, ErrorMessages.InvalidParams);
             _weights = Ones(valueCount);
             UpdateHelpers();
         }
@@ -167,7 +167,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public CategoricalDistribution(TGen generator, ICollection<double> weights) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);          
+                      
             Contract.Requires<ArgumentNullException>(weights != null, ErrorMessages.NullWeights);     
             Contract.Requires<ArgumentException>(weights.Count > 0);
             Contract.Requires<ArgumentOutOfRangeException>(IsValidParam(weights), ErrorMessages.InvalidParams);

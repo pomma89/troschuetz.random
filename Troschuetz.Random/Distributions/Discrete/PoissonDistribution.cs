@@ -78,6 +78,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Diagnostics.Contracts;
     using Generators;
     using Core;
+    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of poisson distributed random numbers.
@@ -144,8 +145,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public PoissonDistribution(TGen generator, double lambda) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(IsValidParam(lambda), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(lambda), ErrorMessages.InvalidParams);
             _lambda = lambda;
         }
 

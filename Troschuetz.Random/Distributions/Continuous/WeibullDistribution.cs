@@ -24,6 +24,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics.Contracts;
     using Generators;
     using Core;
+    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of weibull distributed random numbers.
@@ -125,8 +126,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </exception>
         public WeibullDistribution(TGen generator, double alpha, double lambda) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _lambda = lambda;
         }

@@ -24,6 +24,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics.Contracts;
     using Generators;
     using Core;
+    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of gamma distributed random numbers.
@@ -115,8 +116,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </exception>
         public GammaDistribution(TGen generator, double alpha, double theta) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(AreValidParams(alpha, theta), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, theta), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _theta = theta;
         }

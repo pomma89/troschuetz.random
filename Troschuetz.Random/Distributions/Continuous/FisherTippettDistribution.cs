@@ -24,6 +24,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics.Contracts;
     using Generators;
     using Core;
+    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of Fisher-Tippett distributed random numbers.
@@ -116,8 +117,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </exception>
         public FisherTippettDistribution(TGen generator, double alpha, double mu) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _mu = mu;
         }

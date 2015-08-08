@@ -78,6 +78,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics.Contracts;
     using Generators;
     using Core;
+    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of normal distributed random numbers.
@@ -171,8 +172,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </exception>
         public NormalDistribution(TGen generator, double mu, double sigma) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
             _mu = mu;
             _sigma = sigma;
         }
