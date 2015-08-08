@@ -66,9 +66,9 @@
 
 namespace Troschuetz.Random.Generators
 {
+    using PommaLabs.Thrower;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Represents a Mersenne Twister pseudo-random number generator with period 2^19937-1.
@@ -200,7 +200,7 @@ namespace Troschuetz.Random.Generators
         /// </exception>
         public MT19937Generator(IList<int> seedArray)
         {
-            Contract.Requires<ArgumentNullException>(seedArray != null);
+            RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
 
             _seed = 19650218U;
             _mt = new uint[N];
@@ -223,7 +223,7 @@ namespace Troschuetz.Random.Generators
         [CLSCompliant(false)]
         public MT19937Generator(uint[] seedArray)
         {
-            Contract.Requires<ArgumentNullException>(seedArray != null);
+            RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
 
             _seed = 19650218U;
             _mt = new uint[N];

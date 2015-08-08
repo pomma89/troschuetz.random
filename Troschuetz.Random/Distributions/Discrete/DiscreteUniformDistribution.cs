@@ -23,6 +23,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
+    using Core;
 
     /// <summary>
     ///   Provides generation of discrete uniformly distributed random numbers.

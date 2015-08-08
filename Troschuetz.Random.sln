@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random", "Troschuetz.Random\Troschuetz.Random.csproj", "{A1FF7728-605F-401A-A9FC-51FA56852E9E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48147844-A87B-45D7-A428-1909094301B2}"
@@ -15,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester", "Tester\Tester.csproj", "{598F64C2-1343-4202-B6A7-A91CF3248D0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{B748E3AB-68DE-40E9-9BD0-0C113C70D260}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests", "UnitTests\Troschuetz.Random.UnitTests.csproj", "{B748E3AB-68DE-40E9-9BD0-0C113C70D260}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NET40", "Troschuetz.Random.NET40\Troschuetz.Random.NET40.csproj", "{6B947182-CF4B-45FE-A1AE-47A28C514040}"
 EndProject

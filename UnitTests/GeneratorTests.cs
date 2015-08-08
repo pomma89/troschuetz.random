@@ -126,8 +126,8 @@ namespace Troschuetz.Random.Tests
                 otherGen.NextBytes(b2);
                 Assert.AreEqual(b2, b1);
             }
-            PersistentCache.DefaultInstance.AddStatic("Generator", _generator);
-            _generator = PersistentCache.DefaultInstance.Get("Generator") as IGenerator;
+            PersistentCache.DefaultInstance.AddStaticToDefaultPartition("Generator", _generator);
+            _generator = PersistentCache.DefaultInstance.GetFromDefaultPartition<IGenerator>("Generator").Value;
             for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext())
             {
                 otherGen.NextBytes(b2);

@@ -55,6 +55,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Diagnostics.Contracts;
     using System.Linq;
     using Generators;
+    using Core;
 
     /// <summary>
     ///   Implements the categorical distribution. For details about this distribution, see 

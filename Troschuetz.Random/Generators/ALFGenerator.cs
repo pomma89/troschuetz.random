@@ -38,8 +38,8 @@
 
 namespace Troschuetz.Random.Generators
 {
+    using PommaLabs.Thrower;
     using System;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Represents a Additive Lagged Fibonacci pseudo-random number generator.
@@ -107,8 +107,7 @@ namespace Troschuetz.Random.Generators
             get { return _shortLag; }
             set
             {
-                Contract.Requires<ArgumentOutOfRangeException>(IsValidShortLag(value));
-                Contract.Ensures(ShortLag == value);
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidShortLag(value));
                 _shortLag = value;
             }
         }
@@ -127,8 +126,7 @@ namespace Troschuetz.Random.Generators
             get { return _longLag; }
             set
             {
-                Contract.Requires<ArgumentOutOfRangeException>(IsValidLongLag(value));
-                Contract.Ensures(LongLag == value);
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidShortLag(value));
                 _longLag = value;
                 Reset();
             }

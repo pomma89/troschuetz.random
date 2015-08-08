@@ -42,6 +42,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
+    using Core;
 
     /// <summary>
     ///   Provides generation of lognormal distributed random numbers.

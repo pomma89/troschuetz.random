@@ -21,6 +21,8 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -170,6 +172,10 @@
     <ApplicationIcon>Troschuetz.Random.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PommaLabs.Thrower, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thrower.1.1\lib\net35\PommaLabs.Thrower.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +184,9 @@
     </Compile>
     <Compile Include="..\Troschuetz.Random\Contracts\GeneratorContract.cs">
       <Link>Contracts\GeneratorContract.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Core\ErrorMessages.cs">
+      <Link>Core\ErrorMessages.cs</Link>
     </Compile>
     <Compile Include="..\Troschuetz.Random\Distributions\Continuous\BetaDistribution.cs">
       <Link>Distributions\Continuous\BetaDistribution.cs</Link>
@@ -257,9 +266,6 @@
     <Compile Include="..\Troschuetz.Random\Distributions\Discrete\PoissonDistribution.cs">
       <Link>Distributions\Discrete\PoissonDistribution.cs</Link>
     </Compile>
-    <Compile Include="..\Troschuetz.Random\ErrorMessages.Designer.cs">
-      <Link>ErrorMessages.Designer.cs</Link>
-    </Compile>
     <Compile Include="..\Troschuetz.Random\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>
@@ -290,14 +296,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Troschuetz.Random\Troschuetz.Random.doxyfile">
-      <Link>Troschuetz.Random.doxyfile</Link>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\Troschuetz.Random\ErrorMessages.resx">
-      <Link>ErrorMessages.resx</Link>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Troschuetz.Random.ico" />

@@ -23,6 +23,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
+    using Core;
 
     /// <summary>
     ///   Provides generation of exponential distributed random numbers.
@@ -111,40 +112,19 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         #region IContinuousDistribution Members
 
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        public double Minimum => 0.0;
 
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
-        public double Mean
-        {
-            get { return 1.0/_lambda; }
-        }
+        public double Mean => 1.0 / _lambda;
 
-        public double Median
-        {
-            get { return Math.Log(2.0)/_lambda; }
-        }
+        public double Median => Math.Log(2.0) / _lambda;
 
-        public double Variance
-        {
-            get { return Math.Pow(_lambda, -2.0); }
-        }
+        public double Variance => Math.Pow(_lambda, -2.0);
 
-        public double[] Mode
-        {
-            get { return new[] {0.0}; }
-        }
+        public double[] Mode => new[] { 0.0 };
 
-        public double NextDouble()
-        {
-            return Sample(Gen, _lambda);
-        }
+        public double NextDouble() => Sample(Gen, _lambda);
 
         #endregion
 

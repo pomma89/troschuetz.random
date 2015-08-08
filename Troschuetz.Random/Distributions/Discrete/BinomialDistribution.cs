@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,10 +19,11 @@
 
 namespace Troschuetz.Random.Distributions.Discrete
 {
+    using Generators;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
+    using Core;
 
     /// <summary>
     ///   Provides generation of binomial distributed random numbers.
@@ -33,35 +34,34 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   <a href="http://en.wikipedia.org/wiki/binomial_distribution">Wikipedia - Binomial distribution</a>.
     /// </remarks>
     [Serializable]
-    public class BinomialDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>,
-                                                     IBetaDistribution<int>
+    public class BinomialDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>, IBetaDistribution<int>
         where TGen : IGenerator
     {
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Alpha"/> if none is specified. 
+        ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const double DefaultAlpha = 0.5;
 
         /// <summary>
-        ///   The default value assigned to <see cref="Beta"/> if none is specified. 
+        ///   The default value assigned to <see cref="Beta"/> if none is specified.
         /// </summary>
         public const int DefaultBeta = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
         /// <summary>
         ///   Stores the parameter alpha which is used for generation of binomial distributed random numbers.
         /// </summary>
-        double _alpha;
+        private double _alpha;
 
         /// <summary>
         ///   Stores the parameter beta which is used for generation of binomial distributed random numbers.
         /// </summary>
-        int _beta;
+        private int _beta;
 
         /// <summary>
         ///   Gets or sets the parameter alpha which is used for generation of binomial distributed random numbers.
@@ -93,7 +93,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             set { _beta = value; }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
@@ -123,7 +123,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             _beta = beta;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -152,7 +152,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             return AreValidParams(Alpha, value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
@@ -168,7 +168,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public double Mean
         {
-            get { return Alpha*Beta; }
+            get { return Alpha * Beta; }
         }
 
         public double Median
@@ -178,12 +178,12 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public double Variance
         {
-            get { return Alpha*(1.0 - Alpha)*Beta; }
+            get { return Alpha * (1.0 - Alpha) * Beta; }
         }
 
         public double[] Mode
         {
-            get { return new[] {Math.Floor(Alpha*(Beta + 1.0))}; }
+            get { return new[] { Math.Floor(Alpha * (Beta + 1.0)) }; }
         }
 
         public int Next()
@@ -196,7 +196,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             return Sample(Gen, _alpha, _beta);
         }
 
-        #endregion
+        #endregion IDiscreteDistribution Members
 
         #region TRandom Helpers
 
@@ -213,7 +213,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   True if <paramref name="alpha"/> is greater than or equal to zero and less than or equal to one,
         ///   and if <paramref name="beta"/> is greater than or equal to zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double alpha, int beta)
         {
             return alpha >= 0 && alpha <= 1 && beta >= 0;
@@ -232,19 +232,21 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <returns>
         ///   A binomial distributed 32-bit signed integer.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static int Sample(TGen generator, double alpha, int beta)
         {
             var successes = 0;
-            for (var i = 0; i < beta; i++) {
-                if (generator.NextDouble() < alpha) {
+            for (var i = 0; i < beta; i++)
+            {
+                if (generator.NextDouble() < alpha)
+                {
                     successes++;
                 }
             }
             return successes;
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
@@ -375,6 +377,6 @@ namespace Troschuetz.Random.Distributions.Discrete
             Debug.Assert(Equals(Beta, beta));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

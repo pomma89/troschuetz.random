@@ -21,6 +21,7 @@ namespace Troschuetz.Random.Contracts
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
+    using Core;
 
     [ContractClassFor(typeof(IDistribution))]
     abstract class DistributionContract : IDistribution

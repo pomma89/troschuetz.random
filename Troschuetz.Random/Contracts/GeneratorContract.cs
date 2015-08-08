@@ -20,6 +20,7 @@ namespace Troschuetz.Random.Contracts
 {
     using System;
     using System.Diagnostics.Contracts;
+    using Core;
 
     [ContractClassFor(typeof(IGenerator))]
     abstract class GeneratorContract : IGenerator
@@ -55,7 +56,7 @@ namespace Troschuetz.Random.Contracts
 
         public int Next(int minValue, int maxValue)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(maxValue >= minValue, ErrorMessages.MinValueGreaterThanMaxValue);
+            Contract.Requires<ArgumentOutOfRangeException>(maxValue >= minValue, ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
             Contract.Ensures(Contract.Result<int>() >= minValue && Contract.Result<int>() < maxValue);
             return default(int);
         }
@@ -76,7 +77,7 @@ namespace Troschuetz.Random.Contracts
 
         public double NextDouble(double minValue, double maxValue)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(maxValue >= minValue, ErrorMessages.MinValueGreaterThanMaxValue);
+            Contract.Requires<ArgumentOutOfRangeException>(maxValue >= minValue, ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
             Contract.Requires<ArgumentException>(!double.IsPositiveInfinity(maxValue - minValue));
             Contract.Ensures(Contract.Result<double>() >= minValue && Contract.Result<double>() < maxValue);
             return default(double);
@@ -102,7 +103,7 @@ namespace Troschuetz.Random.Contracts
 
         public uint NextUInt(uint minValue, uint maxValue)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(maxValue >= minValue, ErrorMessages.MinValueGreaterThanMaxValue);
+            Contract.Requires<ArgumentOutOfRangeException>(maxValue >= minValue, ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
             Contract.Ensures(Contract.Result<uint>() >= minValue && Contract.Result<uint>() < maxValue);
             return default(int);
         }

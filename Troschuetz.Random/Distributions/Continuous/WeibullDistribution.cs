@@ -23,6 +23,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Generators;
+    using Core;
 
     /// <summary>
     ///   Provides generation of weibull distributed random numbers.
