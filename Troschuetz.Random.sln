@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random", "Troschuetz.Random\Troschuetz.Random.csproj", "{A1FF7728-605F-401A-A9FC-51FA56852E9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48147844-A87B-45D7-A428-1909094301B2}"
+	ProjectSection(SolutionItems) = preProject
+		.hgignore = .hgignore
+		appveyor.yml = appveyor.yml
+		GPL.txt = GPL.txt
+		LGPL.txt = LGPL.txt
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Tester", "Tester\Troschuetz.Random.Tester.csproj", "{598F64C2-1343-4202-B6A7-A91CF3248D0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests", "UnitTests\Troschuetz.Random.UnitTests.csproj", "{B748E3AB-68DE-40E9-9BD0-0C113C70D260}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NET40", "Troschuetz.Random.NET40\Troschuetz.Random.NET40.csproj", "{6B947182-CF4B-45FE-A1AE-47A28C514040}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGetPackager", "Troschuetz.Random.NuGetPackager\Troschuetz.Random.NuGetPackager.csproj", "{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A1FF7728-605F-401A-A9FC-51FA56852E9E} = {A1FF7728-605F-401A-A9FC-51FA56852E9E}
+		{6B947182-CF4B-45FE-A1AE-47A28C514040} = {6B947182-CF4B-45FE-A1AE-47A28C514040}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Logo", "Project Logo", "{07EA9A7E-47F0-4173-855E-4A5B6B517A66}"
+	ProjectSection(SolutionItems) = preProject
+		ProjectLogo\logo-128.png = ProjectLogo\logo-128.png
+		ProjectLogo\logo-256.png = ProjectLogo\logo-256.png
+		ProjectLogo\logo-32.png = ProjectLogo\logo-32.png
+		ProjectLogo\logo-64.png = ProjectLogo\logo-64.png
+		ProjectLogo\logo-original.png = ProjectLogo\logo-original.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Original Sources", "Original Sources", "{FDBA8F2C-3F3C-4320-BB07-BC7F7AEC7263}"
+	ProjectSection(SolutionItems) = preProject
+		OriginalSources\Random_src.zip = OriginalSources\Random_src.zip
+		OriginalSources\RandomTester_src.zip = OriginalSources\RandomTester_src.zip
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Publish|Any CPU = Publish|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1FF7728-605F-401A-A9FC-51FA56852E9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1FF7728-605F-401A-A9FC-51FA56852E9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1FF7728-605F-401A-A9FC-51FA56852E9E}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{A1FF7728-605F-401A-A9FC-51FA56852E9E}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{A1FF7728-605F-401A-A9FC-51FA56852E9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1FF7728-605F-401A-A9FC-51FA56852E9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{598F64C2-1343-4202-B6A7-A91CF3248D0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B748E3AB-68DE-40E9-9BD0-0C113C70D260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B947182-CF4B-45FE-A1AE-47A28C514040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B947182-CF4B-45FE-A1AE-47A28C514040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B947182-CF4B-45FE-A1AE-47A28C514040}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{6B947182-CF4B-45FE-A1AE-47A28C514040}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{6B947182-CF4B-45FE-A1AE-47A28C514040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B947182-CF4B-45FE-A1AE-47A28C514040}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

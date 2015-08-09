@@ -1,0 +1,649 @@
+/*
+ * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
+ * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * 
+ * This file is part of Troschuetz.Random Class Library.
+ * 
+ * Troschuetz.Random is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+#region Original Copyright
+
+/* 
+   A C-program for MT19937, with initialization improved 2002/1/26.
+   Coded by Takuji Nishimura and Makoto Matsumoto.
+
+   Before using, initialize the state by using init_genrand(seed)  
+   or init_by_array(init_key, key_length).
+
+   Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
+   All rights reserved.                          
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above copyright
+        notice, this list of conditions and the following disclaimer in the
+        documentation and/or other materials provided with the distribution.
+
+     3. The names of its contributors may not be used to endorse or promote 
+        products derived from this software without specific prior written 
+        permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+   A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+   EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+   PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+   LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+   Any feedback is very welcome.
+   http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
+   email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
+*/
+
+#endregion
+
+namespace Troschuetz.Random.Generators
+{
+    using PommaLabs.Thrower;
+    using System;
+    using System.Collections.Generic;
+    using Core;
+
+    /// <summary>
+    ///   Represents a Mersenne Twister pseudo-random number generator with period 2^19937-1.
+    /// </summary>
+    /// <remarks>
+    ///   The <see cref="MT19937Generator"/> type bases upon information and the implementation presented on the
+    ///   <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">Mersenne Twister Home Page</a>.
+    /// </remarks>
+    // ReSharper disable InconsistentNaming
+    [Serializable]
+    public sealed class MT19937Generator : GeneratorBase<MT19937Generator>, IGenerator
+// ReSharper restore InconsistentNaming
+    {
+        #region Class Fields
+
+        /// <summary>
+        ///   Represents the number of unsigned random numbers generated at one time. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 624.</remarks>
+        const int N = 624;
+
+        /// <summary>
+        ///   Represents a constant used for generation of unsigned random numbers. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 397.</remarks>
+        const int M = 397;
+
+        /// <summary>
+        ///   Represents the constant vector a. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 0x9908b0dfU.</remarks>
+        const uint VectorA = 0x9908b0dfU;
+
+        /// <summary>
+        ///   Represents the most significant w-r bits. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 0x80000000.</remarks>
+        const uint UpperMask = 0x80000000U;
+
+        /// <summary>
+        ///   Represents the least significant r bits. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 0x7fffffff.</remarks>
+        const uint LowerMask = 0x7fffffffU;
+
+        #endregion
+
+        #region Instance Fields
+
+        /// <summary>
+        ///   Stores the state vector array.
+        /// </summary>
+        readonly uint[] _mt;
+
+        /// <summary>
+        ///   Stores the used seed.
+        /// </summary>
+        readonly uint _seed;
+
+        /// <summary>
+        ///   Stores the used seed array.
+        /// </summary>
+        readonly uint[] _seedArray;
+
+        /// <summary>
+        ///   Stores an <see cref="uint"/> used to generate up to 32 random <see cref="bool"/> values.
+        /// </summary>
+        uint _bitBuffer;
+
+        /// <summary>
+        ///   Stores how many random <see cref="bool"/> values still can be generated from <see cref="_bitBuffer"/>.
+        /// </summary>
+        int _bitCount;
+
+        /// <summary>
+        ///   Stores an index for the state vector array element that will be accessed next.
+        /// </summary>
+        uint _mti;
+
+        #endregion
+
+        #region Construction
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, 
+        ///   using a time-dependent default seed value.
+        /// </summary>
+        public MT19937Generator() : this((uint) Math.Abs(Environment.TickCount))
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, 
+        ///   using the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   A number used to calculate a starting value for the pseudo-random number sequence.
+        ///   If a negative number is specified, the absolute value of the number is used. 
+        /// </param>
+        public MT19937Generator(int seed) : this((uint) Math.Abs(seed))
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, 
+        ///   using the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        [CLSCompliant(false)]
+        public MT19937Generator(uint seed)
+        {
+            _seed = seed;
+            _mt = new uint[N];
+            _seedArray = null;
+            ResetGenerator();
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, using the specified seed array.
+        /// </summary>
+        /// <param name="seedArray">
+        ///   An array of numbers used to calculate a starting values for the pseudo-random number sequence.
+        ///   If negative numbers are specified, the absolute values of them are used. 
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="seedArray"/> is NULL (<see langword="Nothing"/> in Visual Basic).
+        /// </exception>
+        public MT19937Generator(IList<int> seedArray)
+        {
+            RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
+
+            _seed = 19650218U;
+            _mt = new uint[N];
+            _seedArray = new uint[seedArray.Count];
+            for (var index = 0; index < seedArray.Count; index++) {
+                _seedArray[index] = (uint) Math.Abs(seedArray[index]);
+            }
+            ResetGenerator();
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, using the specified seed array.
+        /// </summary>
+        /// <param name="seedArray">
+        ///   An array of unsigned numbers used to calculate a starting values for the pseudo-random number sequence.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="seedArray"/> is NULL (<see langword="Nothing"/> in Visual Basic).
+        /// </exception>
+        [CLSCompliant(false)]
+        public MT19937Generator(uint[] seedArray)
+        {
+            RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
+
+            _seed = 19650218U;
+            _mt = new uint[N];
+            _seedArray = seedArray;
+            ResetGenerator();
+        }
+
+        #endregion
+
+        #region Instance Methods
+
+        /// <summary>
+        ///   Resets the <see cref="MT19937Generator"/>, so that it produces the same pseudo-random number sequence again.
+        /// </summary>
+        void ResetGenerator()
+        {
+            _mt[0] = _seed & 0xffffffffU;
+            for (_mti = 1; _mti < N; _mti++) {
+                _mt[_mti] = (1812433253U*(_mt[_mti - 1] ^ (_mt[_mti - 1] >> 30)) + _mti);
+                // See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier.
+                // In the previous versions, MSBs of the seed affect only MSBs of the array mt[].
+                // 2002/01/09 modified by Makoto Matsumoto
+            }
+
+            // If the object was instanciated with a seed array do some further (re)initialisation.
+            if (_seedArray != null) {
+                ResetBySeedArray();
+            }
+
+            // Reset helper variables used for generation of random bools.
+            _bitBuffer = 0;
+            _bitCount = 32;
+        }
+
+        /// <summary>
+        ///   Extends resetting of the <see cref="MT19937Generator"/> using the <see cref="_seedArray"/>.
+        /// </summary>
+        void ResetBySeedArray()
+        {
+            uint i = 1;
+            uint j = 0;
+            var k = (N > _seedArray.Length) ? N : _seedArray.Length;
+            for (; k > 0; k--) {
+                _mt[i] = (_mt[i] ^ ((_mt[i - 1] ^ (_mt[i - 1] >> 30))*1664525U)) + _seedArray[j] + j; // non linear
+                i++;
+                j++;
+                if (i >= N) {
+                    _mt[0] = _mt[N - 1];
+                    i = 1;
+                }
+                if (j >= _seedArray.Length) {
+                    j = 0;
+                }
+            }
+            for (k = N - 1; k > 0; k--) {
+                _mt[i] = (_mt[i] ^ ((_mt[i - 1] ^ (_mt[i - 1] >> 30))*1566083941U)) - i; // non linear
+                i++;
+                if (i < N) {
+                    continue;
+                }
+                _mt[0] = _mt[N - 1];
+                i = 1;
+            }
+
+            _mt[0] = 0x80000000U; // MSB is 1; assuring non-0 initial array
+        }
+
+        /// <summary>
+        ///   Generates <see cref="MT19937Generator.N"/> unsigned random numbers.
+        /// </summary>
+        /// <remarks>
+        ///   Generated random numbers are 32-bit unsigned integers greater than or equal to <see cref="UInt32.MinValue"/> 
+        ///   and less than or equal to <see cref="UInt32.MaxValue"/>.
+        /// </remarks>
+// ReSharper disable InconsistentNaming
+        void GenerateNUInts()
+// ReSharper restore InconsistentNaming
+        {
+            int kk;
+            uint y;
+            var mag01 = new[] {0x0U, VectorA};
+
+            for (kk = 0; kk < N - M; kk++) {
+                y = (_mt[kk] & UpperMask) | (_mt[kk + 1] & LowerMask);
+                _mt[kk] = _mt[kk + M] ^ (y >> 1) ^ mag01[y & 0x1U];
+            }
+            for (; kk < N - 1; kk++) {
+                y = (_mt[kk] & UpperMask) | (_mt[kk + 1] & LowerMask);
+                _mt[kk] = _mt[kk + (M - N)] ^ (y >> 1) ^ mag01[y & 0x1U];
+            }
+            y = (_mt[N - 1] & UpperMask) | (_mt[0] & LowerMask);
+            _mt[N - 1] = _mt[M - 1] ^ (y >> 1) ^ mag01[y & 0x1U];
+
+            _mti = 0;
+        }
+
+        #endregion
+
+        #region IGenerator Members
+
+        [CLSCompliant(false)]
+        public uint Seed
+        {
+            get { return _seed; }
+        }
+
+        public bool CanReset
+        {
+            get { return true; }
+        }
+
+        public bool Reset()
+        {
+            ResetGenerator();
+            return true;
+        }
+
+        public int Next()
+        {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            var result = (int) (y >> 1);
+            // Exclude Int32.MaxValue from the range of return values.
+            return result == Int32.MaxValue ? Next() : result;
+        }
+
+        public int NextInclusiveMaxValue()
+        {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N)
+            {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            return (int)(y >> 1);
+        }
+
+        public int Next(int maxValue)
+        {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return (int) ((int) (y >> 1)*IntToDoubleMultiplier*maxValue);
+        }
+
+        public int Next(int minValue, int maxValue)
+        {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            var range = maxValue - minValue;
+            if (range < 0) {
+                // The range is greater than Int32.MaxValue, so we have to use slower floating point arithmetic.
+                // Also all 32 random bits (uint) have to be used which again is slower (See comment in NextDouble()).
+                return minValue + (int) (y*UIntToDoubleMultiplier*(maxValue - (double) minValue));
+            }
+
+            // 31 random bits (int) will suffice which allows us to shift and cast to an int
+            // before the first multiplication and gain better performance.
+            // See comment in NextDouble().
+            return minValue + (int) ((int) (y >> 1)*IntToDoubleMultiplier*range);
+        }
+
+        public double NextDouble()
+        {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            // Here a ~2x speed improvement is gained by computing a value that can be cast to an int 
+            // before casting to a double to perform the multiplication.
+            // Casting a double from an int is a lot faster than from an uint and the extra shift operation 
+            // and cast to an int are very fast (the allocated bits remain the same), so overall there's 
+            // a significant performance improvement.
+            return (int) (y >> 1)*IntToDoubleMultiplier;
+        }
+
+        public double NextDouble(double maxValue)
+        {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
+
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return (int) (y >> 1)*IntToDoubleMultiplier*maxValue;
+        }
+
+        public double NextDouble(double minValue, double maxValue)
+        {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
+
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return minValue + (int) (y >> 1)*IntToDoubleMultiplier*(maxValue - minValue);
+        }
+
+        [CLSCompliant(false)]
+        public uint NextUInt()
+        {
+            if (_mti >= N)
+            {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            return (y ^ (y >> 18));
+        }
+
+        [CLSCompliant(false)]
+        public uint NextUInt(uint maxValue)
+        {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
+
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return (uint) ((int) (y >> 1)*IntToDoubleMultiplier*maxValue);
+        }
+
+        [CLSCompliant(false)]
+        public uint NextUInt(uint minValue, uint maxValue)
+        {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // Generate N words at one time
+                GenerateNUInts();
+            }
+            var y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            // The shift operation and extra int cast before the first multiplication give better performance.
+            // See comment in NextDouble().
+            return minValue + (uint) ((int) (y >> 1)*IntToDoubleMultiplier*(maxValue - minValue));
+        }
+
+        public bool NextBoolean()
+        {
+            if (_bitCount == 32) {
+                // Generate 32 more bits (1 uint) and store it for future calls.
+                // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+                if (_mti >= N) {
+                    // Generate N words at one time
+                    GenerateNUInts();
+                }
+                var y = _mt[_mti++];
+                // Tempering
+                y ^= (y >> 11);
+                y ^= (y << 7) & 0x9d2c5680U;
+                y ^= (y << 15) & 0xefc60000U;
+                _bitBuffer = (y ^ (y >> 18));
+
+                // Reset the bitCount and use rightmost bit of buffer to generate random bool.
+                _bitCount = 1;
+                return (_bitBuffer & 0x1) == 1;
+            }
+
+            // Increase the bitCount and use rightmost bit of shifted buffer to generate random bool.
+            _bitCount++;
+            return ((_bitBuffer >>= 1) & 0x1) == 1;
+        }
+
+        public void NextBytes(byte[] buffer)
+        {
+            // Preconditions
+            RaiseArgumentNullException.IfIsNull(buffer, nameof(buffer), ErrorMessages.NullBuffer);
+
+            // Fill the buffer with 4 bytes (1 uint) at a time.
+            var i = 0;
+            uint y;
+            while (i < buffer.Length - 3) {
+                // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+                if (_mti >= N) {
+                    // generate N words at one time
+                    GenerateNUInts();
+                }
+                y = _mt[_mti++];
+                // Tempering
+                y ^= (y >> 11);
+                y ^= (y << 7) & 0x9d2c5680U;
+                y ^= (y << 15) & 0xefc60000U;
+                y ^= (y >> 18);
+
+                buffer[i++] = (byte) y;
+                buffer[i++] = (byte) (y >> 8);
+                buffer[i++] = (byte) (y >> 16);
+                buffer[i++] = (byte) (y >> 24);
+            }
+
+            // Fill up any remaining bytes in the buffer.
+            if (i >= buffer.Length) {
+                return;
+            }
+
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
+            if (_mti >= N) {
+                // generate N words at one time
+                GenerateNUInts();
+            }
+            y = _mt[_mti++];
+            // Tempering
+            y ^= (y >> 11);
+            y ^= (y << 7) & 0x9d2c5680U;
+            y ^= (y << 15) & 0xefc60000U;
+            y ^= (y >> 18);
+
+            buffer[i++] = (byte) y;
+            if (i < buffer.Length) {
+                buffer[i++] = (byte) (y >> 8);
+                if (i < buffer.Length) {
+                    buffer[i++] = (byte) (y >> 16);
+                    if (i < buffer.Length) {
+                        buffer[i] = (byte) (y >> 24);
+                    }
+                }
+            }
+        }
+
+        #endregion
+    }
+}
