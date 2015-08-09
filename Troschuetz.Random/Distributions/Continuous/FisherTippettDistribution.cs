@@ -100,7 +100,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Mu
         {
             get { return _mu; }
-            set { _mu = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidMu(value), ErrorMessages.InvalidParams);
+                _mu = value;
+            }
         }
 
         #endregion Instance Fields

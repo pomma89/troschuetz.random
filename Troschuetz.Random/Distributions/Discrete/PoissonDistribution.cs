@@ -88,7 +88,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   <see cref="PoissonDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Poisson_distribution">Wikipedia - Poisson
     ///   distribution</a> and the implementation in the
-    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html"> Communication
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
     ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
@@ -125,7 +125,11 @@ namespace Troschuetz.Random.Distributions.Discrete
         public double Lambda
         {
             get { return _lambda; }
-            set { _lambda = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidLambda(value), ErrorMessages.InvalidParams);
+                _lambda = value;
+            }
         }
 
         #endregion Instance Fields
@@ -275,7 +279,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   <see cref="PoissonDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Poisson_distribution">Wikipedia - Poisson
     ///   distribution</a> and the implementation in the
-    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html"> Communication
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
     ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]

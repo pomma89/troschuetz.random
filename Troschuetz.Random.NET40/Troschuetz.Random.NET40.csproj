@@ -130,9 +130,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Troschuetz.Random\Contracts\DistributionContracts.cs">
-      <Link>Contracts\DistributionContracts.cs</Link>
-    </Compile>
     <Compile Include="..\Troschuetz.Random\Contracts\GeneratorContract.cs">
       <Link>Contracts\GeneratorContract.cs</Link>
     </Compile>

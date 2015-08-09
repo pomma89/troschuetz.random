@@ -118,6 +118,9 @@ namespace Troschuetz.Random.Distributions.Discrete
             get { return _weights.Select(w => w/_weightsSum).ToList(); }
             set
             {
+                RaiseArgumentNullException.IfIsNull(value, nameof(value), ErrorMessages.NullWeights);
+                Raise<ArgumentException>.IfIsEmpty(value);
+                Raise<ArgumentOutOfRangeException>.IfNot(AreValidWeights(value), ErrorMessages.InvalidParams);
                 _weights = value.ToList();
                 UpdateHelpers();
             }

@@ -98,7 +98,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Lambda
         {
             get { return _lambda; }
-            set { _lambda = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidLambda(value), ErrorMessages.InvalidParams);
+                _lambda = value;
+            }
         }
 
         #endregion Instance Fields

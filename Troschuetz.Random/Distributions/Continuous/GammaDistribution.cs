@@ -96,7 +96,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Theta
         {
             get { return _theta; }
-            set { _theta = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidTheta(value), ErrorMessages.InvalidParams);
+                _theta = value;
+            }
         }
 
         #endregion Instance Fields

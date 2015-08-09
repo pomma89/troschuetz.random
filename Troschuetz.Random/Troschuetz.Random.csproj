@@ -130,7 +130,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\DistributionContracts.cs" />
     <Compile Include="Contracts\GeneratorContract.cs" />
     <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Extensions.cs" />
