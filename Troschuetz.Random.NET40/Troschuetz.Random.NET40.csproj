@@ -21,13 +21,15 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -73,8 +75,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants>TRACE;USETHROWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Troschuetz.Random.xml</DocumentationFile>
@@ -118,66 +119,19 @@
     <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.Unchecked|AnyCPU'">
-    <OutputPath>bin\Release.Unchecked\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
-    <Optimize>True</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release.Unchecked\Troschuetz.Random.xml</DocumentationFile>
-    <Prefer32Bit>false</Prefer32Bit>
-    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
-    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
-    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
-    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
-    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
-    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
-    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
-    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
-    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
-    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
-    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
-    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
-    <CodeContractsInferRequires>True</CodeContractsInferRequires>
-    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
-    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
-    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
-    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
-    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
-    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
-    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
-    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
-    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
-    <CodeContractsCustomRewriterAssembly />
-    <CodeContractsCustomRewriterClass />
-    <CodeContractsLibPaths />
-    <CodeContractsExtraRewriteOptions />
-    <CodeContractsExtraAnalysisOptions />
-    <CodeContractsSQLServerOption />
-    <CodeContractsBaseLineFile />
-    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
-    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
-    <CodeContractsRuntimeCheckingLevel>None</CodeContractsRuntimeCheckingLevel>
-    <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
-    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Troschuetz.Random.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PommaLabs.Thrower, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thrower.1.1\lib\net35\PommaLabs.Thrower.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Troschuetz.Random\Contracts\DistributionContracts.cs">
-      <Link>Contracts\DistributionContracts.cs</Link>
-    </Compile>
-    <Compile Include="..\Troschuetz.Random\Contracts\GeneratorContract.cs">
-      <Link>Contracts\GeneratorContract.cs</Link>
+    <Compile Include="..\Troschuetz.Random\Core\ErrorMessages.cs">
+      <Link>Core\ErrorMessages.cs</Link>
     </Compile>
     <Compile Include="..\Troschuetz.Random\Distributions\Continuous\BetaDistribution.cs">
       <Link>Distributions\Continuous\BetaDistribution.cs</Link>
@@ -257,9 +211,6 @@
     <Compile Include="..\Troschuetz.Random\Distributions\Discrete\PoissonDistribution.cs">
       <Link>Distributions\Discrete\PoissonDistribution.cs</Link>
     </Compile>
-    <Compile Include="..\Troschuetz.Random\ErrorMessages.Designer.cs">
-      <Link>ErrorMessages.Designer.cs</Link>
-    </Compile>
     <Compile Include="..\Troschuetz.Random\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>
@@ -271,6 +222,9 @@
     </Compile>
     <Compile Include="..\Troschuetz.Random\Generators\MT19937Generator.cs">
       <Link>Generators\MT19937Generator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\NumericalRecipes3Q1Generator.cs">
+      <Link>Generators\NumericalRecipes3Q1Generator.cs</Link>
     </Compile>
     <Compile Include="..\Troschuetz.Random\Generators\StandardGenerator.cs">
       <Link>Generators\StandardGenerator.cs</Link>
@@ -290,45 +244,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Troschuetz.Random\Troschuetz.Random.doxyfile">
-      <Link>Troschuetz.Random.doxyfile</Link>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\Troschuetz.Random\ErrorMessages.resx">
-      <Link>ErrorMessages.resx</Link>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Troschuetz.Random.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set ASR=$(SolutionDir)NuGetPackager.Unchecked/ASR/AssemblyRenamer.exe
-set ASR_ARGS=--out:ASR
-set ASR_IN=Troschuetz.Random
-set ASR_OUT=Troschuetz.Random.Unchecked
-
-set dir="$(SolutionDir)NuGetPackager.Unchecked/lib/net40-client"
-if not exist %25dir%25 mkdir %25dir%25
-set dir="$(SolutionDir)NuGetPackager/lib/net40-client"
-if not exist %25dir%25 mkdir %25dir%25
-
-if $(ConfigurationName) == Release.Unchecked (
-    mkdir ASR
-    %25ASR%25 %25ASR_ARGS%25 %25ASR_IN%25 %25ASR_OUT%25
-    copy %25ASR_IN%25.pdb "ASR/%25ASR_OUT%25.pdb"
-    copy %25ASR_IN%25.xml "ASR/%25ASR_OUT%25.xml"
-    copy "ASR\%25ASR_OUT%25.dll" "$(SolutionDir)NuGetPackager.Unchecked/lib/net40-client"
-    copy "ASR\%25ASR_OUT%25.pdb" "$(SolutionDir)NuGetPackager.Unchecked/lib/net40-client"
-    copy "ASR\%25ASR_OUT%25.xml" "$(SolutionDir)NuGetPackager.Unchecked/lib/net40-client"
-)
-
-if $(ConfigurationName) == Release (
-    copy "%25ASR_IN%25.dll" "$(SolutionDir)NuGetPackager/lib/net40-client"
-    copy "%25ASR_IN%25.pdb" "$(SolutionDir)NuGetPackager/lib/net40-client"
-    copy "%25ASR_IN%25.xml" "$(SolutionDir)NuGetPackager/lib/net40-client"
-)</PostBuildEvent>
+    <PostBuildEvent>if not exist "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net40-client" mkdir "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net40-client"
+copy "$(TargetDir)Troschuetz.Random.dll" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net40-client"
+copy "$(TargetDir)Troschuetz.Random.pdb" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net40-client"
+copy "$(TargetDir)Troschuetz.Random.xml" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net40-client"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

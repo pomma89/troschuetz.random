@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,7 +19,7 @@
 
 #region Original Copyrights
 
-//   -*- C++ -*-
+// -*- C++ -*-
 /*****************************************************************************
  *
  *   |_|_|_  |_|_    |_    |_|_|_  |_		     C O M M U N I C A T I O N
@@ -29,7 +29,7 @@
  *
  * $Id: Poisson.c,v 1.2 2002/01/14 11:37:33 spee Exp $
  *
- * CNClass: CNPoisson --- CNPoisson distributed random numbers 
+ * CNClass: CNPoisson --- CNPoisson distributed random numbers
  *
  *****************************************************************************
  * Copyright (C) 1992-1996   Communication Networks
@@ -55,7 +55,7 @@
  * -------------------
  * Copyright (C) 1988 Free Software Foundation
  *    written by Dirk Grunwald (grunwald@cs.uiuc.edu)
- * 
+ *
  * This file is part of the GNU C++ Library.  This library is free
  * software; you can redistribute it and/or modify it under the terms of
  * the GNU Library General Public License as published by the Free
@@ -69,24 +69,27 @@
  * Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *****************************************************************************/
 
-#endregion
+#endregion Original Copyrights
 
 namespace Troschuetz.Random.Distributions.Discrete
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
 
     /// <summary>
     ///   Provides generation of poisson distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The poisson distribution generates only discrete numbers.<br />
-    ///   The implementation of the <see cref="PoissonDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Poisson_distribution">Wikipedia - Poisson distribution</a>
-    ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
-    ///   Communication Networks Class Library</a>.
+    ///   The poisson distribution generates only discrete numbers. <br/> The implementation of the
+    ///   <see cref="PoissonDistribution"/> type bases upon information presented on
+    ///   <a href="http://en.wikipedia.org/wiki/Poisson_distribution">Wikipedia - Poisson
+    ///   distribution</a> and the implementation in the
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
+    ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
     public class PoissonDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, ILambdaDistribution<double>
@@ -95,21 +98,23 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Lambda"/> if none is specified. 
+        ///   The default value assigned to <see cref="Lambda"/> if none is specified.
         /// </summary>
         public const double DefaultLambda = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
         /// <summary>
-        ///   Stores the the parameter lambda which is used for generation of poisson distributed random numbers.
+        ///   Stores the the parameter lambda which is used for generation of poisson distributed
+        ///   random numbers.
         /// </summary>
         double _lambda;
 
         /// <summary>
-        ///   Gets or sets the parameter lambda which is used for generation of poisson distributed random numbers.
+        ///   Gets or sets the parameter lambda which is used for generation of poisson distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -120,35 +125,36 @@ namespace Troschuetz.Random.Distributions.Discrete
         public double Lambda
         {
             get { return _lambda; }
-            set { _lambda = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidLambda(value), ErrorMessages.InvalidParams);
+                _lambda = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of poisson distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         public PoissonDistribution(TGen generator, double lambda) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(IsValidParam(lambda), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(lambda), ErrorMessages.InvalidParams);
             _lambda = lambda;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -156,15 +162,13 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Determines whether the specified value is valid for parameter <see cref="Lambda"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidLambda(double value)
         {
             return IsValidParam(value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
@@ -198,7 +202,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             get
             {
                 // Checks if the value of lambda is a whole number.
-                return _lambda == Math.Floor(_lambda) ? new[] {_lambda - 1.0, _lambda} : new[] {Math.Floor(_lambda)};
+                return _lambda == Math.Floor(_lambda) ? new[] { _lambda - 1.0, _lambda } : new[] { Math.Floor(_lambda) };
             }
         }
 
@@ -212,7 +216,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             return Sample(Gen, _lambda);
         }
 
-        #endregion
+        #endregion IDiscreteDistribution Members
 
         #region TRandom Helpers
 
@@ -225,11 +229,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <returns>
         ///   True if <paramref name="lambda"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
-        public static bool IsValidParam(double lambda)
-        {
-            return lambda > 0;
-        }
+        [Pure]
+        public static bool IsValidParam(double lambda) => lambda > 0;
 
         /// <summary>
         ///   Returns a poisson distributed 32-bit signed integer.
@@ -238,32 +239,48 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of poisson distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A poisson distributed 32-bit signed integer.
-        /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        /// <returns>A poisson distributed 32-bit signed integer.</returns>
+        [Pure]
         internal static int Sample(TGen generator, double lambda)
         {
-            var count = 0;
-            var helper1 = Math.Exp(-1.0*lambda);
-            for (var product = generator.NextDouble(); product >= helper1; product *= generator.NextDouble()) {
-                count++;
-            }
-            return count;
+            // See contribution of JcBernack on BitBucket (issue #2) and see Wikipedia page about
+            // Poisson distribution (https://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables).
+            const int step = 500;
+            var k = 0;
+            var p = 1.0;
+            double r;
+            do
+            {
+                k++;
+                while ((r = generator.NextDouble()).Equals(0.0))
+                {
+                    // Cycle until the random number is not zero. According to the Wikipedia page,
+                    // we should multiply p by a random number that must be greater than zero and
+                    // less than 1. NextDouble guarantees only the second clause, not the first one.
+                }
+                p *= r;
+                if (p < Math.E && lambda > 0)
+                {
+                    p *= Math.Exp(lambda > step ? step : lambda);
+                    lambda -= step;
+                }
+            } while (p > 1);
+            return k - 1;
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of poisson distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The poisson distribution generates only discrete numbers.<br />
-    ///   The implementation of the <see cref="PoissonDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Poisson_distribution">Wikipedia - Poisson distribution</a>
-    ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
-    ///   Communication Networks Class Library</a>.
+    ///   The poisson distribution generates only discrete numbers. <br/> The implementation of the
+    ///   <see cref="PoissonDistribution"/> type bases upon information presented on
+    ///   <a href="http://en.wikipedia.org/wiki/Poisson_distribution">Wikipedia - Poisson
+    ///   distribution</a> and the implementation in the
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
+    ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
     public sealed class PoissonDistribution : PoissonDistribution<IGenerator>
@@ -271,8 +288,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public PoissonDistribution() : base(new XorShift128Generator(), DefaultLambda)
         {
@@ -281,8 +298,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -296,13 +313,11 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public PoissonDistribution(IGenerator generator) : base(generator, DefaultLambda)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
@@ -310,8 +325,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of poisson distributed random numbers.
@@ -326,8 +341,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -347,16 +362,14 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of poisson distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
@@ -366,6 +379,6 @@ namespace Troschuetz.Random.Distributions.Discrete
             Debug.Assert(Equals(Lambda, lambda));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

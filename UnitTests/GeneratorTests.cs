@@ -126,8 +126,8 @@ namespace Troschuetz.Random.Tests
                 otherGen.NextBytes(b2);
                 Assert.AreEqual(b2, b1);
             }
-            PersistentCache.DefaultInstance.AddStatic("Generator", _generator);
-            _generator = PersistentCache.DefaultInstance.Get("Generator") as IGenerator;
+            PersistentCache.DefaultInstance.AddStaticToDefaultPartition("Generator", _generator);
+            _generator = PersistentCache.DefaultInstance.GetFromDefaultPartition<IGenerator>("Generator").Value;
             for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext())
             {
                 otherGen.NextBytes(b2);
@@ -559,14 +559,14 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void Choice_EmptyList()
         {
             _generator.Choice(new string[0]);
         }
 
         [Test]
-        public void Chioce_OneItem()
+        public void Choice_OneItem()
         {
             var list = new[] {1};
             for (var i = 0; i < Iterations; ++i) {
@@ -582,7 +582,7 @@ namespace Troschuetz.Random.Tests
         [TestCase(20)]
         [TestCase(50)]
         [TestCase(100)]
-        public void Chioce_ManyItems(int len)
+        public void Choice_ManyItems(int len)
         {
             var list = new int[len];
             for (var i = 0; i < len; ++i) {
@@ -600,7 +600,7 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        public void Chioce_FromString()
+        public void Choice_FromString()
         {
             var str = new[] {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
             var counts = new double[str.Length];
@@ -622,14 +622,14 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void Choice_IEnumerable_EmptyList()
         {
             _generator.Choice(new string[0]);
         }
 
         [Test]
-        public void Chioce_IEnumerable_OneItem()
+        public void Choice_IEnumerable_OneItem()
         {
             var list = new[] {1};
             for (var i = 0; i < Iterations; ++i) {
@@ -645,7 +645,7 @@ namespace Troschuetz.Random.Tests
         [TestCase(20)]
         [TestCase(50)]
         [TestCase(100)]
-        public void Chioce_IEnumerable_ManyItems(int len)
+        public void Choice_IEnumerable_ManyItems(int len)
         {
             var list = new int[len];
             for (var i = 0; i < len; ++i) {
@@ -674,14 +674,14 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void Choices_EmptyList()
         {
             _generator.Choices(new string[0]).GetEnumerator().MoveNext();
         }
 
         [Test]
-        public void Chioces_OneItem()
+        public void Choices_OneItem()
         {
             var list = new[] {1};
             var en = _generator.Choices(list).GetEnumerator();
@@ -699,7 +699,7 @@ namespace Troschuetz.Random.Tests
         [TestCase(20)]
         [TestCase(50)]
         [TestCase(100)]
-        public void Chioces_ManyItems(int len)
+        public void Choices_ManyItems(int len)
         {
             var list = new int[len];
             for (var i = 0; i < len; ++i) {
@@ -719,7 +719,7 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        public void Chioces_FromString()
+        public void Choices_FromString()
         {
             var str = new[] {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
             var counts = new double[str.Length];
@@ -743,14 +743,14 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void Choices_IEnumerable_EmptyList()
         {
             _generator.Choices(new string[0]).GetEnumerator().MoveNext();
         }
 
         [Test]
-        public void Chioces_IEnumerable_OneItem()
+        public void Choices_IEnumerable_OneItem()
         {
             var list = new[] {1};
             var en = _generator.Choices(list).GetEnumerator();
@@ -768,7 +768,7 @@ namespace Troschuetz.Random.Tests
         [TestCase(20)]
         [TestCase(50)]
         [TestCase(100)]
-        public void Chioces_IEnumerable_ManyItems(int len)
+        public void Choices_IEnumerable_ManyItems(int len)
         {
             var list = new int[len];
             for (var i = 0; i < len; ++i) {

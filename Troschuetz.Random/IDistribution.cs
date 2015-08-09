@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -14,20 +14,20 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random
 {
+    using PommaLabs.Thrower;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
-    using Contracts;
+    using Core;
 
     /// <summary>
     ///   Declares common functionality for all random number distributions.
     /// </summary>
-    [ContractClass(typeof(DistributionContract))]
     public interface IDistribution
     {
         /// <summary>
@@ -37,7 +37,7 @@ namespace Troschuetz.Random
         IGenerator Generator { get; }
 
         /// <summary>
-        ///   Gets a value indicating whether the random number distribution can be reset, 
+        ///   Gets a value indicating whether the random number distribution can be reset,
         ///   so that it produces the same random number sequence again.
         /// </summary>
         [Pure]
@@ -121,29 +121,31 @@ namespace Troschuetz.Random
         /// </summary>
         protected readonly TGen Gen;
 
-        internal Distribution(TGen generator)
+        /// <summary>
+        ///   Builds a distribution using given generator.
+        /// </summary>
+        /// <param name="generator">The generator that will be used by the distribution.</param>
+        /// <exception cref="ArgumentNullException">
+        ///   Given generator is null.
+        /// </exception>
+        protected Distribution(TGen generator)
         {
+            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             Gen = generator;
         }
 
         #region IDistribution Members
 
         /// <summary>
-        ///   Gets a value indicating whether the random number distribution can be reset, 
+        ///   Gets a value indicating whether the random number distribution can be reset,
         ///   so that it produces the same random number sequence again.
         /// </summary>
-        public bool CanReset
-        {
-            get { return Gen.CanReset; }
-        }
+        public bool CanReset => Gen.CanReset;
 
         /// <summary>
         ///   Gets a <see cref="IGenerator"/> object that can be used as underlying random number generator.
         /// </summary>
-        public IGenerator Generator
-        {
-            get { return Gen; }
-        }
+        public IGenerator Generator => Gen;
 
         /// <summary>
         ///   Resets the random number distribution, so that it produces the same random number sequence again.
@@ -151,12 +153,9 @@ namespace Troschuetz.Random
         /// <returns>
         ///   <see langword="true"/>, if the random number distribution was reset; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool Reset()
-        {
-            return Gen.Reset();
-        }
+        public bool Reset() => Gen.Reset();
 
-        #endregion
+        #endregion IDistribution Members
     }
 
     /// <summary>
@@ -182,7 +181,6 @@ namespace Troschuetz.Random
     ///   Models a distribution with an alpha parameter.
     /// </summary>
     /// <typeparam name="TNum">The numeric type of the parameter.</typeparam>
-    [ContractClass(typeof(AlphaDistributionContract<>))]
     public interface IAlphaDistribution<TNum> where TNum : struct
     {
         /// <summary>
@@ -207,7 +205,6 @@ namespace Troschuetz.Random
     ///   Models a distribution with a beta parameter.
     /// </summary>
     /// <typeparam name="TNum">The numeric type of the parameter.</typeparam>
-    [ContractClass(typeof(BetaDistributionContract<>))]
     public interface IBetaDistribution<TNum> where TNum : struct
     {
         /// <summary>
@@ -232,7 +229,6 @@ namespace Troschuetz.Random
     ///   Models a distribution with a gamma parameter.
     /// </summary>
     /// <typeparam name="TNum">The numeric type of the parameter.</typeparam>
-    [ContractClass(typeof(GammaDistributionContract<>))]
     public interface IGammaDistribution<TNum> where TNum : struct
     {
         /// <summary>
@@ -257,7 +253,6 @@ namespace Troschuetz.Random
     ///   Models a distribution with a lambda parameter.
     /// </summary>
     /// <typeparam name="TNum">The numeric type of the parameter.</typeparam>
-    [ContractClass(typeof(LambdaDistributionContract<>))]
     public interface ILambdaDistribution<TNum> where TNum : struct
     {
         /// <summary>
@@ -282,7 +277,6 @@ namespace Troschuetz.Random
     ///   Models a distribution with a mu parameter.
     /// </summary>
     /// <typeparam name="TNum">The numeric type of the parameter.</typeparam>
-    [ContractClass(typeof(MuDistributionContract<>))]
     public interface IMuDistribution<TNum> where TNum : struct
     {
         /// <summary>
@@ -307,7 +301,6 @@ namespace Troschuetz.Random
     ///   Models a distribution with a nu parameter.
     /// </summary>
     /// <typeparam name="TNum">The numeric type of the parameter.</typeparam>
-    [ContractClass(typeof(NuDistributionContract<>))]
     public interface INuDistribution<TNum> where TNum : struct
     {
         /// <summary>
@@ -332,7 +325,6 @@ namespace Troschuetz.Random
     ///   Models a distribution with a sigma parameter.
     /// </summary>
     /// <typeparam name="TNum">The numeric type of the parameter.</typeparam>
-    [ContractClass(typeof(SigmaDistributionContract<>))]
     public interface ISigmaDistribution<TNum> where TNum : struct
     {
         /// <summary>
@@ -357,7 +349,6 @@ namespace Troschuetz.Random
     ///   Models a distribution with a theta parameter.
     /// </summary>
     /// <typeparam name="TNum">The numeric type of the parameter.</typeparam>
-    [ContractClass(typeof(ThetaDistributionContract<>))]
     public interface IThetaDistribution<TNum> where TNum : struct
     {
         /// <summary>
@@ -382,7 +373,6 @@ namespace Troschuetz.Random
     ///   Models a distribution with a weights parameter.
     /// </summary>
     /// <typeparam name="T">The numeric type of the parameter.</typeparam>
-    [ContractClass(typeof(WeightsDistributionContract<>))]
     public interface IWeightsDistribution<T> where T : struct
     {
         /// <summary>

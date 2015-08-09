@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,17 +19,20 @@
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
 
     /// <summary>
     ///   Provides generation of rayleigh distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="RayleighDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Rayleigh_distribution">Wikipedia - Rayleigh Distribution</a>.
+    ///   The implementation of the <see cref="RayleighDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Rayleigh_distribution">Wikipedia -
+    ///   Rayleigh Distribution</a>.
     /// </remarks>
     [Serializable]
     public class RayleighDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, ISigmaDistribution<double>
@@ -38,11 +41,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Sigma"/> if none is specified. 
+        ///   The default value assigned to <see cref="Sigma"/> if none is specified.
         /// </summary>
         public const double DefaultSigma = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
@@ -52,7 +55,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         double _sigma;
 
         /// <summary>
-        ///   Gets or sets the parameter sigma which is used for generation of rayleigh distributed random numbers.
+        ///   Gets or sets the parameter sigma which is used for generation of rayleigh distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -63,36 +67,37 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Sigma
         {
             get { return _sigma; }
-            set { _sigma = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidSigma(value), ErrorMessages.InvalidParams);
+                _sigma = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         public RayleighDistribution(TGen generator, double sigma)
             : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(IsValidParam(sigma), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(sigma), ErrorMessages.InvalidParams);
             _sigma = sigma;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -100,15 +105,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Sigma"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidSigma(double value)
         {
             return IsValidParam(value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
@@ -124,22 +127,22 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Mean
         {
-            get { return _sigma*Math.Sqrt(Math.PI/2.0); }
+            get { return _sigma * Math.Sqrt(Math.PI / 2.0); }
         }
 
         public double Median
         {
-            get { return _sigma*Math.Sqrt(Math.Log(4)); }
+            get { return _sigma * Math.Sqrt(Math.Log(4)); }
         }
 
         public double Variance
         {
-            get { return Math.Pow(_sigma, 2.0)*(4.0 - Math.PI)/2.0; }
+            get { return Math.Pow(_sigma, 2.0) * (4.0 - Math.PI) / 2.0; }
         }
 
         public double[] Mode
         {
-            get { return new[] {_sigma}; }
+            get { return new[] { _sigma }; }
         }
 
         public double NextDouble()
@@ -147,7 +150,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return Sample(Gen, _sigma);
         }
 
-        #endregion
+        #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
@@ -160,7 +163,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="sigma"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool IsValidParam(double sigma)
         {
             return sigma > 0;
@@ -173,10 +176,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A rayleigh distributed floating point random number.
-        /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        /// <returns>A rayleigh distributed floating point random number.</returns>
+        [Pure]
         internal static double Sample(TGen generator, double sigma)
         {
             const double mu = 0.0;
@@ -185,15 +186,16 @@ namespace Troschuetz.Random.Distributions.Continuous
             return Math.Sqrt(n1 + n2);
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of rayleigh distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="RayleighDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Rayleigh_distribution">Wikipedia - Rayleigh Distribution</a>.
+    ///   The implementation of the <see cref="RayleighDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Rayleigh_distribution">Wikipedia -
+    ///   Rayleigh Distribution</a>.
     /// </remarks>
     [Serializable]
     public sealed class RayleighDistribution : RayleighDistribution<IGenerator>
@@ -201,8 +203,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public RayleighDistribution() : base(new XorShift128Generator(), DefaultSigma)
         {
@@ -211,8 +213,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -226,13 +228,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public RayleighDistribution(IGenerator generator) : base(generator, DefaultSigma)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
@@ -240,8 +240,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
@@ -256,8 +256,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -277,16 +277,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
@@ -296,6 +294,6 @@ namespace Troschuetz.Random.Distributions.Continuous
             Debug.Assert(Equals(Sigma, sigma));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

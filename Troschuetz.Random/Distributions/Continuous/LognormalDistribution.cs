@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -34,41 +34,44 @@
  *  2001-02-18  moved to individual header files
  */
 
-#endregion
+#endregion Original Copyright
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
 
     /// <summary>
     ///   Provides generation of lognormal distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="LognormalDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Log-normal_distribution">Wikipedia - Lognormal Distribution</a> and
-    ///   the implementation in the <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
+    ///   The implementation of the <see cref="LognormalDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Log-normal_distribution">Wikipedia -
+    ///   Lognormal Distribution</a> and the implementation in the
+    ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
     /// </remarks>
     [Serializable]
-    public class LognormalDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IMuDistribution<double>, 
+    public class LognormalDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IMuDistribution<double>,
                                                ISigmaDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Mu"/> if none is specified. 
+        ///   The default value assigned to <see cref="Mu"/> if none is specified.
         /// </summary>
         public const double DefaultMu = 1;
 
         /// <summary>
-        ///   The default value assigned to <see cref="Sigma"/> if none is specified. 
+        ///   The default value assigned to <see cref="Sigma"/> if none is specified.
         /// </summary>
         public const double DefaultSigma = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
@@ -78,12 +81,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         double _mu;
 
         /// <summary>
-        ///   Stores the parameter sigma which is used for generation of lognormal distributed random numbers.
+        ///   Stores the parameter sigma which is used for generation of lognormal distributed
+        ///   random numbers.
         /// </summary>
         double _sigma;
 
         /// <summary>
-        ///   Gets or sets the parameter mu which is used for generation of lognormal distributed random numbers.
+        ///   Gets or sets the parameter mu which is used for generation of lognormal distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is equal to <see cref="double.NaN"/>.
@@ -94,11 +99,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Mu
         {
             get { return _mu; }
-            set { _mu = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidMu(value), ErrorMessages.InvalidParams);
+                _mu = value;
+            }
         }
 
         /// <summary>
-        ///   Gets or sets the parameter sigma which is used for generation of lognormal distributed random numbers.
+        ///   Gets or sets the parameter sigma which is used for generation of lognormal distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than zero.
@@ -109,16 +119,20 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Sigma
         {
             get { return _sigma; }
-            set { _sigma = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidSigma(value), ErrorMessages.InvalidParams);
+                _sigma = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="mu">
@@ -127,21 +141,18 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of lognormal distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
         public LognormalDistribution(TGen generator, double mu, double sigma) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
             _mu = mu;
             _sigma = sigma;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -167,7 +178,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return AreValidParams(Mu, value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
@@ -183,7 +194,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Mean
         {
-            get { return Math.Exp(Mu + 0.5*Math.Pow(Sigma, 2.0)); }
+            get { return Math.Exp(Mu + 0.5 * Math.Pow(Sigma, 2.0)); }
         }
 
         public double Median
@@ -193,12 +204,12 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Variance
         {
-            get { return (Math.Exp(Math.Pow(Sigma, 2.0)) - 1.0)*Math.Exp(2.0*Mu + Math.Pow(Sigma, 2.0)); }
+            get { return (Math.Exp(Math.Pow(Sigma, 2.0)) - 1.0) * Math.Exp(2.0 * Mu + Math.Pow(Sigma, 2.0)); }
         }
 
         public double[] Mode
         {
-            get { return new[] {Math.Exp(Mu - Math.Pow(Sigma, 2.0))}; }
+            get { return new[] { Math.Exp(Mu - Math.Pow(Sigma, 2.0)) }; }
         }
 
         public double NextDouble()
@@ -206,7 +217,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return Sample(Gen, _mu, _sigma);
         }
 
-        #endregion
+        #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
@@ -220,9 +231,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of lognormal distributed random numbers.
         /// </param>
         /// <returns>
-        ///   True if <paramref name="sigma"/> is greater than or equal to zero; otherwise, it returns false.
+        ///   True if <paramref name="sigma"/> is greater than or equal to zero; otherwise, it
+        ///   returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double mu, double sigma)
         {
             return !double.IsNaN(mu) && sigma >= 0;
@@ -238,27 +250,26 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of lognormal distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A lognormal distributed floating point random number.
-        /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        /// <returns>A lognormal distributed floating point random number.</returns>
+        [Pure]
         internal static double Sample(TGen generator, double mu, double sigma)
         {
             const double nm = 0.0;
             const double ns = 1.0;
-            return Math.Exp(NormalDistribution<TGen>.Sample(generator, nm, ns)*sigma + mu);
+            return Math.Exp(NormalDistribution<TGen>.Sample(generator, nm, ns) * sigma + mu);
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of lognormal distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="LognormalDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Log-normal_distribution">Wikipedia - Lognormal Distribution</a> and
-    ///   the implementation in the <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
+    ///   The implementation of the <see cref="LognormalDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Log-normal_distribution">Wikipedia -
+    ///   Lognormal Distribution</a> and the implementation in the
+    ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
     /// </remarks>
     [Serializable]
     public sealed class LognormalDistribution : LognormalDistribution<IGenerator>
@@ -266,8 +277,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public LognormalDistribution() : base(new XorShift128Generator(), DefaultMu, DefaultSigma)
         {
@@ -277,8 +288,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -293,13 +304,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public LognormalDistribution(IGenerator generator) : base(generator, DefaultMu, DefaultSigma)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
@@ -308,8 +317,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="mu">
         ///   The parameter mu which is used for generation of lognormal distributed random numbers.
@@ -328,8 +337,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -354,8 +363,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="LognormalDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="mu">
@@ -364,9 +373,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of lognormal distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
@@ -377,6 +384,6 @@ namespace Troschuetz.Random.Distributions.Continuous
             Debug.Assert(Equals(Sigma, sigma));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,16 +19,19 @@
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
 
     /// <summary>
     ///   Provides generation of exponential distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="ExponentialDistribution"/> type bases upon information presented on
+    ///   The implementation of the <see cref="ExponentialDistribution"/> type bases upon
+    ///   information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Exponential_distribution">Wikipedia - Exponential distribution</a>.
     /// </remarks>
     [Serializable]
@@ -38,21 +41,23 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Lambda"/> if none is specified. 
+        ///   The default value assigned to <see cref="Lambda"/> if none is specified.
         /// </summary>
         public const double DefaultLambda = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
         /// <summary>
-        ///   Stores the parameter lambda which is used for generation of exponential distributed random numbers.
+        ///   Stores the parameter lambda which is used for generation of exponential distributed
+        ///   random numbers.
         /// </summary>
         double _lambda;
 
         /// <summary>
-        ///   Gets or sets the parameter lambda which is used for generation of exponential distributed random numbers.
+        ///   Gets or sets the parameter lambda which is used for generation of exponential
+        ///   distributed random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -63,35 +68,36 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Lambda
         {
             get { return _lambda; }
-            set { _lambda = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidLambda(value), ErrorMessages.InvalidParams);
+                _lambda = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using
+        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of exponential distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         public ExponentialDistribution(TGen generator, double lambda) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(IsValidParam(lambda), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(lambda), ErrorMessages.InvalidParams);
             _lambda = lambda;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -99,54 +105,31 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Lambda"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidLambda(double value)
         {
             return IsValidParam(value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        public double Minimum => 0.0;
 
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
-        public double Mean
-        {
-            get { return 1.0/_lambda; }
-        }
+        public double Mean => 1.0 / _lambda;
 
-        public double Median
-        {
-            get { return Math.Log(2.0)/_lambda; }
-        }
+        public double Median => Math.Log(2.0) / _lambda;
 
-        public double Variance
-        {
-            get { return Math.Pow(_lambda, -2.0); }
-        }
+        public double Variance => Math.Pow(_lambda, -2.0);
 
-        public double[] Mode
-        {
-            get { return new[] {0.0}; }
-        }
+        public double[] Mode => new[] { 0.0 };
 
-        public double NextDouble()
-        {
-            return Sample(Gen, _lambda);
-        }
+        public double NextDouble() => Sample(Gen, _lambda);
 
-        #endregion
+        #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
@@ -159,7 +142,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="lambda"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool IsValidParam(double lambda)
         {
             return lambda > 0;
@@ -172,23 +155,22 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of exponential distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An exponential distributed floating point random number.
-        /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        /// <returns>An exponential distributed floating point random number.</returns>
+        [Pure]
         internal static double Sample(TGen generator, double lambda)
         {
-            return (-1.0/lambda)*Math.Log(1.0 - generator.NextDouble());
+            return (-1.0 / lambda) * Math.Log(1.0 - generator.NextDouble());
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of exponential distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="ExponentialDistribution"/> type bases upon information presented on
+    ///   The implementation of the <see cref="ExponentialDistribution"/> type bases upon
+    ///   information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Exponential_distribution">Wikipedia - Exponential distribution</a>.
     /// </remarks>
     [Serializable]
@@ -197,8 +179,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public ExponentialDistribution() : base(new XorShift128Generator(), DefaultLambda)
         {
@@ -207,8 +189,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -222,13 +204,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using
+        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public ExponentialDistribution(IGenerator generator) : base(generator, DefaultLambda)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
@@ -236,8 +216,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of exponential distributed random numbers.
@@ -252,8 +232,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -273,16 +253,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using
+        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of exponential distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
@@ -292,6 +270,6 @@ namespace Troschuetz.Random.Distributions.Continuous
             Debug.Assert(Equals(Lambda, lambda));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

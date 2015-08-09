@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,7 +19,7 @@
 
 #region Original Copyright
 
-//   -*- C++ -*-
+// -*- C++ -*-
 /*****************************************************************************
  *
  *   |_|_|_  |_|_    |_    |_|_|_  |_		     C O M M U N I C A T I O N
@@ -55,7 +55,7 @@
  * -------------------
  * Copyright (C) 1988 Free Software Foundation
  *    written by Dirk Grunwald (grunwald@cs.uiuc.edu)
- * 
+ *
  * This file is part of the GNU C++ Library.  This library is free
  * software; you can redistribute it and/or modify it under the terms of
  * the GNU Library General Public License as published by the Free
@@ -69,23 +69,26 @@
  * Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *****************************************************************************/
 
-#endregion
+#endregion Original Copyright
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
 
     /// <summary>
     ///   Provides generation of normal distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="NormalDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Normal_distribution">Wikipedia - Normal distribution</a>
-    ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
-    ///   Communication Networks Class Library</a>.
+    ///   The implementation of the <see cref="NormalDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Normal_distribution">Wikipedia - Normal
+    ///   distribution</a> and the implementation in the
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
+    ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
     public class NormalDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IMuDistribution<double>, ISigmaDistribution<double>
@@ -94,16 +97,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Mu"/> if none is specified. 
+        ///   The default value assigned to <see cref="Mu"/> if none is specified.
         /// </summary>
         public const double DefaultMu = 1;
 
         /// <summary>
-        ///   The default value assigned to <see cref="Sigma"/> if none is specified. 
+        ///   The default value assigned to <see cref="Sigma"/> if none is specified.
         /// </summary>
         public const double DefaultSigma = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
@@ -118,7 +121,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         double _sigma;
 
         /// <summary>
-        ///   Gets or sets the parameter mu which is used for generation of normal distributed random numbers.
+        ///   Gets or sets the parameter mu which is used for generation of normal distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is equal to <see cref="double.NaN"/>.
@@ -129,11 +133,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Mu
         {
             get { return _mu; }
-            set { _mu = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidMu(value), ErrorMessages.InvalidParams);
+                _mu = value;
+            }
         }
 
         /// <summary>
-        ///   Gets or sets the parameter sigma which is used for generation of normal distributed random numbers.
+        ///   Gets or sets the parameter sigma which is used for generation of normal distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -144,16 +153,20 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Sigma
         {
             get { return _sigma; }
-            set { _sigma = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidSigma(value), ErrorMessages.InvalidParams);
+                _sigma = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution{T}"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="NormalDistribution{T}"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="mu">
@@ -162,21 +175,18 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of normal distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <see cref="sigma"/> is less than or equal to zero.
         /// </exception>
         public NormalDistribution(TGen generator, double mu, double sigma) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
             _mu = mu;
             _sigma = sigma;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -194,15 +204,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Sigma"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidSigma(double value)
         {
             return AreValidParams(_mu, value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
@@ -233,7 +241,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double[] Mode
         {
-            get { return new[] {_mu}; }
+            get { return new[] { _mu }; }
         }
 
         public double NextDouble()
@@ -241,7 +249,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return Sample(Gen, _mu, _sigma);
         }
 
-        #endregion
+        #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
@@ -257,7 +265,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <see cref="_sigma"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double mu, double sigma)
         {
             return !double.IsNaN(mu) && sigma > 0;
@@ -273,35 +281,36 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of normal distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A normal distributed floating point random number.
-        /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        /// <returns>A normal distributed floating point random number.</returns>
+        [Pure]
         internal static double Sample(TGen generator, double mu, double sigma)
         {
-            while (true) {
-                var v1 = 2.0*generator.NextDouble() - 1.0;
-                var v2 = 2.0*generator.NextDouble() - 1.0;
-                var w = v1*v1 + v2*v2;
-                if (w > 1) {
+            while (true)
+            {
+                var v1 = 2.0 * generator.NextDouble() - 1.0;
+                var v2 = 2.0 * generator.NextDouble() - 1.0;
+                var w = v1 * v1 + v2 * v2;
+                if (w > 1)
+                {
                     continue;
                 }
-                var y = Math.Sqrt(-2.0*Math.Log(w)/w)*sigma;
-                return generator.NextBoolean() ? v1*y + mu : v2*y + mu;
+                var y = Math.Sqrt(-2.0 * Math.Log(w) / w) * sigma;
+                return generator.NextBoolean() ? v1 * y + mu : v2 * y + mu;
             }
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of normal distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="NormalDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Normal_distribution">Wikipedia - Normal distribution</a>
-    ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
-    ///   Communication Networks Class Library</a>.
+    ///   The implementation of the <see cref="NormalDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Normal_distribution">Wikipedia - Normal
+    ///   distribution</a> and the implementation in the
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
+    ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
     public sealed class NormalDistribution : NormalDistribution<IGenerator>
@@ -309,8 +318,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public NormalDistribution() : base(new XorShift128Generator(), DefaultMu, DefaultSigma)
         {
@@ -320,8 +329,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -336,13 +345,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public NormalDistribution(IGenerator generator) : base(generator, DefaultMu, DefaultSigma)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
@@ -351,8 +358,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="mu">
         ///   The parameter mu which is used for generation of normal distributed random numbers.
@@ -371,8 +378,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -396,8 +403,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="mu">
@@ -406,9 +413,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of normal distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <see cref="sigma"/> is less than or equal to zero.
         /// </exception>
@@ -419,6 +424,6 @@ namespace Troschuetz.Random.Distributions.Continuous
             Debug.Assert(Equals(Sigma, sigma));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

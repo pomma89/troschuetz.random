@@ -209,10 +209,10 @@ namespace Troschuetz.Random.Tests
             for (var i = 0; i < Iterations; ++i) {
                 Dist.NextDouble();
             }
-            PersistentCache.DefaultInstance.AddStatic("Distribution", Dist);
-            var otherDist = PersistentCache.DefaultInstance.Get("Distribution") as TDist;
+            PersistentCache.DefaultInstance.AddStaticToDefaultPartition("Distribution", Dist);
+            var otherDist = PersistentCache.DefaultInstance.GetFromDefaultPartition<TDist>("Distribution");
             for (var i = 0; i < Iterations; ++i) {
-                Assert.AreEqual(Dist.NextDouble(), otherDist.NextDouble());
+                Assert.AreEqual(Dist.NextDouble(), otherDist.Value.NextDouble());
             }
         }
     }
@@ -347,10 +347,10 @@ namespace Troschuetz.Random.Tests
             for (var i = 0; i < Iterations; ++i) {
                 Dist.Next();
             }
-            PersistentCache.DefaultInstance.AddStatic("Distribution", Dist);
-            var otherDist = PersistentCache.DefaultInstance.Get("Distribution") as TDist;
+            PersistentCache.DefaultInstance.AddStaticToDefaultPartition("Distribution", Dist);
+            var otherDist = PersistentCache.DefaultInstance.GetFromDefaultPartition<TDist>("Distribution");
             for (var i = 0; i < Iterations; ++i) {
-                Assert.AreEqual(Dist.Next(), otherDist.Next());
+                Assert.AreEqual(Dist.Next(), otherDist.Value.Next());
             }
         }
     }

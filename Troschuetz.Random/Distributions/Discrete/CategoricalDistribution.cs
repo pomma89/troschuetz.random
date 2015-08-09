@@ -55,6 +55,8 @@ namespace Troschuetz.Random.Distributions.Discrete
     using System.Diagnostics.Contracts;
     using System.Linq;
     using Generators;
+    using Core;
+    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Implements the categorical distribution. For details about this distribution, see 
@@ -116,6 +118,9 @@ namespace Troschuetz.Random.Distributions.Discrete
             get { return _weights.Select(w => w/_weightsSum).ToList(); }
             set
             {
+                RaiseArgumentNullException.IfIsNull(value, nameof(value), ErrorMessages.NullWeights);
+                Raise<ArgumentException>.IfIsEmpty(value);
+                Raise<ArgumentOutOfRangeException>.IfNot(AreValidWeights(value), ErrorMessages.InvalidParams);
                 _weights = value.ToList();
                 UpdateHelpers();
             }
@@ -142,8 +147,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public CategoricalDistribution(TGen generator, int valueCount) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator); 
-            Contract.Requires<ArgumentNullException>(valueCount != 0, ErrorMessages.InvalidParams);
+            RaiseArgumentOutOfRangeException.IfIsEqual(valueCount, 0, ErrorMessages.InvalidParams);
             _weights = Ones(valueCount);
             UpdateHelpers();
         }
@@ -166,10 +170,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public CategoricalDistribution(TGen generator, ICollection<double> weights) : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);          
-            Contract.Requires<ArgumentNullException>(weights != null, ErrorMessages.NullWeights);     
-            Contract.Requires<ArgumentException>(weights.Count > 0);
-            Contract.Requires<ArgumentOutOfRangeException>(IsValidParam(weights), ErrorMessages.InvalidParams);
+            RaiseArgumentNullException.IfIsNull(weights, nameof(weights), ErrorMessages.NullWeights);
+            Raise<ArgumentException>.IfIsEmpty(weights);
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidWeights(weights), ErrorMessages.InvalidParams);
             _weights = weights.ToList();
             UpdateHelpers();
         }
@@ -318,7 +321,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   False if any of the weights is negative or if the sum of parameters is 0.0;
         ///   otherwise, it returns true.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool IsValidParam(IEnumerable<double> weights)
         {
             var sum = 0.0;
@@ -341,7 +344,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <returns>
         ///   A categorical distributed 32-bit signed integer.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static int Sample(TGen generator, int weightsCount, double[] cdf, double weightsSum)
         {
             var u = generator.NextDouble(weightsSum);

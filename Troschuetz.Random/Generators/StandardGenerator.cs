@@ -19,7 +19,9 @@
 
 namespace Troschuetz.Random.Generators
 {
+    using PommaLabs.Thrower;
     using System;
+    using Core;
 
     /// <summary>
     ///   Represents a simple pseudo-random number generator.
@@ -135,11 +137,17 @@ namespace Troschuetz.Random.Generators
 
         public int Next(int maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+
             return _generator.Next(maxValue);
         }
 
         public int Next(int minValue, int maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+
             return _generator.Next(minValue, maxValue);
         }
 
@@ -150,11 +158,19 @@ namespace Troschuetz.Random.Generators
 
         public double NextDouble(double maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
+
             return _generator.NextDouble()*maxValue;
         }
 
         public double NextDouble(double minValue, double maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
+
             return minValue + _generator.NextDouble()*(maxValue - minValue);
         }
 
@@ -169,6 +185,9 @@ namespace Troschuetz.Random.Generators
         [CLSCompliant(false)]
         public uint NextUInt(uint maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
+
             // UInt32 requires four bytes in order to be built.
             NextBytes(_uintBuffer ?? (_uintBuffer = new byte[4]));
             var x = BitConverter.ToUInt32(_uintBuffer, 0);
@@ -181,6 +200,9 @@ namespace Troschuetz.Random.Generators
         [CLSCompliant(false)]
         public uint NextUInt(uint minValue, uint maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+
             // UInt32 requires four bytes in order to be built.
             NextBytes(_uintBuffer ?? (_uintBuffer = new byte[4]));
             var x = BitConverter.ToUInt32(_uintBuffer, 0);
@@ -208,6 +230,9 @@ namespace Troschuetz.Random.Generators
 
         public void NextBytes(byte[] buffer)
         {
+            // Preconditions
+            RaiseArgumentNullException.IfIsNull(buffer, nameof(buffer), ErrorMessages.NullBuffer);
+
             _generator.NextBytes(buffer);
         }
 

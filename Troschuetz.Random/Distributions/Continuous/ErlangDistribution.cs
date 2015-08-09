@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,18 +19,20 @@
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
 
     /// <summary>
     ///   Provides generation of erlang distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="ErlangDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Erlang_distribution">Wikipedia - Erlang distribution</a> and
-    ///   <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
+    ///   The implementation of the <see cref="ErlangDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Erlang_distribution">Wikipedia - Erlang
+    ///   distribution</a> and <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
     /// </remarks>
     [Serializable]
     public class ErlangDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, ILambdaDistribution<double>
@@ -39,21 +41,22 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Alpha"/> if none is specified. 
+        ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const int DefaultAlpha = 1;
 
         /// <summary>
-        ///   The default value assigned to <see cref="Lambda"/> if none is specified. 
+        ///   The default value assigned to <see cref="Lambda"/> if none is specified.
         /// </summary>
         public const double DefaultLambda = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
-        
+
         /// <summary>
-        ///   Stores the parameter lambda which is used for generation of rayleigh distributed random numbers.
+        ///   Stores the parameter lambda which is used for generation of rayleigh distributed
+        ///   random numbers.
         /// </summary>
         double _lambda;
 
@@ -63,7 +66,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         int _alpha;
 
         /// <summary>
-        ///   Gets or sets the parameter alpha which is used for generation of erlang distributed random numbers.
+        ///   Gets or sets the parameter alpha which is used for generation of erlang distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -74,11 +78,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         public int Alpha
         {
             get { return _alpha; }
-            set { _alpha = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                _alpha = value;
+            }
         }
 
         /// <summary>
-        ///   Gets or sets the parameter lambda which is used for generation of erlang distributed random numbers.
+        ///   Gets or sets the parameter lambda which is used for generation of erlang distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -89,16 +98,20 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Lambda
         {
             get { return _lambda; }
-            set { _lambda = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidLambda(value), ErrorMessages.InvalidParams);
+                _lambda = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
@@ -107,22 +120,19 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of erlang distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         public ErlangDistribution(TGen generator, int alpha, double lambda)
             : base(generator)
         {
-            Contract.Requires<ArgumentNullException>(!ReferenceEquals(generator, null), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _lambda = lambda;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -130,9 +140,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Alpha"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidAlpha(int value)
         {
             return AreValidParams(value, _lambda);
@@ -142,15 +150,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Lambda"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidLambda(double value)
         {
             return AreValidParams(_alpha, value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
@@ -166,7 +172,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Mean
         {
-            get { return Alpha/Lambda; }
+            get { return Alpha / Lambda; }
         }
 
         public double Median
@@ -176,12 +182,12 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Variance
         {
-            get { return Alpha/Math.Pow(Lambda, 2.0); }
+            get { return Alpha / Math.Pow(Lambda, 2.0); }
         }
 
         public double[] Mode
         {
-            get { return new[] {(Alpha - 1)/Lambda}; }
+            get { return new[] { (Alpha - 1) / Lambda }; }
         }
 
         public double NextDouble()
@@ -189,7 +195,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return Sample(Gen, _alpha, _lambda);
         }
 
-        #endregion
+        #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
@@ -206,7 +212,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="lambda"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(int alpha, double lambda)
         {
             return alpha > 0 && lambda > 0;
@@ -222,13 +228,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of erlang distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An erlang distributed floating point random number.
-        /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        /// <returns>An erlang distributed floating point random number.</returns>
+        [Pure]
         internal static double Sample(TGen generator, int alpha, double lambda)
         {
-            if (double.IsPositiveInfinity(lambda)) {
+            if (double.IsPositiveInfinity(lambda))
+            {
                 return alpha;
             }
 
@@ -238,44 +243,49 @@ namespace Troschuetz.Random.Distributions.Continuous
             var alphafix = 1.0;
 
             // Fix when alpha is less than one.
-            if (alpha < 1.0) {
+            if (alpha < 1.0)
+            {
                 a = alpha + 1;
-                alphafix = Math.Pow(generator.NextDouble(), 1.0/alpha);
+                alphafix = Math.Pow(generator.NextDouble(), 1.0 / alpha);
             }
 
-            var d = a - (1.0/3.0);
-            var c = 1.0/Math.Sqrt(9.0*d);
-            while (true) {
+            var d = a - (1.0 / 3.0);
+            var c = 1.0 / Math.Sqrt(9.0 * d);
+            while (true)
+            {
                 var x = NormalDistribution<TGen>.Sample(generator, mu, sigma);
-                var v = 1.0 + (c*x);
-                while (v <= 0.0) {
+                var v = 1.0 + (c * x);
+                while (v <= 0.0)
+                {
                     x = NormalDistribution<TGen>.Sample(generator, mu, sigma);
-                    v = 1.0 + (c*x);
+                    v = 1.0 + (c * x);
                 }
 
-                v = v*v*v;
+                v = v * v * v;
                 var u = generator.NextDouble();
-                x = x*x;
-                if (u < 1.0 - (0.0331*x*x)) {
-                    return alphafix*d*v/lambda;
+                x = x * x;
+                if (u < 1.0 - (0.0331 * x * x))
+                {
+                    return alphafix * d * v / lambda;
                 }
 
-                if (Math.Log(u) < (0.5*x) + (d*(1.0 - v + Math.Log(v)))) {
-                    return alphafix*d*v/lambda;
+                if (Math.Log(u) < (0.5 * x) + (d * (1.0 - v + Math.Log(v))))
+                {
+                    return alphafix * d * v / lambda;
                 }
             }
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of erlang distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="ErlangDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Erlang_distribution">Wikipedia - Erlang distribution</a> and
-    ///   <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
+    ///   The implementation of the <see cref="ErlangDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Erlang_distribution">Wikipedia - Erlang
+    ///   distribution</a> and <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
     /// </remarks>
     [Serializable]
     public sealed class ErlangDistribution : ErlangDistribution<IGenerator>
@@ -283,8 +293,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public ErlangDistribution()
             : base(new XorShift128Generator(), DefaultAlpha, DefaultLambda)
@@ -295,8 +305,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -312,13 +322,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public ErlangDistribution(IGenerator generator)
             : base(generator, DefaultAlpha, DefaultLambda)
         {
@@ -328,8 +336,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of erlang distributed random numbers.
@@ -349,8 +357,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -375,8 +383,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
@@ -385,9 +393,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of erlang distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
@@ -398,6 +404,6 @@ namespace Troschuetz.Random.Distributions.Continuous
             Debug.Assert(Equals(Lambda, lambda));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

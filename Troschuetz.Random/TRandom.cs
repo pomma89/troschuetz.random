@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,27 +13,26 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using Distributions.Continuous;
     using Distributions.Discrete;
+    using PommaLabs.Thrower;
     using Generators;
+    using System;
+    using System.Collections.Generic;
+    using Core;
 
     /// <summary>
-    ///   A random generator class similar to the one Python offers, 
+    ///   A random generator class similar to the one Python offers,
     ///   providing functions similar to the ones found in <see cref="System.Random"/>
     ///   and functions returning random numbers according to a particular kind of distribution.
     /// </summary>
-// ReSharper disable InconsistentNaming
     [Serializable]
     public class TRandom<TGen> : IGenerator where TGen : IGenerator
-// ReSharper restore InconsistentNaming
     {
         readonly TGen _gen;
 
@@ -63,12 +62,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BernoulliDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="BernoulliDistribution"/> for each group of parameters.
         /// </remarks>
         public int Bernoulli(double alpha)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(BernoulliDistribution<TGen>.IsValidParam(alpha), 
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(BernoulliDistribution<TGen>.IsValidParam(alpha), ErrorMessages.InvalidParams);
             return BernoulliDistribution<TGen>.Sample(_gen, alpha);
         }
 
@@ -91,11 +89,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BernoulliDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="BernoulliDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> BernoulliSamples(double alpha)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(BernoulliDistribution<TGen>.IsValidParam(alpha),
+            Raise<ArgumentOutOfRangeException>.IfNot(BernoulliDistribution<TGen>.IsValidParam(alpha),
                                                            ErrorMessages.InvalidParams);
             return InfiniteLoop(BernoulliDistribution<TGen>.Sample, _gen, alpha);
         }
@@ -123,11 +121,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BinomialDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="BinomialDistribution"/> for each group of parameters.
         /// </remarks>
         public int Binomial(double alpha, int beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(BinomialDistribution<TGen>.AreValidParams(alpha, beta),
+            Raise<ArgumentOutOfRangeException>.IfNot(BinomialDistribution<TGen>.AreValidParams(alpha, beta),
                                                            ErrorMessages.InvalidParams);
             return BinomialDistribution<TGen>.Sample(_gen, alpha, beta);
         }
@@ -155,11 +153,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BinomialDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="BinomialDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> BinomialSamples(double alpha, int beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(BinomialDistribution<TGen>.AreValidParams(alpha, beta),
+            Raise<ArgumentOutOfRangeException>.IfNot(BinomialDistribution<TGen>.AreValidParams(alpha, beta),
                                                            ErrorMessages.InvalidParams);
             return InfiniteLoop(BinomialDistribution<TGen>.Sample, _gen, alpha, beta);
         }
@@ -184,11 +182,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public int Categorical(int valueCount)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(valueCount > 0, ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(valueCount > 0, ErrorMessages.InvalidParams);
             double[] cdf;
             double weightsSum;
             CategoricalDistribution<TGen>.SetUp(valueCount, null, out cdf, out weightsSum);
@@ -215,11 +213,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> CategoricalSamples(int valueCount)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(valueCount > 0, ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(valueCount > 0, ErrorMessages.InvalidParams);
             double[] cdf;
             double weightsSum;
             CategoricalDistribution<TGen>.SetUp(valueCount, null, out cdf, out weightsSum);
@@ -230,7 +228,7 @@ namespace Troschuetz.Random
         ///   Returns a categorical distributed 32-bit signed integer.
         /// </summary>
         /// <param name="weights">
-        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized 
+        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
         ///   as this is often impossible using floating point arithmetic.
         /// </param>
         /// <returns>
@@ -250,11 +248,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public int Categorical(ICollection<double> weights)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(CategoricalDistribution<TGen>.IsValidParam(weights),
+            Raise<ArgumentOutOfRangeException>.IfNot(CategoricalDistribution<TGen>.IsValidParam(weights),
                                                            ErrorMessages.InvalidParams);
             double[] cdf;
             double weightsSum;
@@ -266,7 +264,7 @@ namespace Troschuetz.Random
         ///   Returns an infinite sequence of categorical distributed 32-bit signed integers.
         /// </summary>
         /// <param name="weights">
-        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized 
+        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
         ///   as this is often impossible using floating point arithmetic.
         /// </param>
         /// <returns>
@@ -286,16 +284,16 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> CategoricalSamples(ICollection<double> weights)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(CategoricalDistribution<TGen>.IsValidParam(weights),
+            Raise<ArgumentOutOfRangeException>.IfNot(CategoricalDistribution<TGen>.IsValidParam(weights),
                                                            ErrorMessages.InvalidParams);
             double[] cdf;
             double weightsSum;
             CategoricalDistribution<TGen>.SetUp(weights.Count, weights, out cdf, out weightsSum);
-            return InfiniteLoop(CategoricalDistribution<TGen>.Sample, _gen, weights.Count, cdf, weightsSum);        
+            return InfiniteLoop(CategoricalDistribution<TGen>.Sample, _gen, weights.Count, cdf, weightsSum);
         }
 
         /// <summary>
@@ -321,11 +319,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="DiscreteUniformDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="DiscreteUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public int DiscreteUniform(int alpha, int beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(DiscreteUniformDistribution<TGen>.AreValidParams(alpha, beta),
+            Raise<ArgumentOutOfRangeException>.IfNot(DiscreteUniformDistribution<TGen>.AreValidParams(alpha, beta),
                                                            ErrorMessages.InvalidParams);
             return DiscreteUniformDistribution<TGen>.Sample(_gen, alpha, beta);
         }
@@ -353,11 +351,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="DiscreteUniformDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="DiscreteUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> DiscreteUniformSamples(int alpha, int beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(DiscreteUniformDistribution<TGen>.AreValidParams(alpha, beta),
+            Raise<ArgumentOutOfRangeException>.IfNot(DiscreteUniformDistribution<TGen>.AreValidParams(alpha, beta),
                                                            ErrorMessages.InvalidParams);
             return InfiniteLoop(DiscreteUniformDistribution<TGen>.Sample, _gen, alpha, beta);
         }
@@ -381,11 +379,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="GeometricDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="GeometricDistribution"/> for each group of parameters.
         /// </remarks>
         public int Geometric(double alpha)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(GeometricDistribution<TGen>.IsValidParam(alpha),
+            Raise<ArgumentOutOfRangeException>.IfNot(GeometricDistribution<TGen>.IsValidParam(alpha),
                                                            ErrorMessages.InvalidParams);
             return GeometricDistribution<TGen>.Sample(_gen, alpha);
         }
@@ -409,11 +407,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="GeometricDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="GeometricDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> GeometricSamples(double alpha)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(GeometricDistribution<TGen>.IsValidParam(alpha),
+            Raise<ArgumentOutOfRangeException>.IfNot(GeometricDistribution<TGen>.IsValidParam(alpha),
                                                            ErrorMessages.InvalidParams);
             return InfiniteLoop(GeometricDistribution<TGen>.Sample, _gen, alpha);
         }
@@ -437,11 +435,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="PoissonDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="PoissonDistribution"/> for each group of parameters.
         /// </remarks>
         public int Poisson(double lambda)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(PoissonDistribution<TGen>.IsValidParam(lambda),
+            Raise<ArgumentOutOfRangeException>.IfNot(PoissonDistribution<TGen>.IsValidParam(lambda),
                                                            ErrorMessages.InvalidParams);
             return PoissonDistribution<TGen>.Sample(_gen, lambda);
         }
@@ -465,16 +463,16 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="PoissonDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="PoissonDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> PoissonSamples(double lambda)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(PoissonDistribution<TGen>.IsValidParam(lambda),
+            Raise<ArgumentOutOfRangeException>.IfNot(PoissonDistribution<TGen>.IsValidParam(lambda),
                                                            ErrorMessages.InvalidParams);
             return InfiniteLoop(PoissonDistribution<TGen>.Sample, _gen, lambda);
         }
 
-        #endregion
+        #endregion Discrete Distributions
 
         #region Continuous Distributions
 
@@ -500,11 +498,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BetaDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="BetaDistribution"/> for each group of parameters.
         /// </remarks>
         public double Beta(double alpha, double beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(BetaDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(BetaDistribution<TGen>.AreValidParams(alpha, beta));
             return BetaDistribution<TGen>.Sample(_gen, alpha, beta);
         }
 
@@ -530,11 +528,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BetaDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="BetaDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> BetaSamples(double alpha, double beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(BetaDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(BetaDistribution<TGen>.AreValidParams(alpha, beta));
             return InfiniteLoop(BetaDistribution<TGen>.Sample, _gen, alpha, beta);
         }
 
@@ -560,11 +558,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BetaPrimeDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="BetaPrimeDistribution"/> for each group of parameters.
         /// </remarks>
         public double BetaPrime(double alpha, double beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(BetaPrimeDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(BetaPrimeDistribution<TGen>.AreValidParams(alpha, beta));
             return BetaPrimeDistribution<TGen>.Sample(_gen, alpha, beta);
         }
 
@@ -590,11 +588,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BetaPrimeDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="BetaPrimeDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> BetaPrimeSamples(double alpha, double beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(BetaPrimeDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(BetaPrimeDistribution<TGen>.AreValidParams(alpha, beta));
             return InfiniteLoop(BetaPrimeDistribution<TGen>.Sample, _gen, alpha, beta);
         }
 
@@ -620,11 +618,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CauchyDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="CauchyDistribution"/> for each group of parameters.
         /// </remarks>
         public double Cauchy(double alpha, double gamma)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(CauchyDistribution<TGen>.AreValidParams(alpha, gamma));
+            Raise<ArgumentOutOfRangeException>.IfNot(CauchyDistribution<TGen>.AreValidParams(alpha, gamma));
             return CauchyDistribution<TGen>.Sample(_gen, alpha, gamma);
         }
 
@@ -650,11 +648,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CauchyDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="CauchyDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> CauchySamples(double alpha, double gamma)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(CauchyDistribution<TGen>.AreValidParams(alpha, gamma));
+            Raise<ArgumentOutOfRangeException>.IfNot(CauchyDistribution<TGen>.AreValidParams(alpha, gamma));
             return InfiniteLoop(CauchyDistribution<TGen>.Sample, _gen, alpha, gamma);
         }
 
@@ -677,11 +675,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ChiDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ChiDistribution"/> for each group of parameters.
         /// </remarks>
         public double Chi(int alpha)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ChiDistribution<TGen>.IsValidParam(alpha));
+            Raise<ArgumentOutOfRangeException>.IfNot(ChiDistribution<TGen>.IsValidParam(alpha));
             return ChiDistribution<TGen>.Sample(_gen, alpha);
         }
 
@@ -704,11 +702,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ChiDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ChiDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ChiSamples(int alpha)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ChiDistribution<TGen>.IsValidParam(alpha));
+            Raise<ArgumentOutOfRangeException>.IfNot(ChiDistribution<TGen>.IsValidParam(alpha));
             return InfiniteLoop(ChiDistribution<TGen>.Sample, _gen, alpha);
         }
 
@@ -731,11 +729,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ChiSquareDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ChiSquareDistribution"/> for each group of parameters.
         /// </remarks>
         public double ChiSquare(int alpha)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ChiSquareDistribution<TGen>.IsValidParam(alpha));
+            Raise<ArgumentOutOfRangeException>.IfNot(ChiSquareDistribution<TGen>.IsValidParam(alpha));
             return ChiSquareDistribution<TGen>.Sample(_gen, alpha);
         }
 
@@ -758,11 +756,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ChiSquareDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ChiSquareDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ChiSquareSamples(int alpha)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ChiSquareDistribution<TGen>.IsValidParam(alpha));
+            Raise<ArgumentOutOfRangeException>.IfNot(ChiSquareDistribution<TGen>.IsValidParam(alpha));
             return InfiniteLoop(ChiSquareDistribution<TGen>.Sample, _gen, alpha);
         }
 
@@ -788,11 +786,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ContinuousUniformDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ContinuousUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public double ContinuousUniform(double alpha, double beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ContinuousUniformDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(ContinuousUniformDistribution<TGen>.AreValidParams(alpha, beta));
             return ContinuousUniformDistribution<TGen>.Sample(_gen, alpha, beta);
         }
 
@@ -818,11 +816,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ContinuousUniformDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ContinuousUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ContinuousUniformSamples(double alpha, double beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ContinuousUniformDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(ContinuousUniformDistribution<TGen>.AreValidParams(alpha, beta));
             return InfiniteLoop(ContinuousUniformDistribution<TGen>.Sample, _gen, alpha, beta);
         }
 
@@ -848,11 +846,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ErlangDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ErlangDistribution"/> for each group of parameters.
         /// </remarks>
         public double Erlang(int alpha, double lambda)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ErlangDistribution<TGen>.AreValidParams(alpha, lambda));
+            Raise<ArgumentOutOfRangeException>.IfNot(ErlangDistribution<TGen>.AreValidParams(alpha, lambda));
             return ErlangDistribution<TGen>.Sample(_gen, alpha, lambda);
         }
 
@@ -878,11 +876,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ErlangDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ErlangDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ErlangSamples(int alpha, double lambda)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ErlangDistribution<TGen>.AreValidParams(alpha, lambda));
+            Raise<ArgumentOutOfRangeException>.IfNot(ErlangDistribution<TGen>.AreValidParams(alpha, lambda));
             return InfiniteLoop(ErlangDistribution<TGen>.Sample, _gen, alpha, lambda);
         }
 
@@ -905,11 +903,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ExponentialDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ExponentialDistribution"/> for each group of parameters.
         /// </remarks>
         public double Exponential(double lambda)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ExponentialDistribution<TGen>.IsValidParam(lambda),
+            Raise<ArgumentOutOfRangeException>.IfNot(ExponentialDistribution<TGen>.IsValidParam(lambda),
                                                            ErrorMessages.InvalidParams);
             return ExponentialDistribution<TGen>.Sample(_gen, lambda);
         }
@@ -933,13 +931,13 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ExponentialDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ExponentialDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ExponentialSamples(double lambda)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ExponentialDistribution<TGen>.IsValidParam(lambda),
+            Raise<ArgumentOutOfRangeException>.IfNot(ExponentialDistribution<TGen>.IsValidParam(lambda),
                                                            ErrorMessages.InvalidParams);
-            return InfiniteLoop(ExponentialDistribution<TGen>.Sample, _gen, lambda);           
+            return InfiniteLoop(ExponentialDistribution<TGen>.Sample, _gen, lambda);
         }
 
         /// <summary>
@@ -964,11 +962,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="FisherSnedecorDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="FisherSnedecorDistribution"/> for each group of parameters.
         /// </remarks>
         public double FisherSnedecor(int alpha, int beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(FisherSnedecorDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(FisherSnedecorDistribution<TGen>.AreValidParams(alpha, beta));
             return FisherSnedecorDistribution<TGen>.Sample(_gen, alpha, beta);
         }
 
@@ -994,11 +992,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="FisherSnedecorDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="FisherSnedecorDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> FisherSnedecorSamples(int alpha, int beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(FisherSnedecorDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(FisherSnedecorDistribution<TGen>.AreValidParams(alpha, beta));
             return InfiniteLoop(FisherSnedecorDistribution<TGen>.Sample, _gen, alpha, beta);
         }
 
@@ -1024,11 +1022,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="FisherTippettDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="FisherTippettDistribution"/> for each group of parameters.
         /// </remarks>
         public double FisherTippett(double alpha, double mu)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(FisherTippettDistribution<TGen>.AreValidParams(alpha, mu));
+            Raise<ArgumentOutOfRangeException>.IfNot(FisherTippettDistribution<TGen>.AreValidParams(alpha, mu));
             return FisherTippettDistribution<TGen>.Sample(_gen, alpha, mu);
         }
 
@@ -1054,11 +1052,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="FisherTippettDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="FisherTippettDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> FisherTippettSamples(double alpha, double mu)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(FisherTippettDistribution<TGen>.AreValidParams(alpha, mu));
+            Raise<ArgumentOutOfRangeException>.IfNot(FisherTippettDistribution<TGen>.AreValidParams(alpha, mu));
             return InfiniteLoop(FisherTippettDistribution<TGen>.Sample, _gen, alpha, mu);
         }
 
@@ -1084,11 +1082,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="GammaDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="GammaDistribution"/> for each group of parameters.
         /// </remarks>
         public double Gamma(double alpha, double theta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(GammaDistribution<TGen>.AreValidParams(alpha, theta));
+            Raise<ArgumentOutOfRangeException>.IfNot(GammaDistribution<TGen>.AreValidParams(alpha, theta));
             return GammaDistribution<TGen>.Sample(_gen, alpha, theta);
         }
 
@@ -1114,11 +1112,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="GammaDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="GammaDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> GammaSamples(double alpha, double theta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(GammaDistribution<TGen>.AreValidParams(alpha, theta));
+            Raise<ArgumentOutOfRangeException>.IfNot(GammaDistribution<TGen>.AreValidParams(alpha, theta));
             return InfiniteLoop(GammaDistribution<TGen>.Sample, _gen, alpha, theta);
         }
 
@@ -1144,11 +1142,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="LaplaceDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="LaplaceDistribution"/> for each group of parameters.
         /// </remarks>
         public double Laplace(double alpha, double mu)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(LaplaceDistribution<TGen>.AreValidParams(alpha, mu));
+            Raise<ArgumentOutOfRangeException>.IfNot(LaplaceDistribution<TGen>.AreValidParams(alpha, mu));
             return LaplaceDistribution<TGen>.Sample(_gen, alpha, mu);
         }
 
@@ -1174,11 +1172,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="LaplaceDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="LaplaceDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> LaplaceSamples(double alpha, double mu)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(LaplaceDistribution<TGen>.AreValidParams(alpha, mu));
+            Raise<ArgumentOutOfRangeException>.IfNot(LaplaceDistribution<TGen>.AreValidParams(alpha, mu));
             return InfiniteLoop(LaplaceDistribution<TGen>.Sample, _gen, alpha, mu);
         }
 
@@ -1204,11 +1202,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="LognormalDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="LognormalDistribution"/> for each group of parameters.
         /// </remarks>
         public double Lognormal(double mu, double sigma)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(LognormalDistribution<TGen>.AreValidParams(mu, sigma));
+            Raise<ArgumentOutOfRangeException>.IfNot(LognormalDistribution<TGen>.AreValidParams(mu, sigma));
             return LognormalDistribution<TGen>.Sample(_gen, mu, sigma);
         }
 
@@ -1234,11 +1232,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="LognormalDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="LognormalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> LognormalSamples(double mu, double sigma)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(LognormalDistribution<TGen>.AreValidParams(mu, sigma));
+            Raise<ArgumentOutOfRangeException>.IfNot(LognormalDistribution<TGen>.AreValidParams(mu, sigma));
             return InfiniteLoop(LognormalDistribution<TGen>.Sample, _gen, mu, sigma);
         }
 
@@ -1264,11 +1262,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="NormalDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="NormalDistribution"/> for each group of parameters.
         /// </remarks>
         public double Normal(double mu, double sigma)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(NormalDistribution<TGen>.AreValidParams(mu, sigma),
+            Raise<ArgumentOutOfRangeException>.IfNot(NormalDistribution<TGen>.AreValidParams(mu, sigma),
                                                            ErrorMessages.InvalidParams);
             return NormalDistribution<TGen>.Sample(_gen, mu, sigma);
         }
@@ -1295,11 +1293,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="NormalDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="NormalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> NormalSamples(double mu, double sigma)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(NormalDistribution<TGen>.AreValidParams(mu, sigma),
+            Raise<ArgumentOutOfRangeException>.IfNot(NormalDistribution<TGen>.AreValidParams(mu, sigma),
                                                            ErrorMessages.InvalidParams);
             return InfiniteLoop(NormalDistribution<TGen>.Sample, _gen, mu, sigma);
         }
@@ -1326,11 +1324,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ParetoDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ParetoDistribution"/> for each group of parameters.
         /// </remarks>
         public double Pareto(double alpha, double beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ParetoDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(ParetoDistribution<TGen>.AreValidParams(alpha, beta));
             return ParetoDistribution<TGen>.Sample(_gen, alpha, beta);
         }
 
@@ -1356,11 +1354,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ParetoDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="ParetoDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ParetoSamples(double alpha, double beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(ParetoDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(ParetoDistribution<TGen>.AreValidParams(alpha, beta));
             return InfiniteLoop(ParetoDistribution<TGen>.Sample, _gen, alpha, beta);
         }
 
@@ -1386,11 +1384,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="PowerDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="PowerDistribution"/> for each group of parameters.
         /// </remarks>
         public double Power(double alpha, double beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(PowerDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(PowerDistribution<TGen>.AreValidParams(alpha, beta));
             return PowerDistribution<TGen>.Sample(_gen, alpha, beta);
         }
 
@@ -1416,11 +1414,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="PowerDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="PowerDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> PowerSamples(double alpha, double beta)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(PowerDistribution<TGen>.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(PowerDistribution<TGen>.AreValidParams(alpha, beta));
             return InfiniteLoop(PowerDistribution<TGen>.Sample, _gen, alpha, beta);
         }
 
@@ -1443,11 +1441,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="RayleighDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="RayleighDistribution"/> for each group of parameters.
         /// </remarks>
         public double Rayleigh(double sigma)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(RayleighDistribution<TGen>.IsValidParam(sigma));
+            Raise<ArgumentOutOfRangeException>.IfNot(RayleighDistribution<TGen>.IsValidParam(sigma));
             return RayleighDistribution<TGen>.Sample(_gen, sigma);
         }
 
@@ -1470,11 +1468,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="RayleighDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="RayleighDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> RayleighSamples(double sigma)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(RayleighDistribution<TGen>.IsValidParam(sigma));
+            Raise<ArgumentOutOfRangeException>.IfNot(RayleighDistribution<TGen>.IsValidParam(sigma));
             return InfiniteLoop(RayleighDistribution<TGen>.Sample, _gen, sigma);
         }
 
@@ -1497,11 +1495,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="StudentsTDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="StudentsTDistribution"/> for each group of parameters.
         /// </remarks>
         public double StudentsT(int nu)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(StudentsTDistribution<TGen>.IsValidParam(nu));
+            Raise<ArgumentOutOfRangeException>.IfNot(StudentsTDistribution<TGen>.IsValidParam(nu));
             return StudentsTDistribution<TGen>.Sample(_gen, nu);
         }
 
@@ -1524,11 +1522,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="StudentsTDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="StudentsTDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> StudentsTSamples(int nu)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(StudentsTDistribution<TGen>.IsValidParam(nu));
+            Raise<ArgumentOutOfRangeException>.IfNot(StudentsTDistribution<TGen>.IsValidParam(nu));
             return InfiniteLoop(StudentsTDistribution<TGen>.Sample, _gen, nu);
         }
 
@@ -1559,11 +1557,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="TriangularDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="TriangularDistribution"/> for each group of parameters.
         /// </remarks>
         public double Triangular(double alpha, double beta, double gamma)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(TriangularDistribution<TGen>.AreValidParams(alpha, beta, gamma));
+            Raise<ArgumentOutOfRangeException>.IfNot(TriangularDistribution<TGen>.AreValidParams(alpha, beta, gamma));
             return TriangularDistribution<TGen>.Sample(_gen, alpha, beta, gamma);
         }
 
@@ -1594,11 +1592,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="TriangularDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="TriangularDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> TriangularSamples(double alpha, double beta, double gamma)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(TriangularDistribution<TGen>.AreValidParams(alpha, beta, gamma));
+            Raise<ArgumentOutOfRangeException>.IfNot(TriangularDistribution<TGen>.AreValidParams(alpha, beta, gamma));
             return InfiniteLoop(TriangularDistribution<TGen>.Sample, _gen, alpha, beta, gamma);
         }
 
@@ -1615,7 +1613,7 @@ namespace Troschuetz.Random
         ///   A weibull distributed floating point random number.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero. 
+        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="WeibullDistribution{TGen}.NextDouble"/>,
@@ -1624,11 +1622,11 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="WeibullDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="WeibullDistribution"/> for each group of parameters.
         /// </remarks>
         public double Weibull(double alpha, double lambda)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(WeibullDistribution<TGen>.AreValidParams(alpha, lambda));
+            Raise<ArgumentOutOfRangeException>.IfNot(WeibullDistribution<TGen>.AreValidParams(alpha, lambda));
             return WeibullDistribution<TGen>.Sample(_gen, alpha, lambda);
         }
 
@@ -1645,7 +1643,7 @@ namespace Troschuetz.Random
         ///   An infinite sequence of weibull distributed floating point random numbers.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero. 
+        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="WeibullDistribution{TGen}.NextDouble"/>,
@@ -1654,15 +1652,15 @@ namespace Troschuetz.Random
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters.
         ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="WeibullDistribution"/> for each group of parameters. 
+        ///   an instance of <see cref="WeibullDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> WeibullSamples(double alpha, double lambda)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(WeibullDistribution<TGen>.AreValidParams(alpha, lambda));
+            Raise<ArgumentOutOfRangeException>.IfNot(WeibullDistribution<TGen>.AreValidParams(alpha, lambda));
             return InfiniteLoop(WeibullDistribution<TGen>.Sample, _gen, alpha, lambda);
         }
 
-        #endregion
+        #endregion Continuous Distributions
 
         #region IGenerator Members
 
@@ -1751,52 +1749,50 @@ namespace Troschuetz.Random
             _gen.NextBytes(buffer);
         }
 
-        #endregion
+        #endregion IGenerator Members
 
         #region Object Members
 
-        public override string ToString()
-        {
-            return string.Format("Generator: {0}", _gen);
-        }
+        public override string ToString() => string.Format("Generator: {0}", _gen);
 
-        #endregion
+        #endregion Object Members
 
         #region Private Members
 
         static IEnumerable<TRet> InfiniteLoop<T1, T2, TRet>(Func<T1, T2, TRet> f, T1 a1, T2 a2)
         {
-            while (true) {
+            while (true)
+            {
                 yield return f(a1, a2);
             }
         }
 
         static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, TRet>(Func<T1, T2, T3, TRet> f, T1 a1, T2 a2, T3 a3)
         {
-            while (true) {
+            while (true)
+            {
                 yield return f(a1, a2, a3);
             }
         }
 
         static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, T4, TRet>(Func<T1, T2, T3, T4, TRet> f, T1 a1, T2 a2, T3 a3, T4 a4)
         {
-            while (true) {
+            while (true)
+            {
                 yield return f(a1, a2, a3, a4);
             }
         }
 
-        #endregion
+        #endregion Private Members
     }
 
     /// <summary>
-    ///   A random generator class similar to the one Python offers, 
-    ///   providing functions similar to the ones found in <see cref="System.Random"/>
+    ///   A random generator class similar to the one Python offers,
+    ///   providing functions similar to the ones found in <see cref="Random"/>
     ///   and functions returning random numbers according to a particular kind of distribution.
     /// </summary>
-// ReSharper disable InconsistentNaming
     [Serializable]
     public sealed class TRandom : TRandom<IGenerator>
-// ReSharper restore InconsistentNaming
     {
         /// <summary>
         ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
@@ -1838,20 +1834,14 @@ namespace Troschuetz.Random
         ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
         ///   and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
         /// </summary>
-        public static TRandom<XorShift128Generator> New()
-        {
-            return new TRandom<XorShift128Generator>(new XorShift128Generator(Environment.TickCount));
-        }
+        public static TRandom<XorShift128Generator> New() => new TRandom<XorShift128Generator>(new XorShift128Generator(Environment.TickCount));
 
         /// <summary>
         ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        public static TRandom<XorShift128Generator> New(int seed)
-        {
-            return new TRandom<XorShift128Generator>(new XorShift128Generator(seed));
-        }
+        public static TRandom<XorShift128Generator> New(int seed) => new TRandom<XorShift128Generator>(new XorShift128Generator(seed));
 
         /// <summary>
         ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
@@ -1859,19 +1849,13 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         [CLSCompliant(false)]
-        public static TRandom<XorShift128Generator> New(uint seed)
-        {
-            return new TRandom<XorShift128Generator>(new XorShift128Generator(seed));
-        }
+        public static TRandom<XorShift128Generator> New(uint seed) => new TRandom<XorShift128Generator>(new XorShift128Generator(seed));
 
         /// <summary>
         ///   Constructs a new instance with the specified generator.
         /// </summary>
         /// <param name="generator">The generator used to produce random numbers.</param>
         /// <exception cref="ArgumentNullException"><paramref name="generator"/> is null.</exception>
-        public static TRandom<TGen> New<TGen>(TGen generator) where TGen : IGenerator
-        {
-            return new TRandom<TGen>(generator);
-        }
+        public static TRandom<TGen> New<TGen>(TGen generator) where TGen : IGenerator => new TRandom<TGen>(generator);
     }
 }
