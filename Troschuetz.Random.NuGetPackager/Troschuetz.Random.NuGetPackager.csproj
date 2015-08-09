@@ -68,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lib\net40-client\" />
-    <Folder Include="lib\portable-win8+net45+sl5+wp8\" />
+    <Folder Include="lib\portable-net45+win8+wp8+wpa81\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

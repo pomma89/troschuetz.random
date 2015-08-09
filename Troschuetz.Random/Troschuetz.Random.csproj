@@ -175,31 +175,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set ASR=$(SolutionDir)NuGetPackager.Unchecked/ASR/AssemblyRenamer.exe
-set ASR_ARGS=--out:ASR
-set ASR_IN=Troschuetz.Random
-set ASR_OUT=Troschuetz.Random.Unchecked
-
-set dir="$(SolutionDir)NuGetPackager.Unchecked/lib/portable-win8+net45+sl5+wp8"
-if not exist %25dir%25 mkdir %25dir%25
-set dir="$(SolutionDir)NuGetPackager/lib/portable-win8+net45+sl5+wp8"
-if not exist %25dir%25 mkdir %25dir%25
-
-if $(ConfigurationName) == Release.Unchecked (
-    mkdir ASR
-    %25ASR%25 %25ASR_ARGS%25 %25ASR_IN%25 %25ASR_OUT%25
-    copy %25ASR_IN%25.pdb "ASR/%25ASR_OUT%25.pdb"
-    copy %25ASR_IN%25.xml "ASR/%25ASR_OUT%25.xml"
-    copy "ASR\%25ASR_OUT%25.dll" "$(SolutionDir)NuGetPackager.Unchecked/lib/portable-win8+net45+sl5+wp8"
-    copy "ASR\%25ASR_OUT%25.pdb" "$(SolutionDir)NuGetPackager.Unchecked/lib/portable-win8+net45+sl5+wp8"
-    copy "ASR\%25ASR_OUT%25.xml" "$(SolutionDir)NuGetPackager.Unchecked/lib/portable-win8+net45+sl5+wp8"
-)
-
-if $(ConfigurationName) == Release (
-    copy "%25ASR_IN%25.dll" "$(SolutionDir)NuGetPackager/lib/portable-win8+net45+sl5+wp8"
-    copy "%25ASR_IN%25.pdb" "$(SolutionDir)NuGetPackager/lib/portable-win8+net45+sl5+wp8"
-    copy "%25ASR_IN%25.xml" "$(SolutionDir)NuGetPackager/lib/portable-win8+net45+sl5+wp8"
-)</PostBuildEvent>
+    <PostBuildEvent>if not exist "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81" mkdir "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81"
+copy "$(TargetDir)Troschuetz.Random.dll" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81"
+copy "$(TargetDir)Troschuetz.Random.pdb" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81"
+copy "$(TargetDir)Troschuetz.Random.xml" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

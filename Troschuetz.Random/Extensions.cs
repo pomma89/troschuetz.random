@@ -145,7 +145,7 @@ namespace Troschuetz.Random
         /// <param name="list">The list from which items should be randomly picked.</param>
         /// <returns>An infinite sequence of random items belonging to given list.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
-        /// <exception cref="InvalidOperationException"><paramref name="list"/> is empty.</exception>
+        /// <exception cref="ArgumentException"><paramref name="list"/> is empty.</exception>
         [Pure]
         public static IEnumerable<TItem> Choices<TGen, TItem>(this TGen generator, IList<TItem> list) where TGen : IGenerator
         {
