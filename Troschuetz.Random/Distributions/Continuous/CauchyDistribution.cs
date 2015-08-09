@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,20 +19,20 @@
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
-    using Core;
-    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of cauchy distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="CauchyDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Cauchy_distribution">Wikipedia - Cauchy distribution</a> and
-    ///   <a href="http://www.xycoon.com/cauchy2p_random.htm">Xycoon - Cauchy Distribution</a>.
+    ///   The implementation of the <see cref="CauchyDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Cauchy_distribution">Wikipedia - Cauchy
+    ///   distribution</a> and <a href="http://www.xycoon.com/cauchy2p_random.htm">Xycoon - Cauchy Distribution</a>.
     /// </remarks>
     [Serializable]
     public class CauchyDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IGammaDistribution<double>
@@ -41,16 +41,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Alpha"/> if none is specified. 
+        ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const double DefaultAlpha = 1;
 
         /// <summary>
-        ///   The default value assigned to <see cref="Gamma"/> if none is specified. 
+        ///   The default value assigned to <see cref="Gamma"/> if none is specified.
         /// </summary>
         public const double DefaultGamma = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
@@ -65,7 +65,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         double _gamma;
 
         /// <summary>
-        ///   Gets or sets the parameter alpha of cauchy distributed random numbers which is used for their generation.
+        ///   Gets or sets the parameter alpha of cauchy distributed random numbers which is used
+        ///   for their generation.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is equal to <see cref="double.NaN"/>.
@@ -76,11 +77,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Alpha
         {
             get { return _alpha; }
-            set { _alpha = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                _alpha = value;
+            }
         }
 
         /// <summary>
-        ///   Gets or sets the parameter gamma which is used for generation of cauchy distributed random numbers.
+        ///   Gets or sets the parameter gamma which is used for generation of cauchy distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -91,16 +97,20 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Gamma
         {
             get { return _gamma; }
-            set { _gamma = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidGamma(value), ErrorMessages.InvalidParams);
+                _gamma = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
@@ -109,9 +119,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="gamma">
         ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="gamma"/> is less than or equal to zero.
         /// </exception>
@@ -123,7 +131,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             _gamma = gamma;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -141,15 +149,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Gamma"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidGamma(double value)
         {
             return AreValidParams(_alpha, value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
@@ -180,7 +186,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double[] Mode
         {
-            get { return new[] {Alpha}; }
+            get { return new[] { Alpha }; }
         }
 
         public double NextDouble()
@@ -188,7 +194,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return Sample(Gen, _alpha, _gamma);
         }
 
-        #endregion
+        #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
@@ -220,25 +226,23 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="gamma">
         ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A cauchy distributed floating point random number.
-        /// </returns>
+        /// <returns>A cauchy distributed floating point random number.</returns>
         [Pure]
         internal static double Sample(TGen generator, double alpha, double gamma)
         {
-            return alpha + gamma*Math.Tan(Math.PI*(generator.NextDouble() - 0.5));
+            return alpha + gamma * Math.Tan(Math.PI * (generator.NextDouble() - 0.5));
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of cauchy distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="CauchyDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Cauchy_distribution">Wikipedia - Cauchy distribution</a> and
-    ///   <a href="http://www.xycoon.com/cauchy2p_random.htm">Xycoon - Cauchy Distribution</a>.
+    ///   The implementation of the <see cref="CauchyDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Cauchy_distribution">Wikipedia - Cauchy
+    ///   distribution</a> and <a href="http://www.xycoon.com/cauchy2p_random.htm">Xycoon - Cauchy Distribution</a>.
     /// </remarks>
     [Serializable]
     public sealed class CauchyDistribution : CauchyDistribution<IGenerator>
@@ -246,8 +250,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public CauchyDistribution()
             : base(new XorShift128Generator(), DefaultAlpha, DefaultGamma)
@@ -258,8 +262,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -275,13 +279,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public CauchyDistribution(IGenerator generator)
             : base(generator, DefaultAlpha, DefaultGamma)
         {
@@ -291,8 +293,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of cauchy distributed random numbers.
@@ -312,8 +314,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -338,8 +340,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
@@ -348,9 +350,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="gamma">
         ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="gamma"/> is less than or equal to zero.
         /// </exception>
@@ -361,6 +361,6 @@ namespace Troschuetz.Random.Distributions.Continuous
             Debug.Assert(Equals(Gamma, gamma));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

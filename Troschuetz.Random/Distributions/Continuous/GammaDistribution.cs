@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,19 +19,19 @@
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
-    using Core;
-    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of gamma distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="GammaDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
+    ///   The implementation of the <see cref="GammaDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
     /// </remarks>
     [Serializable]
     public class GammaDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IThetaDistribution<double>
@@ -40,16 +40,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Alpha"/> if none is specified. 
+        ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const double DefaultAlpha = 1;
 
         /// <summary>
-        ///   The default value assigned to <see cref="Theta"/> if none is specified. 
+        ///   The default value assigned to <see cref="Theta"/> if none is specified.
         /// </summary>
         public const double DefaultTheta = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
@@ -57,14 +57,15 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Stores the parameter alpha which is used for generation of gamma distributed random numbers.
         /// </summary>
         double _alpha;
-        
+
         /// <summary>
         ///   Stores the parameter theta which is used for generation of gamma distributed random numbers.
         /// </summary>
         double _theta;
 
         /// <summary>
-        ///   Gets or sets the parameter alpha which is used for generation of gamma distributed random numbers.
+        ///   Gets or sets the parameter alpha which is used for generation of gamma distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -75,11 +76,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Alpha
         {
             get { return _alpha; }
-            set { _alpha = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                _alpha = value;
+            }
         }
 
         /// <summary>
-        ///   Gets or sets the parameter theta which is used for generation of gamma distributed random numbers.
+        ///   Gets or sets the parameter theta which is used for generation of gamma distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -93,13 +99,13 @@ namespace Troschuetz.Random.Distributions.Continuous
             set { _theta = value; }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
@@ -108,9 +114,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="theta">
         ///   The parameter theta which is used for generation of gamma distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
@@ -121,7 +125,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             _theta = theta;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -129,9 +133,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Alpha"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidAlpha(double value)
         {
             return AreValidParams(value, Theta);
@@ -141,15 +143,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Theta"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidTheta(double value)
         {
             return AreValidParams(_alpha, value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
@@ -165,7 +165,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Mean
         {
-            get { return _alpha*Theta; }
+            get { return _alpha * Theta; }
         }
 
         public double Median
@@ -175,15 +175,16 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Variance
         {
-            get { return _alpha*Math.Pow(Theta, 2.0); }
+            get { return _alpha * Math.Pow(Theta, 2.0); }
         }
 
         public double[] Mode
         {
             get
             {
-                if (_alpha >= 1.0) {
-                    return new[] {(_alpha - 1.0)*Theta};
+                if (_alpha >= 1.0)
+                {
+                    return new[] { (_alpha - 1.0) * Theta };
                 }
                 throw new NotSupportedException(ErrorMessages.UndefinedModeForParams);
             }
@@ -194,7 +195,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return Sample(Gen, _alpha, _theta);
         }
 
-        #endregion
+        #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
@@ -227,43 +228,46 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="theta">
         ///   The parameter theta which is used for generation of gamma distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A gamma distributed floating point random number.
-        /// </returns>
+        /// <returns>A gamma distributed floating point random number.</returns>
         [Pure]
         internal static double Sample(TGen generator, double alpha, double theta)
         {
             var helper1 = alpha - Math.Floor(alpha);
-            var helper2 = Math.E/(Math.E + helper1);
+            var helper2 = Math.E / (Math.E + helper1);
             double xi, eta;
-            do {
+            do
+            {
                 var gen1 = 1.0 - generator.NextDouble();
                 var gen2 = 1.0 - generator.NextDouble();
-                if (gen1 <= helper2) {
-                    xi = Math.Pow(gen1/helper2, 1.0/helper1);
-                    eta = gen2*Math.Pow(xi, helper1 - 1.0);
-                } else {
-                    xi = 1.0 - Math.Log((gen1 - helper2)/(1.0 - helper2));
-                    eta = gen2*Math.Pow(Math.E, -xi);
+                if (gen1 <= helper2)
+                {
+                    xi = Math.Pow(gen1 / helper2, 1.0 / helper1);
+                    eta = gen2 * Math.Pow(xi, helper1 - 1.0);
                 }
-            } while (eta > Math.Pow(xi, helper1 - 1.0)*Math.Pow(Math.E, -xi));
+                else
+                {
+                    xi = 1.0 - Math.Log((gen1 - helper2) / (1.0 - helper2));
+                    eta = gen2 * Math.Pow(Math.E, -xi);
+                }
+            } while (eta > Math.Pow(xi, helper1 - 1.0) * Math.Pow(Math.E, -xi));
 
-            for (var i = 1; i <= alpha; i++) {
+            for (var i = 1; i <= alpha; i++)
+            {
                 xi -= Math.Log(generator.NextDouble());
             }
 
-            return xi*theta;
+            return xi * theta;
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of gamma distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="GammaDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
+    ///   The implementation of the <see cref="GammaDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
     /// </remarks>
     [Serializable]
     public sealed class GammaDistribution : GammaDistribution<IGenerator>
@@ -271,8 +275,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public GammaDistribution()
             : base(new XorShift128Generator(), DefaultAlpha, DefaultTheta)
@@ -283,8 +287,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -300,13 +304,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public GammaDistribution(IGenerator generator)
             : base(generator, DefaultAlpha, DefaultTheta)
         {
@@ -316,8 +318,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of gamma distributed random numbers.
@@ -337,8 +339,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -363,8 +365,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
@@ -373,9 +375,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="theta">
         ///   The parameter theta which is used for generation of gamma distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
@@ -386,6 +386,6 @@ namespace Troschuetz.Random.Distributions.Continuous
             Debug.Assert(Equals(Theta, theta));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

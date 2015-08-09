@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,19 +19,19 @@
 
 namespace Troschuetz.Random.Distributions.Discrete
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
-    using Core;
-    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of bernoulli distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The bernoulli distribution generates only discrete numbers.<br />
-    ///   The implementation of the <see cref="BernoulliDistribution"/> type bases upon information presented on
+    ///   The bernoulli distribution generates only discrete numbers. <br/> The implementation of
+    ///   the <see cref="BernoulliDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Bernoulli_distribution">Wikipedia - Bernoulli distribution</a>.
     /// </remarks>
     [Serializable]
@@ -41,21 +41,23 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Alpha"/> if none is specified. 
+        ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const double DefaultAlpha = 0.5;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
         /// <summary>
-        ///   Stores the parameter alpha which is used for generation of bernoulli distributed random numbers.
+        ///   Stores the parameter alpha which is used for generation of bernoulli distributed
+        ///   random numbers.
         /// </summary>
         double _alpha;
 
         /// <summary>
-        ///   Gets or sets the parameter alpha which is used for generation of bernoulli distributed random numbers.
+        ///   Gets or sets the parameter alpha which is used for generation of bernoulli distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than zero or greater than one.
@@ -66,34 +68,36 @@ namespace Troschuetz.Random.Distributions.Discrete
         public double Alpha
         {
             get { return _alpha; }
-            set { _alpha = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                _alpha = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
         public BernoulliDistribution(TGen generator, double alpha) : base(generator)
-        {            
+        {
             Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(alpha), ErrorMessages.InvalidParams);
             _alpha = alpha;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -102,15 +106,15 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is greater than or equal to 0.0, and less than or equal to 1.0;
-        ///   otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is greater than or equal to 0.0, and less than or
+        ///   equal to 1.0; otherwise, <see langword="false"/>.
         /// </returns>
         public bool IsValidAlpha(double value)
         {
             return IsValidParam(value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
@@ -136,17 +140,18 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public double Variance
         {
-            get { return Alpha*(1.0 - Alpha); }
+            get { return Alpha * (1.0 - Alpha); }
         }
 
         public double[] Mode
         {
             get
             {
-                if (Alpha > (1 - Alpha)) {
-                    return new[] {1.0};
+                if (Alpha > (1 - Alpha))
+                {
+                    return new[] { 1.0 };
                 }
-                return Alpha < (1 - Alpha) ? new[] {0.0} : new[] {0.0, 1.0};
+                return Alpha < (1 - Alpha) ? new[] { 0.0 } : new[] { 0.0, 1.0 };
             }
         }
 
@@ -160,7 +165,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             return Sample(Gen, _alpha);
         }
 
-        #endregion
+        #endregion IDiscreteDistribution Members
 
         #region TRandom Helpers
 
@@ -171,8 +176,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
         /// </param>
         /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than or equal to zero
-        ///   and less than or equal to one; otherwise, it returns false.
+        ///   True if <paramref name="alpha"/> is greater than or equal to zero and less than or
+        ///   equal to one; otherwise, it returns false.
         /// </returns>
         [Pure]
         public static bool IsValidParam(double alpha)
@@ -187,24 +192,22 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A bernoulli distributed 32-bit signed integer.
-        /// </returns>
+        /// <returns>A bernoulli distributed 32-bit signed integer.</returns>
         [Pure]
         internal static int Sample(TGen generator, double alpha)
         {
             return generator.NextDouble() < alpha ? 1 : 0;
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of bernoulli distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The bernoulli distribution generates only discrete numbers.<br />
-    ///   The implementation of the <see cref="BernoulliDistribution"/> type bases upon information presented on
+    ///   The bernoulli distribution generates only discrete numbers. <br/> The implementation of
+    ///   the <see cref="BernoulliDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Bernoulli_distribution">Wikipedia - Bernoulli distribution</a>.
     /// </remarks>
     [Serializable]
@@ -213,8 +216,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public BernoulliDistribution() : base(new XorShift128Generator(), DefaultAlpha)
         {
@@ -223,8 +226,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -238,13 +241,11 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public BernoulliDistribution(IGenerator generator) : base(generator, DefaultAlpha)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
@@ -252,8 +253,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
@@ -268,8 +269,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -289,16 +290,14 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
@@ -308,6 +307,6 @@ namespace Troschuetz.Random.Distributions.Discrete
             Debug.Assert(Equals(Alpha, alpha));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

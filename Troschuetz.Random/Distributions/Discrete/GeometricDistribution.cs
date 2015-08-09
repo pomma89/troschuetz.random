@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,7 +19,7 @@
 
 #region Original Copyrights
 
-//   -*- C++ -*-
+// -*- C++ -*-
 /*****************************************************************************
  *
  *   |_|_|_  |_|_    |_    |_|_|_  |_		     C O M M U N I C A T I O N
@@ -55,7 +55,7 @@
  * -------------------
  * Copyright (C) 1988 Free Software Foundation
  *    written by Dirk Grunwald (grunwald@cs.uiuc.edu)
- * 
+ *
  * This file is part of the GNU C++ Library.  This library is free
  * software; you can redistribute it and/or modify it under the terms of
  * the GNU Library General Public License as published by the Free
@@ -69,26 +69,27 @@
  * Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *****************************************************************************/
 
-#endregion
+#endregion Original Copyrights
 
 namespace Troschuetz.Random.Distributions.Discrete
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
-    using Core;
-    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of geometric distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The geometric distribution generates only discrete numbers.<br />
-    ///   The implementation of the <see cref="GeometricDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Geometric_distribution">Wikipedia - Geometric distribution</a>
-    ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
-    ///   Communication Networks Class Library</a>.
+    ///   The geometric distribution generates only discrete numbers. <br/> The implementation of
+    ///   the <see cref="GeometricDistribution"/> type bases upon information presented on
+    ///   <a href="http://en.wikipedia.org/wiki/Geometric_distribution">Wikipedia - Geometric
+    ///   distribution</a> and the implementation in the
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html"> Communication
+    ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
     public class GeometricDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>
@@ -97,21 +98,22 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Alpha"/> if none is specified. 
+        ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const double DefaultAlpha = 0.5;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
-        
+
         /// <summary>
         ///   Stores the parameter beta which is used for generation of uniformly distributed random numbers.
         /// </summary>
         double _alpha;
 
         /// <summary>
-        ///   Gets or sets the parameter alpha which is used for generation of geometric distributed random numbers.
+        ///   Gets or sets the parameter alpha which is used for generation of geometric distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero or it is greater than one.
@@ -122,24 +124,26 @@ namespace Troschuetz.Random.Distributions.Discrete
         public double Alpha
         {
             get { return _alpha; }
-            set { _alpha = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                _alpha = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of geometric distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
@@ -149,7 +153,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             _alpha = alpha;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -166,7 +170,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             return IsValidParam(value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
@@ -182,7 +186,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public double Mean
         {
-            get { return 1.0/Alpha; }
+            get { return 1.0 / Alpha; }
         }
 
         public double Median
@@ -192,12 +196,12 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public double Variance
         {
-            get { return (1.0 - Alpha)/Math.Pow(Alpha, 2.0); }
+            get { return (1.0 - Alpha) / Math.Pow(Alpha, 2.0); }
         }
 
         public double[] Mode
         {
-            get { return new[] {1.0}; }
+            get { return new[] { 1.0 }; }
         }
 
         public int Next()
@@ -210,7 +214,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             return Sample(Gen, _alpha);
         }
 
-        #endregion
+        #endregion IDiscreteDistribution Members
 
         #region TRandom Helpers
 
@@ -221,8 +225,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   The parameter alpha which is used for generation of geometric distributed random numbers.
         /// </param>
         /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than zero and
-        ///   if it is less than or equal to one; otherwise, it returns false.
+        ///   True if <paramref name="alpha"/> is greater than zero and if it is less than or equal
+        ///   to one; otherwise, it returns false.
         /// </returns>
         [Pure]
         public static bool IsValidParam(double alpha)
@@ -237,31 +241,31 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of geometric distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A geometric distributed 32-bit signed integer.
-        /// </returns>
+        /// <returns>A geometric distributed 32-bit signed integer.</returns>
         [Pure]
         internal static int Sample(TGen generator, double alpha)
         {
             var samples = 1;
-            for (; generator.NextDouble() >= alpha; samples++) {
+            for (; generator.NextDouble() >= alpha; samples++)
+            {
                 // Empty
             }
             return samples;
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of geometric distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The geometric distribution generates only discrete numbers.<br />
-    ///   The implementation of the <see cref="GeometricDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Geometric_distribution">Wikipedia - Geometric distribution</a>
-    ///   and the implementation in the <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">
-    ///   Communication Networks Class Library</a>.
+    ///   The geometric distribution generates only discrete numbers. <br/> The implementation of
+    ///   the <see cref="GeometricDistribution"/> type bases upon information presented on
+    ///   <a href="http://en.wikipedia.org/wiki/Geometric_distribution">Wikipedia - Geometric
+    ///   distribution</a> and the implementation in the
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html"> Communication
+    ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
     public sealed class GeometricDistribution : GeometricDistribution<IGenerator>
@@ -269,8 +273,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public GeometricDistribution() : base(new XorShift128Generator(), DefaultAlpha)
         {
@@ -279,8 +283,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -294,13 +298,11 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public GeometricDistribution(IGenerator generator) : base(generator, DefaultAlpha)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
@@ -308,8 +310,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of geometric distributed random numbers.
@@ -324,8 +326,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -345,16 +347,14 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of geometric distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
@@ -364,6 +364,6 @@ namespace Troschuetz.Random.Distributions.Discrete
             Debug.Assert(Equals(Alpha, alpha));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

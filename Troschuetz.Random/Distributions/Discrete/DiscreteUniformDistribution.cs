@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,21 +19,22 @@
 
 namespace Troschuetz.Random.Distributions.Discrete
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
-    using Core;
-    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of discrete uniformly distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The discrete uniform distribution generates only discrete numbers.<br />
-    ///   The implementation of the <see cref="DiscreteUniformDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28discrete%29">
-    ///   Wikipedia - Uniform distribution (discrete)</a>.
+    ///   The discrete uniform distribution generates only discrete numbers. <br/> The
+    ///   implementation of the <see cref="DiscreteUniformDistribution"/> type bases upon
+    ///   information presented on
+    ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28discrete%29">Wikipedia -
+    ///   Uniform distribution (discrete)</a>.
     /// </remarks>
     [Serializable]
     public class DiscreteUniformDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<int>,
@@ -43,16 +44,16 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Alpha"/> if none is specified. 
+        ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const int DefaultAlpha = 0;
 
         /// <summary>
-        ///   The default value assigned to <see cref="Beta"/> if none is specified. 
+        ///   The default value assigned to <see cref="Beta"/> if none is specified.
         /// </summary>
         public const int DefaultBeta = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
@@ -60,14 +61,15 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Stores the parameter beta which is used for generation of uniformly distributed random numbers.
         /// </summary>
         int _beta;
-        
+
         /// <summary>
         ///   Stores the parameter beta which is used for generation of uniformly distributed random numbers.
         /// </summary>
         int _alpha;
 
         /// <summary>
-        ///   Gets or sets the parameter alpha which is used for generation of uniformly distributed random numbers.
+        ///   Gets or sets the parameter alpha which is used for generation of uniformly distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is greater than <see cref="Beta"/>.
@@ -78,15 +80,20 @@ namespace Troschuetz.Random.Distributions.Discrete
         public int Alpha
         {
             get { return _alpha; }
-            set { _alpha = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                _alpha = value;
+            }
         }
 
         /// <summary>
-        ///   Gets or sets the parameter beta which is used for generation of uniformly distributed random numbers.
+        ///   Gets or sets the parameter beta which is used for generation of uniformly distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <see cref="Alpha"/> is greater than <paramref name="value"/>,
-        ///   or <paramref name="value"/> is equal to <see cref="int.MaxValue"/>.
+        ///   <see cref="Alpha"/> is greater than <paramref name="value"/>, or
+        ///   <paramref name="value"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         /// <remarks>
         ///   Calls <see cref="AreValidParams"/> to determine whether a value is valid and therefore assignable.
@@ -94,10 +101,14 @@ namespace Troschuetz.Random.Distributions.Discrete
         public int Beta
         {
             get { return _beta; }
-            set { _beta = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidBeta(value), ErrorMessages.InvalidParams);
+                _beta = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
@@ -107,17 +118,16 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of discrete uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>,
-        ///   or <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
+        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>, or
+        ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         public DiscreteUniformDistribution(TGen generator, int alpha, int beta) : base(generator)
         {
@@ -126,7 +136,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             _beta = beta;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -148,15 +158,15 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is greater than or equal to <see cref="Alpha"/>, and less than 
-        ///   <see cref="int.MaxValue"/>; otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is greater than or equal to <see cref="Alpha"/>, and
+        ///   less than <see cref="int.MaxValue"/>; otherwise, <see langword="false"/>.
         /// </returns>
         public bool IsValidBeta(int value)
         {
             return AreValidParams(_alpha, value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
@@ -172,17 +182,17 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public double Mean
         {
-            get { return Alpha/2.0 + _beta/2.0; }
+            get { return Alpha / 2.0 + _beta / 2.0; }
         }
 
         public double Median
         {
-            get { return Alpha/2.0 + _beta/2.0; }
+            get { return Alpha / 2.0 + _beta / 2.0; }
         }
 
         public double Variance
         {
-            get { return (Math.Pow(_beta - Alpha + 1.0, 2.0) - 1.0)/12.0; }
+            get { return (Math.Pow(_beta - Alpha + 1.0, 2.0) - 1.0) / 12.0; }
         }
 
         public double[] Mode
@@ -200,7 +210,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             return Sample(Gen, _alpha, _beta);
         }
 
-        #endregion
+        #endregion IDiscreteDistribution Members
 
         #region TRandom Helpers
 
@@ -208,14 +218,16 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Determines whether discrete uniform distribution is defined under given parameters.
         /// </summary>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of discrete uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
         /// </param>
         /// <returns>
-        ///   True if <paramref name="alpha"/> is less than or equal to <paramref name="beta"/>,
-        ///   and if <paramref name="beta"/> is less than <see cref="int.MaxValue"/>; otherwise, it returns false.
+        ///   True if <paramref name="alpha"/> is less than or equal to <paramref name="beta"/>, and
+        ///   if <paramref name="beta"/> is less than <see cref="int.MaxValue"/>; otherwise, it
+        ///   returns false.
         /// </returns>
         [Pure]
         public static bool AreValidParams(int alpha, int beta)
@@ -228,31 +240,31 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         /// <param name="generator">The generator from which random number are drawn.</param>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of discrete uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A discrete uniform distributed 32-bit signed integer.
-        /// </returns>
+        /// <returns>A discrete uniform distributed 32-bit signed integer.</returns>
         [Pure]
         internal static int Sample(TGen generator, int alpha, int beta)
         {
             return generator.Next(alpha, beta + 1);
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of discrete uniformly distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The discrete uniform distribution generates only discrete numbers.<br />
-    ///   The implementation of the <see cref="DiscreteUniformDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28discrete%29">
-    ///   Wikipedia - Uniform distribution (discrete)</a>.
+    ///   The discrete uniform distribution generates only discrete numbers. <br/> The
+    ///   implementation of the <see cref="DiscreteUniformDistribution"/> type bases upon
+    ///   information presented on
+    ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28discrete%29">Wikipedia -
+    ///   Uniform distribution (discrete)</a>.
     /// </remarks>
     [Serializable]
     public sealed class DiscreteUniformDistribution : DiscreteUniformDistribution<IGenerator>
@@ -261,7 +273,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="DiscreteUniformDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator. 
+        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public DiscreteUniformDistribution() : this(new XorShift128Generator(), DefaultAlpha, DefaultBeta)
         {
@@ -291,9 +303,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public DiscreteUniformDistribution(IGenerator generator) : this(generator, DefaultAlpha, DefaultBeta)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
@@ -303,17 +313,18 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="DiscreteUniformDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator. 
+        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of discrete uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>,
-        ///   or <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
+        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>, or
+        ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         public DiscreteUniformDistribution(int alpha, int beta) : this(new XorShift128Generator(), alpha, beta)
         {
@@ -330,14 +341,15 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of discrete uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>,
-        ///   or <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
+        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>, or
+        ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         [CLSCompliant(false)]
         public DiscreteUniformDistribution(uint seed, int alpha, int beta)
@@ -355,17 +367,16 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of discrete uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>,
-        ///   or <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
+        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>, or
+        ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         public DiscreteUniformDistribution(IGenerator generator, int alpha, int beta) : base(generator, alpha, beta)
         {
@@ -374,6 +385,6 @@ namespace Troschuetz.Random.Distributions.Discrete
             Debug.Assert(Equals(Beta, beta));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

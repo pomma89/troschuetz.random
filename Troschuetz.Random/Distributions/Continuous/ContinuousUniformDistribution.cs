@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,20 +19,21 @@
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
-    using Core;
-    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of continuous uniformly distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="ContinuousUniformDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28continuous%29"> 
-    ///   Wikipedia - Uniform distribution (continuous)</a>.
+    ///   The implementation of the <see cref="ContinuousUniformDistribution"/> type bases upon
+    ///   information presented on
+    ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28continuous%29">Wikipedia -
+    ///   Uniform distribution (continuous)</a>.
     /// </remarks>
     [Serializable]
     public class ContinuousUniformDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
@@ -42,21 +43,22 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Alpha"/> if none is specified. 
+        ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const double DefaultAlpha = 0;
 
         /// <summary>
-        ///   The default value assigned to <see cref="Beta"/> if none is specified. 
+        ///   The default value assigned to <see cref="Beta"/> if none is specified.
         /// </summary>
         public const double DefaultBeta = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
         /// <summary>
-        ///   Stores the parameter alpha which is used for generation of uniformly distributed random numbers.
+        ///   Stores the parameter alpha which is used for generation of uniformly distributed
+        ///   random numbers.
         /// </summary>
         double _alpha;
 
@@ -66,7 +68,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         double _beta;
 
         /// <summary>
-        ///   Gets or sets the parameter alpha which is used for generation of uniformly distributed random numbers.
+        ///   Gets or sets the parameter alpha which is used for generation of uniformly distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is greater than <see cref="Beta"/>.
@@ -77,11 +80,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Alpha
         {
             get { return _alpha; }
-            set { _alpha = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                _alpha = value;
+            }
         }
 
         /// <summary>
-        ///   Gets or sets the parameter beta which is used for generation of uniformly distributed random numbers.
+        ///   Gets or sets the parameter beta which is used for generation of uniformly distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <see cref="Alpha"/> is greater than <paramref name="value"/>.
@@ -92,10 +100,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Beta
         {
             get { return _beta; }
-            set { _beta = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidBeta(value), ErrorMessages.InvalidParams);
+                _beta = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
@@ -105,14 +117,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter beta which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
         /// </exception>
@@ -124,7 +136,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             _beta = beta;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -133,7 +145,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is less than or equal to <see cref="Beta"/>; otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is less than or equal to <see cref="Beta"/>;
+        ///   otherwise, <see langword="false"/>.
         /// </returns>
         public bool IsValidAlpha(double value)
         {
@@ -153,7 +166,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return AreValidParams(_alpha, value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
@@ -169,17 +182,17 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Mean
         {
-            get { return _alpha/2.0 + _beta/2.0; }
+            get { return _alpha / 2.0 + _beta / 2.0; }
         }
 
         public double Median
         {
-            get { return _alpha/2.0 + _beta/2.0; }
+            get { return _alpha / 2.0 + _beta / 2.0; }
         }
 
         public double Variance
         {
-            get { return Math.Pow(_beta - _alpha, 2.0)/12.0; }
+            get { return Math.Pow(_beta - _alpha, 2.0) / 12.0; }
         }
 
         public double[] Mode
@@ -192,7 +205,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return Sample(Gen, _alpha, _beta);
         }
 
-        #endregion
+        #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
@@ -200,10 +213,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether continuous uniform distribution is defined under given parameters.
         /// </summary>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter beta which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <returns>
         ///   True if <paramref name="alpha"/> is less than or equal to <paramref name="beta"/>;
@@ -220,31 +235,32 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="generator">The generator from which random number are drawn.</param>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter beta which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
-        /// <returns>
-        ///   A continuous uniform distributed floating point random number.
-        /// </returns>
+        /// <returns>A continuous uniform distributed floating point random number.</returns>
         [Pure]
         internal static double Sample(TGen generator, double alpha, double beta)
         {
             var helper1 = beta - alpha;
-            return alpha + generator.NextDouble()*helper1;
+            return alpha + generator.NextDouble() * helper1;
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of continuous uniformly distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="ContinuousUniformDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28continuous%29"> 
-    ///   Wikipedia - Uniform distribution (continuous)</a>.
+    ///   The implementation of the <see cref="ContinuousUniformDistribution"/> type bases upon
+    ///   information presented on
+    ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28continuous%29">Wikipedia -
+    ///   Uniform distribution (continuous)</a>.
     /// </remarks>
     [Serializable]
     public sealed class ContinuousUniformDistribution : ContinuousUniformDistribution<IGenerator>
@@ -285,9 +301,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public ContinuousUniformDistribution(IGenerator generator)
             : base(generator, DefaultAlpha, DefaultBeta)
         {
@@ -301,10 +315,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter beta which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
@@ -325,10 +341,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter beta which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
@@ -349,14 +367,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter beta which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
         /// </exception>
@@ -367,6 +385,6 @@ namespace Troschuetz.Random.Distributions.Continuous
             Debug.Assert(Equals(Beta, beta));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

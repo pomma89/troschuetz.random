@@ -19,19 +19,19 @@
 
 namespace Troschuetz.Random.Distributions.Discrete
 {
+    using Core;
     using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Core;
-    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of binomial distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The binomial distribution generates only discrete numbers.<br />
-    ///   The implementation of the <see cref="BinomialDistribution"/> type bases upon information presented on
+    ///   The binomial distribution generates only discrete numbers. <br/> The implementation of the
+    ///   <see cref="BinomialDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/binomial_distribution">Wikipedia - Binomial distribution</a>.
     /// </remarks>
     [Serializable]
@@ -65,7 +65,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         private int _beta;
 
         /// <summary>
-        ///   Gets or sets the parameter alpha which is used for generation of binomial distributed random numbers.
+        ///   Gets or sets the parameter alpha which is used for generation of binomial distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than zero or greater than one.
@@ -76,11 +77,16 @@ namespace Troschuetz.Random.Distributions.Discrete
         public double Alpha
         {
             get { return _alpha; }
-            set { _alpha = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                _alpha = value;
+            }
         }
 
         /// <summary>
-        ///   Gets or sets the parameter beta which is used for generation of binomial distributed random numbers.
+        ///   Gets or sets the parameter beta which is used for generation of binomial distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than zero.
@@ -91,7 +97,11 @@ namespace Troschuetz.Random.Distributions.Discrete
         public int Beta
         {
             get { return _beta; }
-            set { _beta = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidBeta(value), ErrorMessages.InvalidParams);
+                _beta = value;
+            }
         }
 
         #endregion Instance Fields
@@ -99,8 +109,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
@@ -109,12 +119,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <param name="beta">
         ///   The parameter beta which is used for generation of binomial distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than zero or greater than one,
-        ///   or <paramref name="beta"/> is less than zero.
+        ///   <paramref name="alpha"/> is less than zero or greater than one, or
+        ///   <paramref name="beta"/> is less than zero.
         /// </exception>
         public BinomialDistribution(TGen generator, double alpha, int beta) : base(generator)
         {
@@ -132,8 +140,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is greater than or equal to 0.0, and less than or equal to 1.0;
-        ///   otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is greater than or equal to 0.0, and less than or
+        ///   equal to 1.0; otherwise, <see langword="false"/>.
         /// </returns>
         public bool IsValidAlpha(double value)
         {
@@ -210,8 +218,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   The parameter beta which is used for generation of binomial distributed random numbers.
         /// </param>
         /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than or equal to zero and less than or equal to one,
-        ///   and if <paramref name="beta"/> is greater than or equal to zero; otherwise, it returns false.
+        ///   True if <paramref name="alpha"/> is greater than or equal to zero and less than or
+        ///   equal to one, and if <paramref name="beta"/> is greater than or equal to zero;
+        ///   otherwise, it returns false.
         /// </returns>
         [Pure]
         public static bool AreValidParams(double alpha, int beta)
@@ -229,9 +238,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <param name="beta">
         ///   The parameter beta which is used for generation of binomial distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A binomial distributed 32-bit signed integer.
-        /// </returns>
+        /// <returns>A binomial distributed 32-bit signed integer.</returns>
         [Pure]
         internal static int Sample(TGen generator, double alpha, int beta)
         {
@@ -253,8 +260,8 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   Provides generation of binomial distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The binomial distribution generates only discrete numbers.<br />
-    ///   The implementation of the <see cref="BinomialDistribution"/> type bases upon information presented on
+    ///   The binomial distribution generates only discrete numbers. <br/> The implementation of the
+    ///   <see cref="BinomialDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/binomial_distribution">Wikipedia - Binomial distribution</a>.
     /// </remarks>
     [Serializable]
@@ -263,8 +270,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public BinomialDistribution() : base(new XorShift128Generator(), DefaultAlpha, DefaultBeta)
         {
@@ -274,8 +281,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -290,13 +297,11 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public BinomialDistribution(IGenerator generator) : base(generator, DefaultAlpha, DefaultBeta)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
@@ -305,8 +310,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of binomial distributed random numbers.
@@ -315,8 +320,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   The parameter beta which is used for generation of binomial distributed random numbers.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than zero or greater than one,
-        ///   or <paramref name="beta"/> is less than zero.
+        ///   <paramref name="alpha"/> is less than zero or greater than one, or
+        ///   <paramref name="beta"/> is less than zero.
         /// </exception>
         public BinomialDistribution(double alpha, int beta) : base(new XorShift128Generator(), alpha, beta)
         {
@@ -326,8 +331,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -339,8 +344,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   The parameter beta which is used for generation of binomial distributed random numbers.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than zero or greater than one,
-        ///   or <paramref name="beta"/> is less than zero.
+        ///   <paramref name="alpha"/> is less than zero or greater than one, or
+        ///   <paramref name="beta"/> is less than zero.
         /// </exception>
         [CLSCompliant(false)]
         public BinomialDistribution(uint seed, double alpha, int beta)
@@ -353,8 +358,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
@@ -363,12 +368,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <param name="beta">
         ///   The parameter beta which is used for generation of binomial distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than zero or greater than one,
-        ///   or <paramref name="beta"/> is less than zero.
+        ///   <paramref name="alpha"/> is less than zero or greater than one, or
+        ///   <paramref name="beta"/> is less than zero.
         /// </exception>
         public BinomialDistribution(IGenerator generator, double alpha, int beta) : base(generator, alpha, beta)
         {

@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,19 +19,19 @@
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
-    using Core;
-    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of chi distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="ChiDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Chi_distribution">Wikipedia - Chi distribution</a>.
+    ///   The implementation of the <see cref="ChiDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Chi_distribution">Wikipedia - Chi distribution</a>.
     /// </remarks>
     [Serializable]
     public class ChiDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>
@@ -40,7 +40,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Alpha"/> if none is specified. 
+        ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const int DefaultAlpha = 1;
 
@@ -53,7 +53,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             -5.395239384953e-6
         };
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
@@ -63,7 +63,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         int _alpha;
 
         /// <summary>
-        ///   Gets or sets the parameter alpha which is used for generation of chi distributed random numbers.
+        ///   Gets or sets the parameter alpha which is used for generation of chi distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -74,24 +75,26 @@ namespace Troschuetz.Random.Distributions.Continuous
         public int Alpha
         {
             get { return _alpha; }
-            set { _alpha = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                _alpha = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of chi distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
@@ -102,7 +105,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             _alpha = alpha;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -110,9 +113,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Alpha"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidAlpha(int value)
         {
             return IsValidParam(value);
@@ -123,19 +124,20 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="x">A double-precision floating point number.</param>
         /// <returns>
-        ///   A double-precision floating point number representing an approximation of Gamma(<paramref name="x"/>).
+        ///   A double-precision floating point number representing an approximation of Gamma( <paramref name="x"/>).
         /// </returns>
         static double Gamma(double x)
         {
             var sum = LanczosCoefficients[0];
-            for (var index = 1; index <= 6; index++) {
-                sum += LanczosCoefficients[index]/(x + index);
+            for (var index = 1; index <= 6; index++)
+            {
+                sum += LanczosCoefficients[index] / (x + index);
             }
 
-            return Math.Sqrt(2.0*Math.PI)/x*Math.Pow(x + 5.5, x + 0.5)/Math.Exp(x + 5.5)*sum;
+            return Math.Sqrt(2.0 * Math.PI) / x * Math.Pow(x + 5.5, x + 0.5) / Math.Exp(x + 5.5) * sum;
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
@@ -151,7 +153,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Mean
         {
-            get { return Math.Sqrt(2.0)*Gamma((Alpha + 1.0)/2.0)/Gamma(Alpha/2.0); }
+            get { return Math.Sqrt(2.0) * Gamma((Alpha + 1.0) / 2.0) / Gamma(Alpha / 2.0); }
         }
 
         public double Median
@@ -166,7 +168,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double[] Mode
         {
-            get { return new[] {Math.Sqrt(Alpha - 1.0)}; } // alpha >= 1
+            get { return new[] { Math.Sqrt(Alpha - 1.0) }; } // alpha >= 1
         }
 
         public double NextDouble()
@@ -174,7 +176,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return Sample(Gen, _alpha);
         }
 
-        #endregion
+        #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
@@ -200,30 +202,29 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of chi distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A chi distributed floating point random number.
-        /// </returns>
+        /// <returns>A chi distributed floating point random number.</returns>
         [Pure]
         internal static double Sample(TGen generator, int alpha)
         {
             const double m = 0.0;
             const double s = 1.0;
             var sum = 0.0;
-            for (var i = 0; i < alpha; i++) {
+            for (var i = 0; i < alpha; i++)
+            {
                 sum += Math.Pow(NormalDistribution<TGen>.Sample(generator, m, s), 2);
             }
             return Math.Sqrt(sum);
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of chi distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="ChiDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Chi_distribution">Wikipedia - Chi distribution</a>.
+    ///   The implementation of the <see cref="ChiDistribution"/> type bases upon information
+    ///   presented on <a href="http://en.wikipedia.org/wiki/Chi_distribution">Wikipedia - Chi distribution</a>.
     /// </remarks>
     [Serializable]
     public sealed class ChiDistribution : ChiDistribution<IGenerator>
@@ -231,8 +232,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public ChiDistribution()
             : base(new XorShift128Generator(), DefaultAlpha)
@@ -242,8 +243,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -258,13 +259,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public ChiDistribution(IGenerator generator)
             : base(generator, DefaultAlpha)
         {
@@ -273,8 +272,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of chi distributed random numbers.
@@ -290,8 +289,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -312,16 +311,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="ChiDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of chi distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
@@ -331,6 +328,6 @@ namespace Troschuetz.Random.Distributions.Continuous
             Debug.Assert(Equals(Alpha, alpha));
         }
 
-        #endregion
+        #endregion Construction
     }
 }

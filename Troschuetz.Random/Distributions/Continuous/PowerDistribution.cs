@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,38 +19,38 @@
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
+    using Core;
+    using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Generators;
-    using Core;
-    using PommaLabs.Thrower;
 
     /// <summary>
     ///   Provides generation of power distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="PowerDistribution"/> type bases upon information presented on
-    ///   <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
+    ///   The implementation of the <see cref="PowerDistribution"/> type bases upon information
+    ///   presented on <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class PowerDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, 
+    public class PowerDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
                                            IBetaDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
 
         /// <summary>
-        ///   The default value assigned to <see cref="Alpha"/> if none is specified. 
+        ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const double DefaultAlpha = 1;
 
         /// <summary>
-        ///   The default value assigned to <see cref="Beta"/> if none is specified. 
+        ///   The default value assigned to <see cref="Beta"/> if none is specified.
         /// </summary>
         public const double DefaultBeta = 1;
 
-        #endregion
+        #endregion Class Fields
 
         #region Instance Fields
 
@@ -65,7 +65,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         double _beta;
 
         /// <summary>
-        ///   Gets or sets the parameter alpha which is used for generation of power distributed random numbers.
+        ///   Gets or sets the parameter alpha which is used for generation of power distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -76,11 +77,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Alpha
         {
             get { return _alpha; }
-            set { _alpha = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                _alpha = value;
+            }
         }
 
         /// <summary>
-        ///   Gets or sets the parameter beta which is used for generation of power distributed random numbers.
+        ///   Gets or sets the parameter beta which is used for generation of power distributed
+        ///   random numbers.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="value"/> is less than or equal to zero.
@@ -91,16 +97,20 @@ namespace Troschuetz.Random.Distributions.Continuous
         public double Beta
         {
             get { return _beta; }
-            set { _beta = value; }
+            set
+            {
+                Raise<ArgumentOutOfRangeException>.IfNot(IsValidBeta(value), ErrorMessages.InvalidParams);
+                _beta = value;
+            }
         }
 
-        #endregion
+        #endregion Instance Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
@@ -109,9 +119,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="beta">
         ///   The parameter beta which is used for generation of power distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
@@ -122,7 +130,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             _beta = beta;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance Methods
 
@@ -130,9 +138,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Alpha"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidAlpha(double value)
         {
             return AreValidParams(value, Beta);
@@ -142,15 +148,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidBeta(double value)
         {
             return AreValidParams(_alpha, value);
         }
 
-        #endregion
+        #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
@@ -161,12 +165,12 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Maximum
         {
-            get { return 1.0/Beta; }
+            get { return 1.0 / Beta; }
         }
 
         public double Mean
         {
-            get { return _alpha/Beta/(_alpha + 1.0); }
+            get { return _alpha / Beta / (_alpha + 1.0); }
         }
 
         public double Median
@@ -176,18 +180,20 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double Variance
         {
-            get { return _alpha/Math.Pow(Beta, 2.0)/Math.Pow(_alpha + 1.0, 2.0)/(_alpha + 2.0); }
+            get { return _alpha / Math.Pow(Beta, 2.0) / Math.Pow(_alpha + 1.0, 2.0) / (_alpha + 2.0); }
         }
 
         public double[] Mode
         {
             get
             {
-                if (_alpha > 1.0) {
-                    return new[] {1.0/Beta};
+                if (_alpha > 1.0)
+                {
+                    return new[] { 1.0 / Beta };
                 }
-                if (_alpha < 1.0) {
-                    return new[] {0.0};
+                if (_alpha < 1.0)
+                {
+                    return new[] { 0.0 };
                 }
                 throw new NotSupportedException(ErrorMessages.UndefinedModeForParams);
             }
@@ -198,7 +204,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             return Sample(Gen, _alpha, _beta);
         }
 
-        #endregion
+        #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
@@ -231,25 +237,23 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="beta">
         ///   The parameter beta which is used for generation of power distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A power distributed floating point random number.
-        /// </returns>
+        /// <returns>A power distributed floating point random number.</returns>
         [Pure]
         internal static double Sample(TGen generator, double alpha, double beta)
         {
-            var helper1 = 1.0/alpha;
-            return Math.Pow(generator.NextDouble(), helper1)/beta;
+            var helper1 = 1.0 / alpha;
+            return Math.Pow(generator.NextDouble(), helper1) / beta;
         }
 
-        #endregion
+        #endregion TRandom Helpers
     }
 
     /// <summary>
     ///   Provides generation of power distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The implementation of the <see cref="PowerDistribution"/> type bases upon information presented on
-    ///   <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
+    ///   The implementation of the <see cref="PowerDistribution"/> type bases upon information
+    ///   presented on <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
     /// </remarks>
     [Serializable]
     public sealed class PowerDistribution : PowerDistribution<IGenerator>
@@ -257,8 +261,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public PowerDistribution() : this(new XorShift128Generator(), DefaultAlpha, DefaultBeta)
         {
@@ -268,8 +272,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -284,13 +288,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         public PowerDistribution(IGenerator generator) : this(generator, DefaultAlpha, DefaultBeta)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
@@ -299,8 +301,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of power distributed random numbers.
@@ -319,8 +321,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -345,8 +347,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">
@@ -355,9 +357,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="beta">
         ///   The parameter beta which is used for generation of power distributed random numbers.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> is <see langword="null"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
@@ -368,6 +368,6 @@ namespace Troschuetz.Random.Distributions.Continuous
             Debug.Assert(Equals(Beta, beta));
         }
 
-        #endregion
+        #endregion Construction
     }
 }
