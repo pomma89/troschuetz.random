@@ -13,7 +13,7 @@ Please visit the [page of the original project](http://goo.gl/rN7my) in order to
 
 A simple, yet effective, WinForms application is available in order to test the Troschuetz.Random library. As for the rest of the code, that application was completelly written by Stefan Troschütz and what I did was simply to adapt it to the new refactored code.
 
-The tester is not distributed on NuGet, but it can be [downloaded here](http://goo.gl/gQzZ3O).
+The tester is not distributed on NuGet, but it can be [downloaded here](https://drive.google.com/open?id=0B8v0ikF4z2BicWpNRy1WeXJVaE0).
 
 ## About this repository and the maintainer ##
 
