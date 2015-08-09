@@ -133,6 +133,7 @@
     <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Generators\GeneratorBase.cs" />
+    <Compile Include="Generators\NumericalRecipes3Q1Generator.cs" />
     <Compile Include="IDistribution.cs" />
     <Compile Include="Distributions\Continuous\BetaDistribution.cs" />
     <Compile Include="Distributions\Continuous\BetaPrimeDistribution.cs" />

@@ -52,10 +52,8 @@ namespace Troschuetz.Random.Generators
     ///   associated <see cref="ShortLag"/> and <see cref="LongLag"/> properties. Some popular pairs are presented on 
     ///   <a href="http://en.wikipedia.org/wiki/Lagged_Fibonacci_generator">Wikipedia - Lagged Fibonacci generator</a>.
     /// </remarks>
-    // ReSharper disable InconsistentNaming
     [Serializable]
     public sealed class ALFGenerator : GeneratorBase<ALFGenerator>, IGenerator
-// ReSharper restore InconsistentNaming
     {
         #region Instance Fields
 
@@ -267,8 +265,8 @@ namespace Troschuetz.Random.Generators
             var x = _x[_i++];
 
             var result = (int) (x >> 1);
-            // Exclude Int32.MaxValue from the range of return values.
-            return result == Int32.MaxValue ? Next() : result;
+            // Exclude int.MaxValue from the range of return values.
+            return result == int.MaxValue ? Next() : result;
         }
 
         public int NextInclusiveMaxValue()
