@@ -139,7 +139,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="lambda"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool IsValidParam(double lambda)
         {
             return lambda > 0;
@@ -155,7 +155,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   An exponential distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, double lambda)
         {
             return (-1.0/lambda)*Math.Log(1.0 - generator.NextDouble());

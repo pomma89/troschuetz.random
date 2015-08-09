@@ -224,7 +224,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   True if <paramref name="alpha"/> is greater than zero and
         ///   if it is less than or equal to one; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool IsValidParam(double alpha)
         {
             return alpha > 0 && alpha <= 1;
@@ -240,7 +240,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <returns>
         ///   A geometric distributed 32-bit signed integer.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static int Sample(TGen generator, double alpha)
         {
             var samples = 1;

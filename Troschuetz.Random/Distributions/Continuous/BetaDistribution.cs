@@ -221,7 +221,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="beta"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double alpha, double beta)
         {
             return alpha > 0 && beta > 0;

@@ -204,7 +204,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="gamma"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double alpha, double gamma)
         {
             return !double.IsNaN(alpha) && gamma > 0;
@@ -223,7 +223,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A cauchy distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, double alpha, double gamma)
         {
             return alpha + gamma*Math.Tan(Math.PI*(generator.NextDouble() - 0.5));

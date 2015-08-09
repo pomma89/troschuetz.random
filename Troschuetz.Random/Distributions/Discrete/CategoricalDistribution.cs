@@ -319,7 +319,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   False if any of the weights is negative or if the sum of parameters is 0.0;
         ///   otherwise, it returns true.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool IsValidParam(IEnumerable<double> weights)
         {
             var sum = 0.0;
@@ -342,7 +342,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <returns>
         ///   A categorical distributed 32-bit signed integer.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static int Sample(TGen generator, int weightsCount, double[] cdf, double weightsSum)
         {
             var u = generator.NextDouble(weightsSum);

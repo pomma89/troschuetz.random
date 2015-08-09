@@ -161,7 +161,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="sigma"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool IsValidParam(double sigma)
         {
             return sigma > 0;
@@ -177,7 +177,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A rayleigh distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, double sigma)
         {
             const double mu = 0.0;

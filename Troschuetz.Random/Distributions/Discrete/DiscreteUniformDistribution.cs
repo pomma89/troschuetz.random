@@ -217,7 +217,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   True if <paramref name="alpha"/> is less than or equal to <paramref name="beta"/>,
         ///   and if <paramref name="beta"/> is less than <see cref="int.MaxValue"/>; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(int alpha, int beta)
         {
             return alpha <= beta && beta < int.MaxValue;
@@ -236,7 +236,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <returns>
         ///   A discrete uniform distributed 32-bit signed integer.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static int Sample(TGen generator, int alpha, int beta)
         {
             return generator.Next(alpha, beta + 1);

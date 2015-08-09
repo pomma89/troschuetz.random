@@ -258,7 +258,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <see cref="_sigma"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double mu, double sigma)
         {
             return !double.IsNaN(mu) && sigma > 0;
@@ -277,7 +277,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A normal distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, double mu, double sigma)
         {
             while (true) {

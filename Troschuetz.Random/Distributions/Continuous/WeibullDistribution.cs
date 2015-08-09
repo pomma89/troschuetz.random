@@ -238,7 +238,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="lambda"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double alpha, double lambda)
         {
             return alpha > 0 && lambda > 0;
@@ -257,7 +257,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A weibull distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, double alpha, double lambda)
         {
             var helper1 = 1.0/alpha;

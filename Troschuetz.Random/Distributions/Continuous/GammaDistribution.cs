@@ -211,7 +211,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="theta"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double alpha, double theta)
         {
             return alpha > 0 && theta > 0;
@@ -230,7 +230,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A gamma distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, double alpha, double theta)
         {
             var helper1 = alpha - Math.Floor(alpha);

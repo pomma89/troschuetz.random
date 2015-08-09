@@ -221,7 +221,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="beta"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(int alpha, int beta)
         {
             return alpha > 0 && beta > 0;
@@ -240,7 +240,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A fisher snedecor distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, int alpha, int beta)
         {
             var helper1 = beta/(double) alpha;

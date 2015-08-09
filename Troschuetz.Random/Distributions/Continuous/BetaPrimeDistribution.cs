@@ -212,7 +212,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="beta"/> are greater than one;
         ///   otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double alpha, double beta)
         {
             return alpha > 1 && beta > 1;
@@ -231,7 +231,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A beta prime distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, double alpha, double beta)
         {
             var betaVariate = BetaDistribution<TGen>.Sample(generator, alpha, beta);

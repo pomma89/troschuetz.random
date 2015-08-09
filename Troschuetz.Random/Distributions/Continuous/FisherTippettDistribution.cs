@@ -207,7 +207,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="alpha"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double alpha, double mu)
         {
             return alpha > 0 && !double.IsNaN(mu);
@@ -226,7 +226,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A fisher tippett distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, double alpha, double mu)
         {
             return mu - alpha*Math.Log(-Math.Log(1.0 - generator.NextDouble()));

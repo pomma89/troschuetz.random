@@ -223,7 +223,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="sigma"/> is greater than or equal to zero; otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double mu, double sigma)
         {
             return !double.IsNaN(mu) && sigma >= 0;
@@ -242,7 +242,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A lognormal distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, double mu, double sigma)
         {
             const double nm = 0.0;

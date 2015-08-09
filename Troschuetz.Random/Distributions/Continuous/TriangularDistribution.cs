@@ -290,7 +290,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   and if <paramref name="beta"/> is greater than or equal to <paramref name="gamma"/>;
         ///   otherwise, it returns false.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         public static bool AreValidParams(double alpha, double beta, double gamma)
         {
             return alpha < beta && alpha <= gamma && beta >= gamma;
@@ -312,7 +312,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A triangular distributed floating point random number.
         /// </returns>
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         internal static double Sample(TGen generator, double alpha, double beta, double gamma)
         {
             var helper1 = gamma - alpha;

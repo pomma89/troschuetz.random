@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGetPack
 		{6B947182-CF4B-45FE-A1AE-47A28C514040} = {6B947182-CF4B-45FE-A1AE-47A28C514040}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectLogo", "ProjectLogo", "{07EA9A7E-47F0-4173-855E-4A5B6B517A66}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Logo", "Project Logo", "{07EA9A7E-47F0-4173-855E-4A5B6B517A66}"
 	ProjectSection(SolutionItems) = preProject
 		ProjectLogo\logo-128.png = ProjectLogo\logo-128.png
 		ProjectLogo\logo-256.png = ProjectLogo\logo-256.png
@@ -36,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectLogo", "ProjectLogo"
 		ProjectLogo\logo-original.png = ProjectLogo\logo-original.png
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OriginalSources", "OriginalSources", "{FDBA8F2C-3F3C-4320-BB07-BC7F7AEC7263}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Original Sources", "Original Sources", "{FDBA8F2C-3F3C-4320-BB07-BC7F7AEC7263}"
 	ProjectSection(SolutionItems) = preProject
 		OriginalSources\Random_src.zip = OriginalSources\Random_src.zip
 		OriginalSources\RandomTester_src.zip = OriginalSources\RandomTester_src.zip
