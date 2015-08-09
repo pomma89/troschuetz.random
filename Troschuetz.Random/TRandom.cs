@@ -34,7 +34,7 @@ namespace Troschuetz.Random
     [Serializable]
     public class TRandom<TGen> : IGenerator where TGen : IGenerator
     {
-        private readonly TGen _gen;
+        readonly TGen _gen;
 
         internal TRandom(TGen generator)
         {
@@ -66,8 +66,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Bernoulli(double alpha)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(BernoulliDistribution<TGen>.IsValidParam(alpha),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(BernoulliDistribution<TGen>.IsValidParam(alpha), ErrorMessages.InvalidParams);
             return BernoulliDistribution<TGen>.Sample(_gen, alpha);
         }
 
@@ -1754,16 +1753,13 @@ namespace Troschuetz.Random
 
         #region Object Members
 
-        public override string ToString()
-        {
-            return string.Format("Generator: {0}", _gen);
-        }
+        public override string ToString() => string.Format("Generator: {0}", _gen);
 
         #endregion Object Members
 
         #region Private Members
 
-        private static IEnumerable<TRet> InfiniteLoop<T1, T2, TRet>(Func<T1, T2, TRet> f, T1 a1, T2 a2)
+        static IEnumerable<TRet> InfiniteLoop<T1, T2, TRet>(Func<T1, T2, TRet> f, T1 a1, T2 a2)
         {
             while (true)
             {
@@ -1771,7 +1767,7 @@ namespace Troschuetz.Random
             }
         }
 
-        private static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, TRet>(Func<T1, T2, T3, TRet> f, T1 a1, T2 a2, T3 a3)
+        static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, TRet>(Func<T1, T2, T3, TRet> f, T1 a1, T2 a2, T3 a3)
         {
             while (true)
             {
@@ -1779,7 +1775,7 @@ namespace Troschuetz.Random
             }
         }
 
-        private static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, T4, TRet>(Func<T1, T2, T3, T4, TRet> f, T1 a1, T2 a2, T3 a3, T4 a4)
+        static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, T4, TRet>(Func<T1, T2, T3, T4, TRet> f, T1 a1, T2 a2, T3 a3, T4 a4)
         {
             while (true)
             {

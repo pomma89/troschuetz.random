@@ -57,12 +57,12 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <summary>
         ///   Stores the parameter alpha which is used for generation of binomial distributed random numbers.
         /// </summary>
-        private double _alpha;
+        double _alpha;
 
         /// <summary>
         ///   Stores the parameter beta which is used for generation of binomial distributed random numbers.
         /// </summary>
-        private int _beta;
+        int _beta;
 
         /// <summary>
         ///   Gets or sets the parameter alpha which is used for generation of binomial distributed

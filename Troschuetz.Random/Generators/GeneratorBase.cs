@@ -56,10 +56,7 @@ namespace Troschuetz.Random.Generators
 
         #region Private Members
 
-        private TGen Generator
-        {
-            get { return this as TGen; }
-        }
+        TGen Generator => this as TGen;
 
         #endregion
     }

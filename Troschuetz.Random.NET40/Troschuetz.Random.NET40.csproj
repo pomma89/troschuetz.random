@@ -130,9 +130,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Troschuetz.Random\Contracts\GeneratorContract.cs">
-      <Link>Contracts\GeneratorContract.cs</Link>
-    </Compile>
     <Compile Include="..\Troschuetz.Random\Core\ErrorMessages.cs">
       <Link>Core\ErrorMessages.cs</Link>
     </Compile>

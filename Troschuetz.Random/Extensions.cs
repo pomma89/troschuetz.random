@@ -107,7 +107,7 @@ namespace Troschuetz.Random
         public static IEnumerable<bool> Bytes<TGen>(this TGen generator, byte[] buffer) where TGen : IGenerator
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentNullException>(buffer != null, ErrorMessages.NullBuffer);
+            RaiseArgumentNullException.IfIsNull(buffer, nameof(buffer), ErrorMessages.NullBuffer);
             while (true)
             {
                 generator.NextBytes(buffer);
@@ -124,14 +124,13 @@ namespace Troschuetz.Random
         /// <param name="list">The list from which an item should be randomly picked.</param>
         /// <returns>A random item belonging to given list.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
-        /// <exception cref="InvalidOperationException"><paramref name="list"/> is empty.</exception>
+        /// <exception cref="ArgumentException"><paramref name="list"/> is empty.</exception>
         [Pure]
         public static TItem Choice<TGen, TItem>(this TGen generator, IList<TItem> list) where TGen : IGenerator
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentNullException>(list != null, ErrorMessages.NullList);
-            Contract.Requires<InvalidOperationException>(list.Count > 0, ErrorMessages.EmptyList);
-            Contract.Ensures(list.Contains(Contract.Result<TItem>()));
+            RaiseArgumentNullException.IfIsNull(list, nameof(list), ErrorMessages.NullList);
+            Raise<ArgumentException>.IfIsEmpty(list, ErrorMessages.EmptyList);
             var idx = generator.Next(list.Count);
             Debug.Assert(idx >= 0 && idx < list.Count);
             return list[idx];
@@ -151,9 +150,8 @@ namespace Troschuetz.Random
         public static IEnumerable<TItem> Choices<TGen, TItem>(this TGen generator, IList<TItem> list) where TGen : IGenerator
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentNullException>(list != null, ErrorMessages.NullList);
-            Contract.Requires<InvalidOperationException>(list.Count > 0, ErrorMessages.EmptyList);
-            Contract.Ensures(Contract.Result<IEnumerable<TItem>>() != null);
+            RaiseArgumentNullException.IfIsNull(list, nameof(list), ErrorMessages.NullList);
+            Raise<ArgumentException>.IfIsEmpty(list, ErrorMessages.EmptyList);
             while (true)
             {
                 var idx = generator.Next(list.Count);
@@ -175,6 +173,7 @@ namespace Troschuetz.Random
         public static IEnumerable<double> Doubles<TGen>(this TGen generator) where TGen : IGenerator
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+
             while (true)
             {
                 yield return generator.NextDouble();
@@ -203,6 +202,7 @@ namespace Troschuetz.Random
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
             Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
+
             while (true)
             {
                 yield return generator.NextDouble(maxValue);
@@ -233,7 +233,8 @@ namespace Troschuetz.Random
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
-            Contract.Requires<ArgumentException>(!double.IsPositiveInfinity(maxValue - minValue));
+            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
+
             while (true)
             {
                 yield return generator.NextDouble(minValue, maxValue);
@@ -254,6 +255,7 @@ namespace Troschuetz.Random
         public static IEnumerable<int> Integers<TGen>(this TGen generator) where TGen : IGenerator
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+
             while (true)
             {
                 yield return generator.Next();
@@ -278,7 +280,8 @@ namespace Troschuetz.Random
         public static IEnumerable<int> Integers<TGen>(this TGen generator, int maxValue) where TGen : IGenerator
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            Contract.Requires<ArgumentOutOfRangeException>(maxValue >= 0, ErrorMessages.NegativeMaxValue);
+            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+
             while (true)
             {
                 yield return generator.Next(maxValue);
@@ -305,6 +308,7 @@ namespace Troschuetz.Random
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+
             while (true)
             {
                 yield return generator.Next(minValue, maxValue);
@@ -321,6 +325,7 @@ namespace Troschuetz.Random
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator) where TGen : IGenerator
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+
             while (true)
             {
                 yield return generator.NextUInt();
@@ -346,6 +351,7 @@ namespace Troschuetz.Random
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
+
             while (true)
             {
                 yield return generator.NextUInt(maxValue);
@@ -372,6 +378,7 @@ namespace Troschuetz.Random
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+
             while (true)
             {
                 yield return generator.NextUInt(minValue, maxValue);

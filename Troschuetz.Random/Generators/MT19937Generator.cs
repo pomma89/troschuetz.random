@@ -69,6 +69,7 @@ namespace Troschuetz.Random.Generators
     using PommaLabs.Thrower;
     using System;
     using System.Collections.Generic;
+    using Core;
 
     /// <summary>
     ///   Represents a Mersenne Twister pseudo-random number generator with period 2^19937-1.
@@ -77,7 +78,7 @@ namespace Troschuetz.Random.Generators
     ///   The <see cref="MT19937Generator"/> type bases upon information and the implementation presented on the
     ///   <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">Mersenne Twister Home Page</a>.
     /// </remarks>
-// ReSharper disable InconsistentNaming
+    // ReSharper disable InconsistentNaming
     [Serializable]
     public sealed class MT19937Generator : GeneratorBase<MT19937Generator>, IGenerator
 // ReSharper restore InconsistentNaming
@@ -380,6 +381,9 @@ namespace Troschuetz.Random.Generators
 
         public int Next(int maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
             if (_mti >= N) {
                 // Generate N words at one time
@@ -399,6 +403,9 @@ namespace Troschuetz.Random.Generators
 
         public int Next(int minValue, int maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
             if (_mti >= N) {
                 // Generate N words at one time
@@ -448,6 +455,10 @@ namespace Troschuetz.Random.Generators
 
         public double NextDouble(double maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
             if (_mti >= N) {
                 // Generate N words at one time
@@ -467,6 +478,10 @@ namespace Troschuetz.Random.Generators
 
         public double NextDouble(double minValue, double maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
             if (_mti >= N) {
                 // Generate N words at one time
@@ -504,6 +519,9 @@ namespace Troschuetz.Random.Generators
         [CLSCompliant(false)]
         public uint NextUInt(uint maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
             if (_mti >= N) {
                 // Generate N words at one time
@@ -524,6 +542,9 @@ namespace Troschuetz.Random.Generators
         [CLSCompliant(false)]
         public uint NextUInt(uint minValue, uint maxValue)
         {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
             if (_mti >= N) {
                 // Generate N words at one time
@@ -569,6 +590,9 @@ namespace Troschuetz.Random.Generators
 
         public void NextBytes(byte[] buffer)
         {
+            // Preconditions
+            RaiseArgumentNullException.IfIsNull(buffer, nameof(buffer), ErrorMessages.NullBuffer);
+
             // Fill the buffer with 4 bytes (1 uint) at a time.
             var i = 0;
             uint y;

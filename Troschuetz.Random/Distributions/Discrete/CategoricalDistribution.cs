@@ -170,10 +170,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public CategoricalDistribution(TGen generator, ICollection<double> weights) : base(generator)
         {
-                      
-            Contract.Requires<ArgumentNullException>(weights != null, ErrorMessages.NullWeights);     
-            Contract.Requires<ArgumentException>(weights.Count > 0);
-            Contract.Requires<ArgumentOutOfRangeException>(IsValidParam(weights), ErrorMessages.InvalidParams);
+            RaiseArgumentNullException.IfIsNull(weights, nameof(weights), ErrorMessages.NullWeights);
+            Raise<ArgumentException>.IfIsEmpty(weights);
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidWeights(weights), ErrorMessages.InvalidParams);
             _weights = weights.ToList();
             UpdateHelpers();
         }
