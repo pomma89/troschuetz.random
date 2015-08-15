@@ -28,11 +28,12 @@ namespace Troschuetz.Random.Generators
 {
     /// <summary>
     ///   An abstract generator which efficiently implements everything required by the
-    ///   <see cref="IGenerator"/> interface using only the <see cref="NextUInt()"/> method.
+    ///   <see cref="IGenerator"/> interface using only few methods: <see cref="NextUInt()"/>,
+    ///   <see cref="NextDouble()"/>, <see cref="NextInt()"/>.
     /// 
     ///   Therefore, in order to build a new generator, one must "simply" override the
     ///   <see cref="Reset(uint)"/>, which is used to automatically initialize the generator, and
-    ///   the <see cref="NextUInt()"/> method, which, as stated above, is used to generate every
+    ///   the generator methods, which, as stated above, are used to generate every
     ///   kind of random object exposed by the interface.
     /// 
     ///   All generators implemented in this library extend this abstract class.
@@ -47,7 +48,20 @@ namespace Troschuetz.Random.Generators
         ///   greater than or equal to 0.0 and less than 1.0 when it gets applied to a nonnegative
         ///   32-bit unsigned integer.
         /// </summary>
-        protected const double UIntToDoubleMultiplier = 1.0 / (uint.MaxValue + 1.0);
+        /// <remarks>
+        ///   The value has been generated from 1.0 / (uint.MaxValue + 1.0).
+        /// </remarks>
+        protected const double UIntToDoubleMultiplier =  2.32830643653869628E-10;
+
+        /// <summary>
+        ///   Represents the multiplier that computes a double-precision floating point number
+        ///   greater than or equal to 0.0 and less than 1.0 when it gets applied to a nonnegative
+        ///   32-bit unsigned integer.
+        /// </summary>
+        /// <remarks>
+        ///   The value has been generated from 1.0 / (ulong.MaxValue + 1.0).
+        /// </remarks>
+        protected const double ULongToDoubleMultiplier = 5.42101086242752217E-20;
 
         #endregion Constants
 
@@ -130,18 +144,7 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit signed integer greater than or equal to 0, and less than
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
         /// </returns>
-#if PORTABLE
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        public int Next()
-        {
-            int result;
-            while ((result = (int) (NextUInt() >> 1)) == int.MaxValue) { }
-
-            // Postconditions
-            Debug.Assert(result >= 0 && result < int.MaxValue);
-            return result;
-        }
+        public abstract int Next();
 
         /// <summary>
         ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
@@ -181,7 +184,7 @@ namespace Troschuetz.Random.Generators
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
 
-            var result = (int) (NextUInt() * UIntToDoubleMultiplier * maxValue);
+            var result = (int) (NextDouble() * maxValue);
 
             // Postconditions
             Debug.Assert(result >= 0 && result < maxValue);
@@ -214,7 +217,7 @@ namespace Troschuetz.Random.Generators
 
             // The cast to double enables 64 bit arithmetic, which is needed when the condition
             // ((maxValue - minValue) > int.MaxValue) is true.
-            var result = minValue + (int) (NextUInt() * UIntToDoubleMultiplier * (maxValue - (double) minValue));
+            var result = minValue + (int) (NextDouble() * (maxValue - (double) minValue));
 
             // Postconditions
             Debug.Assert(result >= minValue && result < maxValue);
@@ -228,17 +231,7 @@ namespace Troschuetz.Random.Generators
         ///   A double-precision floating point number greater than or equal to 0.0, and less than
         ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
         /// </returns>
-#if PORTABLE
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        public double NextDouble()
-        {
-            var result = NextUInt() * UIntToDoubleMultiplier;
-
-            // Postconditions
-            Debug.Assert(result >= 0.0 && result < 1.0);
-            return result;
-        }
+        public abstract double NextDouble();
 
         /// <summary>
         ///   Returns a nonnegative floating point random number less than the specified maximum.
@@ -261,7 +254,7 @@ namespace Troschuetz.Random.Generators
             RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
             Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
 
-            var result = NextUInt() * UIntToDoubleMultiplier * maxValue;
+            var result = NextDouble() * maxValue;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < maxValue);
@@ -294,7 +287,7 @@ namespace Troschuetz.Random.Generators
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
             Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
 
-            var result = minValue + NextUInt() * UIntToDoubleMultiplier * (maxValue - minValue);
+            var result = minValue + NextDouble() * (maxValue - minValue);
 
             // Postconditions
             Debug.Assert(result >= minValue && result < maxValue);
@@ -347,7 +340,7 @@ namespace Troschuetz.Random.Generators
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
 
-            var result = (uint) (NextUInt() * UIntToDoubleMultiplier * maxValue);
+            var result = (uint) (NextDouble() * maxValue);
 
             // Postconditions
             Debug.Assert(result < maxValue);
@@ -375,7 +368,7 @@ namespace Troschuetz.Random.Generators
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
-            var result = minValue + (uint) (NextUInt() * UIntToDoubleMultiplier * (maxValue - minValue));
+            var result = minValue + (uint) (NextDouble() * (maxValue - minValue));
 
             // Postconditions
             Debug.Assert(result >= minValue && result < maxValue);

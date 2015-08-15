@@ -55,7 +55,7 @@ namespace Troschuetz.Random.Generators
     [Serializable]
     public sealed class ALFGenerator : GeneratorBase<ALFGenerator>, IGenerator
     {
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores an <see cref="uint"/> used to generate up to 32 random <see cref="bool"/> values.

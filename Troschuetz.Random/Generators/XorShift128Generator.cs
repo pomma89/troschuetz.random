@@ -58,6 +58,7 @@
 namespace Troschuetz.Random.Generators
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
 
     /// <summary>
@@ -171,6 +172,8 @@ namespace Troschuetz.Random.Generators
         /// </returns>
         public override bool Reset(uint seed)
         {
+            base.Reset(seed);
+
             // "The seed set for xor128 is four 32-bit integers x,y,z,w not all 0, ..." (George
             // Marsaglia) To meet that requirement the y, z, w seeds are constant values greater 0.
             _x = seed;
@@ -181,6 +184,52 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
+        ///   Returns a nonnegative random number less than <see cref="int.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to 0, and less than
+        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
+        /// </returns>
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public override int Next()
+        {
+            var t = (_x ^ (_x << 11));
+            _x = _y;
+            _y = _z;
+            _z = _w;
+            var result = (int) ((_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8))) >> 33);
+
+            // Postconditions
+            Debug.Assert(result >= 0 && result < int.MaxValue);
+            return result;
+        }
+
+        /// <summary>
+        ///   Returns a nonnegative floating point random number less than 1.0.
+        /// </summary>
+        /// <returns>
+        ///   A double-precision floating point number greater than or equal to 0.0, and less than
+        ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
+        /// </returns>
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public override double NextDouble()
+        {
+            var t = (_x ^ (_x << 11));
+            _x = _y;
+            _y = _z;
+            _z = _w;
+            var result = (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8))) * UIntToDoubleMultiplier;
+
+            // Postconditions
+            Debug.Assert(result >= 0.0 && result < 1.0);
+            return result;
+        }
+
+        /// <summary>
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
@@ -188,7 +237,6 @@ namespace Troschuetz.Random.Generators
         ///   less than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override uint NextUInt()

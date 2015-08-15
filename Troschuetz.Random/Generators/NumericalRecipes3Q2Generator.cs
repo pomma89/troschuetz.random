@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Troschuetz.Random.Generators
@@ -111,12 +112,59 @@ namespace Troschuetz.Random.Generators
         public override bool Reset(uint seed)
         {
             base.Reset(seed);
+
             _v = SeedV;
             _w = SeedW;
             _v ^= seed;
             _w = NextULong();
             _v = NextULong();
             return true;
+        }
+
+        /// <summary>
+        ///   Returns a nonnegative random number less than <see cref="int.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to 0, and less than
+        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
+        /// </returns>
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public override int Next()
+        {
+            _v ^= _v >> 17;
+            _v ^= _v << 31;
+            _v ^= _v >> 8;
+            _w = SeedU * (_w & 0xFFFFFFFFUL) + (_w >> 32);
+            var result = (int) ((_v ^ _w) >> 33);
+
+            // Postconditions
+            Debug.Assert(result >= 0 && result < int.MaxValue);
+            return result;
+        }
+
+        /// <summary>
+        ///   Returns a nonnegative floating point random number less than 1.0.
+        /// </summary>
+        /// <returns>
+        ///   A double-precision floating point number greater than or equal to 0.0, and less than
+        ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
+        /// </returns>
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public override double NextDouble()
+        {
+            _v ^= _v >> 17;
+            _v ^= _v << 31;
+            _v ^= _v >> 8;
+            _w = SeedU * (_w & 0xFFFFFFFFUL) + (_w >> 32);
+            var result = (_v ^ _w) * ULongToDoubleMultiplier;
+
+            // Postconditions
+            Debug.Assert(result >= 0.0 && result < 1.0);
+            return result;
         }
 
         /// <summary>
@@ -127,7 +175,6 @@ namespace Troschuetz.Random.Generators
         ///   less than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override uint NextUInt()
@@ -147,7 +194,6 @@ namespace Troschuetz.Random.Generators
         ///   less than or equal to <see cref="ulong.MaxValue"/>.
         /// </returns>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public ulong NextULong()
