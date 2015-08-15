@@ -74,8 +74,6 @@ namespace Troschuetz.Random.Generators
 
         #region Abstract members
 
-        protected abstract int NextInclusiveMaxValue(TGenState generatorState);
-
         protected abstract double NextDouble(TGenState generatorState);
 
         protected abstract uint NextUInt(TGenState generatorState);
@@ -100,7 +98,7 @@ namespace Troschuetz.Random.Generators
         public int Next()
         {
             int result;
-            while ((result = NextInclusiveMaxValue(_state)) == int.MaxValue) { }
+            while ((result = (int) (NextUInt(_state) >> 1)) == int.MaxValue) { }
 
             // Postconditions
             Debug.Assert(result >= 0 && result < int.MaxValue);
@@ -118,7 +116,7 @@ namespace Troschuetz.Random.Generators
             // int are very fast (the allocated bits remain the same), so overall there's a
             // significant performance improvement. NOTE TO SELF: DO NOT REMOVE THE SECOND (INT)
             // CAST, EVEN IF VISUAL STUDIO TELLS IT IS NOT NECESSARY.
-            var result = (int) ((int) (NextInclusiveMaxValue(_state) >> 1) * IntToDoubleMultiplier * maxValue);
+            var result = (int) ((int) (NextUInt(_state) >> 1) * IntToDoubleMultiplier * maxValue);
 
             // Postconditions
             Debug.Assert(result >= 0 && result < maxValue);
@@ -137,7 +135,7 @@ namespace Troschuetz.Random.Generators
                 // The range is greater than int.MaxValue, so we have to use slower floating point
                 // arithmetic. Also all 32 random bits (uint) have to be used which again is slower
                 // (See comment in NextDouble()).
-                result = minValue + (int) (NextInclusiveMaxValue(_state) * UIntToDoubleMultiplier * (maxValue - (double) minValue));
+                result = minValue + (int) (NextUInt(_state) * UIntToDoubleMultiplier * (maxValue - (double) minValue));
             }
             else
             {
@@ -145,7 +143,7 @@ namespace Troschuetz.Random.Generators
                 // before the first multiplication and gain better performance. See comment in
                 // Next(maxValue). NOTE TO SELF: DO NOT REMOVE THE SECOND (INT) CAST, EVEN IF VISUAL
                 // STUDIO TELLS IT IS NOT NECESSARY.
-                result = minValue + (int) ((int) (NextInclusiveMaxValue(_state) >> 1) * IntToDoubleMultiplier * range);
+                result = minValue + (int) ((int) (NextUInt(_state) >> 1) * IntToDoubleMultiplier * range);
             }
 
             // Postconditions
@@ -155,7 +153,7 @@ namespace Troschuetz.Random.Generators
 
         public int NextInclusiveMaxValue()
         {
-            var result = NextInclusiveMaxValue(_state);
+            var result = (int) (NextUInt(_state) >> 1);
 
             // Postconditions
             Debug.Assert(result >= 0);

@@ -99,14 +99,6 @@ namespace Troschuetz.Random.Generators
 
         #region AbstractGenerator members
 
-        protected override int NextInclusiveMaxValue(GeneratorState generatorState)
-        {
-            unchecked
-            {
-                return (int) (((uint) generatorState.NextULong()) >> 1);
-            }
-        }
-
         protected override double NextDouble(GeneratorState generatorState)
         {
             unchecked
