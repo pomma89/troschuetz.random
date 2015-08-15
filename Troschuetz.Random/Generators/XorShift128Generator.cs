@@ -166,7 +166,6 @@ namespace Troschuetz.Random.Generators
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public XorShift128Generator(uint seed)
         {
             _seed = seed;

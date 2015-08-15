@@ -29,6 +29,7 @@ namespace Troschuetz.Random.Generators
     /// <typeparam name="TGenState">
     ///   The type of the object containing the current generator state.
     /// </typeparam>
+    [Serializable]
     public abstract class AbstractGenerator<TGenState> : IGenerator
         where TGenState : class, IGeneratorState, new()
     {
@@ -189,7 +190,7 @@ namespace Troschuetz.Random.Generators
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
             Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
 
-            var result = NextDouble() * (maxValue - minValue);
+            var result = minValue + NextDouble() * (maxValue - minValue);
 
             // Postconditions
             Debug.Assert(result >= minValue && result < maxValue);
@@ -219,7 +220,7 @@ namespace Troschuetz.Random.Generators
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
-            var result = (uint) (NextUInt(_state) * UIntToDoubleMultiplier * (maxValue - minValue));
+            var result = minValue + (uint) (NextUInt(_state) * UIntToDoubleMultiplier * (maxValue - minValue));
 
             // Postconditions
             Debug.Assert(result >= minValue && result < maxValue);

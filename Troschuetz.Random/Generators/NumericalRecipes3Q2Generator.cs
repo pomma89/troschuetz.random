@@ -24,7 +24,7 @@ using System.Runtime.CompilerServices;
 namespace Troschuetz.Random.Generators
 {
     [Serializable]
-    sealed class NumericalRecipes3Q2Generator : AbstractGenerator<NumericalRecipes3Q2Generator.GeneratorState>
+    public sealed class NumericalRecipes3Q2Generator : AbstractGenerator<NumericalRecipes3Q2Generator.GeneratorState>
     {
         #region Constants
 
@@ -43,7 +43,7 @@ namespace Troschuetz.Random.Generators
         /// <summary>
         ///   Represents the seed for the <see cref="ulong"/> numbers generation. This field is constant.
         /// </summary>
-        /// <remarks>The value of this constant is 2685821657736338717.</remarks>
+        /// <remarks>The value of this constant is 4294957665.</remarks>
         public const ulong SeedU = 4294957665UL;
 
         /// <summary>
@@ -54,6 +54,33 @@ namespace Troschuetz.Random.Generators
 
         #endregion
 
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="NumericalRecipes3Q2Generator"/> class, 
+        ///   using a time-dependent default seed value.
+        /// </summary>
+        public NumericalRecipes3Q2Generator() : base((uint) Math.Abs(Environment.TickCount))
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="NumericalRecipes3Q2Generator"/> class, 
+        ///   using the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   A number used to calculate a starting value for the pseudo-random number sequence.
+        ///   If a negative number is specified, the absolute value of the number is used. 
+        /// </param>
+        public NumericalRecipes3Q2Generator(int seed) : base((uint) Math.Abs(seed))
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="NumericalRecipes3Q2Generator"/> class, 
+        ///   using the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
         public NumericalRecipes3Q2Generator(uint seed) : base(seed)
         {
         }
@@ -86,6 +113,7 @@ namespace Troschuetz.Random.Generators
 
         #endregion
 
+        [Serializable]
         public sealed class GeneratorState : IGeneratorState
         {
             public ulong V;
