@@ -26,12 +26,12 @@ namespace Troschuetz.Random.Generators
 {
     /// <summary>
     ///   </summary>
-    /// <typeparam name="TGenState">
-    ///   The type of the object containing the current generator state.
+    /// <typeparam name="TGenerator">
+    ///   The type of the object containing the real generation methods.
     /// </typeparam>
     [Serializable]
-    public abstract class AbstractGenerator<TGenState>
-        where TGenState : AbstractGenerator<TGenState>, IGenerator
+    public abstract class AbstractGenerator<TGenerator>
+        where TGenerator : AbstractGenerator<TGenerator>, IGenerator
     {
         #region Constants
 
@@ -51,7 +51,7 @@ namespace Troschuetz.Random.Generators
 
         #endregion Constants
 
-        TGenState _state;
+        TGenerator _state;
 
         /// <summary>
         ///   Stores an <see cref="uint"/> used to generate up to 32 random <see cref="bool"/> values.
@@ -65,7 +65,7 @@ namespace Troschuetz.Random.Generators
 
         protected AbstractGenerator(uint seed)
         {
-            _state = this as TGenState;
+            _state = this as TGenerator;
             _state.Reset(seed);
 
             // The seed is stored in order to allow resetting the generator.
@@ -76,19 +76,28 @@ namespace Troschuetz.Random.Generators
 
         public uint Seed { get; }
 
-        public bool Reset()
-        {
-            var result = _state.Reset(Seed);
+        public bool Reset() => Reset(Seed);
 
-            // Postconditions
-            Debug.Assert(result == _state.CanReset);
-            return result;
+        public virtual bool Reset(uint seed)
+        {
+            if (!_state.CanReset)
+            {
+                return false;
+            }
+
+            // Reset helper variables used for generation of random bools.
+            _bitBuffer = 0U;
+            _bitCount = 0;
+            return true;
         }
 
         public int Next()
         {
-            int result;
-            while ((result = (int) (_state.NextUInt() >> 1)) == int.MaxValue) { }
+            var result = (int) (_state.NextUInt() >> 1);
+            if (result == int.MaxValue)
+            {
+                result = Next();
+            }
 
             // Postconditions
             Debug.Assert(result >= 0 && result < int.MaxValue);

@@ -137,6 +137,7 @@
     <Compile Include="Generators\NumericalRecipes3Generator.cs" />
     <Compile Include="Generators\NumericalRecipes3Q1Generator.cs" />
     <Compile Include="Generators\NumericalRecipes3Q2Generator.cs" />
+    <Compile Include="Generators\XorShift128Generator.cs" />
     <Compile Include="IDistribution.cs" />
     <Compile Include="Distributions\Continuous\BetaDistribution.cs" />
     <Compile Include="Distributions\Continuous\BetaPrimeDistribution.cs" />
@@ -165,12 +166,10 @@
     <Compile Include="Distributions\Discrete\GeometricDistribution.cs" />
     <Compile Include="Distributions\Discrete\PoissonDistribution.cs" />
     <Compile Include="IGenerator.cs" />
-    <Compile Include="IGeneratorState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Generators\ALFGenerator.cs" />
     <Compile Include="Generators\MT19937Generator.cs" />
     <Compile Include="Generators\StandardGenerator.cs" />
-    <Compile Include="Generators\XorShift128Generator.cs" />
     <Compile Include="TRandom.cs" />
   </ItemGroup>
   <ItemGroup>

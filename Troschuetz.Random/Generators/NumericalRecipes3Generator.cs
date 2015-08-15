@@ -109,8 +109,9 @@ namespace Troschuetz.Random.Generators
 
         public bool CanReset => true;
 
-        public bool Reset(uint seed)
+        public override bool Reset(uint seed)
         {
+            base.Reset(seed);
             _v = SeedV;
             _w = SeedW;
             _u = seed ^ _v;
