@@ -394,7 +394,7 @@ namespace Troschuetz.Random.Generators
 
             // The shift operation and extra int cast before the first multiplication give better performance.
             // See comment in NextDouble().
-            return (uint) ((int) (x >> 1)*IntToDoubleMultiplier*maxValue);
+            return (uint)((x >> 1) * IntToDoubleMultiplier * maxValue);
         }
 
         [CLSCompliant(false)]

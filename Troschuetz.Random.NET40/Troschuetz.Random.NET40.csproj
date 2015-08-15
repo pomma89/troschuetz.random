@@ -214,6 +214,9 @@
     <Compile Include="..\Troschuetz.Random\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\AbstractGenerator.cs">
+      <Link>Generators\AbstractGenerator.cs</Link>
+    </Compile>
     <Compile Include="..\Troschuetz.Random\Generators\ALFGenerator.cs">
       <Link>Generators\ALFGenerator.cs</Link>
     </Compile>
@@ -223,8 +226,14 @@
     <Compile Include="..\Troschuetz.Random\Generators\MT19937Generator.cs">
       <Link>Generators\MT19937Generator.cs</Link>
     </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\NumericalRecipes3Generator.cs">
+      <Link>Generators\NumericalRecipes3Generator.cs</Link>
+    </Compile>
     <Compile Include="..\Troschuetz.Random\Generators\NumericalRecipes3Q1Generator.cs">
       <Link>Generators\NumericalRecipes3Q1Generator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\NumericalRecipes3Q2Generator.cs">
+      <Link>Generators\NumericalRecipes3Q2Generator.cs</Link>
     </Compile>
     <Compile Include="..\Troschuetz.Random\Generators\StandardGenerator.cs">
       <Link>Generators\StandardGenerator.cs</Link>

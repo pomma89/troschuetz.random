@@ -358,7 +358,7 @@ namespace Troschuetz.Random.Generators
 
             var result = (int) (y >> 1);
             // Exclude Int32.MaxValue from the range of return values.
-            return result == Int32.MaxValue ? Next() : result;
+            return result == int.MaxValue ? Next() : result;
         }
 
         public int NextInclusiveMaxValue()

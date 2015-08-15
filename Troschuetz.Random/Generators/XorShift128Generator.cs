@@ -82,19 +82,19 @@ namespace Troschuetz.Random.Generators
         ///   Represents the seed for the <see cref="_y"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 362436069.</remarks>
-        const uint SeedY = 362436069;
+        public const uint SeedY = 362436069;
 
         /// <summary>
         ///   Represents the seed for the <see cref="_z"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 521288629.</remarks>
-        const uint SeedZ = 521288629;
+        public const uint SeedZ = 521288629;
 
         /// <summary>
         ///   Represents the seed for the <see cref="_w"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 88675123.</remarks>
-        const uint SeedW = 88675123;
+        public const uint SeedW = 88675123;
 
         #endregion
 
@@ -227,7 +227,7 @@ namespace Troschuetz.Random.Generators
 
             var result = (int) (w >> 1);
             // Exclude Int32.MaxValue from the range of return values.
-            return result == Int32.MaxValue ? Next() : result;
+            return result == int.MaxValue ? Next() : result;
         }
 
         public int NextInclusiveMaxValue()

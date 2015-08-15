@@ -117,7 +117,7 @@ namespace Troschuetz.Random
     public abstract class Distribution<TGen> where TGen : IGenerator
     {
         /// <summary>
-        ///   Stores a <see cref="TGen"/> object that can be used as underlying random number generator.
+        ///   Stores a <typeparamref name="TGen"/> object that can be used as underlying random number generator.
         /// </summary>
         protected readonly TGen Gen;
 

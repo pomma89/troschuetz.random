@@ -19,77 +19,36 @@
  */
 
 using System;
-using System.Runtime.CompilerServices;
 
 namespace Troschuetz.Random.Generators
 {
     [Serializable]
-    sealed class NumericalRecipes3Q1Generator : AbstractGenerator<NumericalRecipes3Q1Generator.State>
+    sealed class NumericalRecipes3Generator : AbstractGenerator<NumericalRecipes3Generator.State>
     {
-        #region Constants
-
-        public const ulong SeedV = 4101842887655102017UL;
-
-        public const ulong SeedU = 2685821657736338717UL;
-
-        public const double SeedD = 5.42101086242752217e-20;
-
-        #endregion
-
-        public NumericalRecipes3Q1Generator(uint seed) : base(seed)
+        public NumericalRecipes3Generator(uint seed) : base(seed)
         {
         }
 
-        #region AbstractGenerator members
-
         protected override int NextInclusiveMaxValue(State state)
         {
-            unchecked
-            {
-                return (int) (((uint) state.NextULong()) >> 1);
-            }
+            throw new NotImplementedException();
         }
 
         protected override double NextDouble(State state)
         {
-            unchecked
-            {
-                return SeedD * state.NextULong();
-            }
+            throw new NotImplementedException();
         }
 
         protected override uint NextUInt(State state)
         {
-            unchecked
-            {
-                return (uint) state.NextULong();
-            }
+            throw new NotImplementedException();
         }
-
-        #endregion
 
         public sealed class State : IState
         {
-
-            public ulong V;
-
             public void Reset(uint seed)
             {
-                V = SeedV;
-                V ^= seed;
-                V = NextULong();
-            }
-
-#if PORTABLE
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-            public ulong NextULong()
-            {
-                V ^= V >> 21;
-                V ^= V << 35;
-                V ^= V >> 4;
-                return V * SeedU;
+                throw new NotImplementedException();
             }
         }
     }

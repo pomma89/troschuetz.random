@@ -17,20 +17,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+using System;
+using System.Diagnostics.Contracts;
+
 namespace Troschuetz.Random
 {
-    using System;
-    using System.Diagnostics.Contracts;
-
     /// <summary>
-    ///   Declares common functionality for all random number generators.
+    ///   Declares common functionalities for all random number generators.
     /// </summary>
     public interface IGenerator
     {
         /// <summary>
         ///   The seed value used by the generator.
         /// </summary>
-        [CLSCompliant(false), Pure]
+        [Pure]
         uint Seed { get; }
 
         /// <summary>
@@ -42,6 +42,7 @@ namespace Troschuetz.Random
 
         /// <summary>
         ///   Resets the random number generator, so that it produces the same random number sequence again.
+        ///   To understand whether this generator can be reset, you can query the <see cref="CanReset"/> property.
         /// </summary>
         /// <returns>
         ///   True if the random number generator was reset; otherwise, false.
@@ -58,11 +59,11 @@ namespace Troschuetz.Random
         int Next();
 
         /// <summary>
-        ///   Returns a nonnegative random number less than or equal to <see cref="Int32.MaxValue"/>.
+        ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to <see cref="Int32.MaxValue"/>;
-        ///   that is, the range of return values includes 0 and <see cref="Int32.MaxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to <see cref="int.MaxValue"/>;
+        ///   that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
         int NextInclusiveMaxValue();
 
@@ -154,10 +155,9 @@ namespace Troschuetz.Random
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="UInt32.MinValue"/> and
-        ///   less than or equal to <see cref="UInt32.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
+        ///   less than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
-        [CLSCompliant(false)]
         uint NextUInt();
 
         /// <summary>
@@ -167,7 +167,6 @@ namespace Troschuetz.Random
         ///   A 32-bit unsigned integer greater than or equal to <see cref="UInt32.MinValue"/> and
         ///   less than <see cref="UInt32.MaxValue"/>.
         /// </returns>
-        [CLSCompliant(false)]
         uint NextUIntExclusiveMaxValue();
 
         /// <summary>
@@ -181,7 +180,6 @@ namespace Troschuetz.Random
         ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
         ///   <see cref="UInt32.MinValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
-        [CLSCompliant(false)]
         uint NextUInt(uint maxValue);
 
         /// <summary>
@@ -201,7 +199,6 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
-        [CLSCompliant(false)]
         uint NextUInt(uint minValue, uint maxValue);
 
         /// <summary>
