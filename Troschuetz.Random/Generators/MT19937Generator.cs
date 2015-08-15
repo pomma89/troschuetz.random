@@ -1,9 +1,9 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
  * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,15 +19,15 @@
 
 #region Original Copyright
 
-/* 
+/*
    A C-program for MT19937, with initialization improved 2002/1/26.
    Coded by Takuji Nishimura and Makoto Matsumoto.
 
-   Before using, initialize the state by using init_genrand(seed)  
+   Before using, initialize the state by using init_genrand(seed)
    or init_by_array(init_key, key_length).
 
    Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
-   All rights reserved.                          
+   All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
@@ -40,8 +40,8 @@
         notice, this list of conditions and the following disclaimer in the
         documentation and/or other materials provided with the distribution.
 
-     3. The names of its contributors may not be used to endorse or promote 
-        products derived from this software without specific prior written 
+     3. The names of its contributors may not be used to endorse or promote
+        products derived from this software without specific prior written
         permission.
 
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -56,28 +56,27 @@
    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
    Any feedback is very welcome.
    http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
 */
 
-#endregion
+#endregion Original Copyright
 
 namespace Troschuetz.Random.Generators
 {
     using PommaLabs.Thrower;
     using System;
     using System.Collections.Generic;
-    using Core;
-    using System.Runtime.CompilerServices;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
 
     /// <summary>
     ///   Represents a Mersenne Twister pseudo-random number generator with period 2^19937-1.
     /// </summary>
     /// <remarks>
-    ///   The <see cref="MT19937Generator"/> type bases upon information and the implementation presented on the
+    ///   The <see cref="MT19937Generator"/> type bases upon information and the implementation
+    ///   presented on the
     ///   <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">Mersenne Twister Home Page</a>.
     /// </remarks>
     [Serializable]
@@ -115,14 +114,14 @@ namespace Troschuetz.Random.Generators
         /// <remarks>The value of this constant is 0x7fffffff.</remarks>
         const uint LowerMask = 0x7fffffffU;
 
-        #endregion
+        #endregion Constants
 
         #region Fields
 
         /// <summary>
         ///   Stores the state vector array.
         /// </summary>
-        readonly uint[] _mt;
+        readonly uint[] _mt = new uint[N];
 
         /// <summary>
         ///   Stores the used seed array.
@@ -134,81 +133,88 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         uint _mti;
 
-        #endregion
+        #endregion Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, 
-        ///   using a time-dependent default seed value.
+        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, using a
+        ///   time-dependent default seed value.
         /// </summary>
         public MT19937Generator() : base((uint) Math.Abs(Environment.TickCount))
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, 
-        ///   using the specified seed value.
+        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, using the
+        ///   specified seed value.
         /// </summary>
         /// <param name="seed">
-        ///   A number used to calculate a starting value for the pseudo-random number sequence.
-        ///   If a negative number is specified, the absolute value of the number is used. 
+        ///   A number used to calculate a starting value for the pseudo-random number sequence. If
+        ///   a negative number is specified, the absolute value of the number is used.
         /// </param>
         public MT19937Generator(int seed) : base((uint) Math.Abs(seed))
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, 
-        ///   using the specified seed value.
+        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, using the
+        ///   specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
         public MT19937Generator(uint seed) : base(seed)
         {
-            _mt = new uint[N];
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, using the specified seed array.
+        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, using the
+        ///   specified seed array.
         /// </summary>
         /// <param name="seedArray">
-        ///   An array of numbers used to calculate a starting values for the pseudo-random number sequence.
-        ///   If negative numbers are specified, the absolute values of them are used. 
+        ///   An array of numbers used to calculate a starting values for the pseudo-random number
+        ///   sequence. If negative numbers are specified, the absolute values of them are used.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="seedArray"/> is NULL (<see langword="Nothing"/> in Visual Basic).
+        ///   <paramref name="seedArray"/> is NULL ( <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         public MT19937Generator(IList<int> seedArray) : base(19650218U)
         {
             RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
             
-            _mt = new uint[N];
             _seedArray = new uint[seedArray.Count];
-            for (var index = 0; index < seedArray.Count; index++) {
+            for (var index = 0; index < seedArray.Count; index++)
+            {
                 _seedArray[index] = (uint) Math.Abs(seedArray[index]);
             }
+
+            // Necessary, because as seed array has been specified.
+            Reset(); 
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, using the specified seed array.
+        ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, using the
+        ///   specified seed array.
         /// </summary>
         /// <param name="seedArray">
-        ///   An array of unsigned numbers used to calculate a starting values for the pseudo-random number sequence.
+        ///   An array of unsigned numbers used to calculate a starting values for the pseudo-random
+        ///   number sequence.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="seedArray"/> is NULL (<see langword="Nothing"/> in Visual Basic).
+        ///   <paramref name="seedArray"/> is NULL ( <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         public MT19937Generator(uint[] seedArray) : base(19650218U)
         {
             RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
             
-            _mt = new uint[N];
             _seedArray = seedArray;
+
+            // Necessary, because as seed array has been specified.
+            Reset(); 
         }
 
-        #endregion
+        #endregion Construction
 
         #region Instance methods
 
@@ -220,22 +226,27 @@ namespace Troschuetz.Random.Generators
             uint i = 1;
             uint j = 0;
             var k = (N > _seedArray.Length) ? N : _seedArray.Length;
-            for (; k > 0; k--) {
-                _mt[i] = (_mt[i] ^ ((_mt[i - 1] ^ (_mt[i - 1] >> 30))*1664525U)) + _seedArray[j] + j; // non linear
+            for (; k > 0; k--)
+            {
+                _mt[i] = (_mt[i] ^ ((_mt[i - 1] ^ (_mt[i - 1] >> 30)) * 1664525U)) + _seedArray[j] + j; // non linear
                 i++;
                 j++;
-                if (i >= N) {
+                if (i >= N)
+                {
                     _mt[0] = _mt[N - 1];
                     i = 1;
                 }
-                if (j >= _seedArray.Length) {
+                if (j >= _seedArray.Length)
+                {
                     j = 0;
                 }
             }
-            for (k = N - 1; k > 0; k--) {
-                _mt[i] = (_mt[i] ^ ((_mt[i - 1] ^ (_mt[i - 1] >> 30))*1566083941U)) - i; // non linear
+            for (k = N - 1; k > 0; k--)
+            {
+                _mt[i] = (_mt[i] ^ ((_mt[i - 1] ^ (_mt[i - 1] >> 30)) * 1566083941U)) - i; // non linear
                 i++;
-                if (i < N) {
+                if (i < N)
+                {
                     continue;
                 }
                 _mt[0] = _mt[N - 1];
@@ -249,20 +260,22 @@ namespace Troschuetz.Random.Generators
         ///   Generates <see cref="N"/> unsigned random numbers.
         /// </summary>
         /// <remarks>
-        ///   Generated random numbers are 32-bit unsigned integers greater than or equal to <see cref="uint.MinValue"/> 
-        ///   and less than or equal to <see cref="uint.MaxValue"/>.
+        ///   Generated random numbers are 32-bit unsigned integers greater than or equal to
+        ///   <see cref="uint.MinValue"/> and less than or equal to <see cref="uint.MaxValue"/>.
         /// </remarks>
         void GenerateNUInts()
         {
             int kk;
             uint y;
-            var mag01 = new[] {0x0U, VectorA};
+            var mag01 = new[] { 0x0U, VectorA };
 
-            for (kk = 0; kk < N - M; kk++) {
+            for (kk = 0; kk < N - M; kk++)
+            {
                 y = (_mt[kk] & UpperMask) | (_mt[kk + 1] & LowerMask);
                 _mt[kk] = _mt[kk + M] ^ (y >> 1) ^ mag01[y & 0x1U];
             }
-            for (; kk < N - 1; kk++) {
+            for (; kk < N - 1; kk++)
+            {
                 y = (_mt[kk] & UpperMask) | (_mt[kk + 1] & LowerMask);
                 _mt[kk] = _mt[kk + (M - N)] ^ (y >> 1) ^ mag01[y & 0x1U];
             }
@@ -272,7 +285,7 @@ namespace Troschuetz.Random.Generators
             _mti = 0;
         }
 
-        #endregion
+        #endregion Instance methods
 
         #region IGenerator members
 
@@ -297,9 +310,9 @@ namespace Troschuetz.Random.Generators
             for (_mti = 1; _mti < N; _mti++)
             {
                 _mt[_mti] = (1812433253U * (_mt[_mti - 1] ^ (_mt[_mti - 1] >> 30)) + _mti);
-                // See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier.
-                // In the previous versions, MSBs of the seed affect only MSBs of the array mt[].
-                // 2002/01/09 modified by Makoto Matsumoto
+                // See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. In the previous versions,
+                // MSBs of the seed affect only MSBs of the array mt[]. 2002/01/09 modified by
+                // Makoto Matsumoto
             }
 
             // If the object was instanciated with a seed array do some further (re)initialisation.
@@ -357,7 +370,8 @@ namespace Troschuetz.Random.Generators
         public override double NextDouble()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            if (_mti >= N) {
+            if (_mti >= N)
+            {
                 // Generate N words at one time
                 GenerateNUInts();
             }
@@ -367,7 +381,7 @@ namespace Troschuetz.Random.Generators
             y ^= (y << 7) & 0x9d2c5680U;
             y ^= (y << 15) & 0xefc60000U;
             y ^= (y >> 18);
-            
+
             var result = (y >> 1) * UIntToDoubleMultiplier;
 
             // Postconditions
@@ -402,6 +416,6 @@ namespace Troschuetz.Random.Generators
             return (y ^ (y >> 18));
         }
 
-        #endregion
+        #endregion IGenerator members
     }
 }
