@@ -221,7 +221,7 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         /// <remarks>
         ///   Generated random numbers are 32-bit unsigned integers greater than or equal to
-        ///   <see cref="UInt32.MinValue"/> and less than or equal to <see cref="UInt32.MaxValue"/>.
+        ///   <see cref="uint.MinValue"/> and less than or equal to <see cref="uint.MaxValue"/>.
         /// </remarks>
         void Fill()
         {

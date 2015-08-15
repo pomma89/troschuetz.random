@@ -296,8 +296,8 @@ namespace Troschuetz.Random.Generators
         ///   Generates <see cref="MT19937Generator.N"/> unsigned random numbers.
         /// </summary>
         /// <remarks>
-        ///   Generated random numbers are 32-bit unsigned integers greater than or equal to <see cref="UInt32.MinValue"/> 
-        ///   and less than or equal to <see cref="UInt32.MaxValue"/>.
+        ///   Generated random numbers are 32-bit unsigned integers greater than or equal to <see cref="uint.MinValue"/> 
+        ///   and less than or equal to <see cref="uint.MaxValue"/>.
         /// </remarks>
 // ReSharper disable InconsistentNaming
         void GenerateNUInts()

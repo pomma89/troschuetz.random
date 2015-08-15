@@ -156,8 +156,10 @@ namespace Troschuetz.Random
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
-        ///   The range between <paramref name="minValue"/> and <paramref name="maxValue"/>
-        ///   must be less than or equal to <see cref="double.MaxValue"/>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
+        ///   cannot be <see cref="double.PositiveInfinity"/>.
         /// </exception>
         double NextDouble(double minValue, double maxValue);
 
@@ -171,11 +173,11 @@ namespace Troschuetz.Random
         uint NextUInt();
 
         /// <summary>
-        ///   Returns an unsigned random number less than <see cref="UInt32.MaxValue"/>.
+        ///   Returns an unsigned random number less than <see cref="uint.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="UInt32.MinValue"/> and
-        ///   less than <see cref="UInt32.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
+        ///   less than <see cref="uint.MaxValue"/>.
         /// </returns>
         uint NextUIntExclusiveMaxValue();
 
@@ -186,9 +188,9 @@ namespace Troschuetz.Random
         ///   The exclusive upper bound of the random number to be generated.
         /// </param>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="UInt32.MinValue"/> and
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
         ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
-        ///   <see cref="UInt32.MinValue"/> but not <paramref name="maxValue"/>.
+        ///   <see cref="uint.MinValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         uint NextUInt(uint maxValue);
 
@@ -229,6 +231,9 @@ namespace Troschuetz.Random
         ///   and less than or equal to <see cref="byte.MaxValue"/>.
         /// </remarks>
         /// <param name="buffer">An array of bytes to contain random numbers.</param>
+        /// <exception cref="ArgumentNullException">
+        ///   <paramref name="buffer"/> is null.
+        /// </exception>
         void NextBytes(byte[] buffer);
     }
 }

@@ -45,13 +45,6 @@ namespace Troschuetz.Random.Generators
         /// <summary>
         ///   Represents the multiplier that computes a double-precision floating point number
         ///   greater than or equal to 0.0 and less than 1.0 when it gets applied to a nonnegative
-        ///   32-bit signed integer.
-        /// </summary>
-        protected const double IntToDoubleMultiplier = 1.0 / (int.MaxValue + 1.0);
-
-        /// <summary>
-        ///   Represents the multiplier that computes a double-precision floating point number
-        ///   greater than or equal to 0.0 and less than 1.0 when it gets applied to a nonnegative
         ///   32-bit unsigned integer.
         /// </summary>
         protected const double UIntToDoubleMultiplier = 1.0 / (uint.MaxValue + 1.0);
@@ -69,8 +62,7 @@ namespace Troschuetz.Random.Generators
         int _bitCount;
 
         /// <summary>
-        ///   Initializes a new instance of the <typeparamref name="TGenerator"/> class, using the
-        ///   specified seed value.
+        ///   Initializes a new instance of the generator, using the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -88,12 +80,32 @@ namespace Troschuetz.Random.Generators
 
         #region IGenerator members
 
+        /// <summary>
+        ///   The seed value used by the generator.
+        /// </summary>
         public uint Seed { get; set; }
 
+        /// <summary>
+        ///   Gets a value indicating whether the random number generator can be reset, so that it
+        ///   produces the same random number sequence again.
+        /// </summary>
         public abstract bool CanReset { get; }
 
+        /// <summary>
+        ///   Resets the random number generator using the initial seed, so that it produces the
+        ///   same random number sequence again. To understand whether this generator can be reset,
+        ///   you can query the <see cref="CanReset"/> property.
+        /// </summary>
+        /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         public bool Reset() => Reset(Seed);
 
+        /// <summary>
+        ///   Resets the random number generator using the specified seed, so that it produces the
+        ///   same random number sequence again. To understand whether this generator can be reset,
+        ///   you can query the <see cref="CanReset"/> property.
+        /// </summary>
+        /// <param name="seed">The seed value used by the generator.</param>
+        /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         public virtual bool Reset(uint seed)
         {
             if (!CanReset)
@@ -111,79 +123,34 @@ namespace Troschuetz.Random.Generators
             return true;
         }
 
+        /// <summary>
+        ///   Returns a nonnegative random number less than <see cref="int.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to 0, and less than
+        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
+        /// </returns>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public int Next()
         {
-            var result = (int) (NextUInt() >> 1);
-            if (result == int.MaxValue)
-            {
-                result = Next();
-            }
+            int result;
+            while ((result = (int) (NextUInt() >> 1)) == int.MaxValue) { }
 
             // Postconditions
             Debug.Assert(result >= 0 && result < int.MaxValue);
             return result;
         }
 
+        /// <summary>
+        ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
+        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
+        /// </returns>
 #if PORTABLE
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        public int Next(int maxValue)
-        {
-            // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
-
-            // Here a ~2x speed improvement is gained by computing a value that can be cast to an
-            // int before casting to a double to perform the multiplication. Casting a double from
-            // an int is a lot faster than from an uint and the extra shift operation and cast to an
-            // int are very fast (the allocated bits remain the same), so overall there's a
-            // significant performance improvement. NOTE TO SELF: DO NOT REMOVE THE SECOND (INT)
-            // CAST, EVEN IF VISUAL STUDIO TELLS IT IS NOT NECESSARY.
-            var result = (int) ((int) (NextUInt() >> 1) * IntToDoubleMultiplier * maxValue);
-
-            // Postconditions
-            Debug.Assert(result >= 0 && result < maxValue);
-            return result;
-        }
-
-#if PORTABLE
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        public int Next(int minValue, int maxValue)
-        {
-            // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
-
-            int result;
-            var range = maxValue - minValue;
-            if (range < 0)
-            {
-                // The range is greater than int.MaxValue, so we have to use slower floating point
-                // arithmetic. Also all 32 random bits (uint) have to be used which again is slower
-                // (See comment in NextDouble()).
-                result = minValue + (int) (NextUInt() * UIntToDoubleMultiplier * (maxValue - (double) minValue));
-            }
-            else
-            {
-                // 31 random bits (int) will suffice which allows us to shift and cast to an int
-                // before the first multiplication and gain better performance. See comment in
-                // Next(maxValue). NOTE TO SELF: DO NOT REMOVE THE SECOND (INT) CAST, EVEN IF VISUAL
-                // STUDIO TELLS IT IS NOT NECESSARY.
-                result = minValue + (int) ((int) (NextUInt() >> 1) * IntToDoubleMultiplier * range);
-            }
-
-            // Postconditions
-            Debug.Assert(result >= minValue && result < maxValue);
-            return result;
-        }
-
-#if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public int NextInclusiveMaxValue()
@@ -195,27 +162,97 @@ namespace Troschuetz.Random.Generators
             return result;
         }
 
+        /// <summary>
+        ///   Returns a nonnegative random number less than the specified maximum.
+        /// </summary>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to 0, and less than
+        ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to 0.
+        /// </exception>
 #if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public int Next(int maxValue)
+        {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
 
+            var result = (int) (NextUInt() * UIntToDoubleMultiplier * maxValue);
+
+            // Postconditions
+            Debug.Assert(result >= 0 && result < maxValue);
+            return result;
+        }
+
+        /// <summary>
+        ///   Returns a random number within the specified range.
+        /// </summary>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">
+        ///   The exclusive upper bound of the random number to be generated.
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </param>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to <paramref name="minValue"/>, and less
+        ///   than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </exception>
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public int Next(int minValue, int maxValue)
+        {
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+
+            // The cast to double enables 64 bit arithmetic, which is needed when the condition
+            // ((maxValue - minValue) > int.MaxValue) is true.
+            var result = minValue + (int) (NextUInt() * UIntToDoubleMultiplier * (maxValue - (double) minValue));
+
+            // Postconditions
+            Debug.Assert(result >= minValue && result < maxValue);
+            return result;
+        }
+
+        /// <summary>
+        ///   Returns a nonnegative floating point random number less than 1.0.
+        /// </summary>
+        /// <returns>
+        ///   A double-precision floating point number greater than or equal to 0.0, and less than
+        ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
+        /// </returns>
+#if PORTABLE
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public double NextDouble()
         {
-            // Here a ~2x speed improvement is gained by computing a value that can be cast to an
-            // int before casting to a double to perform the multiplication. Casting a double from
-            // an int is a lot faster than from an uint and the extra shift operation and cast to an
-            // int are very fast (the allocated bits remain the same), so overall there's a
-            // significant performance improvement. NOTE TO SELF: DO NOT REMOVE THE SECOND (INT)
-            // CAST, EVEN IF VISUAL STUDIO TELLS IT IS NOT NECESSARY.
-            var result = (int) (NextUInt() >> 1) * IntToDoubleMultiplier;
+            var result = NextUInt() * UIntToDoubleMultiplier;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < 1.0);
             return result;
         }
 
+        /// <summary>
+        ///   Returns a nonnegative floating point random number less than the specified maximum.
+        /// </summary>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
+        /// <returns>
+        ///   A double-precision floating point number greater than or equal to 0.0, and less than
+        ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to 0.0.
+        /// </exception>
+        /// <exception cref="ArgumentException"><paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.</exception>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public double NextDouble(double maxValue)
@@ -224,17 +261,31 @@ namespace Troschuetz.Random.Generators
             RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
             Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
 
-            // NOTE TO SELF: DO NOT REMOVE THE SECOND (INT) CAST, EVEN IF VISUAL STUDIO TELLS IT IS
-            // NOT NECESSARY.
-            var result = (int) (NextUInt() >> 1) * IntToDoubleMultiplier * maxValue;
+            var result = NextUInt() * UIntToDoubleMultiplier * maxValue;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < maxValue);
             return result;
         }
 
+        /// <summary>
+        ///   Returns a floating point random number within the specified range.
+        /// </summary>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
+        /// <returns>
+        ///   A double-precision floating point number greater than or equal to
+        ///   <paramref name="minValue"/>, and less than <paramref name="maxValue"/>; that is, the
+        ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
+        ///   cannot be <see cref="double.PositiveInfinity"/>.
+        /// </exception>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public double NextDouble(double minValue, double maxValue)
@@ -243,17 +294,52 @@ namespace Troschuetz.Random.Generators
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
             Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
 
-            // NOTE TO SELF: DO NOT REMOVE THE SECOND (INT) CAST, EVEN IF VISUAL STUDIO TELLS IT IS
-            // NOT NECESSARY.
-            var result = minValue + (int) (NextUInt() >> 1) * IntToDoubleMultiplier * (maxValue - minValue);
+            var result = minValue + NextUInt() * UIntToDoubleMultiplier * (maxValue - minValue);
 
             // Postconditions
             Debug.Assert(result >= minValue && result < maxValue);
             return result;
         }
 
-#if PORTABLE
+        /// <summary>
+        ///   Returns an unsigned random number.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
+        ///   less than or equal to <see cref="uint.MaxValue"/>.
+        /// </returns>
+        public abstract uint NextUInt();
 
+        /// <summary>
+        ///   Returns an unsigned random number less than <see cref="uint.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
+        ///   less than <see cref="uint.MaxValue"/>.
+        /// </returns>
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public uint NextUIntExclusiveMaxValue()
+        {
+            uint result;
+            while ((result = NextUInt()) == uint.MaxValue) { }
+
+            // Postconditions
+            Debug.Assert(result < uint.MaxValue);
+            return result;
+        }
+
+        /// <summary>
+        ///   Returns an unsigned random number less than the specified maximum.
+        /// </summary>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
+        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   <see cref="uint.MinValue"/> but not <paramref name="maxValue"/>.
+        /// </returns>
+#if PORTABLE
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public uint NextUInt(uint maxValue)
@@ -268,10 +354,20 @@ namespace Troschuetz.Random.Generators
             return result;
         }
 
-        public abstract uint NextUInt();
-
+        /// <summary>
+        ///   Returns an unsigned random number within the specified range.
+        /// </summary>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <paramref name="minValue"/> and
+        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </exception>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public uint NextUInt(uint minValue, uint maxValue)
@@ -286,22 +382,15 @@ namespace Troschuetz.Random.Generators
             return result;
         }
 
+        /// <summary>
+        ///   Returns a random Boolean value.
+        /// </summary>
+        /// <remarks>
+        ///   Buffers 31 random bits for future calls, so the random number generator is only
+        ///   invoked once in every 31 calls.
+        /// </remarks>
+        /// <returns>A <see cref="bool"/> value.</returns>
 #if PORTABLE
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        public uint NextUIntExclusiveMaxValue()
-        {
-            uint result;
-            while ((result = NextUInt()) == uint.MaxValue) { }
-
-            // Postconditions
-            Debug.Assert(result < uint.MaxValue);
-            return result;
-        }
-
-#if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public bool NextBoolean()
@@ -321,8 +410,16 @@ namespace Troschuetz.Random.Generators
             return ((_bitBuffer >>= 1) & 0x1) == 1;
         }
 
+        /// <summary>
+        ///   Fills the elements of a specified array of bytes with random numbers.
+        /// </summary>
+        /// <remarks>
+        ///   Each element of the array of bytes is set to a random number greater than or equal to
+        ///   0, and less than or equal to <see cref="byte.MaxValue"/>.
+        /// </remarks>
+        /// <param name="buffer">An array of bytes to contain random numbers.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public void NextBytes(byte[] buffer)

@@ -106,10 +106,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidLambda(double value)
-        {
-            return IsValidParam(value);
-        }
+        public bool IsValidLambda(double value) => IsValidParam(value);
 
         #endregion Instance Methods
 
@@ -143,10 +140,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="lambda"/> is greater than zero; otherwise, it returns false.
         /// </returns>
         [Pure]
-        public static bool IsValidParam(double lambda)
-        {
-            return lambda > 0;
-        }
+        public static bool IsValidParam(double lambda) => lambda > 0;
 
         /// <summary>
         ///   Returns an exponential distributed floating point random number.

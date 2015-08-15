@@ -103,6 +103,9 @@ namespace Troschuetz.Random
         /// <param name="generator">The generator from which random numbers are drawn.</param>
         /// <param name="buffer">An array of bytes to contain random numbers.</param>
         /// <returns>An infinite sequence of true values.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///   <paramref name="buffer"/> is null.
+        /// </exception>
         [Pure]
         public static IEnumerable<bool> Bytes<TGen>(this TGen generator, byte[] buffer) where TGen : IGenerator
         {
@@ -222,11 +225,11 @@ namespace Troschuetz.Random
         ///   that is, the range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///   The range between <paramref name="minValue"/> and <paramref name="maxValue"/> must be
-        ///   less than or equal to <see cref="double.PositiveInfinity"/>.
+        ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
+        ///   cannot be <see cref="double.PositiveInfinity"/>.
         /// </exception>
         [Pure]
         public static IEnumerable<double> Doubles<TGen>(this TGen generator, double minValue, double maxValue) where TGen : IGenerator
@@ -321,7 +324,7 @@ namespace Troschuetz.Random
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
         /// <returns>An infinite sequence of 32-bit unsigned integers.</returns>
-        [CLSCompliant(false), Pure]
+        [Pure]
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator) where TGen : IGenerator
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
@@ -346,7 +349,7 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to 1.
         /// </exception>
-        [CLSCompliant(false), Pure]
+        [Pure]
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator, uint maxValue) where TGen : IGenerator
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
@@ -373,7 +376,7 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
         /// </exception>
-        [CLSCompliant(false), Pure]
+        [Pure]
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator, uint minValue, uint maxValue) where TGen : IGenerator
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
