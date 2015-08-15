@@ -70,6 +70,8 @@ namespace Troschuetz.Random.Generators
     using System;
     using System.Collections.Generic;
     using Core;
+    using System.Runtime.CompilerServices;
+    using System.Diagnostics;
 
     /// <summary>
     ///   Represents a Mersenne Twister pseudo-random number generator with period 2^19937-1.
@@ -78,12 +80,10 @@ namespace Troschuetz.Random.Generators
     ///   The <see cref="MT19937Generator"/> type bases upon information and the implementation presented on the
     ///   <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">Mersenne Twister Home Page</a>.
     /// </remarks>
-    // ReSharper disable InconsistentNaming
     [Serializable]
-    public sealed class MT19937Generator : GeneratorBase<MT19937Generator>, IGenerator
-// ReSharper restore InconsistentNaming
+    public sealed class MT19937Generator : AbstractGenerator
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   Represents the number of unsigned random numbers generated at one time. This field is constant.
@@ -117,7 +117,7 @@ namespace Troschuetz.Random.Generators
 
         #endregion
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the state vector array.
@@ -125,24 +125,9 @@ namespace Troschuetz.Random.Generators
         readonly uint[] _mt;
 
         /// <summary>
-        ///   Stores the used seed.
-        /// </summary>
-        readonly uint _seed;
-
-        /// <summary>
         ///   Stores the used seed array.
         /// </summary>
         readonly uint[] _seedArray;
-
-        /// <summary>
-        ///   Stores an <see cref="uint"/> used to generate up to 32 random <see cref="bool"/> values.
-        /// </summary>
-        uint _bitBuffer;
-
-        /// <summary>
-        ///   Stores how many random <see cref="bool"/> values still can be generated from <see cref="_bitBuffer"/>.
-        /// </summary>
-        int _bitCount;
 
         /// <summary>
         ///   Stores an index for the state vector array element that will be accessed next.
@@ -157,7 +142,7 @@ namespace Troschuetz.Random.Generators
         ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, 
         ///   using a time-dependent default seed value.
         /// </summary>
-        public MT19937Generator() : this((uint) Math.Abs(Environment.TickCount))
+        public MT19937Generator() : base((uint) Math.Abs(Environment.TickCount))
         {
         }
 
@@ -169,7 +154,7 @@ namespace Troschuetz.Random.Generators
         ///   A number used to calculate a starting value for the pseudo-random number sequence.
         ///   If a negative number is specified, the absolute value of the number is used. 
         /// </param>
-        public MT19937Generator(int seed) : this((uint) Math.Abs(seed))
+        public MT19937Generator(int seed) : base((uint) Math.Abs(seed))
         {
         }
 
@@ -180,13 +165,9 @@ namespace Troschuetz.Random.Generators
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
-        public MT19937Generator(uint seed)
+        public MT19937Generator(uint seed) : base(seed)
         {
-            _seed = seed;
             _mt = new uint[N];
-            _seedArray = null;
-            ResetGenerator();
         }
 
         /// <summary>
@@ -199,17 +180,15 @@ namespace Troschuetz.Random.Generators
         /// <exception cref="ArgumentNullException">
         /// <paramref name="seedArray"/> is NULL (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
-        public MT19937Generator(IList<int> seedArray)
+        public MT19937Generator(IList<int> seedArray) : base(19650218U)
         {
             RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
-
-            _seed = 19650218U;
+            
             _mt = new uint[N];
             _seedArray = new uint[seedArray.Count];
             for (var index = 0; index < seedArray.Count; index++) {
                 _seedArray[index] = (uint) Math.Abs(seedArray[index]);
             }
-            ResetGenerator();
         }
 
         /// <summary>
@@ -221,43 +200,17 @@ namespace Troschuetz.Random.Generators
         /// <exception cref="ArgumentNullException">
         /// <paramref name="seedArray"/> is NULL (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
-        [CLSCompliant(false)]
-        public MT19937Generator(uint[] seedArray)
+        public MT19937Generator(uint[] seedArray) : base(19650218U)
         {
             RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
-
-            _seed = 19650218U;
+            
             _mt = new uint[N];
             _seedArray = seedArray;
-            ResetGenerator();
         }
 
         #endregion
 
-        #region Instance Methods
-
-        /// <summary>
-        ///   Resets the <see cref="MT19937Generator"/>, so that it produces the same pseudo-random number sequence again.
-        /// </summary>
-        void ResetGenerator()
-        {
-            _mt[0] = _seed & 0xffffffffU;
-            for (_mti = 1; _mti < N; _mti++) {
-                _mt[_mti] = (1812433253U*(_mt[_mti - 1] ^ (_mt[_mti - 1] >> 30)) + _mti);
-                // See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier.
-                // In the previous versions, MSBs of the seed affect only MSBs of the array mt[].
-                // 2002/01/09 modified by Makoto Matsumoto
-            }
-
-            // If the object was instanciated with a seed array do some further (re)initialisation.
-            if (_seedArray != null) {
-                ResetBySeedArray();
-            }
-
-            // Reset helper variables used for generation of random bools.
-            _bitBuffer = 0;
-            _bitCount = 32;
-        }
+        #region Instance methods
 
         /// <summary>
         ///   Extends resetting of the <see cref="MT19937Generator"/> using the <see cref="_seedArray"/>.
@@ -293,15 +246,13 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
-        ///   Generates <see cref="MT19937Generator.N"/> unsigned random numbers.
+        ///   Generates <see cref="N"/> unsigned random numbers.
         /// </summary>
         /// <remarks>
         ///   Generated random numbers are 32-bit unsigned integers greater than or equal to <see cref="uint.MinValue"/> 
         ///   and less than or equal to <see cref="uint.MaxValue"/>.
         /// </remarks>
-// ReSharper disable InconsistentNaming
         void GenerateNUInts()
-// ReSharper restore InconsistentNaming
         {
             int kk;
             uint y;
@@ -323,51 +274,54 @@ namespace Troschuetz.Random.Generators
 
         #endregion
 
-        #region IGenerator Members
+        #region IGenerator members
 
-        [CLSCompliant(false)]
-        public uint Seed
-        {
-            get { return _seed; }
-        }
+        /// <summary>
+        ///   Gets a value indicating whether the random number generator can be reset, so that it
+        ///   produces the same random number sequence again.
+        /// </summary>
+        public override bool CanReset => true;
 
-        public bool CanReset
+        /// <summary>
+        ///   Resets the random number generator using the specified seed, so that it produces the
+        ///   same random number sequence again. To understand whether this generator can be reset,
+        ///   you can query the <see cref="CanReset"/> property.
+        /// </summary>
+        /// <param name="seed">The seed value used by the generator.</param>
+        /// <returns>True if the random number generator was reset; otherwise, false.</returns>
+        public override bool Reset(uint seed)
         {
-            get { return true; }
-        }
+            base.Reset(seed);
 
-        public bool Reset()
-        {
-            ResetGenerator();
-            return true;
-        }
-
-        public bool Reset(uint seed)
-        {
-            ResetGenerator();
-            return true;
-        }
-
-        public int Next()
-        {
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            if (_mti >= N) {
-                // Generate N words at one time
-                GenerateNUInts();
+            _mt[0] = seed & 0xffffffffU;
+            for (_mti = 1; _mti < N; _mti++)
+            {
+                _mt[_mti] = (1812433253U * (_mt[_mti - 1] ^ (_mt[_mti - 1] >> 30)) + _mti);
+                // See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier.
+                // In the previous versions, MSBs of the seed affect only MSBs of the array mt[].
+                // 2002/01/09 modified by Makoto Matsumoto
             }
-            var y = _mt[_mti++];
-            // Tempering
-            y ^= (y >> 11);
-            y ^= (y << 7) & 0x9d2c5680U;
-            y ^= (y << 15) & 0xefc60000U;
-            y ^= (y >> 18);
 
-            var result = (int) (y >> 1);
-            // Exclude Int32.MaxValue from the range of return values.
-            return result == int.MaxValue ? Next() : result;
+            // If the object was instanciated with a seed array do some further (re)initialisation.
+            if (_seedArray != null)
+            {
+                ResetBySeedArray();
+            }
+            return true;
         }
 
-        public int NextInclusiveMaxValue()
+        /// <summary>
+        ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
+        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
+        /// </returns>
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public override int NextInclusiveMaxValue()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
             if (_mti >= N)
@@ -382,62 +336,25 @@ namespace Troschuetz.Random.Generators
             y ^= (y << 15) & 0xefc60000U;
             y ^= (y >> 18);
 
-            return (int)(y >> 1);
+            var result = (int) (y >> 1);
+
+            // Postconditions
+            Debug.Assert(result >= 0);
+            return result;
         }
 
-        public int Next(int maxValue)
-        {
-            // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+        /// <summary>
+        ///   Returns a nonnegative floating point random number less than 1.0.
+        /// </summary>
+        /// <returns>
+        ///   A double-precision floating point number greater than or equal to 0.0, and less than
+        ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
+        /// </returns>
+#if PORTABLE
 
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            if (_mti >= N) {
-                // Generate N words at one time
-                GenerateNUInts();
-            }
-            var y = _mt[_mti++];
-            // Tempering
-            y ^= (y >> 11);
-            y ^= (y << 7) & 0x9d2c5680U;
-            y ^= (y << 15) & 0xefc60000U;
-            y ^= (y >> 18);
-
-            // The shift operation and extra int cast before the first multiplication give better performance.
-            // See comment in NextDouble().
-            return (int) ((int) (y >> 1)*IntToDoubleMultiplier*maxValue);
-        }
-
-        public int Next(int minValue, int maxValue)
-        {
-            // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
-
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            if (_mti >= N) {
-                // Generate N words at one time
-                GenerateNUInts();
-            }
-            var y = _mt[_mti++];
-            // Tempering
-            y ^= (y >> 11);
-            y ^= (y << 7) & 0x9d2c5680U;
-            y ^= (y << 15) & 0xefc60000U;
-            y ^= (y >> 18);
-
-            var range = maxValue - minValue;
-            if (range < 0) {
-                // The range is greater than Int32.MaxValue, so we have to use slower floating point arithmetic.
-                // Also all 32 random bits (uint) have to be used which again is slower (See comment in NextDouble()).
-                return minValue + (int) (y*UIntToDoubleMultiplier*(maxValue - (double) minValue));
-            }
-
-            // 31 random bits (int) will suffice which allows us to shift and cast to an int
-            // before the first multiplication and gain better performance.
-            // See comment in NextDouble().
-            return minValue + (int) ((int) (y >> 1)*IntToDoubleMultiplier*range);
-        }
-
-        public double NextDouble()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public override double NextDouble()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
             if (_mti >= N) {
@@ -450,63 +367,26 @@ namespace Troschuetz.Random.Generators
             y ^= (y << 7) & 0x9d2c5680U;
             y ^= (y << 15) & 0xefc60000U;
             y ^= (y >> 18);
+            
+            var result = (y >> 1) * UIntToDoubleMultiplier;
 
-            // Here a ~2x speed improvement is gained by computing a value that can be cast to an int 
-            // before casting to a double to perform the multiplication.
-            // Casting a double from an int is a lot faster than from an uint and the extra shift operation 
-            // and cast to an int are very fast (the allocated bits remain the same), so overall there's 
-            // a significant performance improvement.
-            return (int) (y >> 1)*IntToDoubleMultiplier;
+            // Postconditions
+            Debug.Assert(result >= 0.0 && result < 1.0);
+            return result;
         }
 
-        public double NextDouble(double maxValue)
-        {
-            // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
-            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
+        /// <summary>
+        ///   Returns an unsigned random number.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
+        ///   less than or equal to <see cref="uint.MaxValue"/>.
+        /// </returns>
+#if PORTABLE
 
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            if (_mti >= N) {
-                // Generate N words at one time
-                GenerateNUInts();
-            }
-            var y = _mt[_mti++];
-            // Tempering
-            y ^= (y >> 11);
-            y ^= (y << 7) & 0x9d2c5680U;
-            y ^= (y << 15) & 0xefc60000U;
-            y ^= (y >> 18);
-
-            // The shift operation and extra int cast before the first multiplication give better performance.
-            // See comment in NextDouble().
-            return (int) (y >> 1)*IntToDoubleMultiplier*maxValue;
-        }
-
-        public double NextDouble(double minValue, double maxValue)
-        {
-            // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
-            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
-
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            if (_mti >= N) {
-                // Generate N words at one time
-                GenerateNUInts();
-            }
-            var y = _mt[_mti++];
-            // Tempering
-            y ^= (y >> 11);
-            y ^= (y << 7) & 0x9d2c5680U;
-            y ^= (y << 15) & 0xefc60000U;
-            y ^= (y >> 18);
-
-            // The shift operation and extra int cast before the first multiplication give better performance.
-            // See comment in NextDouble().
-            return minValue + (int) (y >> 1)*IntToDoubleMultiplier*(maxValue - minValue);
-        }
-
-        [CLSCompliant(false)]
-        public uint NextUInt()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public override uint NextUInt()
         {
             if (_mti >= N)
             {
@@ -520,134 +400,6 @@ namespace Troschuetz.Random.Generators
             y ^= (y << 7) & 0x9d2c5680U;
             y ^= (y << 15) & 0xefc60000U;
             return (y ^ (y >> 18));
-        }
-
-        [CLSCompliant(false)]
-        public uint NextUInt(uint maxValue)
-        {
-            // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
-
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            if (_mti >= N) {
-                // Generate N words at one time
-                GenerateNUInts();
-            }
-            var y = _mt[_mti++];
-            // Tempering
-            y ^= (y >> 11);
-            y ^= (y << 7) & 0x9d2c5680U;
-            y ^= (y << 15) & 0xefc60000U;
-            y ^= (y >> 18);
-
-            // The shift operation and extra int cast before the first multiplication give better performance.
-            // See comment in NextDouble().
-            return (uint) ((int) (y >> 1)*IntToDoubleMultiplier*maxValue);
-        }
-
-        [CLSCompliant(false)]
-        public uint NextUInt(uint minValue, uint maxValue)
-        {
-            // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
-
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            if (_mti >= N) {
-                // Generate N words at one time
-                GenerateNUInts();
-            }
-            var y = _mt[_mti++];
-            // Tempering
-            y ^= (y >> 11);
-            y ^= (y << 7) & 0x9d2c5680U;
-            y ^= (y << 15) & 0xefc60000U;
-            y ^= (y >> 18);
-
-            // The shift operation and extra int cast before the first multiplication give better performance.
-            // See comment in NextDouble().
-            return minValue + (uint) ((int) (y >> 1)*IntToDoubleMultiplier*(maxValue - minValue));
-        }
-
-        public bool NextBoolean()
-        {
-            if (_bitCount == 32) {
-                // Generate 32 more bits (1 uint) and store it for future calls.
-                // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-                if (_mti >= N) {
-                    // Generate N words at one time
-                    GenerateNUInts();
-                }
-                var y = _mt[_mti++];
-                // Tempering
-                y ^= (y >> 11);
-                y ^= (y << 7) & 0x9d2c5680U;
-                y ^= (y << 15) & 0xefc60000U;
-                _bitBuffer = (y ^ (y >> 18));
-
-                // Reset the bitCount and use rightmost bit of buffer to generate random bool.
-                _bitCount = 1;
-                return (_bitBuffer & 0x1) == 1;
-            }
-
-            // Increase the bitCount and use rightmost bit of shifted buffer to generate random bool.
-            _bitCount++;
-            return ((_bitBuffer >>= 1) & 0x1) == 1;
-        }
-
-        public void NextBytes(byte[] buffer)
-        {
-            // Preconditions
-            RaiseArgumentNullException.IfIsNull(buffer, nameof(buffer), ErrorMessages.NullBuffer);
-
-            // Fill the buffer with 4 bytes (1 uint) at a time.
-            var i = 0;
-            uint y;
-            while (i < buffer.Length - 3) {
-                // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-                if (_mti >= N) {
-                    // generate N words at one time
-                    GenerateNUInts();
-                }
-                y = _mt[_mti++];
-                // Tempering
-                y ^= (y >> 11);
-                y ^= (y << 7) & 0x9d2c5680U;
-                y ^= (y << 15) & 0xefc60000U;
-                y ^= (y >> 18);
-
-                buffer[i++] = (byte) y;
-                buffer[i++] = (byte) (y >> 8);
-                buffer[i++] = (byte) (y >> 16);
-                buffer[i++] = (byte) (y >> 24);
-            }
-
-            // Fill up any remaining bytes in the buffer.
-            if (i >= buffer.Length) {
-                return;
-            }
-
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            if (_mti >= N) {
-                // generate N words at one time
-                GenerateNUInts();
-            }
-            y = _mt[_mti++];
-            // Tempering
-            y ^= (y >> 11);
-            y ^= (y << 7) & 0x9d2c5680U;
-            y ^= (y << 15) & 0xefc60000U;
-            y ^= (y >> 18);
-
-            buffer[i++] = (byte) y;
-            if (i < buffer.Length) {
-                buffer[i++] = (byte) (y >> 8);
-                if (i < buffer.Length) {
-                    buffer[i++] = (byte) (y >> 16);
-                    if (i < buffer.Length) {
-                        buffer[i] = (byte) (y >> 24);
-                    }
-                }
-            }
         }
 
         #endregion

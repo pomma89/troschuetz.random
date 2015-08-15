@@ -140,17 +140,18 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
-        ///   Returns a nonnegative random number less than <see cref="int.MaxValue"/>.
+        ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than
-        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
+        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
 #if PORTABLE
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public override int Next()
+        public override int NextInclusiveMaxValue()
         {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             _u = _u * SeedU1 + SeedU2;
             _v ^= _v >> 17;
             _v ^= _v << 31;
@@ -159,7 +160,11 @@ namespace Troschuetz.Random.Generators
             var x = _u ^ (_u << 21);
             x ^= x >> 35;
             x ^= x << 4;
-            return (int) (((x + _v) ^ _w) >> 33);
+            var result = (int) (((x + _v) ^ _w) >> 33);
+
+            // Postconditions
+            Debug.Assert(result >= 0);
+            return result;
         }
 
         /// <summary>
@@ -174,6 +179,7 @@ namespace Troschuetz.Random.Generators
 #endif
         public override double NextDouble()
         {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             _u = _u * SeedU1 + SeedU2;
             _v ^= _v >> 17;
             _v ^= _v << 31;
@@ -201,6 +207,7 @@ namespace Troschuetz.Random.Generators
 #endif
         public override uint NextUInt()
         {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             _u = _u * SeedU1 + SeedU2;
             _v ^= _v >> 17;
             _v ^= _v << 31;

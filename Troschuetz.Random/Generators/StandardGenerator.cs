@@ -39,12 +39,12 @@ namespace Troschuetz.Random.Generators
         #region Fields
 
         /// <summary>
-        ///   Stores a byte array used to compute the result of <see cref="NextUInt()"/>, starting from the output of <see cref="NextBytes"/>.
+        ///   Stores a byte array used to compute the result of <see cref="NextUInt()"/>, starting from the output of <see cref="AbstractGenerator.NextBytes"/>.
         /// </summary>
         byte[] _uintBuffer;
 
         /// <summary>
-        ///   Stores an instance of <see cref="System.Random"/> type that is used to generate random numbers.
+        ///   Stores an instance of <see cref="Random"/> type that is used to generate random numbers.
         /// </summary>
         Random _generator;
 
@@ -104,16 +104,16 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
-        ///   Returns a nonnegative random number less than <see cref="int.MaxValue"/>.
+        ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than
-        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
+        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
 #if PORTABLE
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public override int Next()
+        public override int NextInclusiveMaxValue()
         {
             var result = _generator.Next();
 

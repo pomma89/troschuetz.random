@@ -66,9 +66,10 @@ namespace Troschuetz.Random.Generators
     /// </summary>
     /// <remarks>
     ///   The <see cref="XorShift128Generator"/> type bases upon the implementation presented in the
-    ///   CP article "<a href="http://www.codeproject.com/csharp/fastrandom.asp">A fast equivalent
+    ///   CP article " <a href="http://www.codeproject.com/csharp/fastrandom.asp">A fast equivalent
     ///   for System.Random</a>" and the theoretical background on xorshift random number generators
-    ///   published by George Marsaglia in this paper "<a href="http://www.jstatsoft.org/v08/i14/xorshift.pdf">Xorshift RNGs</a>".
+    ///   published by George Marsaglia in this paper "
+    ///   <a href="http://www.jstatsoft.org/v08/i14/xorshift.pdf">Xorshift RNGs</a>".
     /// </remarks>
     [Serializable]
     public sealed class XorShift128Generator : AbstractGenerator
@@ -157,19 +158,18 @@ namespace Troschuetz.Random.Generators
         #region IGenerator members
 
         /// <summary>
-        ///   Gets a value indicating whether the random number generator can be reset,
-        ///   so that it produces the same random number sequence again.
+        ///   Gets a value indicating whether the random number generator can be reset, so that it
+        ///   produces the same random number sequence again.
         /// </summary>
         public override bool CanReset => true;
 
         /// <summary>
-        ///   Resets the random number generator using the specified seed, so that it produces the same random number sequence again.
-        ///   To understand whether this generator can be reset, you can query the <see cref="CanReset"/> property.
+        ///   Resets the random number generator using the specified seed, so that it produces the
+        ///   same random number sequence again. To understand whether this generator can be reset,
+        ///   you can query the <see cref="CanReset"/> property.
         /// </summary>
         /// <param name="seed">The seed value used by the generator.</param>
-        /// <returns>
-        ///   True if the random number generator was reset; otherwise, false.
-        /// </returns>
+        /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         public override bool Reset(uint seed)
         {
             base.Reset(seed);
@@ -184,25 +184,26 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
-        ///   Returns a nonnegative random number less than <see cref="int.MaxValue"/>.
+        ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than
-        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
+        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
 #if PORTABLE
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public override int Next()
+        public override int NextInclusiveMaxValue()
         {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
             var t = (_x ^ (_x << 11));
             _x = _y;
             _y = _z;
             _z = _w;
-            var result = (int) ((_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8))) >> 33);
+            var result = (int) ((_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8))) >> 1);
 
             // Postconditions
-            Debug.Assert(result >= 0 && result < int.MaxValue);
+            Debug.Assert(result >= 0);
             return result;
         }
 
@@ -218,6 +219,7 @@ namespace Troschuetz.Random.Generators
 #endif
         public override double NextDouble()
         {
+            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
             var t = (_x ^ (_x << 11));
             _x = _y;
             _y = _z;

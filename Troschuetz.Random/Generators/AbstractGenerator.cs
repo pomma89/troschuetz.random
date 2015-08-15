@@ -29,7 +29,7 @@ namespace Troschuetz.Random.Generators
     /// <summary>
     ///   An abstract generator which efficiently implements everything required by the
     ///   <see cref="IGenerator"/> interface using only few methods: <see cref="NextUInt()"/>,
-    ///   <see cref="NextDouble()"/>, <see cref="NextInt()"/>.
+    ///   <see cref="NextDouble()"/>, <see cref="NextInclusiveMaxValue()"/>.
     /// 
     ///   Therefore, in order to build a new generator, one must "simply" override the
     ///   <see cref="Reset(uint)"/>, which is used to automatically initialize the generator, and
@@ -120,6 +120,9 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         /// <param name="seed">The seed value used by the generator.</param>
         /// <returns>True if the random number generator was reset; otherwise, false.</returns>
+        /// <remarks>
+        ///   If this method is overridden, always remember to call it inside the override.
+        /// </remarks>
         public virtual bool Reset(uint seed)
         {
             if (!CanReset)
@@ -144,7 +147,18 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit signed integer greater than or equal to 0, and less than
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
         /// </returns>
-        public abstract int Next();
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public int Next()
+        {
+            int result;
+            while ((result = NextInclusiveMaxValue()) == int.MaxValue) { }
+
+            // Postconditions
+            Debug.Assert(result >= 0 && result < int.MaxValue);
+            return result;
+        }
 
         /// <summary>
         ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
@@ -153,17 +167,7 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
-#if PORTABLE
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        public int NextInclusiveMaxValue()
-        {
-            var result = (int) (NextUInt() >> 1);
-
-            // Postconditions
-            Debug.Assert(result >= 0);
-            return result;
-        }
+        public abstract int NextInclusiveMaxValue();
 
         /// <summary>
         ///   Returns a nonnegative random number less than the specified maximum.
