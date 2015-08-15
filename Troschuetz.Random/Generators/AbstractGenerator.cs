@@ -20,6 +20,8 @@
 using PommaLabs.Thrower;
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using Troschuetz.Random.Core;
 
 namespace Troschuetz.Random.Generators
@@ -30,8 +32,8 @@ namespace Troschuetz.Random.Generators
     ///   The type of the object containing the real generation methods.
     /// </typeparam>
     [Serializable]
-    public abstract class AbstractGenerator<TGenerator>
-        where TGenerator : AbstractGenerator<TGenerator>, IGenerator
+    public abstract class AbstractGenerator<TGenerator> : IGenerator
+        where TGenerator : AbstractGenerator<TGenerator>
     {
         #region Constants
 
@@ -51,8 +53,6 @@ namespace Troschuetz.Random.Generators
 
         #endregion Constants
 
-        TGenerator _state;
-
         /// <summary>
         ///   Stores an <see cref="uint"/> used to generate up to 32 random <see cref="bool"/> values.
         /// </summary>
@@ -63,10 +63,19 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         int _bitCount;
 
+        /// <summary>
+        ///   Initializes a new instance of the <typeparamref name="TGenerator"/> class, using the
+        ///   specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        [SuppressMessage("Potential Code Quality Issues", "RECS0021:Warns about calls to virtual member functions occuring in the constructor", Justification = "In this case, it is safe")]
+        [SuppressMessage("Usage", "CC0067:Virtual Method Called On Constructor", Justification = "In this case, it is safe")]
         protected AbstractGenerator(uint seed)
         {
-            _state = this as TGenerator;
-            _state.Reset(seed);
+            // Set the initial state for this generator.
+            Reset(seed);
 
             // The seed is stored in order to allow resetting the generator.
             Seed = seed;
@@ -74,13 +83,15 @@ namespace Troschuetz.Random.Generators
 
         #region IGenerator members
 
-        public uint Seed { get; }
+        public uint Seed { get; set; }
+
+        public abstract bool CanReset { get; }
 
         public bool Reset() => Reset(Seed);
 
         public virtual bool Reset(uint seed)
         {
-            if (!_state.CanReset)
+            if (!CanReset)
             {
                 return false;
             }
@@ -88,12 +99,20 @@ namespace Troschuetz.Random.Generators
             // Reset helper variables used for generation of random bools.
             _bitBuffer = 0U;
             _bitCount = 0;
+
+            // Store the new seed.
+            Seed = seed;
+
             return true;
         }
 
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public int Next()
         {
-            var result = (int) (_state.NextUInt() >> 1);
+            var result = (int) (NextUInt() >> 1);
             if (result == int.MaxValue)
             {
                 result = Next();
@@ -104,6 +123,10 @@ namespace Troschuetz.Random.Generators
             return result;
         }
 
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public int Next(int maxValue)
         {
             // Preconditions
@@ -115,13 +138,17 @@ namespace Troschuetz.Random.Generators
             // int are very fast (the allocated bits remain the same), so overall there's a
             // significant performance improvement. NOTE TO SELF: DO NOT REMOVE THE SECOND (INT)
             // CAST, EVEN IF VISUAL STUDIO TELLS IT IS NOT NECESSARY.
-            var result = (int) ((int) (_state.NextUInt() >> 1) * IntToDoubleMultiplier * maxValue);
+            var result = (int) ((int) (NextUInt() >> 1) * IntToDoubleMultiplier * maxValue);
 
             // Postconditions
             Debug.Assert(result >= 0 && result < maxValue);
             return result;
         }
 
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public int Next(int minValue, int maxValue)
         {
             // Preconditions
@@ -134,7 +161,7 @@ namespace Troschuetz.Random.Generators
                 // The range is greater than int.MaxValue, so we have to use slower floating point
                 // arithmetic. Also all 32 random bits (uint) have to be used which again is slower
                 // (See comment in NextDouble()).
-                result = minValue + (int) (_state.NextUInt() * UIntToDoubleMultiplier * (maxValue - (double) minValue));
+                result = minValue + (int) (NextUInt() * UIntToDoubleMultiplier * (maxValue - (double) minValue));
             }
             else
             {
@@ -142,7 +169,7 @@ namespace Troschuetz.Random.Generators
                 // before the first multiplication and gain better performance. See comment in
                 // Next(maxValue). NOTE TO SELF: DO NOT REMOVE THE SECOND (INT) CAST, EVEN IF VISUAL
                 // STUDIO TELLS IT IS NOT NECESSARY.
-                result = minValue + (int) ((int) (_state.NextUInt() >> 1) * IntToDoubleMultiplier * range);
+                result = minValue + (int) ((int) (NextUInt() >> 1) * IntToDoubleMultiplier * range);
             }
 
             // Postconditions
@@ -150,81 +177,134 @@ namespace Troschuetz.Random.Generators
             return result;
         }
 
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public int NextInclusiveMaxValue()
         {
-            var result = (int) (_state.NextUInt() >> 1);
+            var result = (int) (NextUInt() >> 1);
 
             // Postconditions
             Debug.Assert(result >= 0);
             return result;
         }
 
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public double NextDouble()
+        {
+            // Here a ~2x speed improvement is gained by computing a value that can be cast to an
+            // int before casting to a double to perform the multiplication. Casting a double from
+            // an int is a lot faster than from an uint and the extra shift operation and cast to an
+            // int are very fast (the allocated bits remain the same), so overall there's a
+            // significant performance improvement. NOTE TO SELF: DO NOT REMOVE THE SECOND (INT)
+            // CAST, EVEN IF VISUAL STUDIO TELLS IT IS NOT NECESSARY.
+            var result = (int) (NextUInt() >> 1) * IntToDoubleMultiplier;
+
+            // Postconditions
+            Debug.Assert(result >= 0.0 && result < 1.0);
+            return result;
+        }
+
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public double NextDouble(double maxValue)
         {
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
             Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
 
-            var result = _state.NextDouble() * maxValue;
+            // NOTE TO SELF: DO NOT REMOVE THE SECOND (INT) CAST, EVEN IF VISUAL STUDIO TELLS IT IS
+            // NOT NECESSARY.
+            var result = (int) (NextUInt() >> 1) * IntToDoubleMultiplier * maxValue;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < maxValue);
             return result;
         }
 
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public double NextDouble(double minValue, double maxValue)
         {
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
             Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
 
-            var result = minValue + _state.NextDouble() * (maxValue - minValue);
+            // NOTE TO SELF: DO NOT REMOVE THE SECOND (INT) CAST, EVEN IF VISUAL STUDIO TELLS IT IS
+            // NOT NECESSARY.
+            var result = minValue + (int) (NextUInt() >> 1) * IntToDoubleMultiplier * (maxValue - minValue);
 
             // Postconditions
             Debug.Assert(result >= minValue && result < maxValue);
             return result;
         }
 
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public uint NextUInt(uint maxValue)
         {
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
 
-            var result = (uint) (_state.NextUInt() * UIntToDoubleMultiplier * maxValue);
+            var result = (uint) (NextUInt() * UIntToDoubleMultiplier * maxValue);
 
             // Postconditions
             Debug.Assert(result < maxValue);
             return result;
         }
 
+        public abstract uint NextUInt();
+
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public uint NextUInt(uint minValue, uint maxValue)
         {
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
-            var result = minValue + (uint) (_state.NextUInt() * UIntToDoubleMultiplier * (maxValue - minValue));
+            var result = minValue + (uint) (NextUInt() * UIntToDoubleMultiplier * (maxValue - minValue));
 
             // Postconditions
             Debug.Assert(result >= minValue && result < maxValue);
             return result;
         }
 
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public uint NextUIntExclusiveMaxValue()
         {
             uint result;
-            while ((result = _state.NextUInt()) == uint.MaxValue) { }
+            while ((result = NextUInt()) == uint.MaxValue) { }
 
             // Postconditions
             Debug.Assert(result < uint.MaxValue);
             return result;
         }
 
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public bool NextBoolean()
         {
             if (_bitCount == 0)
             {
                 // Generate 32 more bits (1 uint) and store it for future calls.
-                _bitBuffer = _state.NextUInt();
+                _bitBuffer = NextUInt();
 
                 // Reset the bitCount and use rightmost bit of buffer to generate random bool.
                 _bitCount = 31;
@@ -236,6 +316,10 @@ namespace Troschuetz.Random.Generators
             return ((_bitBuffer >>= 1) & 0x1) == 1;
         }
 
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void NextBytes(byte[] buffer)
         {
             // Preconditions
@@ -245,7 +329,7 @@ namespace Troschuetz.Random.Generators
             var i = 0;
             while (i < buffer.Length - 3)
             {
-                var u = _state.NextUInt();
+                var u = NextUInt();
                 buffer[i++] = (byte) u;
                 buffer[i++] = (byte) (u >> 8);
                 buffer[i++] = (byte) (u >> 16);
@@ -255,7 +339,7 @@ namespace Troschuetz.Random.Generators
             // Fill up any remaining bytes in the buffer.
             if (i < buffer.Length)
             {
-                var u = _state.NextUInt();
+                var u = NextUInt();
                 buffer[i++] = (byte) u;
                 if (i < buffer.Length)
                 {

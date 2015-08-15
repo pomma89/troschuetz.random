@@ -70,7 +70,7 @@ namespace Troschuetz.Random.Generators
     ///   published by George Marsaglia in this paper "<a href="http://www.jstatsoft.org/v08/i14/xorshift.pdf">Xorshift RNGs</a>".
     /// </remarks>
     [Serializable]
-    public sealed class XorShift128Generator : AbstractGenerator<XorShift128Generator>, IGenerator
+    public sealed class XorShift128Generator : AbstractGenerator<XorShift128Generator>
     {
         #region Constants
 
@@ -155,8 +155,20 @@ namespace Troschuetz.Random.Generators
 
         #region IGenerator members
 
-        public bool CanReset => true;
+        /// <summary>
+        ///   Gets a value indicating whether the random number generator can be reset,
+        ///   so that it produces the same random number sequence again.
+        /// </summary>
+        public override bool CanReset => true;
 
+        /// <summary>
+        ///   Resets the random number generator using the specified seed, so that it produces the same random number sequence again.
+        ///   To understand whether this generator can be reset, you can query the <see cref="CanReset"/> property.
+        /// </summary>
+        /// <param name="seed">The seed value used by the generator.</param>
+        /// <returns>
+        ///   True if the random number generator was reset; otherwise, false.
+        /// </returns>
         public override bool Reset(uint seed)
         {
             // "The seed set for xor128 is four 32-bit integers x,y,z,w not all 0, ..." (George
@@ -168,32 +180,18 @@ namespace Troschuetz.Random.Generators
             return true;
         }
 
+        /// <summary>
+        ///   Returns an unsigned random number.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
+        ///   less than or equal to <see cref="uint.MaxValue"/>.
+        /// </returns>
 #if PORTABLE
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public double NextDouble()
-        {
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            var t = (_x ^ (_x << 11));
-            _x = _y;
-            _y = _z;
-            _z = _w;
-            var w = (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8)));
-
-            // Here a ~2x speed improvement is gained by computing a value that can be cast to an
-            // int before casting to a double to perform the multiplication. Casting a double from
-            // an int is a lot faster than from an uint and the extra shift operation and cast to an
-            // int are very fast (the allocated bits remain the same), so overall there's a
-            // significant performance improvement.
-            return (int) (w >> 1) * IntToDoubleMultiplier;
-        }
-
-#if PORTABLE
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        public uint NextUInt()
+        public override uint NextUInt()
         {
             var t = (_x ^ (_x << 11));
             _x = _y;

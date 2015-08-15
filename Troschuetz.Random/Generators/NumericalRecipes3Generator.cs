@@ -23,19 +23,24 @@ using System.Runtime.CompilerServices;
 
 namespace Troschuetz.Random.Generators
 {
+    /// <summary>
+    ///   A generator whose original code has been found on "Numerical Recipes in C++", 3rd edition.
+    ///   Inside the book, it is named "Ran" and it is the highest quality recommended generator.
+    /// </summary>
+    /// <remarks>This generator has a period of ~ 3.138 * 10^57.</remarks>
     [Serializable]
-    public sealed class NumericalRecipes3Generator : AbstractGenerator<NumericalRecipes3Generator>, IGenerator
+    public sealed class NumericalRecipes3Generator : AbstractGenerator<NumericalRecipes3Generator>
     {
         #region Constants
 
         /// <summary>
-        ///   Represents the seed for the <see cref="GeneratorState.V"/> variable. This field is constant.
+        ///   Represents the seed for the <see cref="_v"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 4101842887655102017.</remarks>
         public const ulong SeedV = 4101842887655102017UL;
 
         /// <summary>
-        ///   Represents the seed for the <see cref="GeneratorState.W"/> variable. This field is constant.
+        ///   Represents the seed for the <see cref="_w"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 1.</remarks>
         public const ulong SeedW = 1UL;
@@ -58,22 +63,20 @@ namespace Troschuetz.Random.Generators
         /// <remarks>The value of this constant is 2685821657736338717.</remarks>
         public const ulong SeedU3 = 4294957665UL;
 
-        /// <summary>
-        ///   Represents the seed for the <see cref="double"/> numbers generation. This field is constant.
-        /// </summary>
-        /// <remarks>The value of this constant is 5.42101086242752217e-20.</remarks>
-        public const double SeedD = 5.42101086242752217e-20;
+        #endregion Constants
 
-        #endregion
+        #region Fields
 
         ulong _u;
         ulong _v;
         ulong _w;
 
+        #endregion Fields
+
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NumericalRecipes3Generator"/> class, 
+        ///   Initializes a new instance of the <see cref="NumericalRecipes3Generator"/> class,
         ///   using a time-dependent default seed value.
         /// </summary>
         public NumericalRecipes3Generator() : base((uint) Math.Abs(Environment.TickCount))
@@ -81,19 +84,19 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NumericalRecipes3Generator"/> class, 
+        ///   Initializes a new instance of the <see cref="NumericalRecipes3Generator"/> class,
         ///   using the specified seed value.
         /// </summary>
         /// <param name="seed">
-        ///   A number used to calculate a starting value for the pseudo-random number sequence.
-        ///   If a negative number is specified, the absolute value of the number is used. 
+        ///   A number used to calculate a starting value for the pseudo-random number sequence. If
+        ///   a negative number is specified, the absolute value of the number is used.
         /// </param>
         public NumericalRecipes3Generator(int seed) : base((uint) Math.Abs(seed))
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NumericalRecipes3Generator"/> class, 
+        ///   Initializes a new instance of the <see cref="NumericalRecipes3Generator"/> class,
         ///   using the specified seed value.
         /// </summary>
         /// <param name="seed">
@@ -103,12 +106,23 @@ namespace Troschuetz.Random.Generators
         {
         }
 
-        #endregion
+        #endregion Construction
 
         #region IGenerator members
 
-        public bool CanReset => true;
+        /// <summary>
+        ///   Gets a value indicating whether the random number generator can be reset, so that it
+        ///   produces the same random number sequence again.
+        /// </summary>
+        public override bool CanReset => true;
 
+        /// <summary>
+        ///   Resets the random number generator using the specified seed, so that it produces the
+        ///   same random number sequence again. To understand whether this generator can be reset,
+        ///   you can query the <see cref="CanReset"/> property.
+        /// </summary>
+        /// <param name="seed">The seed value used by the generator.</param>
+        /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         public override bool Reset(uint seed)
         {
             base.Reset(seed);
@@ -123,28 +137,18 @@ namespace Troschuetz.Random.Generators
             return true;
         }
 
+        /// <summary>
+        ///   Returns an unsigned random number.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
+        ///   less than or equal to <see cref="uint.MaxValue"/>.
+        /// </returns>
 #if PORTABLE
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public double NextDouble()
-        {
-            _u = _u * SeedU1 + SeedU2;
-            _v ^= _v >> 17;
-            _v ^= _v << 31;
-            _v ^= _v >> 8;
-            _w = SeedU3 * (_w & 0xFFFFFFFFUL) + (_w >> 32);
-            var x = _u ^ (_u << 21);
-            x ^= x >> 35;
-            x ^= x << 4;
-            return SeedD * ((x + _v) ^ _w);
-        }
-
-#if PORTABLE
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        public uint NextUInt()
+        public override uint NextUInt()
         {
             _u = _u * SeedU1 + SeedU2;
             _v ^= _v >> 17;
@@ -157,6 +161,13 @@ namespace Troschuetz.Random.Generators
             return (uint) ((x + _v) ^ _w);
         }
 
+        /// <summary>
+        ///   Returns an unsigned long random number.
+        /// </summary>
+        /// <returns>
+        ///   A 64-bit unsigned integer greater than or equal to <see cref="ulong.MinValue"/> and
+        ///   less than or equal to <see cref="ulong.MaxValue"/>.
+        /// </returns>
 #if PORTABLE
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -174,6 +185,6 @@ namespace Troschuetz.Random.Generators
             return (x + _v) ^ _w;
         }
 
-        #endregion
+        #endregion IGenerator members
     }
 }
