@@ -347,9 +347,8 @@ namespace Troschuetz.Random.Generators
             y ^= (y >> 11);
             y ^= (y << 7) & 0x9d2c5680U;
             y ^= (y << 15) & 0xefc60000U;
-            y ^= (y >> 18);
 
-            var result = (int) (y >> 1);
+            var result = (int) ((y ^ (y >> 18)) >> 1);
 
             // Postconditions
             Debug.Assert(result >= 0);
@@ -380,9 +379,8 @@ namespace Troschuetz.Random.Generators
             y ^= (y >> 11);
             y ^= (y << 7) & 0x9d2c5680U;
             y ^= (y << 15) & 0xefc60000U;
-            y ^= (y >> 18);
 
-            var result = (y >> 1) * UIntToDoubleMultiplier;
+            var result = (y ^ (y >> 18)) * UIntToDoubleMultiplier;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < 1.0);
