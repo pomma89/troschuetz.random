@@ -30,8 +30,8 @@ namespace Troschuetz.Random.Generators
     ///   The type of the object containing the current generator state.
     /// </typeparam>
     [Serializable]
-    public abstract class AbstractGenerator<TGenState> : IGenerator
-        where TGenState : class, IGeneratorState, new()
+    public abstract class AbstractGenerator<TGenState>
+        where TGenState : AbstractGenerator<TGenState>, IGenerator
     {
         #region Constants
 
@@ -65,40 +65,30 @@ namespace Troschuetz.Random.Generators
 
         protected AbstractGenerator(uint seed)
         {
-            _state = new TGenState();
+            _state = this as TGenState;
             _state.Reset(seed);
 
             // The seed is stored in order to allow resetting the generator.
             Seed = seed;
         }
 
-        #region Abstract members
-
-        protected abstract double NextDouble(TGenState generatorState);
-
-        protected abstract uint NextUInt(TGenState generatorState);
-
-        #endregion Abstract members
-
         #region IGenerator members
 
         public uint Seed { get; }
-
-        public bool CanReset => _state.CanReset;
 
         public bool Reset()
         {
             var result = _state.Reset(Seed);
 
             // Postconditions
-            Debug.Assert(result == CanReset);
+            Debug.Assert(result == _state.CanReset);
             return result;
         }
 
         public int Next()
         {
             int result;
-            while ((result = (int) (NextUInt(_state) >> 1)) == int.MaxValue) { }
+            while ((result = (int) (_state.NextUInt() >> 1)) == int.MaxValue) { }
 
             // Postconditions
             Debug.Assert(result >= 0 && result < int.MaxValue);
@@ -116,7 +106,7 @@ namespace Troschuetz.Random.Generators
             // int are very fast (the allocated bits remain the same), so overall there's a
             // significant performance improvement. NOTE TO SELF: DO NOT REMOVE THE SECOND (INT)
             // CAST, EVEN IF VISUAL STUDIO TELLS IT IS NOT NECESSARY.
-            var result = (int) ((int) (NextUInt(_state) >> 1) * IntToDoubleMultiplier * maxValue);
+            var result = (int) ((int) (_state.NextUInt() >> 1) * IntToDoubleMultiplier * maxValue);
 
             // Postconditions
             Debug.Assert(result >= 0 && result < maxValue);
@@ -135,7 +125,7 @@ namespace Troschuetz.Random.Generators
                 // The range is greater than int.MaxValue, so we have to use slower floating point
                 // arithmetic. Also all 32 random bits (uint) have to be used which again is slower
                 // (See comment in NextDouble()).
-                result = minValue + (int) (NextUInt(_state) * UIntToDoubleMultiplier * (maxValue - (double) minValue));
+                result = minValue + (int) (_state.NextUInt() * UIntToDoubleMultiplier * (maxValue - (double) minValue));
             }
             else
             {
@@ -143,7 +133,7 @@ namespace Troschuetz.Random.Generators
                 // before the first multiplication and gain better performance. See comment in
                 // Next(maxValue). NOTE TO SELF: DO NOT REMOVE THE SECOND (INT) CAST, EVEN IF VISUAL
                 // STUDIO TELLS IT IS NOT NECESSARY.
-                result = minValue + (int) ((int) (NextUInt(_state) >> 1) * IntToDoubleMultiplier * range);
+                result = minValue + (int) ((int) (_state.NextUInt() >> 1) * IntToDoubleMultiplier * range);
             }
 
             // Postconditions
@@ -153,19 +143,10 @@ namespace Troschuetz.Random.Generators
 
         public int NextInclusiveMaxValue()
         {
-            var result = (int) (NextUInt(_state) >> 1);
+            var result = (int) (_state.NextUInt() >> 1);
 
             // Postconditions
             Debug.Assert(result >= 0);
-            return result;
-        }
-
-        public double NextDouble()
-        {
-            var result = NextDouble(_state);
-
-            // Postconditions
-            Debug.Assert(result >= 0.0 && result < 1.0);
             return result;
         }
 
@@ -175,7 +156,7 @@ namespace Troschuetz.Random.Generators
             RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
             Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
 
-            var result = NextDouble() * maxValue;
+            var result = _state.NextDouble() * maxValue;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < maxValue);
@@ -188,17 +169,11 @@ namespace Troschuetz.Random.Generators
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
             Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
 
-            var result = minValue + NextDouble() * (maxValue - minValue);
+            var result = minValue + _state.NextDouble() * (maxValue - minValue);
 
             // Postconditions
             Debug.Assert(result >= minValue && result < maxValue);
             return result;
-        }
-
-        public uint NextUInt()
-        {
-            // Here we have no preconditions and no postconditions.
-            return NextUInt(_state);
         }
 
         public uint NextUInt(uint maxValue)
@@ -206,7 +181,7 @@ namespace Troschuetz.Random.Generators
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
 
-            var result = (uint) (NextUInt(_state) * UIntToDoubleMultiplier * maxValue);
+            var result = (uint) (_state.NextUInt() * UIntToDoubleMultiplier * maxValue);
 
             // Postconditions
             Debug.Assert(result < maxValue);
@@ -218,7 +193,7 @@ namespace Troschuetz.Random.Generators
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
-            var result = minValue + (uint) (NextUInt(_state) * UIntToDoubleMultiplier * (maxValue - minValue));
+            var result = minValue + (uint) (_state.NextUInt() * UIntToDoubleMultiplier * (maxValue - minValue));
 
             // Postconditions
             Debug.Assert(result >= minValue && result < maxValue);
@@ -228,7 +203,7 @@ namespace Troschuetz.Random.Generators
         public uint NextUIntExclusiveMaxValue()
         {
             uint result;
-            while ((result = NextUInt(_state)) == uint.MaxValue) { }
+            while ((result = _state.NextUInt()) == uint.MaxValue) { }
 
             // Postconditions
             Debug.Assert(result < uint.MaxValue);
@@ -240,7 +215,7 @@ namespace Troschuetz.Random.Generators
             if (_bitCount == 0)
             {
                 // Generate 32 more bits (1 uint) and store it for future calls.
-                _bitBuffer = NextUInt(_state);
+                _bitBuffer = _state.NextUInt();
 
                 // Reset the bitCount and use rightmost bit of buffer to generate random bool.
                 _bitCount = 31;
@@ -261,7 +236,7 @@ namespace Troschuetz.Random.Generators
             var i = 0;
             while (i < buffer.Length - 3)
             {
-                var u = NextUInt(_state);
+                var u = _state.NextUInt();
                 buffer[i++] = (byte) u;
                 buffer[i++] = (byte) (u >> 8);
                 buffer[i++] = (byte) (u >> 16);
@@ -271,7 +246,7 @@ namespace Troschuetz.Random.Generators
             // Fill up any remaining bytes in the buffer.
             if (i < buffer.Length)
             {
-                var u = NextUInt(_state);
+                var u = _state.NextUInt();
                 buffer[i++] = (byte) u;
                 if (i < buffer.Length)
                 {

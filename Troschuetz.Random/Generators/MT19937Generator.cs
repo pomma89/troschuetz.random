@@ -342,6 +342,12 @@ namespace Troschuetz.Random.Generators
             return true;
         }
 
+        public bool Reset(uint seed)
+        {
+            ResetGenerator();
+            return true;
+        }
+
         public int Next()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().

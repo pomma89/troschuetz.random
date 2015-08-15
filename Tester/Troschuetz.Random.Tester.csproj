@@ -18,7 +18,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -102,9 +102,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Troschuetz.Random.NET40\Troschuetz.Random.NET40.csproj">
-      <Project>{6b947182-cf4b-45fe-a1ae-47a28c514040}</Project>
-      <Name>Troschuetz.Random.NET40</Name>
+    <ProjectReference Include="..\Troschuetz.Random\Troschuetz.Random.csproj">
+      <Project>{a1ff7728-605f-401a-a9fc-51fa56852e9e}</Project>
+      <Name>Troschuetz.Random</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

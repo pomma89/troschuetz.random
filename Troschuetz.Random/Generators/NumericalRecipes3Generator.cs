@@ -24,7 +24,7 @@ using System.Runtime.CompilerServices;
 namespace Troschuetz.Random.Generators
 {
     [Serializable]
-    public sealed class NumericalRecipes3Generator : AbstractGenerator<NumericalRecipes3Generator.GeneratorState>
+    public sealed class NumericalRecipes3Generator : AbstractGenerator<NumericalRecipes3Generator>, IGenerator
     {
         #region Constants
 
@@ -66,6 +66,12 @@ namespace Troschuetz.Random.Generators
 
         #endregion
 
+        ulong _u;
+        ulong _v;
+        ulong _w;
+
+        #region Construction
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="NumericalRecipes3Generator"/> class, 
         ///   using a time-dependent default seed value.
@@ -97,64 +103,76 @@ namespace Troschuetz.Random.Generators
         {
         }
 
-        #region AbstractGenerator members
-
-        protected override double NextDouble(GeneratorState generatorState)
-        {
-            unchecked
-            {
-                return SeedD * generatorState.NextULong();
-            }
-        }
-
-        protected override uint NextUInt(GeneratorState generatorState)
-        {
-            unchecked
-            {
-                return (uint) generatorState.NextULong();
-            }
-        }
-
         #endregion
 
-        [Serializable]
-        public sealed class GeneratorState : IGeneratorState
+        #region IGenerator members
+
+        public bool CanReset => true;
+
+        public bool Reset(uint seed)
         {
-            public ulong U;
-            public ulong V;
-            public ulong W;
-
-            public bool CanReset => true;
-
-            public bool Reset(uint seed)
-            {
-                V = SeedV;
-                W = SeedW;
-                U = seed ^ V;
-                NextULong();
-                V = U;
-                NextULong();
-                W = V;
-                NextULong();
-                return true;
-            }
+            _v = SeedV;
+            _w = SeedW;
+            _u = seed ^ _v;
+            NextULong();
+            _v = _u;
+            NextULong();
+            _w = _v;
+            NextULong();
+            return true;
+        }
 
 #if PORTABLE
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-            public ulong NextULong()
-            {
-                U = U * SeedU1 + SeedU2;
-                V ^= V >> 17;
-                V ^= V << 31;
-                V ^= V >> 8;
-                W = SeedU3 * (W & 0xFFFFFFFFUL) + (W >> 32);
-                var x = U ^ (U << 21);
-                x ^= x >> 35;
-                x ^= x << 4;
-                return (x + V) ^ W;
-            }
+        public double NextDouble()
+        {
+            _u = _u * SeedU1 + SeedU2;
+            _v ^= _v >> 17;
+            _v ^= _v << 31;
+            _v ^= _v >> 8;
+            _w = SeedU3 * (_w & 0xFFFFFFFFUL) + (_w >> 32);
+            var x = _u ^ (_u << 21);
+            x ^= x >> 35;
+            x ^= x << 4;
+            return SeedD * ((x + _v) ^ _w);
         }
+
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public uint NextUInt()
+        {
+            _u = _u * SeedU1 + SeedU2;
+            _v ^= _v >> 17;
+            _v ^= _v << 31;
+            _v ^= _v >> 8;
+            _w = SeedU3 * (_w & 0xFFFFFFFFUL) + (_w >> 32);
+            var x = _u ^ (_u << 21);
+            x ^= x >> 35;
+            x ^= x << 4;
+            return (uint) ((x + _v) ^ _w);
+        }
+
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public ulong NextULong()
+        {
+            _u = _u * SeedU1 + SeedU2;
+            _v ^= _v >> 17;
+            _v ^= _v << 31;
+            _v ^= _v >> 8;
+            _w = SeedU3 * (_w & 0xFFFFFFFFUL) + (_w >> 32);
+            var x = _u ^ (_u << 21);
+            x ^= x >> 35;
+            x ^= x << 4;
+            return (x + _v) ^ _w;
+        }
+
+        #endregion
     }
 }

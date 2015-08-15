@@ -24,7 +24,7 @@ using System.Runtime.CompilerServices;
 namespace Troschuetz.Random.Generators
 {
     [Serializable]
-    public sealed class NumericalRecipes3Q2Generator : AbstractGenerator<NumericalRecipes3Q2Generator.GeneratorState>
+    public sealed class NumericalRecipes3Q2Generator : AbstractGenerator<NumericalRecipes3Q2Generator>, IGenerator
     {
         #region Constants
 
@@ -53,6 +53,11 @@ namespace Troschuetz.Random.Generators
         public const double SeedD = 5.42101086242752217e-20;
 
         #endregion
+
+        ulong _v;
+        ulong _w;
+
+        #region Construction
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="NumericalRecipes3Q2Generator"/> class, 
@@ -85,56 +90,61 @@ namespace Troschuetz.Random.Generators
         {
         }
 
-        #region AbstractGenerator members
-
-        protected override double NextDouble(GeneratorState generatorState)
-        {
-            unchecked
-            {
-                return SeedD * generatorState.NextULong();
-            }
-        }
-
-        protected override uint NextUInt(GeneratorState generatorState)
-        {
-            unchecked
-            {
-                return (uint) generatorState.NextULong();
-            }
-        }
-
         #endregion
 
-        [Serializable]
-        public sealed class GeneratorState : IGeneratorState
+        #region IGenerator members
+
+        public bool CanReset => true;
+
+        public bool Reset(uint seed)
         {
-            public ulong V;
-            public ulong W;
-
-            public bool CanReset => true;
-
-            public bool Reset(uint seed)
-            {
-                V = SeedV;
-                W = SeedW;
-                V ^= seed;
-                W = NextULong();
-                V = NextULong();
-                return true;
-            }
+            _v = SeedV;
+            _w = SeedW;
+            _v ^= seed;
+            _w = NextULong();
+            _v = NextULong();
+            return true;
+        }
 
 #if PORTABLE
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-            public ulong NextULong()
-            {
-                V ^= V >> 17;
-                V ^= V << 31;
-                V ^= V >> 8;
-                W = SeedU * (W & 0xFFFFFFFFUL) + (W >> 32);
-                return V ^ W;
-            }
+        public double NextDouble()
+        {
+            _v ^= _v >> 17;
+            _v ^= _v << 31;
+            _v ^= _v >> 8;
+            _w = SeedU * (_w & 0xFFFFFFFFUL) + (_w >> 32);
+            return SeedD * (_v ^ _w);
         }
+
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public uint NextUInt()
+        {
+            _v ^= _v >> 17;
+            _v ^= _v << 31;
+            _v ^= _v >> 8;
+            _w = SeedU * (_w & 0xFFFFFFFFUL) + (_w >> 32);
+            return (uint) (_v ^ _w);
+        }
+
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public ulong NextULong()
+        {
+            _v ^= _v >> 17;
+            _v ^= _v << 31;
+            _v ^= _v >> 8;
+            _w = SeedU * (_w & 0xFFFFFFFFUL) + (_w >> 32);
+            return _v ^ _w;
+        }
+
+        #endregion
     }
 }

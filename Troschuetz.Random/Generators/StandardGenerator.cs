@@ -125,6 +125,12 @@ namespace Troschuetz.Random.Generators
             return true;
         }
 
+        public bool Reset(uint seed)
+        {
+            ResetGenerator();
+            return true;
+        }
+
         public int Next()
         {
             return _generator.Next();

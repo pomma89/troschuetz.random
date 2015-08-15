@@ -24,7 +24,7 @@ using System.Runtime.CompilerServices;
 namespace Troschuetz.Random.Generators
 {
     [Serializable]
-    public sealed class NumericalRecipes3Q1Generator : AbstractGenerator<NumericalRecipes3Q1Generator.GeneratorState>
+    public sealed class NumericalRecipes3Q1Generator : AbstractGenerator<NumericalRecipes3Q1Generator>, IGenerator
     {
         #region Constants
 
@@ -47,6 +47,10 @@ namespace Troschuetz.Random.Generators
         public const double SeedD = 5.42101086242752217e-20;
 
         #endregion
+
+        ulong _v;
+
+        #region Construction
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="NumericalRecipes3Q1Generator"/> class, 
@@ -79,52 +83,56 @@ namespace Troschuetz.Random.Generators
         {
         }
 
-        #region AbstractGenerator members
-
-        protected override double NextDouble(GeneratorState generatorState)
-        {
-            unchecked
-            {
-                return SeedD * generatorState.NextULong();
-            }
-        }
-
-        protected override uint NextUInt(GeneratorState generatorState)
-        {
-            unchecked
-            {
-                return (uint) generatorState.NextULong();
-            }
-        }
-
         #endregion
 
-        [Serializable]
-        public sealed class GeneratorState : IGeneratorState
+        #region IGenerator members
+
+        public bool CanReset => true;
+
+        public bool Reset(uint seed)
         {
-            public ulong V;
-
-            public bool CanReset => true;
-
-            public bool Reset(uint seed)
-            {
-                V = SeedV;
-                V ^= seed;
-                V = NextULong();
-                return true;
-            }
+            _v = SeedV;
+            _v ^= seed;
+            _v = NextULong();
+            return true;
+        }
 
 #if PORTABLE
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-            public ulong NextULong()
-            {
-                V ^= V >> 21;
-                V ^= V << 35;
-                V ^= V >> 4;
-                return V * SeedU;
-            }
+        public double NextDouble()
+        {
+            _v ^= _v >> 21;
+            _v ^= _v << 35;
+            _v ^= _v >> 4;
+            return SeedD * (_v * SeedU);
         }
+
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public uint NextUInt()
+        {
+            _v ^= _v >> 21;
+            _v ^= _v << 35;
+            _v ^= _v >> 4;
+            return (uint) (_v * SeedU);
+        }
+
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public ulong NextULong()
+        {
+            _v ^= _v >> 21;
+            _v ^= _v << 35;
+            _v ^= _v >> 4;
+            return _v * SeedU;
+        }
+
+        #endregion
     }
 }

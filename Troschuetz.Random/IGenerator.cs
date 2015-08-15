@@ -41,13 +41,22 @@ namespace Troschuetz.Random
         bool CanReset { get; }
 
         /// <summary>
-        ///   Resets the random number generator, so that it produces the same random number sequence again.
+        ///   Resets the random number generator using the initial seed, so that it produces the same random number sequence again.
         ///   To understand whether this generator can be reset, you can query the <see cref="CanReset"/> property.
         /// </summary>
         /// <returns>
         ///   True if the random number generator was reset; otherwise, false.
         /// </returns>
         bool Reset();
+
+        /// <summary>
+        ///   Resets the random number generator using the specified seed, so that it produces the same random number sequence again.
+        ///   To understand whether this generator can be reset, you can query the <see cref="CanReset"/> property.
+        /// </summary>
+        /// <returns>
+        ///   True if the random number generator was reset; otherwise, false.
+        /// </returns>
+        bool Reset(uint seed);
 
         /// <summary>
         ///   Returns a nonnegative random number less than <see cref="int.MaxValue"/>.

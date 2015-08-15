@@ -1680,6 +1680,11 @@ namespace Troschuetz.Random
             return _gen.Reset();
         }
 
+        public bool Reset(uint seed)
+        {
+            return _gen.Reset(seed);
+        }
+
         public int Next()
         {
             return _gen.Next();
