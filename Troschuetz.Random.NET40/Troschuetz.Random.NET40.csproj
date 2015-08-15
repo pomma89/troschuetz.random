@@ -221,9 +221,6 @@
     <Compile Include="..\Troschuetz.Random\Generators\ALFGenerator.cs">
       <Link>Generators\ALFGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Troschuetz.Random\Generators\GeneratorBase.cs">
-      <Link>Generators\GeneratorBase.cs</Link>
-    </Compile>
     <Compile Include="..\Troschuetz.Random\Generators\MT19937Generator.cs">
       <Link>Generators\MT19937Generator.cs</Link>
     </Compile>
