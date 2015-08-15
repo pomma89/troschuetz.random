@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Diagnostics;
 
 namespace Troschuetz.Random.Generators
 {
@@ -83,7 +84,11 @@ namespace Troschuetz.Random.Generators
 
         public int NextInclusiveMaxValue()
         {
-            throw new NotImplementedException();
+            var result = NextInclusiveMaxValue(_state);
+
+            // Postconditions
+            Debug.Assert(result >= 0);
+            return result;
         }
 
         public bool NextBoolean()
@@ -98,7 +103,11 @@ namespace Troschuetz.Random.Generators
 
         public double NextDouble()
         {
-            throw new NotImplementedException();
+            var result = NextDouble(_state);
+
+            // Postconditions
+            Debug.Assert(result >= 0.0 && result < 1.0);
+            return result;
         }
 
         public double NextDouble(double maxValue)

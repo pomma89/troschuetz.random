@@ -82,19 +82,19 @@ namespace Troschuetz.Random.Generators
         ///   Represents the seed for the <see cref="_y"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 362436069.</remarks>
-        public const uint SeedY = 362436069;
+        public const uint SeedY = 362436069U;
 
         /// <summary>
         ///   Represents the seed for the <see cref="_z"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 521288629.</remarks>
-        public const uint SeedZ = 521288629;
+        public const uint SeedZ = 521288629U;
 
         /// <summary>
         ///   Represents the seed for the <see cref="_w"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 88675123.</remarks>
-        public const uint SeedW = 88675123;
+        public const uint SeedW = 88675123U;
 
         #endregion
 

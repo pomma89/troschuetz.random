@@ -28,10 +28,22 @@ namespace Troschuetz.Random.Generators
     {
         #region Constants
 
+        /// <summary>
+        ///   Represents the seed for the <see cref="State.V"/> variable. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 4101842887655102017.</remarks>
         public const ulong SeedV = 4101842887655102017UL;
 
+        /// <summary>
+        ///   Represents the seed for the <see cref="ulong"/> numbers generation. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 2685821657736338717.</remarks>
         public const ulong SeedU = 2685821657736338717UL;
 
+        /// <summary>
+        ///   Represents the seed for the <see cref="double"/> numbers generation. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 5.42101086242752217e-20.</remarks>
         public const double SeedD = 5.42101086242752217e-20;
 
         #endregion
@@ -70,7 +82,6 @@ namespace Troschuetz.Random.Generators
 
         public sealed class State : IState
         {
-
             public ulong V;
 
             public void Reset(uint seed)
