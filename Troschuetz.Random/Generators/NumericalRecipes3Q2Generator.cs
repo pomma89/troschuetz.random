@@ -24,18 +24,18 @@ using System.Runtime.CompilerServices;
 namespace Troschuetz.Random.Generators
 {
     [Serializable]
-    sealed class NumericalRecipes3Q2Generator : AbstractGenerator<NumericalRecipes3Q2Generator.State>
+    sealed class NumericalRecipes3Q2Generator : AbstractGenerator<NumericalRecipes3Q2Generator.GeneratorState>
     {
         #region Constants
 
         /// <summary>
-        ///   Represents the seed for the <see cref="State.V"/> variable. This field is constant.
+        ///   Represents the seed for the <see cref="GeneratorState.V"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 4101842887655102017.</remarks>
         public const ulong SeedV = 4101842887655102017UL;
 
         /// <summary>
-        ///   Represents the seed for the <see cref="State.W"/> variable. This field is constant.
+        ///   Represents the seed for the <see cref="GeneratorState.W"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 1.</remarks>
         public const ulong SeedW = 1UL;
@@ -60,44 +60,47 @@ namespace Troschuetz.Random.Generators
 
         #region AbstractGenerator members
 
-        protected override int NextInclusiveMaxValue(State state)
+        protected override int NextInclusiveMaxValue(GeneratorState generatorState)
         {
             unchecked
             {
-                return (int) (((uint) state.NextULong()) >> 1);
+                return (int) (((uint) generatorState.NextULong()) >> 1);
             }
         }
 
-        protected override double NextDouble(State state)
+        protected override double NextDouble(GeneratorState generatorState)
         {
             unchecked
             {
-                return SeedD * state.NextULong();
+                return SeedD * generatorState.NextULong();
             }
         }
 
-        protected override uint NextUInt(State state)
+        protected override uint NextUInt(GeneratorState generatorState)
         {
             unchecked
             {
-                return (uint) state.NextULong();
+                return (uint) generatorState.NextULong();
             }
         }
 
         #endregion
 
-        public sealed class State : IState
+        public sealed class GeneratorState : IGeneratorState
         {
             public ulong V;
             public ulong W;
 
-            public void Reset(uint seed)
+            public bool CanReset => true;
+
+            public bool Reset(uint seed)
             {
                 V = SeedV;
                 W = SeedW;
                 V ^= seed;
                 W = NextULong();
                 V = NextULong();
+                return true;
             }
 
 #if PORTABLE

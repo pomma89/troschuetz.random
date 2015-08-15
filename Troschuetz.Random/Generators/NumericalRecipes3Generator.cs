@@ -23,30 +23,33 @@ using System;
 namespace Troschuetz.Random.Generators
 {
     [Serializable]
-    sealed class NumericalRecipes3Generator : AbstractGenerator<NumericalRecipes3Generator.State>
+    sealed class NumericalRecipes3Generator : AbstractGenerator<NumericalRecipes3Generator.GeneratorState>
     {
         public NumericalRecipes3Generator(uint seed) : base(seed)
         {
         }
 
-        protected override int NextInclusiveMaxValue(State state)
+        protected override int NextInclusiveMaxValue(GeneratorState generatorState)
         {
             throw new NotImplementedException();
         }
 
-        protected override double NextDouble(State state)
+        protected override double NextDouble(GeneratorState generatorState)
         {
             throw new NotImplementedException();
         }
 
-        protected override uint NextUInt(State state)
+        protected override uint NextUInt(GeneratorState generatorState)
         {
             throw new NotImplementedException();
         }
 
-        public sealed class State : IState
+        public sealed class GeneratorState : IGeneratorState
         {
-            public void Reset(uint seed)
+
+            public bool CanReset => true;
+
+            public bool Reset(uint seed)
             {
                 throw new NotImplementedException();
             }

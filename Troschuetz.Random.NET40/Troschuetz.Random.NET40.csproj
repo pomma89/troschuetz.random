@@ -247,6 +247,9 @@
     <Compile Include="..\Troschuetz.Random\IGenerator.cs">
       <Link>IGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Troschuetz.Random\IGeneratorState.cs">
+      <Link>IGeneratorState.cs</Link>
+    </Compile>
     <Compile Include="..\Troschuetz.Random\TRandom.cs">
       <Link>TRandom.cs</Link>
     </Compile>
