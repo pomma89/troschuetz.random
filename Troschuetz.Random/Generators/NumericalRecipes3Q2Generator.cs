@@ -31,7 +31,7 @@ namespace Troschuetz.Random.Generators
     /// </summary>
     /// <remarks>This generator has a period of ~ 8.5 * 10^37.</remarks>
     [Serializable]
-    public sealed class NumericalRecipes3Q2Generator : AbstractGenerator<NumericalRecipes3Q2Generator>
+    public sealed class NumericalRecipes3Q2Generator : AbstractGenerator
     {
         #region Constants
 

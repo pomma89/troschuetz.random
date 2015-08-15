@@ -70,7 +70,7 @@ namespace Troschuetz.Random.Generators
     ///   published by George Marsaglia in this paper "<a href="http://www.jstatsoft.org/v08/i14/xorshift.pdf">Xorshift RNGs</a>".
     /// </remarks>
     [Serializable]
-    public sealed class XorShift128Generator : AbstractGenerator<XorShift128Generator>
+    public sealed class XorShift128Generator : AbstractGenerator
     {
         #region Constants
 

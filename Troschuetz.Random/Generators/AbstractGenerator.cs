@@ -27,13 +27,18 @@ using Troschuetz.Random.Core;
 namespace Troschuetz.Random.Generators
 {
     /// <summary>
-    ///   </summary>
-    /// <typeparam name="TGenerator">
-    ///   The type of the object containing the real generation methods.
-    /// </typeparam>
+    ///   An abstract generator which efficiently implements everything required by the
+    ///   <see cref="IGenerator"/> interface using only the <see cref="NextUInt()"/> method.
+    /// 
+    ///   Therefore, in order to build a new generator, one must "simply" override the
+    ///   <see cref="Reset(uint)"/>, which is used to automatically initialize the generator, and
+    ///   the <see cref="NextUInt()"/> method, which, as stated above, is used to generate every
+    ///   kind of random object exposed by the interface.
+    /// 
+    ///   All generators implemented in this library extend this abstract class.
+    /// </summary>
     [Serializable]
-    public abstract class AbstractGenerator<TGenerator> : IGenerator
-        where TGenerator : AbstractGenerator<TGenerator>
+    public abstract class AbstractGenerator : IGenerator
     {
         #region Constants
 
