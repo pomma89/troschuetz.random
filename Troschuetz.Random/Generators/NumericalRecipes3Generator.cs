@@ -19,39 +19,102 @@
  */
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Troschuetz.Random.Generators
 {
     [Serializable]
     sealed class NumericalRecipes3Generator : AbstractGenerator<NumericalRecipes3Generator.GeneratorState>
     {
+        #region Constants
+
+        /// <summary>
+        ///   Represents the seed for the <see cref="GeneratorState.V"/> variable. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 4101842887655102017.</remarks>
+        public const ulong SeedV = 4101842887655102017UL;
+
+        /// <summary>
+        ///   Represents the seed for the <see cref="GeneratorState.W"/> variable. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 1.</remarks>
+        public const ulong SeedW = 1UL;
+
+        /// <summary>
+        ///   Represents the seed for the <see cref="ulong"/> numbers generation. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 2685821657736338717.</remarks>
+        public const ulong SeedU = 4294957665UL;
+
+        /// <summary>
+        ///   Represents the seed for the <see cref="double"/> numbers generation. This field is constant.
+        /// </summary>
+        /// <remarks>The value of this constant is 5.42101086242752217e-20.</remarks>
+        public const double SeedD = 5.42101086242752217e-20;
+
+        #endregion
+
         public NumericalRecipes3Generator(uint seed) : base(seed)
         {
         }
 
+        #region AbstractGenerator members
+
         protected override int NextInclusiveMaxValue(GeneratorState generatorState)
         {
-            throw new NotImplementedException();
+            unchecked
+            {
+                return (int) (((uint) generatorState.NextULong()) >> 1);
+            }
         }
 
         protected override double NextDouble(GeneratorState generatorState)
         {
-            throw new NotImplementedException();
+            unchecked
+            {
+                return SeedD * generatorState.NextULong();
+            }
         }
 
         protected override uint NextUInt(GeneratorState generatorState)
         {
-            throw new NotImplementedException();
+            unchecked
+            {
+                return (uint) generatorState.NextULong();
+            }
         }
+
+        #endregion
 
         public sealed class GeneratorState : IGeneratorState
         {
+            public ulong U;
+            public ulong V;
+            public ulong W;
 
             public bool CanReset => true;
 
             public bool Reset(uint seed)
             {
-                throw new NotImplementedException();
+                V = SeedV;
+                W = SeedW;
+                V ^= seed;
+                W = NextULong();
+                V = NextULong();
+                return true;
+            }
+
+#if PORTABLE
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+            public ulong NextULong()
+            {
+                V ^= V >> 17;
+                V ^= V << 31;
+                V ^= V >> 8;
+                W = SeedU * (W & 0xFFFFFFFFUL) + (W >> 32);
+                return V ^ W;
             }
         }
     }

@@ -52,6 +52,16 @@ namespace Troschuetz.Random.Generators
 
         TGenState _state;
 
+        /// <summary>
+        ///   Stores an <see cref="uint"/> used to generate up to 32 random <see cref="bool"/> values.
+        /// </summary>
+        uint _bitBuffer;
+
+        /// <summary>
+        ///   Stores how many random <see cref="bool"/> values still can be generated from <see cref="_bitBuffer"/>.
+        /// </summary>
+        int _bitCount;
+
         protected AbstractGenerator(uint seed)
         {
             _state = new TGenState();
@@ -101,9 +111,12 @@ namespace Troschuetz.Random.Generators
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
 
-            // The shift operation and extra int cast before the first multiplication give better
-            // performance. See comment in NextDouble(). NOTE TO SELF: DO NOT REMOVE THE SECOND
-            // (INT) CAST, EVEN IF VISUAL STUDIO TELLS IT IS NOT NECESSARY.
+            // Here a ~2x speed improvement is gained by computing a value that can be cast to an
+            // int before casting to a double to perform the multiplication. Casting a double from
+            // an int is a lot faster than from an uint and the extra shift operation and cast to an
+            // int are very fast (the allocated bits remain the same), so overall there's a
+            // significant performance improvement. NOTE TO SELF: DO NOT REMOVE THE SECOND (INT)
+            // CAST, EVEN IF VISUAL STUDIO TELLS IT IS NOT NECESSARY.
             var result = (int) ((int) (NextInclusiveMaxValue(_state) >> 1) * IntToDoubleMultiplier * maxValue);
 
             // Postconditions
@@ -129,7 +142,7 @@ namespace Troschuetz.Random.Generators
             {
                 // 31 random bits (int) will suffice which allows us to shift and cast to an int
                 // before the first multiplication and gain better performance. See comment in
-                // NextDouble(). NOTE TO SELF: DO NOT REMOVE THE SECOND (INT) CAST, EVEN IF VISUAL
+                // Next(maxValue). NOTE TO SELF: DO NOT REMOVE THE SECOND (INT) CAST, EVEN IF VISUAL
                 // STUDIO TELLS IT IS NOT NECESSARY.
                 result = minValue + (int) ((int) (NextInclusiveMaxValue(_state) >> 1) * IntToDoubleMultiplier * range);
             }
@@ -148,16 +161,6 @@ namespace Troschuetz.Random.Generators
             return result;
         }
 
-        public bool NextBoolean()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void NextBytes(byte[] buffer)
-        {
-            throw new NotImplementedException();
-        }
-
         public double NextDouble()
         {
             var result = NextDouble(_state);
@@ -169,12 +172,28 @@ namespace Troschuetz.Random.Generators
 
         public double NextDouble(double maxValue)
         {
-            throw new NotImplementedException();
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
+
+            var result = NextDouble() * maxValue;
+
+            // Postconditions
+            Debug.Assert(result >= 0.0 && result < maxValue);
+            return result;
         }
 
         public double NextDouble(double minValue, double maxValue)
         {
-            throw new NotImplementedException();
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
+
+            var result = NextDouble() * (maxValue - minValue);
+
+            // Postconditions
+            Debug.Assert(result >= minValue && result < maxValue);
+            return result;
         }
 
         public uint NextUInt()
@@ -185,17 +204,89 @@ namespace Troschuetz.Random.Generators
 
         public uint NextUInt(uint maxValue)
         {
-            throw new NotImplementedException();
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
+
+            var result = (uint) (NextUInt(_state) * UIntToDoubleMultiplier * maxValue);
+
+            // Postconditions
+            Debug.Assert(result < maxValue);
+            return result;
         }
 
         public uint NextUInt(uint minValue, uint maxValue)
         {
-            throw new NotImplementedException();
+            // Preconditions
+            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+
+            var result = (uint) (NextUInt(_state) * UIntToDoubleMultiplier * (maxValue - minValue));
+
+            // Postconditions
+            Debug.Assert(result >= minValue && result < maxValue);
+            return result;
         }
 
         public uint NextUIntExclusiveMaxValue()
         {
-            throw new NotImplementedException();
+            uint result;
+            while ((result = NextUInt(_state)) == uint.MaxValue) { }
+
+            // Postconditions
+            Debug.Assert(result < uint.MaxValue);
+            return result;
+        }
+
+        public bool NextBoolean()
+        {
+            if (_bitCount == 0)
+            {
+                // Generate 32 more bits (1 uint) and store it for future calls.
+                _bitBuffer = NextUInt(_state);
+
+                // Reset the bitCount and use rightmost bit of buffer to generate random bool.
+                _bitCount = 31;
+                return (_bitBuffer & 0x1) == 1;
+            }
+
+            // Decrease the bitCount and use rightmost bit of shifted buffer to generate random bool.
+            _bitCount--;
+            return ((_bitBuffer >>= 1) & 0x1) == 1;
+        }
+
+        public void NextBytes(byte[] buffer)
+        {
+            // Preconditions
+            RaiseArgumentNullException.IfIsNull(buffer, nameof(buffer), ErrorMessages.NullBuffer);
+
+            // Fill the buffer with 4 bytes (1 uint) at a time.
+            var i = 0;
+            while (i < buffer.Length - 3)
+            {
+                var u = NextUInt(_state);
+                buffer[i++] = (byte) u;
+                buffer[i++] = (byte) (u >> 8);
+                buffer[i++] = (byte) (u >> 16);
+                buffer[i++] = (byte) (u >> 24);
+            }
+
+            // Fill up any remaining bytes in the buffer.
+            if (i < buffer.Length)
+            {
+                var u = NextUInt(_state);
+                buffer[i++] = (byte) u;
+                if (i < buffer.Length)
+                {
+                    buffer[i++] = (byte) (u >> 8);
+                    if (i < buffer.Length)
+                    {
+                        buffer[i++] = (byte) (u >> 16);
+                        if (i < buffer.Length)
+                        {
+                            buffer[i] = (byte) (u >> 24);
+                        }
+                    }
+                }
+            }
         }
 
         #endregion IGenerator members

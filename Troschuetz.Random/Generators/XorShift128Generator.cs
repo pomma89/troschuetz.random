@@ -336,8 +336,7 @@ namespace Troschuetz.Random.Generators
             // See comment in NextDouble().
             return minValue + (int) (w >> 1)*IntToDoubleMultiplier*(maxValue - minValue);
         }
-
-        [CLSCompliant(false)]
+        
         public uint NextUInt()
         {
             var t = (_x ^ (_x << 11));
@@ -346,8 +345,7 @@ namespace Troschuetz.Random.Generators
             _z = _w;
             return (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8)));
         }
-
-        [CLSCompliant(false)]
+        
         public uint NextUInt(uint maxValue)
         {
             // Preconditions
