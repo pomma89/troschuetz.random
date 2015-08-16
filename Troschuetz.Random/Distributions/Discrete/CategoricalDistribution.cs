@@ -72,7 +72,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     public class CategoricalDistribution<TGen> : AbstractDistribution<TGen>, IDiscreteDistribution, IWeightsDistribution<double>
         where TGen : IGenerator
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default number of values used for categorical distribution,
@@ -82,7 +82,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         #endregion
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the cumulative distribution of current weights.
@@ -356,15 +356,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         };
 
         /// <summary>
-        ///   Returns a categorical distributed 32-bit signed integer.
+        ///   Declares a function returning a categorical distributed 32-bit signed integer.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="weightsCount">The number of weights from which we should sample.</param>
-        /// <param name="cdf">The cumulative distribution of weights.</param>
-        /// <param name="weightsSum">The sum of weights.</param>
-        /// <returns>
-        ///   A categorical distributed 32-bit signed integer.
-        /// </returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="CategoricalDistribution{TGen}"/> class.
         /// </remarks>

@@ -38,16 +38,16 @@ namespace Troschuetz.Random.Distributions.Continuous
     public class RayleighDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, ISigmaDistribution<double>
         where TGen : IGenerator
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Sigma"/> if none is specified.
         /// </summary>
         public const double DefaultSigma = 1;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter sigma which is used for generation of rayleigh distributed random numbers.
@@ -74,7 +74,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
 

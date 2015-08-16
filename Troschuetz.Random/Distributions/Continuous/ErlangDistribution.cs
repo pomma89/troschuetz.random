@@ -38,7 +38,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     public class ErlangDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, ILambdaDistribution<double>
         where TGen : IGenerator
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Alpha"/> if none is specified.
@@ -50,9 +50,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         public const double DefaultLambda = 1;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter lambda which is used for generation of rayleigh distributed
@@ -105,7 +105,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
 

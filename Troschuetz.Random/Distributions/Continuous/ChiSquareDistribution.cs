@@ -38,16 +38,16 @@ namespace Troschuetz.Random.Distributions.Continuous
     public class ChiSquareDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>
         where TGen : IGenerator
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const int DefaultAlpha = 1;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter alpha which is used for generation of chi square distributed
@@ -75,7 +75,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
 

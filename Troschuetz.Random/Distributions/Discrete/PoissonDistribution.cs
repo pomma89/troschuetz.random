@@ -95,16 +95,16 @@ namespace Troschuetz.Random.Distributions.Discrete
     public class PoissonDistribution<TGen> : AbstractDistribution<TGen>, IDiscreteDistribution, ILambdaDistribution<double>
         where TGen : IGenerator
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Lambda"/> if none is specified.
         /// </summary>
         public const double DefaultLambda = 1;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the the parameter lambda which is used for generation of poisson distributed
@@ -132,7 +132,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
 
@@ -244,13 +244,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         public static Func<double, bool> IsValidParam { get; } = lambda => lambda > 0;
 
         /// <summary>
-        ///   Returns a poisson distributed 32-bit signed integer.
+        ///   Declares a function returning a poisson distributed 32-bit signed integer.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of poisson distributed random numbers.
-        /// </param>
-        /// <returns>A poisson distributed 32-bit signed integer.</returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="PoissonDistribution{TGen}"/> class.
         /// </remarks>

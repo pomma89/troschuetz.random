@@ -38,7 +38,7 @@ namespace Troschuetz.Random.Tester
     {
         IContainer components;
 
-        #region Instance fields
+        #region Fields
 
         DataGridViewTextBoxColumn booleans;
         Button buttonClear;

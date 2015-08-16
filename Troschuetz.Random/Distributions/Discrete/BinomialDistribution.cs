@@ -38,7 +38,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     public class BinomialDistribution<TGen> : AbstractDistribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>, IBetaDistribution<int>
         where TGen : IGenerator
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Alpha"/> if none is specified.
@@ -50,9 +50,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         public const int DefaultBeta = 1;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter alpha which is used for generation of binomial distributed random numbers.
@@ -104,7 +104,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
 
@@ -235,16 +235,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         };
 
         /// <summary>
-        ///   Returns a binomial distributed 32-bit signed integer.
+        ///   Declares a function returning a binomial distributed 32-bit signed integer.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of binomial distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of binomial distributed random numbers.
-        /// </param>
-        /// <returns>A binomial distributed 32-bit signed integer.</returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="BinomialDistribution{TGen}"/> class.
         /// </remarks>

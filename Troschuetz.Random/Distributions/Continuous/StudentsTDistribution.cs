@@ -39,16 +39,16 @@ namespace Troschuetz.Random.Distributions.Continuous
     public class StudentsTDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, INuDistribution<int>
         where TGen : IGenerator
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Nu"/> if none is specified.
         /// </summary>
         public const int DefaultNu = 1;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter nu which is used for generation of t-distributed random numbers.
@@ -74,7 +74,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
 
