@@ -240,7 +240,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance => Math.Pow(_sigma, 2.0);
+        public double Variance => Sqr(_sigma);
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.

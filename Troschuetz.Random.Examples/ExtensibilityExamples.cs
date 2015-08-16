@@ -8,7 +8,7 @@ namespace Troschuetz.Random.Examples
 {
     static class ExtensibilityExamples
     {
-        static void Main()
+        public static void Main()
         {
             // 1) Use SuperSillyGenerator to generate a few numbers.
             Console.WriteLine("Super silly generator in action!");

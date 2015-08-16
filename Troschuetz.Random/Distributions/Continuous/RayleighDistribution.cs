@@ -144,7 +144,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance => Math.Pow(_sigma, 2.0) * (4.0 - Math.PI) / 2.0;
+        public double Variance => Sqr(_sigma) * (4.0 - Math.PI) / 2.0;
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -185,8 +185,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         public static Func<TGen, double, double> Sample { get; set; } = (generator, sigma) =>
         {
             const double mu = 0.0;
-            var n1 = Math.Pow(NormalDistribution<TGen>.Sample(generator, mu, sigma), 2);
-            var n2 = Math.Pow(NormalDistribution<TGen>.Sample(generator, mu, sigma), 2);
+            var n1 = Sqr(NormalDistribution<TGen>.Sample(generator, mu, sigma));
+            var n2 = Sqr(NormalDistribution<TGen>.Sample(generator, mu, sigma));
             return Math.Sqrt(n1 + n2);
         };
 

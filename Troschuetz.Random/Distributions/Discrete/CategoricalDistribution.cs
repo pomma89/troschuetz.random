@@ -245,7 +245,7 @@ namespace Troschuetz.Random.Distributions.Discrete
                 {
                     tmpMedian = i;
                 }
-                tmpVar += _weights[i] * Math.Pow(i + 1 - Mean, 2);
+                tmpVar += _weights[i] * Sqr(i + 1 - Mean);
             }
 
             // Finalize last results...

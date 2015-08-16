@@ -49,6 +49,13 @@ namespace Troschuetz.Random.Distributions
         /// </summary>
         public TGen TypedGenerator { get; }
 
+        /// <summary>
+        ///   Fast square power, taken from "Numerical Recipes in C++", 3rd edition.
+        /// </summary>
+        /// <param name="d">A double.</param>
+        /// <returns>The square of given double.</returns>
+        protected static double Sqr(double d) => (d == 0.0) ? 0.0 : d * d;
+
         #region IDistribution members
 
         /// <summary>

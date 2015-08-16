@@ -137,7 +137,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if median is not defined for given distribution with some parameters.
         /// </exception>
-        public double Median => Alpha * Math.Pow(1 - 2.0 / (9.0 * Alpha), 3);
+        public double Median => Alpha * Math.Pow(1 - 2.0 / (9.0 * Alpha), 3.0);
 
         /// <summary>
         ///   Gets the variance of distributed random numbers.
@@ -200,7 +200,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             var sum = 0.0;
             for (var i = 0; i < alpha; i++)
             {
-                sum += Math.Pow(NormalDistribution<TGen>.Sample(generator, m, s), 2);
+                sum += Sqr(NormalDistribution<TGen>.Sample(generator, m, s));
             }
             return sum;
         };

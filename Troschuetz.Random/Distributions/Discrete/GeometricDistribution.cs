@@ -206,7 +206,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance => (1.0 - Alpha) / Math.Pow(Alpha, 2.0);
+        public double Variance => (1.0 - Alpha) / Sqr(Alpha);
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.

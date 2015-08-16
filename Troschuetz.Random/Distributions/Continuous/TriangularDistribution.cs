@@ -273,7 +273,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance => (Math.Pow(_alpha, 2.0) + Math.Pow(_beta, 2.0) + Math.Pow(_gamma, 2.0) - _alpha * _beta -
+        public double Variance => (Sqr(_alpha) + Sqr(_beta) + Sqr(_gamma) - _alpha * _beta -
                         _alpha * _gamma - _beta * _gamma) / 18.0;
 
         /// <summary>
