@@ -278,7 +278,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public BetaPrimeDistribution(uint seed)
             : base(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta)
         {
@@ -339,7 +338,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to one.
         /// </exception>
-        [CLSCompliant(false)]
         public BetaPrimeDistribution(uint seed, double alpha, double beta)
             : base(new XorShift128Generator(seed), alpha, beta)
         {

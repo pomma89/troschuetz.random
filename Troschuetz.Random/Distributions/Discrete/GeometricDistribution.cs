@@ -229,10 +229,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   to one; otherwise, it returns false.
         /// </returns>
         [Pure]
-        public static bool IsValidParam(double alpha)
+        public static Func<double, bool> IsValidParam { get; } = alpha =>
         {
             return alpha > 0 && alpha <= 1;
-        }
+        };
 
         /// <summary>
         ///   Returns a geometric distributed 32-bit signed integer.
@@ -243,7 +243,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </param>
         /// <returns>A geometric distributed 32-bit signed integer.</returns>
         [Pure]
-        internal static int Sample(TGen generator, double alpha)
+        public static Func<TGen, double, int> Sample { get; } = (generator, alpha) =>
         {
             var samples = 1;
             for (; generator.NextDouble() >= alpha; samples++)
@@ -251,7 +251,7 @@ namespace Troschuetz.Random.Distributions.Discrete
                 // Empty
             }
             return samples;
-        }
+        };
 
         #endregion TRandom Helpers
     }
@@ -274,25 +274,24 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public GeometricDistribution() : base(new XorShift128Generator(), DefaultAlpha)
+        public GeometricDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultAlpha)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
-        public GeometricDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultAlpha)
+        public GeometricDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
         }
@@ -311,7 +310,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of geometric distributed random numbers.
@@ -319,15 +318,15 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
-        public GeometricDistribution(double alpha) : base(new XorShift128Generator(), alpha)
+        public GeometricDistribution(double alpha) : base(new NumericalRecipes3Q1Generator(), alpha)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, alpha));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -338,10 +337,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
-        [CLSCompliant(false)]
-        public GeometricDistribution(uint seed, double alpha) : base(new XorShift128Generator(seed), alpha)
+        public GeometricDistribution(uint seed, double alpha) : base(new NumericalRecipes3Q1Generator(seed), alpha)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
         }

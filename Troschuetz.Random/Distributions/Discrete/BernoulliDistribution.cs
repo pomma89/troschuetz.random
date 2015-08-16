@@ -109,39 +109,24 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <see langword="true"/> if value is greater than or equal to 0.0, and less than or
         ///   equal to 1.0; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidAlpha(double value)
-        {
-            return IsValidParam(value);
-        }
+        public bool IsValidAlpha(double value) => IsValidParam(value);
 
         #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        public double Minimum => 0.0;
 
-        public double Maximum
-        {
-            get { return 1.0; }
-        }
+        public double Maximum => 1.0;
 
-        public double Mean
-        {
-            get { return Alpha; }
-        }
+        public double Mean => Alpha;
 
         public double Median
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
         }
 
-        public double Variance
-        {
-            get { return Alpha * (1.0 - Alpha); }
-        }
+        public double Variance => Alpha * (1.0 - Alpha);
 
         public double[] Mode
         {
@@ -155,15 +140,9 @@ namespace Troschuetz.Random.Distributions.Discrete
             }
         }
 
-        public int Next()
-        {
-            return Sample(TypedGenerator, _alpha);
-        }
+        public int Next() => Sample(TypedGenerator, _alpha);
 
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _alpha);
 
         #endregion IDiscreteDistribution Members
 
@@ -180,10 +159,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   equal to one; otherwise, it returns false.
         /// </returns>
         [Pure]
-        public static bool IsValidParam(double alpha)
+        public static Func<double, bool> IsValidParam { get; } = alpha =>
         {
             return alpha >= 0.0 && alpha <= 1.0;
-        }
+        };
 
         /// <summary>
         ///   Returns a bernoulli distributed 32-bit signed integer.
@@ -194,10 +173,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </param>
         /// <returns>A bernoulli distributed 32-bit signed integer.</returns>
         [Pure]
-        internal static int Sample(TGen generator, double alpha)
+        public static Func<TGen, double, int> Sample { get; } = (generator, alpha) =>
         {
             return generator.NextDouble() < alpha ? 1 : 0;
-        }
+        };
 
         #endregion TRandom Helpers
     }
@@ -217,25 +196,24 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public BernoulliDistribution() : base(new XorShift128Generator(), DefaultAlpha)
+        public BernoulliDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultAlpha)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
-        public BernoulliDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultAlpha)
+        public BernoulliDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
         }
@@ -254,7 +232,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
@@ -262,15 +240,15 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
-        public BernoulliDistribution(double alpha) : base(new XorShift128Generator(), alpha)
+        public BernoulliDistribution(double alpha) : base(new NumericalRecipes3Q1Generator(), alpha)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, alpha));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -281,10 +259,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
-        [CLSCompliant(false)]
-        public BernoulliDistribution(uint seed, double alpha) : base(new XorShift128Generator(seed), alpha)
+        public BernoulliDistribution(uint seed, double alpha) : base(new NumericalRecipes3Q1Generator(seed), alpha)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
         }

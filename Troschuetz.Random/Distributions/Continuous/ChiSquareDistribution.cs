@@ -232,7 +232,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public ChiSquareDistribution(uint seed)
             : base(new XorShift128Generator(seed), DefaultAlpha)
         {
@@ -284,7 +283,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
         public ChiSquareDistribution(uint seed, int alpha)
             : base(new XorShift128Generator(seed), alpha)
         {

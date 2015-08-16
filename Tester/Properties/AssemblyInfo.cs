@@ -54,9 +54,5 @@ using System.Security;
 [assembly: AssemblyVersion("3.3.0")]
 [assembly: AssemblyFileVersion("3.3.0")]
 
-// Common Language Specification (CLS) compliance generally refers to the claim 
-// that CLS rules and restrictions are being followed.
-[assembly: CLSCompliant(true)]
-
 // Specifies that an assembly cannot cause an elevation of privilege.
 [assembly: SecurityTransparent]

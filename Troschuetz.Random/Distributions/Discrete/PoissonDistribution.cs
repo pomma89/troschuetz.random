@@ -230,7 +230,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   True if <paramref name="lambda"/> is greater than zero; otherwise, it returns false.
         /// </returns>
         [Pure]
-        public static bool IsValidParam(double lambda) => lambda > 0;
+        public static Func<double, bool> IsValidParam { get; } = lambda => lambda > 0;
 
         /// <summary>
         ///   Returns a poisson distributed 32-bit signed integer.
@@ -241,7 +241,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </param>
         /// <returns>A poisson distributed 32-bit signed integer.</returns>
         [Pure]
-        internal static int Sample(TGen generator, double lambda)
+        public static Func<TGen, double, int> Sample { get; } = (generator, lambda) =>
         {
             // See contribution of JcBernack on BitBucket (issue #2) and see Wikipedia page about
             // Poisson distribution (https://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables).
@@ -266,7 +266,7 @@ namespace Troschuetz.Random.Distributions.Discrete
                 }
             } while (p > 1);
             return k - 1;
-        }
+        };
 
         #endregion TRandom Helpers
     }
@@ -289,25 +289,24 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public PoissonDistribution() : base(new XorShift128Generator(), DefaultLambda)
+        public PoissonDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultLambda)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Lambda, DefaultLambda));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
-        public PoissonDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultLambda)
+        public PoissonDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultLambda)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Lambda, DefaultLambda));
         }
@@ -326,7 +325,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of poisson distributed random numbers.
@@ -334,15 +333,15 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
-        public PoissonDistribution(double lambda) : base(new XorShift128Generator(), lambda)
+        public PoissonDistribution(double lambda) : base(new NumericalRecipes3Q1Generator(), lambda)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Lambda, lambda));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -353,10 +352,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
-        public PoissonDistribution(uint seed, double lambda) : base(new XorShift128Generator(seed), lambda)
+        public PoissonDistribution(uint seed, double lambda) : base(new NumericalRecipes3Q1Generator(seed), lambda)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Lambda, lambda));
         }

@@ -230,10 +230,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   returns false.
         /// </returns>
         [Pure]
-        public static bool AreValidParams(int alpha, int beta)
+        public static Func<int, int, bool> AreValidParams { get; } = (alpha, beta) =>
         {
             return alpha <= beta && beta < int.MaxValue;
-        }
+        };
 
         /// <summary>
         ///   Returns a discrete uniform distributed 32-bit signed integer.
@@ -248,10 +248,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </param>
         /// <returns>A discrete uniform distributed 32-bit signed integer.</returns>
         [Pure]
-        internal static int Sample(TGen generator, int alpha, int beta)
+        public static Func<TGen, int, int, int> Sample { get; } = (generator, alpha, beta) =>
         {
             return generator.Next(alpha, beta + 1);
-        }
+        };
 
         #endregion TRandom Helpers
     }
@@ -273,26 +273,25 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="DiscreteUniformDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public DiscreteUniformDistribution() : this(new XorShift128Generator(), DefaultAlpha, DefaultBeta)
+        public DiscreteUniformDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="DiscreteUniformDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
-        public DiscreteUniformDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta)
+        public DiscreteUniformDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
@@ -313,7 +312,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="DiscreteUniformDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of discrete uniform distributed
@@ -326,16 +325,16 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>, or
         ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
-        public DiscreteUniformDistribution(int alpha, int beta) : this(new XorShift128Generator(), alpha, beta)
+        public DiscreteUniformDistribution(int alpha, int beta) : this(new NumericalRecipes3Q1Generator(), alpha, beta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="DiscreteUniformDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -351,11 +350,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>, or
         ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
-        [CLSCompliant(false)]
         public DiscreteUniformDistribution(uint seed, int alpha, int beta)
-            : this(new XorShift128Generator(seed), alpha, beta)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha, beta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));

@@ -143,10 +143,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <see langword="true"/> if value is greater than or equal to 0.0, and less than or
         ///   equal to 1.0; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidAlpha(double value)
-        {
-            return AreValidParams(value, Beta);
-        }
+        public bool IsValidAlpha(double value) => AreValidParams(value, Beta);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
@@ -155,54 +152,30 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <returns>
         ///   <see langword="true"/> if value is greater than or equal to 0; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidBeta(int value)
-        {
-            return AreValidParams(Alpha, value);
-        }
+        public bool IsValidBeta(int value) => AreValidParams(Alpha, value);
 
         #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        public double Minimum => 0.0;
 
-        public double Maximum
-        {
-            get { return Beta; }
-        }
+        public double Maximum => Beta;
 
-        public double Mean
-        {
-            get { return Alpha * Beta; }
-        }
+        public double Mean => Alpha * Beta;
 
         public double Median
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
         }
 
-        public double Variance
-        {
-            get { return Alpha * (1.0 - Alpha) * Beta; }
-        }
+        public double Variance => Alpha * (1.0 - Alpha) * Beta;
 
-        public double[] Mode
-        {
-            get { return new[] { Math.Floor(Alpha * (Beta + 1.0)) }; }
-        }
+        public double[] Mode => new[] { Math.Floor(Alpha * (Beta + 1.0)) };
 
-        public int Next()
-        {
-            return Sample(TypedGenerator, _alpha, _beta);
-        }
+        public int Next() => Sample(TypedGenerator, _alpha, _beta);
 
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha, _beta);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta);
 
         #endregion IDiscreteDistribution Members
 
@@ -223,10 +196,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   otherwise, it returns false.
         /// </returns>
         [Pure]
-        public static bool AreValidParams(double alpha, int beta)
+        public static Func<double, int, bool> AreValidParams { get; } = (alpha, beta) =>
         {
             return alpha >= 0 && alpha <= 1 && beta >= 0;
-        }
+        };
 
         /// <summary>
         ///   Returns a binomial distributed 32-bit signed integer.
@@ -240,7 +213,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </param>
         /// <returns>A binomial distributed 32-bit signed integer.</returns>
         [Pure]
-        internal static int Sample(TGen generator, double alpha, int beta)
+        public static Func<TGen, double, int, int> Sample { get; } = (generator, alpha, beta) =>
         {
             var successes = 0;
             for (var i = 0; i < beta; i++)
@@ -251,7 +224,7 @@ namespace Troschuetz.Random.Distributions.Discrete
                 }
             }
             return successes;
-        }
+        };
 
         #endregion TRandom Helpers
     }
@@ -271,26 +244,25 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public BinomialDistribution() : base(new XorShift128Generator(), DefaultAlpha, DefaultBeta)
+        public BinomialDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
-        public BinomialDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta)
+        public BinomialDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
@@ -311,7 +283,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of binomial distributed random numbers.
@@ -323,16 +295,16 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <paramref name="alpha"/> is less than zero or greater than one, or
         ///   <paramref name="beta"/> is less than zero.
         /// </exception>
-        public BinomialDistribution(double alpha, int beta) : base(new XorShift128Generator(), alpha, beta)
+        public BinomialDistribution(double alpha, int beta) : base(new NumericalRecipes3Q1Generator(), alpha, beta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -347,11 +319,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <paramref name="alpha"/> is less than zero or greater than one, or
         ///   <paramref name="beta"/> is less than zero.
         /// </exception>
-        [CLSCompliant(false)]
         public BinomialDistribution(uint seed, double alpha, int beta)
-            : base(new XorShift128Generator(seed), alpha, beta)
+            : base(new NumericalRecipes3Q1Generator(seed), alpha, beta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));

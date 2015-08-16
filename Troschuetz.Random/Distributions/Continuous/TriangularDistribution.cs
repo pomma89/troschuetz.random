@@ -379,7 +379,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public TriangularDistribution(uint seed)
             : base(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta, DefaultGamma)
         {
@@ -452,7 +451,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
-        [CLSCompliant(false)]
         public TriangularDistribution(uint seed, double alpha, double beta, double gamma)
             : base(new XorShift128Generator(seed), alpha, beta, gamma)
         {

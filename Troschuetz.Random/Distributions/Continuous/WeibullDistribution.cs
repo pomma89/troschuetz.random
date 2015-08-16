@@ -304,7 +304,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public WeibullDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultAlpha, DefaultLambda)
         {
             Debug.Assert(Generator is XorShift128Generator);
@@ -362,7 +361,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
         public WeibullDistribution(uint seed, double alpha, double lambda)
             : base(new XorShift128Generator(seed), alpha, lambda)
         {

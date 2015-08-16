@@ -286,7 +286,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public ContinuousUniformDistribution(uint seed)
             : base(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta)
         {
@@ -351,7 +350,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
         /// </exception>
-        [CLSCompliant(false)]
         public ContinuousUniformDistribution(uint seed, double alpha, double beta)
             : base(new XorShift128Generator(seed), alpha, beta)
         {

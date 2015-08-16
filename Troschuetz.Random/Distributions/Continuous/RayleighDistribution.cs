@@ -219,7 +219,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public RayleighDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultSigma)
         {
             Debug.Assert(Generator is XorShift128Generator);
@@ -268,7 +267,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
         public RayleighDistribution(uint seed, double sigma) : base(new XorShift128Generator(seed), sigma)
         {
             Debug.Assert(Generator is XorShift128Generator);

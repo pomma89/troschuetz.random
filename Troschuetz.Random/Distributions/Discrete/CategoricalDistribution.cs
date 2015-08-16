@@ -322,17 +322,19 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   otherwise, it returns true.
         /// </returns>
         [Pure]
-        public static bool IsValidParam(IEnumerable<double> weights)
+        public static Func<IEnumerable<double>, bool> IsValidParam { get; } = weights =>
         {
             var sum = 0.0;
-            foreach (var w in weights) {
-                if (w < 0.0 || Double.IsNaN(w)) {
+            foreach (var w in weights)
+            {
+                if (w < 0.0 || Double.IsNaN(w))
+                {
                     return false;
                 }
                 sum += w;
             }
             return sum != 0.0;
-        }
+        };
 
         /// <summary>
         ///   Returns a categorical distributed 32-bit signed integer.
@@ -345,28 +347,33 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   A categorical distributed 32-bit signed integer.
         /// </returns>
         [Pure]
-        internal static int Sample(TGen generator, int weightsCount, double[] cdf, double weightsSum)
+        public static Func<TGen, int, double[], double, int> Sample { get; } = (generator, weightsCount, cdf, weightsSum) =>
         {
             var u = generator.NextDouble(weightsSum);
             var minIdx = 0;
             var maxIdx = weightsCount - 1;
-            while (minIdx < maxIdx) {
+            while (minIdx < maxIdx)
+            {
                 var idx = (maxIdx - minIdx) / 2 + minIdx;
                 var c = cdf[idx];
-                if (u == c) {
+                if (u == c)
+                {
                     minIdx = idx;
                     break;
-                } if (u < c) {
+                }
+                if (u < c)
+                {
                     maxIdx = idx;
-                } else {
+                }
+                else
+                {
                     minIdx = idx + 1;
                 }
             }
             return minIdx;
-        }
+        };
 
-        internal static void SetUp(int weightsCount, IEnumerable<double> weights, out double[] cdf,
-                                   out double weightsSum)
+        internal static void SetUp(int weightsCount, IEnumerable<double> weights, out double[] cdf, out double weightsSum)
         {
             var weightsList = (weights == null) ? Ones(weightsCount) : weights.ToList();
             weightsSum = 0.0; // It will store the sum of all weights.
@@ -404,26 +411,25 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public CategoricalDistribution() : base(new XorShift128Generator(), DefaultValueCount)
+        public CategoricalDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultValueCount)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Weights.Count, DefaultValueCount));
             Debug.Assert(Weights.All(w => w == 1.0/DefaultValueCount));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
-        public CategoricalDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultValueCount)
+        public CategoricalDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultValueCount)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Weights.Count, DefaultValueCount));
             Debug.Assert(Weights.All(w => w == 1.0/DefaultValueCount));
@@ -446,7 +452,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="valueCount">
         ///   The parameter valueCount which is used for generation of binomial distributed random numbers
@@ -455,16 +461,16 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="valueCount"/> is less than or equal to zero.
         /// </exception>
-        public CategoricalDistribution(int valueCount) : base(new XorShift128Generator(), valueCount)
+        public CategoricalDistribution(int valueCount) : base(new NumericalRecipes3Q1Generator(), valueCount)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Weights.Count, valueCount));
             Debug.Assert(Weights.All(w => w == 1.0/valueCount));
         }
         
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -476,10 +482,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="valueCount"/> is less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
-        public CategoricalDistribution(uint seed, int valueCount) : base(new XorShift128Generator(seed), valueCount)
+        public CategoricalDistribution(uint seed, int valueCount) : base(new NumericalRecipes3Q1Generator(seed), valueCount)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Weights.Count, valueCount));
             Debug.Assert(Weights.All(w => w == 1.0/valueCount));
@@ -509,7 +514,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="weights">
         ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized 
@@ -522,14 +527,14 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
         /// </exception>
-        public CategoricalDistribution(ICollection<double> weights) : base(new XorShift128Generator(), weights)
+        public CategoricalDistribution(ICollection<double> weights) : base(new NumericalRecipes3Q1Generator(), weights)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -545,11 +550,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
         /// </exception>
-        [CLSCompliant(false)]
         public CategoricalDistribution(uint seed, ICollection<double> weights)
-            : base(new XorShift128Generator(seed), weights)
+            : base(new NumericalRecipes3Q1Generator(seed), weights)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
         }
 

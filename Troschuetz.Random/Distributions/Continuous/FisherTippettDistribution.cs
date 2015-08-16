@@ -273,7 +273,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public FisherTippettDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultAlpha, DefaultMu)
         {
             Debug.Assert(Generator is XorShift128Generator);
@@ -331,7 +330,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
         public FisherTippettDistribution(uint seed, double alpha, double mu)
             : base(new XorShift128Generator(seed), alpha, mu)
         {

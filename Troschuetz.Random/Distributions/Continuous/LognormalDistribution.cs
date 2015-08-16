@@ -294,7 +294,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public LognormalDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultMu, DefaultSigma)
         {
             Debug.Assert(Generator is XorShift128Generator);
@@ -352,7 +351,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
-        [CLSCompliant(false)]
         public LognormalDistribution(uint seed, double mu, double sigma)
             : base(new XorShift128Generator(seed), mu, sigma)
         {

@@ -268,7 +268,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public CauchyDistribution(uint seed)
             : base(new XorShift128Generator(seed), DefaultAlpha, DefaultGamma)
         {
@@ -329,7 +328,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="gamma"/> is less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
         public CauchyDistribution(uint seed, double alpha, double gamma)
             : base(new XorShift128Generator(seed), alpha, gamma)
         {

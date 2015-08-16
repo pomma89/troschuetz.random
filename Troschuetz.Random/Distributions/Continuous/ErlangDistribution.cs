@@ -311,7 +311,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public ErlangDistribution(uint seed)
             : base(new XorShift128Generator(seed), DefaultAlpha, DefaultLambda)
         {
@@ -372,7 +371,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
         public ErlangDistribution(uint seed, int alpha, double lambda)
             : base(new XorShift128Generator(seed), alpha, lambda)
         {

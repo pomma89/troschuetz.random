@@ -278,7 +278,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public PowerDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta)
         {
             Debug.Assert(Generator is XorShift128Generator);
@@ -336,7 +335,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
         public PowerDistribution(uint seed, double alpha, double beta)
             : this(new XorShift128Generator(seed), alpha, beta)
         {

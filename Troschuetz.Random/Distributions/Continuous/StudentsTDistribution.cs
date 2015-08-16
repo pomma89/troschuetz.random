@@ -234,7 +234,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public StudentsTDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultNu)
         {
             Debug.Assert(Generator is XorShift128Generator);
@@ -283,7 +282,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
         public StudentsTDistribution(uint seed, int nu) : base(new XorShift128Generator(seed), nu)
         {
             Debug.Assert(Generator is XorShift128Generator);
