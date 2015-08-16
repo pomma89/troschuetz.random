@@ -38,16 +38,16 @@ namespace Troschuetz.Random.Distributions.Continuous
     public class ExponentialDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, ILambdaDistribution<double>
         where TGen : IGenerator
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Lambda"/> if none is specified.
         /// </summary>
         public const double DefaultLambda = 1;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter lambda which is used for generation of exponential distributed
@@ -75,7 +75,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
 
@@ -131,30 +131,29 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether exponential distribution is defined under given parameter.
+        ///   Determines whether exponential distribution is defined under given parameter. The
+        ///   default definition retursn true if lambda is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of exponential distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="lambda"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ExponentialDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
-        public static bool IsValidParam(double lambda) => lambda > 0;
+        public static Func<double, bool> IsValidParam { get; } = lambda => lambda > 0.0;
 
         /// <summary>
-        ///   Returns an exponential distributed floating point random number.
+        ///   Declares a function returning an exponential distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of exponential distributed random numbers.
-        /// </param>
-        /// <returns>An exponential distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ExponentialDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
-        internal static double Sample(TGen generator, double lambda)
+        public static Func<TGen, double, double> Sample { get; } = (generator, lambda) =>
         {
-            return (-1.0 / lambda) * Math.Log(1.0 - generator.NextDouble());
-        }
+            // Algorithm taken from "Numerical Recipes in C++", 3rd edition. 
+            double u;
+            do u = generator.NextDouble(); while (u == 0.0);
+            return -Math.Log(u) / lambda;
+        };
 
         #endregion TRandom Helpers
     }
@@ -174,25 +173,24 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public ExponentialDistribution() : base(new XorShift128Generator(), DefaultLambda)
+        public ExponentialDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultLambda)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Lambda, DefaultLambda));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
-        public ExponentialDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultLambda)
+        public ExponentialDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultLambda)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Lambda, DefaultLambda));
         }
@@ -211,7 +209,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of exponential distributed random numbers.
@@ -219,15 +217,15 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
-        public ExponentialDistribution(double lambda) : base(new XorShift128Generator(), lambda)
+        public ExponentialDistribution(double lambda) : base(new NumericalRecipes3Q1Generator(), lambda)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Lambda, lambda));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -238,10 +236,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
-        [CLSCompliant(false)]
-        public ExponentialDistribution(uint seed, double lambda) : base(new XorShift128Generator(seed), lambda)
+        public ExponentialDistribution(uint seed, double lambda) : base(new NumericalRecipes3Q1Generator(seed), lambda)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Lambda, lambda));
         }

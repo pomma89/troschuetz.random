@@ -25,6 +25,7 @@ namespace Troschuetz.Random
     using System;
     using System.Collections.Generic;
     using Core;
+    using System.Runtime.CompilerServices;
 
     /// <summary>
     ///   A random generator class similar to the one Python offers,
@@ -1664,90 +1665,28 @@ namespace Troschuetz.Random
 
         #region IGenerator Members
 
-        [CLSCompliant(false)]
-        public uint Seed
-        {
-            get { return _gen.Seed; }
-        }
+        public uint Seed => _gen.Seed;
 
-        public bool CanReset
-        {
-            get { return _gen.CanReset; }
-        }
+        public bool CanReset => _gen.CanReset;
 
-        public bool Reset()
-        {
-            return _gen.Reset();
-        }
+        public bool Reset() => _gen.Reset(Seed);
+        public bool Reset(uint seed) => _gen.Reset(seed);
 
-        public bool Reset(uint seed)
-        {
-            return _gen.Reset(seed);
-        }
+        public int Next() => _gen.Next();
+        public int NextInclusiveMaxValue() => _gen.NextInclusiveMaxValue();
+        public int Next(int maxValue) => _gen.Next(maxValue);
+        public int Next(int minValue, int maxValue) => _gen.Next(minValue, maxValue);
 
-        public int Next()
-        {
-            return _gen.Next();
-        }
+        public double NextDouble() => _gen.NextDouble();
+        public double NextDouble(double maxValue) => _gen.NextDouble(maxValue);
+        public double NextDouble(double minValue, double maxValue) => _gen.NextDouble(minValue, maxValue);
 
-        public int NextInclusiveMaxValue()
-        {
-            return _gen.NextInclusiveMaxValue();
-        }
+        public uint NextUInt() => _gen.NextUInt();
+        public uint NextUInt(uint maxValue) => _gen.NextUInt(maxValue);
+        public uint NextUIntExclusiveMaxValue() => _gen.NextUIntExclusiveMaxValue();
+        public uint NextUInt(uint minValue, uint maxValue) => _gen.NextUInt(minValue, maxValue);
 
-        public int Next(int maxValue)
-        {
-            return _gen.Next(maxValue);
-        }
-
-        public int Next(int minValue, int maxValue)
-        {
-            return _gen.Next(minValue, maxValue);
-        }
-
-        public double NextDouble()
-        {
-            return _gen.NextDouble();
-        }
-
-        public double NextDouble(double maxValue)
-        {
-            return _gen.NextDouble(maxValue);
-        }
-
-        public double NextDouble(double minValue, double maxValue)
-        {
-            return _gen.NextDouble(minValue, maxValue);
-        }
-
-        [CLSCompliant(false)]
-        public uint NextUInt()
-        {
-            return _gen.NextUInt();
-        }
-
-        [CLSCompliant(false)]
-        public uint NextUIntExclusiveMaxValue()
-        {
-            return _gen.NextUIntExclusiveMaxValue();
-        }
-
-        [CLSCompliant(false)]
-        public uint NextUInt(uint maxValue)
-        {
-            return _gen.NextUInt(maxValue);
-        }
-
-        [CLSCompliant(false)]
-        public uint NextUInt(uint minValue, uint maxValue)
-        {
-            return _gen.NextUInt(minValue, maxValue);
-        }
-
-        public bool NextBoolean()
-        {
-            return _gen.NextBoolean();
-        }
+        public bool NextBoolean() => _gen.NextBoolean();
 
         public void NextBytes(byte[] buffer)
         {
@@ -1764,6 +1703,9 @@ namespace Troschuetz.Random
 
         #region Private Members
 
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         static IEnumerable<TRet> InfiniteLoop<T1, T2, TRet>(Func<T1, T2, TRet> f, T1 a1, T2 a2)
         {
             while (true)
@@ -1772,6 +1714,9 @@ namespace Troschuetz.Random
             }
         }
 
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, TRet>(Func<T1, T2, T3, TRet> f, T1 a1, T2 a2, T3 a3)
         {
             while (true)
@@ -1780,6 +1725,9 @@ namespace Troschuetz.Random
             }
         }
 
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, T4, TRet>(Func<T1, T2, T3, T4, TRet> f, T1 a1, T2 a2, T3 a3, T4 a4)
         {
             while (true)
@@ -1821,7 +1769,6 @@ namespace Troschuetz.Random
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        [CLSCompliant(false)]
         public TRandom(uint seed) : this(new XorShift128Generator(seed))
         {
         }
@@ -1853,7 +1800,6 @@ namespace Troschuetz.Random
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        [CLSCompliant(false)]
         public static TRandom<XorShift128Generator> New(uint seed) => new TRandom<XorShift128Generator>(new XorShift128Generator(seed));
 
         /// <summary>
