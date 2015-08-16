@@ -363,11 +363,11 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public TriangularDistribution() : base(new XorShift128Generator(), DefaultAlpha, DefaultBeta, DefaultGamma)
+        public TriangularDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta, DefaultGamma)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
             Debug.Assert(Equals(Gamma, DefaultGamma));
@@ -375,15 +375,15 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
         public TriangularDistribution(uint seed)
-            : base(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta, DefaultGamma)
+            : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta, DefaultGamma)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
@@ -406,7 +406,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of triangular distributed random numbers.
@@ -423,9 +423,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
         public TriangularDistribution(double alpha, double beta, double gamma)
-            : base(new XorShift128Generator(), alpha, beta, gamma)
+            : base(new NumericalRecipes3Q1Generator(), alpha, beta, gamma)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));
             Debug.Assert(Equals(Gamma, gamma));
@@ -433,7 +433,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -453,9 +453,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
         public TriangularDistribution(uint seed, double alpha, double beta, double gamma)
-            : base(new XorShift128Generator(seed), alpha, beta, gamma)
+            : base(new NumericalRecipes3Q1Generator(seed), alpha, beta, gamma)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));

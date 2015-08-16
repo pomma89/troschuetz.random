@@ -205,24 +205,24 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public RayleighDistribution() : base(new XorShift128Generator(), DefaultSigma)
+        public RayleighDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultSigma)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Sigma, DefaultSigma));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public RayleighDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultSigma)
+        public RayleighDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultSigma)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Sigma, DefaultSigma));
         }
@@ -241,7 +241,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
@@ -249,15 +249,15 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
-        public RayleighDistribution(double sigma) : base(new XorShift128Generator(), sigma)
+        public RayleighDistribution(double sigma) : base(new NumericalRecipes3Q1Generator(), sigma)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Sigma, sigma));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -268,9 +268,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
-        public RayleighDistribution(uint seed, double sigma) : base(new XorShift128Generator(seed), sigma)
+        public RayleighDistribution(uint seed, double sigma) : base(new NumericalRecipes3Q1Generator(seed), sigma)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Sigma, sigma));
         }

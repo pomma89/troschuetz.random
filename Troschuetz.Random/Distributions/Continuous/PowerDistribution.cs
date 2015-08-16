@@ -263,25 +263,25 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public PowerDistribution() : this(new XorShift128Generator(), DefaultAlpha, DefaultBeta)
+        public PowerDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public PowerDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta)
+        public PowerDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
@@ -302,7 +302,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of power distributed random numbers.
@@ -313,16 +313,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
-        public PowerDistribution(double alpha, double beta) : this(new XorShift128Generator(), alpha, beta)
+        public PowerDistribution(double alpha, double beta) : this(new NumericalRecipes3Q1Generator(), alpha, beta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -337,9 +337,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         public PowerDistribution(uint seed, double alpha, double beta)
-            : this(new XorShift128Generator(seed), alpha, beta)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha, beta)
         {
-            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));
