@@ -241,8 +241,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </remarks>
         public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
-            var helper1 = beta - alpha;
-            return alpha + generator.NextDouble() * helper1;
+            return generator.NextDouble(alpha, beta);
         };
 
         #endregion TRandom Helpers
