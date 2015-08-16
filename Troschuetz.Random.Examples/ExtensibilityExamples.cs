@@ -1,11 +1,41 @@
 ﻿using System;
+using System.Linq;
 using Troschuetz.Random.Distributions;
+using Troschuetz.Random.Distributions.Continuous;
 using Troschuetz.Random.Generators;
 
 namespace Troschuetz.Random.Examples
 {
-    class ExtensibilityExamples
+    static class ExtensibilityExamples
     {
+        static void Main()
+        {
+            // 1) Use SuperSillyGenerator to generate a few numbers.
+            Console.WriteLine("Super silly generator in action!");
+            var ssg = new SuperSillyGenerator(21U);
+            foreach (var x in ssg.Doubles().Take(5)) Console.WriteLine(x);
+
+            Console.WriteLine();
+
+            // 2) Use SuperSillyContinuousDistribution to generate a few numbers.
+            Console.WriteLine("Super silly distribution in action!");
+            var ssd = new SuperSillyContinuousDistribution<SuperSillyGenerator>(ssg);
+            Console.WriteLine(ssd.NextDouble());
+            Console.WriteLine(ssd.NextDouble());
+            Console.WriteLine(ssd.NextDouble());
+
+            Console.WriteLine();
+
+            // 3) Use SuperSillyGenerator with a normal distribution.
+            Console.WriteLine("Super silly generator with a normal distribution");
+            var normal = new NormalDistribution<SuperSillyGenerator>(ssg, 0, 1);
+            Console.WriteLine(normal.NextDouble());
+            Console.WriteLine(normal.NextDouble());
+            Console.WriteLine(normal.NextDouble());
+
+            // 4) Change the core logic of normal distribution with a... Silly one.
+            //NormalDistribution.
+        }
     }
 
     // Super silly generator which is provided as an example on how one can build a new generator.
