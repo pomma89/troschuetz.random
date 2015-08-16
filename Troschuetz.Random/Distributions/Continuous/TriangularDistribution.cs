@@ -341,19 +341,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         /// <summary>
-        ///   Returns a triangular distributed floating point random number.
+        ///   Declares a function returning a triangular distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <returns>A triangular distributed floating point random number.</returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="TriangularDistribution{TGen}"/> class.
         /// </remarks>

@@ -270,16 +270,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         /// <summary>
-        ///   Returns a lognormal distributed floating point random number.
+        ///   Declares a function returning a lognormal distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of lognormal distributed random numbers.
-        /// </param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of lognormal distributed random numbers.
-        /// </param>
-        /// <returns>A lognormal distributed floating point random number.</returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="LognormalDistribution{TGen}"/> class.
         /// </remarks>

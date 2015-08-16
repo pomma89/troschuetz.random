@@ -252,16 +252,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         /// <summary>
-        ///   Returns a fisher tippett distributed floating point random number.
+        ///   Declares a function returning a fisher tippett distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <returns>A fisher tippett distributed floating point random number.</returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="FisherTippettDistribution{TGen}"/> class.
         /// </remarks>

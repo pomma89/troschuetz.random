@@ -202,13 +202,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         /// <summary>
-        ///   Returns a rayleigh distributed floating point random number.
+        ///   Declares a function returning a rayleigh distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
-        /// </param>
-        /// <returns>A rayleigh distributed floating point random number.</returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="RayleighDistribution{TGen}"/> class.
         /// </remarks>

@@ -258,18 +258,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         /// <summary>
-        ///   Returns a continuous uniform distributed floating point random number.
+        ///   Declares a function returning a continuous uniform distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <returns>A continuous uniform distributed floating point random number.</returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="ContinuousUniformDistribution{TGen}"/> class.
         /// </remarks>

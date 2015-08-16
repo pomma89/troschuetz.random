@@ -255,16 +255,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         /// <summary>
-        ///   Returns a beta prime distributed floating point random number.
+        ///   Declares a function returning a beta prime distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of beta prime distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of beta prime distributed random numbers.
-        /// </param>
-        /// <returns>A beta prime distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="BetaPrimeDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var betaVariate = BetaDistribution<TGen>.Sample(generator, alpha, beta);

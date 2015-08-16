@@ -281,16 +281,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         /// <summary>
-        ///   Returns a weibull distributed floating point random number.
+        ///   Declares a function returning a weibull distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of weibull distributed random numbers.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of weibull distributed random numbers.
-        /// </param>
-        /// <returns>A weibull distributed floating point random number.</returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="WeibullDistribution{TGen}"/> class.
         /// </remarks>

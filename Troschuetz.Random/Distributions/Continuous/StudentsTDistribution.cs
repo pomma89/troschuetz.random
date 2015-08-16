@@ -215,13 +215,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         /// <summary>
-        ///   Returns a student's t distributed floating point random number.
+        ///   Declares a function returning a student's t distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="nu">
-        ///   The parameter nu which is used for generation of student's t distributed random numbers.
-        /// </param>
-        /// <returns>A student's t distributed floating point random number.</returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="StudentsTDistribution{TGen}"/> class.
         /// </remarks>

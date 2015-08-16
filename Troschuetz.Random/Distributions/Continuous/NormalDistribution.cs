@@ -301,16 +301,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         /// <summary>
-        ///   Returns a normal distributed floating point random number.
+        ///   Declares a function returning a normal distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <returns>A normal distributed floating point random number.</returns>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="NormalDistribution{TGen}"/> class.
         /// </remarks>
