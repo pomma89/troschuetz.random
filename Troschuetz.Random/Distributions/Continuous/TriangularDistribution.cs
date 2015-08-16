@@ -44,7 +44,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of triangular distributed random numbers.
@@ -206,10 +205,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <see langword="true"/> if value is less than <see cref="Beta"/>, and less than or
         ///   equal to <see cref="Gamma"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidAlpha(double value)
-        {
-            return AreValidParams(value, _beta, _gamma);
-        }
+        public bool IsValidAlpha(double value) => AreValidParams(value, _beta, _gamma);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
@@ -219,10 +215,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <see langword="true"/> if value is greater than <see cref="Alpha"/>, and greater than
         ///   or equal to <see cref="Gamma"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidBeta(double value)
-        {
-            return AreValidParams(_alpha, value, _gamma);
-        }
+        public bool IsValidBeta(double value) => AreValidParams(_alpha, value, _gamma);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Gamma"/>.
@@ -232,10 +225,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <see langword="true"/> if value is greater than or equal to <see cref="Alpha"/>, and
         ///   greater than or equal to <see cref="Beta"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidGamma(double value)
-        {
-            return AreValidParams(_alpha, _beta, value);
-        }
+        public bool IsValidGamma(double value) => AreValidParams(_alpha, _beta, value);
 
         #endregion Instance Methods
 
@@ -244,18 +234,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return _alpha; }
-        }
+        public double Minimum => _alpha;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return _beta; }
-        }
+        public double Maximum => _beta;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -263,10 +247,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mean is not defined for given distribution with some parameters.
         /// </exception>
-        public double Mean
-        {
-            get { return _alpha / 3.0 + _beta / 3.0 + _gamma / 3.0; }
-        }
+        public double Mean => _alpha / 3.0 + _beta / 3.0 + _gamma / 3.0;
 
         /// <summary>
         ///   Gets the median of distributed random numbers.
@@ -292,14 +273,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance
-        {
-            get
-            {
-                return (Math.Pow(_alpha, 2.0) + Math.Pow(_beta, 2.0) + Math.Pow(_gamma, 2.0) - _alpha * _beta -
+        public double Variance => (Math.Pow(_alpha, 2.0) + Math.Pow(_beta, 2.0) + Math.Pow(_gamma, 2.0) - _alpha * _beta -
                         _alpha * _gamma - _beta * _gamma) / 18.0;
-            }
-        }
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -307,19 +282,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mode is not defined for given distribution with some parameters.
         /// </exception>
-        public double[] Mode
-        {
-            get { return new[] { _gamma }; }
-        }
+        public double[] Mode => new[] { _gamma };
 
         /// <summary>
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha, _beta, _gamma);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta, _gamma);
 
         #endregion IContinuousDistribution Members
 
@@ -327,10 +296,9 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Determines whether triangular distribution is defined under given parameters. The
-        ///   default definition returns true if alpha is less than beta, and if
-        ///   alpha is less than or equal to gamma, and if
-        ///   beta is greater than or equal to gamma;
-        ///   otherwise, it returns false.
+        ///   default definition returns true if alpha is less than beta, and if alpha is less than
+        ///   or equal to gamma, and if beta is greater than or equal to gamma; otherwise, it
+        ///   returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="TriangularDistribution{TGen}"/> class.

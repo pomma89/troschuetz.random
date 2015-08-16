@@ -25,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of t-distributed random numbers.
@@ -106,10 +105,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidNu(int value)
-        {
-            return IsValidParam(value);
-        }
+        public bool IsValidNu(int value) => IsValidParam(value);
 
         #endregion Instance Methods
 
@@ -118,18 +114,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return double.NegativeInfinity; }
-        }
+        public double Minimum => double.NegativeInfinity;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -155,10 +145,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if median is not defined for given distribution with some parameters.
         /// </exception>
-        public double Median
-        {
-            get { return 0.0; }
-        }
+        public double Median => 0.0;
 
         /// <summary>
         ///   Gets the variance of distributed random numbers.
@@ -184,19 +171,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mode is not defined for given distribution with some parameters.
         /// </exception>
-        public double[] Mode
-        {
-            get { return new[] { 0.0 }; }
-        }
+        public double[] Mode => new[] { 0.0 };
 
         /// <summary>
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _nu);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _nu);
 
         #endregion IContinuousDistribution Members
 

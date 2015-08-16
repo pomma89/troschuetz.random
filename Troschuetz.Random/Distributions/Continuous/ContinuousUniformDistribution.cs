@@ -149,10 +149,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <see langword="true"/> if value is less than or equal to <see cref="Beta"/>;
         ///   otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidAlpha(double value)
-        {
-            return AreValidParams(value, _beta);
-        }
+        public bool IsValidAlpha(double value) => AreValidParams(value, _beta);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
@@ -162,10 +159,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <see langword="true"/> if value is greater than or equal to <see cref="Alpha"/>;
         ///   otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidBeta(double value)
-        {
-            return AreValidParams(_alpha, value);
-        }
+        public bool IsValidBeta(double value) => AreValidParams(_alpha, value);
 
         #endregion Instance Methods
 
@@ -174,18 +168,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return _alpha; }
-        }
+        public double Minimum => _alpha;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return _beta; }
-        }
+        public double Maximum => _beta;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -193,10 +181,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mean is not defined for given distribution with some parameters.
         /// </exception>
-        public double Mean
-        {
-            get { return _alpha / 2.0 + _beta / 2.0; }
-        }
+        public double Mean => _alpha / 2.0 + _beta / 2.0;
 
         /// <summary>
         ///   Gets the median of distributed random numbers.
@@ -204,10 +189,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if median is not defined for given distribution with some parameters.
         /// </exception>
-        public double Median
-        {
-            get { return _alpha / 2.0 + _beta / 2.0; }
-        }
+        public double Median => _alpha / 2.0 + _beta / 2.0;
 
         /// <summary>
         ///   Gets the variance of distributed random numbers.
@@ -215,10 +197,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance
-        {
-            get { return Math.Pow(_beta - _alpha, 2.0) / 12.0; }
-        }
+        public double Variance => Math.Pow(_beta - _alpha, 2.0) / 12.0;
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -235,10 +214,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha, _beta);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta);
 
         #endregion IContinuousDistribution Members
 

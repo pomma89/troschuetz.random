@@ -25,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of bernoulli distributed random numbers.
@@ -189,8 +188,8 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Determines whether bernoulli distribution is defined under given parameter. The
-        ///   default definition returns true if alpha is greater than or equal to zero and less than or
-        ///   equal to one; otherwise, it returns false.
+        ///   default definition returns true if alpha is greater than or equal to zero and less
+        ///   than or equal to one; otherwise, it returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="BernoulliDistribution{TGen}"/> class.

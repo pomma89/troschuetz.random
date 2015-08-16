@@ -25,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of exponential distributed random numbers.
@@ -182,7 +181,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </remarks>
         public static Func<TGen, double, double> Sample { get; set; } = (generator, lambda) =>
         {
-            // Algorithm taken from "Numerical Recipes in C++", 3rd edition. 
+            // Algorithm taken from "Numerical Recipes in C++", 3rd edition.
             double u;
             do u = generator.NextDouble(); while (u == 0.0);
             return -Math.Log(u) / lambda;

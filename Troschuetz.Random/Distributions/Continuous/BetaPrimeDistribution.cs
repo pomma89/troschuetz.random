@@ -25,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of beta-prime distributed random numbers.
@@ -142,20 +141,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 1.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidAlpha(double value)
-        {
-            return AreValidParams(value, _beta);
-        }
+        public bool IsValidAlpha(double value) => AreValidParams(value, _beta);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 1.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidBeta(double value)
-        {
-            return AreValidParams(_alpha, value);
-        }
+        public bool IsValidBeta(double value) => AreValidParams(_alpha, value);
 
         #endregion Instance Methods
 
@@ -164,18 +157,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        public double Minimum => 0.0;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -183,10 +170,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mean is not defined for given distribution with some parameters.
         /// </exception>
-        public double Mean
-        {
-            get { return _alpha / (_beta - 1.0); }
-        }
+        public double Mean => _alpha / (_beta - 1.0);
 
         /// <summary>
         ///   Gets the median of distributed random numbers.
@@ -223,19 +207,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mode is not defined for given distribution with some parameters.
         /// </exception>
-        public double[] Mode
-        {
-            get { return new[] { (_alpha - 1.0) / (_beta + 1.0) }; }
-        }
+        public double[] Mode => new[] { (_alpha - 1.0) / (_beta + 1.0) };
 
         /// <summary>
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha, _beta);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta);
 
         #endregion IContinuousDistribution Members
 
@@ -243,8 +221,8 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Determines whether beta prime distribution is defined under given parameters. The
-        ///   default definition returns true if alpha and beta are greater than one;
-        ///   otherwise, it returns false.
+        ///   default definition returns true if alpha and beta are greater than one; otherwise, it
+        ///   returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="BetaPrimeDistribution{TGen}"/> class.

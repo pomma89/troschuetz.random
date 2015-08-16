@@ -25,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of Fisher-Snedecor distributed random numbers.
@@ -135,20 +134,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidAlpha(int value)
-        {
-            return AreValidParams(value, _beta);
-        }
+        public bool IsValidAlpha(int value) => AreValidParams(value, _beta);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidBeta(int value)
-        {
-            return AreValidParams(_alpha, value);
-        }
+        public bool IsValidBeta(int value) => AreValidParams(_alpha, value);
 
         #endregion Instance Methods
 
@@ -157,18 +150,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        public double Minimum => 0.0;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -243,10 +230,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha, _beta);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta);
 
         #endregion IContinuousDistribution Members
 
@@ -254,8 +238,8 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Determines whether fisher snedecor distribution is defined under given parameters. The
-        ///   default definition returns true if alpha and beta are greater than zero;
-        ///   otherwise, it returns false.
+        ///   default definition returns true if alpha and beta are greater than zero; otherwise, it
+        ///   returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="FisherSnedecorDistribution{TGen}"/> class.

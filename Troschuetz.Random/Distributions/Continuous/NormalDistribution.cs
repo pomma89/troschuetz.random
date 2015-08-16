@@ -79,7 +79,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of normal distributed random numbers.
@@ -196,20 +195,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/>.</returns>
-        public bool IsValidMu(double value)
-        {
-            return AreValidParams(value, _sigma);
-        }
+        public bool IsValidMu(double value) => AreValidParams(value, _sigma);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Sigma"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidSigma(double value)
-        {
-            return AreValidParams(_mu, value);
-        }
+        public bool IsValidSigma(double value) => AreValidParams(_mu, value);
 
         #endregion Instance Methods
 
@@ -218,18 +211,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return double.NegativeInfinity; }
-        }
+        public double Minimum => double.NegativeInfinity;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -237,10 +224,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mean is not defined for given distribution with some parameters.
         /// </exception>
-        public double Mean
-        {
-            get { return _mu; }
-        }
+        public double Mean => _mu;
 
         /// <summary>
         ///   Gets the median of distributed random numbers.
@@ -248,10 +232,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if median is not defined for given distribution with some parameters.
         /// </exception>
-        public double Median
-        {
-            get { return _mu; }
-        }
+        public double Median => _mu;
 
         /// <summary>
         ///   Gets the variance of distributed random numbers.
@@ -259,10 +240,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance
-        {
-            get { return Math.Pow(_sigma, 2.0); }
-        }
+        public double Variance => Math.Pow(_sigma, 2.0);
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -270,27 +248,21 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mode is not defined for given distribution with some parameters.
         /// </exception>
-        public double[] Mode
-        {
-            get { return new[] { _mu }; }
-        }
+        public double[] Mode => new[] { _mu };
 
         /// <summary>
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _mu, _sigma);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _mu, _sigma);
 
         #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether normal distribution is defined under given parameters. The
-        ///   default definition returns true if sigma is greater than zero; otherwise, it returns false.
+        ///   Determines whether normal distribution is defined under given parameters. The default
+        ///   definition returns true if sigma is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="NormalDistribution{TGen}"/> class.

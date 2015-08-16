@@ -25,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of erlang distributed random numbers.
@@ -142,20 +141,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidAlpha(int value)
-        {
-            return AreValidParams(value, _lambda);
-        }
+        public bool IsValidAlpha(int value) => AreValidParams(value, _lambda);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Lambda"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidLambda(double value)
-        {
-            return AreValidParams(_alpha, value);
-        }
+        public bool IsValidLambda(double value) => AreValidParams(_alpha, value);
 
         #endregion Instance Methods
 
@@ -164,18 +157,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        public double Minimum => 0.0;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -183,10 +170,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mean is not defined for given distribution with some parameters.
         /// </exception>
-        public double Mean
-        {
-            get { return Alpha / Lambda; }
-        }
+        public double Mean => Alpha / Lambda;
 
         /// <summary>
         ///   Gets the median of distributed random numbers.
@@ -205,10 +189,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance
-        {
-            get { return Alpha / Math.Pow(Lambda, 2.0); }
-        }
+        public double Variance => Alpha / Math.Pow(Lambda, 2.0);
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -216,28 +197,22 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mode is not defined for given distribution with some parameters.
         /// </exception>
-        public double[] Mode
-        {
-            get { return new[] { (Alpha - 1) / Lambda }; }
-        }
+        public double[] Mode => new[] { (Alpha - 1) / Lambda };
 
         /// <summary>
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha, _lambda);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _alpha, _lambda);
 
         #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether erlang distribution is defined under given parameters. The
-        ///   default definition returns true if alpha and lambda are greater than zero;
-        ///   otherwise, it returns false.
+        ///   Determines whether erlang distribution is defined under given parameters. The default
+        ///   definition returns true if alpha and lambda are greater than zero; otherwise, it
+        ///   returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="ErlangDistribution{TGen}"/> class.

@@ -44,7 +44,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of lognormal distributed random numbers.
@@ -162,10 +161,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/>.</returns>
-        public bool IsValidMu(double value)
-        {
-            return AreValidParams(value, Sigma);
-        }
+        public bool IsValidMu(double value) => AreValidParams(value, Sigma);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Sigma"/>.
@@ -174,10 +170,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   <see langword="true"/> if value is greater than or equal to 0.0; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidSigma(double value)
-        {
-            return AreValidParams(Mu, value);
-        }
+        public bool IsValidSigma(double value) => AreValidParams(Mu, value);
 
         #endregion Instance Methods
 
@@ -186,18 +179,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        public double Minimum => 0.0;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -205,10 +192,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mean is not defined for given distribution with some parameters.
         /// </exception>
-        public double Mean
-        {
-            get { return Math.Exp(Mu + 0.5 * Math.Pow(Sigma, 2.0)); }
-        }
+        public double Mean => Math.Exp(Mu + 0.5 * Math.Pow(Sigma, 2.0));
 
         /// <summary>
         ///   Gets the median of distributed random numbers.
@@ -216,10 +200,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if median is not defined for given distribution with some parameters.
         /// </exception>
-        public double Median
-        {
-            get { return Math.Exp(Mu); }
-        }
+        public double Median => Math.Exp(Mu);
 
         /// <summary>
         ///   Gets the variance of distributed random numbers.
@@ -227,10 +208,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance
-        {
-            get { return (Math.Exp(Math.Pow(Sigma, 2.0)) - 1.0) * Math.Exp(2.0 * Mu + Math.Pow(Sigma, 2.0)); }
-        }
+        public double Variance => (Math.Exp(Math.Pow(Sigma, 2.0)) - 1.0) * Math.Exp(2.0 * Mu + Math.Pow(Sigma, 2.0));
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -238,19 +216,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mode is not defined for given distribution with some parameters.
         /// </exception>
-        public double[] Mode
-        {
-            get { return new[] { Math.Exp(Mu - Math.Pow(Sigma, 2.0)) }; }
-        }
+        public double[] Mode => new[] { Math.Exp(Mu - Math.Pow(Sigma, 2.0)) };
 
         /// <summary>
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _mu, _sigma);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _mu, _sigma);
 
         #endregion IContinuousDistribution Members
 
@@ -258,8 +230,8 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Determines whether lognormal distribution is defined under given parameters. The
-        ///   default definition returns true if sigma is greater than or equal to zero; otherwise, it
-        ///   returns false.
+        ///   default definition returns true if sigma is greater than or equal to zero; otherwise,
+        ///   it returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="LognormalDistribution{TGen}"/> class.

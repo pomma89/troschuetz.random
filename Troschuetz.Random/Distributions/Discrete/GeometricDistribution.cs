@@ -79,7 +79,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of geometric distributed random numbers.

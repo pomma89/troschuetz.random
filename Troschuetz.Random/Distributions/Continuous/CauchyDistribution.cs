@@ -25,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of cauchy distributed random numbers.
@@ -141,20 +140,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/>.</returns>
-        public bool IsValidAlpha(double value)
-        {
-            return AreValidParams(value, _gamma);
-        }
+        public bool IsValidAlpha(double value) => AreValidParams(value, _gamma);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Gamma"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidGamma(double value)
-        {
-            return AreValidParams(_alpha, value);
-        }
+        public bool IsValidGamma(double value) => AreValidParams(_alpha, value);
 
         #endregion Instance Methods
 
@@ -163,18 +156,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return double.NegativeInfinity; }
-        }
+        public double Minimum => double.NegativeInfinity;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -193,10 +180,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if median is not defined for given distribution with some parameters.
         /// </exception>
-        public double Median
-        {
-            get { return Alpha; }
-        }
+        public double Median => Alpha;
 
         /// <summary>
         ///   Gets the variance of distributed random numbers.
@@ -215,27 +199,21 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mode is not defined for given distribution with some parameters.
         /// </exception>
-        public double[] Mode
-        {
-            get { return new[] { Alpha }; }
-        }
+        public double[] Mode => new[] { Alpha };
 
         /// <summary>
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha, _gamma);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _alpha, _gamma);
 
         #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether cauchy distribution is defined under given parameters. The
-        ///   default definition returns true if gamma is greater than zero; otherwise, it returns false.
+        ///   Determines whether cauchy distribution is defined under given parameters. The default
+        ///   definition returns true if gamma is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="CauchyDistribution{TGen}"/> class.

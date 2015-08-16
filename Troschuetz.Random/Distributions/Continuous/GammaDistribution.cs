@@ -25,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of gamma distributed random numbers.
@@ -139,20 +138,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidAlpha(double value)
-        {
-            return AreValidParams(value, Theta);
-        }
+        public bool IsValidAlpha(double value) => AreValidParams(value, Theta);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Theta"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidTheta(double value)
-        {
-            return AreValidParams(_alpha, value);
-        }
+        public bool IsValidTheta(double value) => AreValidParams(_alpha, value);
 
         #endregion Instance Methods
 
@@ -161,18 +154,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        public double Minimum => 0.0;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -180,10 +167,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mean is not defined for given distribution with some parameters.
         /// </exception>
-        public double Mean
-        {
-            get { return _alpha * Theta; }
-        }
+        public double Mean => _alpha * Theta;
 
         /// <summary>
         ///   Gets the median of distributed random numbers.
@@ -202,10 +186,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance
-        {
-            get { return _alpha * Math.Pow(Theta, 2.0); }
-        }
+        public double Variance => _alpha * Math.Pow(Theta, 2.0);
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -229,19 +210,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha, _theta);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _alpha, _theta);
 
         #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether gamma distribution is defined under given parameters. The
-        ///   default definition returns true if alpha and theta are greater than zero;
-        ///   otherwise, it returns false.
+        ///   Determines whether gamma distribution is defined under given parameters. The default
+        ///   definition returns true if alpha and theta are greater than zero; otherwise, it
+        ///   returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="GammaDistribution{TGen}"/> class.

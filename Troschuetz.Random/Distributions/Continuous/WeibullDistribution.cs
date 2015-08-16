@@ -25,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of weibull distributed random numbers.
@@ -150,20 +149,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidAlpha(double value)
-        {
-            return AreValidParams(value, Lambda);
-        }
+        public bool IsValidAlpha(double value) => AreValidParams(value, Lambda);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Lambda"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidLambda(double value)
-        {
-            return AreValidParams(_alpha, value);
-        }
+        public bool IsValidLambda(double value) => AreValidParams(_alpha, value);
 
         /// <summary>
         ///   Represents a Lanczos approximation of the Gamma function.
@@ -190,18 +183,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        public double Minimum => 0.0;
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        public double Maximum => double.PositiveInfinity;
 
         /// <summary>
         ///   Gets the mean of distributed random numbers.
@@ -209,10 +196,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mean is not defined for given distribution with some parameters.
         /// </exception>
-        public double Mean
-        {
-            get { return Lambda * Gamma(1.0 + 1.0 / _alpha); }
-        }
+        public double Mean => Lambda * Gamma(1.0 + 1.0 / _alpha);
 
         /// <summary>
         ///   Gets the median of distributed random numbers.
@@ -220,10 +204,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if median is not defined for given distribution with some parameters.
         /// </exception>
-        public double Median
-        {
-            get { return Lambda * Math.Pow(Math.Log(2.0), 1.0 / _alpha); }
-        }
+        public double Median => Lambda * Math.Pow(Math.Log(2.0), 1.0 / _alpha);
 
         /// <summary>
         ///   Gets the variance of distributed random numbers.
@@ -231,10 +212,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance
-        {
-            get { return Math.Pow(Lambda, 2.0) * Gamma(1.0 + 2.0 / _alpha) - Math.Pow(Mean, 2.0); }
-        }
+        public double Variance => Math.Pow(Lambda, 2.0) * Gamma(1.0 + 2.0 / _alpha) - Math.Pow(Mean, 2.0);
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -258,19 +236,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha, _lambda);
-        }
+        public double NextDouble() => Sample(TypedGenerator, _alpha, _lambda);
 
         #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether weibull distribution is defined under given parameters. The
-        ///   default definition returns true if alpha and lambda are greater than zero;
-        ///   otherwise, it returns false.
+        ///   Determines whether weibull distribution is defined under given parameters. The default
+        ///   definition returns true if alpha and lambda are greater than zero; otherwise, it
+        ///   returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="WeibullDistribution{TGen}"/> class.
