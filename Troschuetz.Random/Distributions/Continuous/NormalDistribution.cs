@@ -91,7 +91,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
-    public class NormalDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IMuDistribution<double>, ISigmaDistribution<double>
+    public class NormalDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IMuDistribution<double>, ISigmaDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -246,7 +246,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _mu, _sigma);
+            return Sample(TypedGenerator, _mu, _sigma);
         }
 
         #endregion IContinuousDistribution Members

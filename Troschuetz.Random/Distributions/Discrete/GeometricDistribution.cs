@@ -92,7 +92,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
-    public class GeometricDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>
+    public class GeometricDistribution<TGen> : AbstractDistribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -206,12 +206,12 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public int Next()
         {
-            return Sample(Gen, _alpha);
+            return Sample(TypedGenerator, _alpha);
         }
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha);
+            return Sample(TypedGenerator, _alpha);
         }
 
         #endregion IDiscreteDistribution Members

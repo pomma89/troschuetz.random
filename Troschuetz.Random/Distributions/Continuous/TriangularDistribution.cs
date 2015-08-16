@@ -55,7 +55,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
     /// </remarks>
     [Serializable]
-    public class TriangularDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
+    public class TriangularDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
                                                        IBetaDistribution<double>, IGammaDistribution<double>
         where TGen : IGenerator
     {
@@ -283,7 +283,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _beta, _gamma);
+            return Sample(TypedGenerator, _alpha, _beta, _gamma);
         }
 
         #endregion IContinuousDistribution Members

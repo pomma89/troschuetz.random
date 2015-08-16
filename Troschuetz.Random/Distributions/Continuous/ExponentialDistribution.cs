@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Exponential_distribution">Wikipedia - Exponential distribution</a>.
     /// </remarks>
     [Serializable]
-    public class ExponentialDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, ILambdaDistribution<double>
+    public class ExponentialDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, ILambdaDistribution<double>
         where TGen : IGenerator
     {
         #region Constants
@@ -124,7 +124,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double[] Mode => new[] { 0.0 };
 
-        public double NextDouble() => Sample(Gen, _lambda);
+        public double NextDouble() => Sample(TypedGenerator, _lambda);
 
         #endregion IContinuousDistribution Members
 

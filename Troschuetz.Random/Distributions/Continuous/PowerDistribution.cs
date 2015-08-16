@@ -34,7 +34,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   presented on <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class PowerDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
+    public class PowerDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
                                            IBetaDistribution<double>
         where TGen : IGenerator
     {
@@ -201,7 +201,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _beta);
+            return Sample(TypedGenerator, _alpha, _beta);
         }
 
         #endregion IContinuousDistribution Members

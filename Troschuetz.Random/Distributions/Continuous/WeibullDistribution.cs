@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Weibull distribution</a>.
     /// </remarks>
     [Serializable]
-    public class WeibullDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
+    public class WeibullDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
                                                     ILambdaDistribution<double>
         where TGen : IGenerator
     {
@@ -225,7 +225,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _lambda);
+            return Sample(TypedGenerator, _alpha, _lambda);
         }
 
         #endregion IContinuousDistribution Members

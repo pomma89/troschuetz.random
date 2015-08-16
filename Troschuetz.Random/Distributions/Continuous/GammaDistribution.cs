@@ -34,7 +34,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   presented on <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
     /// </remarks>
     [Serializable]
-    public class GammaDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IThetaDistribution<double>
+    public class GammaDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IThetaDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -196,7 +196,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _theta);
+            return Sample(TypedGenerator, _alpha, _theta);
         }
 
         #endregion IContinuousDistribution Members

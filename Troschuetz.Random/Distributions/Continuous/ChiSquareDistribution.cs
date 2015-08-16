@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Chi-square distribution</a>.
     /// </remarks>
     [Serializable]
-    public class ChiSquareDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>
+    public class ChiSquareDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -155,7 +155,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha);
+            return Sample(TypedGenerator, _alpha);
         }
 
         #endregion IContinuousDistribution Members

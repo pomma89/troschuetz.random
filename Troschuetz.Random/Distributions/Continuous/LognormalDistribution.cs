@@ -55,7 +55,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
     /// </remarks>
     [Serializable]
-    public class LognormalDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IMuDistribution<double>,
+    public class LognormalDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IMuDistribution<double>,
                                                ISigmaDistribution<double>
         where TGen : IGenerator
     {
@@ -214,7 +214,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _mu, _sigma);
+            return Sample(TypedGenerator, _mu, _sigma);
         }
 
         #endregion IContinuousDistribution Members

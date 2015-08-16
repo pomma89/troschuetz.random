@@ -36,7 +36,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Uniform distribution (continuous)</a>.
     /// </remarks>
     [Serializable]
-    public class ContinuousUniformDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
+    public class ContinuousUniformDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
                                                        IBetaDistribution<double>
         where TGen : IGenerator
     {
@@ -202,7 +202,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _beta);
+            return Sample(TypedGenerator, _alpha, _beta);
         }
 
         #endregion IContinuousDistribution Members

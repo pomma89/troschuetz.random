@@ -36,7 +36,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Student t Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class StudentsTDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, INuDistribution<int>
+    public class StudentsTDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, INuDistribution<int>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -160,7 +160,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _nu);
+            return Sample(TypedGenerator, _nu);
         }
 
         #endregion IContinuousDistribution Members

@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Laplace distribution</a>.
     /// </remarks>
     [Serializable]
-    public class LaplaceDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
+    public class LaplaceDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
                                              IMuDistribution<double>
         where TGen : IGenerator
     {
@@ -191,7 +191,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _mu);
+            return Sample(TypedGenerator, _alpha, _mu);
         }
 
         #endregion IContinuousDistribution Members

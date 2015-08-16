@@ -34,7 +34,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   presented on <a href="http://www.xycoon.com/ibeta.htm">Xycoon - Inverted Beta Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class BetaPrimeDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>
+    public class BetaPrimeDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -199,7 +199,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _beta);
+            return Sample(TypedGenerator, _alpha, _beta);
         }
 
         #endregion IContinuousDistribution Members

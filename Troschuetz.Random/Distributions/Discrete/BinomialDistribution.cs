@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   <a href="http://en.wikipedia.org/wiki/binomial_distribution">Wikipedia - Binomial distribution</a>.
     /// </remarks>
     [Serializable]
-    public class BinomialDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>, IBetaDistribution<int>
+    public class BinomialDistribution<TGen> : AbstractDistribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>, IBetaDistribution<int>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -196,12 +196,12 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public int Next()
         {
-            return Sample(Gen, _alpha, _beta);
+            return Sample(TypedGenerator, _alpha, _beta);
         }
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _beta);
+            return Sample(TypedGenerator, _alpha, _beta);
         }
 
         #endregion IDiscreteDistribution Members

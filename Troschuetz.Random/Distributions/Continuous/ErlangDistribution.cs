@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   distribution</a> and <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class ErlangDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, ILambdaDistribution<double>
+    public class ErlangDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, ILambdaDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -192,7 +192,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _lambda);
+            return Sample(TypedGenerator, _alpha, _lambda);
         }
 
         #endregion IContinuousDistribution Members

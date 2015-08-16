@@ -34,7 +34,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   information presented on <a href="http://en.wikipedia.org/wiki/F-distribution">Wikipedia - F-distribution</a>.
     /// </remarks>
     [Serializable]
-    public class FisherSnedecorDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, IBetaDistribution<int>
+    public class FisherSnedecorDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, IBetaDistribution<int>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -210,7 +210,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _beta);
+            return Sample(TypedGenerator, _alpha, _beta);
         }
 
         #endregion IContinuousDistribution Members

@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Laplace_distribution">Wikipedia - Fisher-Tippett distribution</a>.
     /// </remarks>
     [Serializable]
-    public class FisherTippettDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
+    public class FisherTippettDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
                                                    IMuDistribution<double>
         where TGen : IGenerator
     {
@@ -197,7 +197,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _mu);
+            return Sample(TypedGenerator, _alpha, _mu);
         }
 
         #endregion IContinuousDistribution Members

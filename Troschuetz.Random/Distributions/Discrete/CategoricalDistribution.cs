@@ -69,7 +69,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   to sum to 1 in floating point representation.
     /// </remarks>
     [Serializable]
-    public class CategoricalDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IWeightsDistribution<double>
+    public class CategoricalDistribution<TGen> : AbstractDistribution<TGen>, IDiscreteDistribution, IWeightsDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -289,12 +289,12 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public int Next()
         {
-            return Sample(Gen, _weights.Count, _cdf, _weightsSum);
+            return Sample(TypedGenerator, _weights.Count, _cdf, _weightsSum);
         }
 
         public double NextDouble()
         {
-            return Sample(Gen, _weights.Count, _cdf, _weightsSum);
+            return Sample(TypedGenerator, _weights.Count, _cdf, _weightsSum);
         }
 
         #endregion

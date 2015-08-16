@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   distribution</a> and <a href="http://www.xycoon.com/cauchy2p_random.htm">Xycoon - Cauchy Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class CauchyDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IGammaDistribution<double>
+    public class CauchyDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IGammaDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -191,7 +191,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _gamma);
+            return Sample(TypedGenerator, _alpha, _gamma);
         }
 
         #endregion IContinuousDistribution Members

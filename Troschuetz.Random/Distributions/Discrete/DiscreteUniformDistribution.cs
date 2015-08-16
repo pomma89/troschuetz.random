@@ -37,7 +37,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   Uniform distribution (discrete)</a>.
     /// </remarks>
     [Serializable]
-    public class DiscreteUniformDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<int>,
+    public class DiscreteUniformDistribution<TGen> : AbstractDistribution<TGen>, IDiscreteDistribution, IAlphaDistribution<int>,
                                                             IBetaDistribution<int>
         where TGen : IGenerator
     {
@@ -202,12 +202,12 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public int Next()
         {
-            return Sample(Gen, _alpha, _beta);
+            return Sample(TypedGenerator, _alpha, _beta);
         }
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _beta);
+            return Sample(TypedGenerator, _alpha, _beta);
         }
 
         #endregion IDiscreteDistribution Members

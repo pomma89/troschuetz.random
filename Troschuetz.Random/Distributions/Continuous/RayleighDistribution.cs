@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Rayleigh Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class RayleighDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, ISigmaDistribution<double>
+    public class RayleighDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, ISigmaDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -147,7 +147,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _sigma);
+            return Sample(TypedGenerator, _sigma);
         }
 
         #endregion IContinuousDistribution Members

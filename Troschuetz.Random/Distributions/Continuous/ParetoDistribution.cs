@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   distribution</a> and <a href="http://www.xycoon.com/par_random.htm">Xycoon - Pareto Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class ParetoDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
+    public class ParetoDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
                                             IBetaDistribution<double>
         where TGen : IGenerator
     {
@@ -205,7 +205,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha, _beta);
+            return Sample(TypedGenerator, _alpha, _beta);
         }
 
         #endregion IContinuousDistribution Members

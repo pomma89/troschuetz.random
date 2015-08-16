@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   <a href="http://en.wikipedia.org/wiki/Bernoulli_distribution">Wikipedia - Bernoulli distribution</a>.
     /// </remarks>
     [Serializable]
-    public class BernoulliDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>
+    public class BernoulliDistribution<TGen> : AbstractDistribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>
         where TGen : IGenerator
     {
         #region Class Fields
@@ -157,12 +157,12 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         public int Next()
         {
-            return Sample(Gen, _alpha);
+            return Sample(TypedGenerator, _alpha);
         }
 
         public double NextDouble()
         {
-            return Sample(Gen, _alpha);
+            return Sample(TypedGenerator, _alpha);
         }
 
         #endregion IDiscreteDistribution Members
