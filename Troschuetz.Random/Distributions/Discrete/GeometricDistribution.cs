@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -10,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -88,7 +89,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   the <see cref="GeometricDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Geometric_distribution">Wikipedia - Geometric
     ///   distribution</a> and the implementation in the
-    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html"> Communication
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
     ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
@@ -234,8 +235,8 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Determines whether geometric distribution is defined under given parameter. The
-        ///   default definition returns true if alpha is greater than zero and if it is less than or equal
-        ///   to one; otherwise, it returns false.
+        ///   default definition returns true if alpha is greater than zero and if it is less than
+        ///   or equal to one; otherwise, it returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="GeometricDistribution{TGen}"/> class.
@@ -274,7 +275,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   the <see cref="GeometricDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Geometric_distribution">Wikipedia - Geometric
     ///   distribution</a> and the implementation in the
-    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html"> Communication
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
     ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]

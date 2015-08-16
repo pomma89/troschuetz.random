@@ -1,5 +1,6 @@
 ﻿/*
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -9,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -1748,28 +1750,28 @@ namespace Troschuetz.Random
     public sealed class TRandom : TRandom<IGenerator>
     {
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
         ///   and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
         /// </summary>
-        public TRandom() : this(new XorShift128Generator(Environment.TickCount))
+        public TRandom() : this(new NumericalRecipes3Q1Generator(Environment.TickCount))
         {
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        public TRandom(int seed) : this(new XorShift128Generator(seed))
+        public TRandom(int seed) : this(new NumericalRecipes3Q1Generator(seed))
         {
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        public TRandom(uint seed) : this(new XorShift128Generator(seed))
+        public TRandom(uint seed) : this(new NumericalRecipes3Q1Generator(seed))
         {
         }
 
@@ -1783,24 +1785,24 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
         ///   and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
         /// </summary>
-        public static TRandom<XorShift128Generator> New() => new TRandom<XorShift128Generator>(new XorShift128Generator(Environment.TickCount));
+        public static TRandom<NumericalRecipes3Q1Generator> New() => new TRandom<NumericalRecipes3Q1Generator>(new NumericalRecipes3Q1Generator(Environment.TickCount));
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        public static TRandom<XorShift128Generator> New(int seed) => new TRandom<XorShift128Generator>(new XorShift128Generator(seed));
+        public static TRandom<NumericalRecipes3Q1Generator> New(int seed) => new TRandom<NumericalRecipes3Q1Generator>(new NumericalRecipes3Q1Generator(seed));
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        public static TRandom<XorShift128Generator> New(uint seed) => new TRandom<XorShift128Generator>(new XorShift128Generator(seed));
+        public static TRandom<NumericalRecipes3Q1Generator> New(uint seed) => new TRandom<NumericalRecipes3Q1Generator>(new NumericalRecipes3Q1Generator(seed));
 
         /// <summary>
         ///   Constructs a new instance with the specified generator.

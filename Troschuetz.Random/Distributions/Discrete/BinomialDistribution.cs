@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -10,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -221,9 +222,9 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Determines whether binomial distribution is defined under given parameters. The
-        ///   default definition returns true if alpha is greater than or equal to zero and less than or
-        ///   equal to one, and if beta is greater than or equal to zero;
-        ///   otherwise, it returns false.
+        ///   default definition returns true if alpha is greater than or equal to zero and less
+        ///   than or equal to one, and if beta is greater than or equal to zero; otherwise, it
+        ///   returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="BinomialDistribution{TGen}"/> class.
