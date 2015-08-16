@@ -270,12 +270,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter beta which is used for generation of beta prime distributed random numbers.
         /// </param>
         /// <returns>A beta prime distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double beta)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var betaVariate = BetaDistribution<TGen>.Sample(generator, alpha, beta);
             var tmp = 1.0 - betaVariate;
             return tmp == 0 ? double.PositiveInfinity : betaVariate / tmp;
-        }
+        };
 
         #endregion TRandom Helpers
     }

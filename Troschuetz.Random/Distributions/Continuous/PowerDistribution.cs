@@ -272,11 +272,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter beta which is used for generation of power distributed random numbers.
         /// </param>
         /// <returns>A power distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double beta)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var helper1 = 1.0 / alpha;
             return Math.Pow(generator.NextDouble(), helper1) / beta;
-        }
+        };
 
         #endregion TRandom Helpers
     }

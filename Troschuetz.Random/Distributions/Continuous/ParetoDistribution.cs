@@ -276,11 +276,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter beta which is used for generation of pareto distributed random numbers.
         /// </param>
         /// <returns>A pareto distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double beta)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var helper1 = 1.0 / beta;
             return alpha / Math.Pow(1.0 - generator.NextDouble(), helper1);
-        }
+        };
 
         #endregion TRandom Helpers
     }

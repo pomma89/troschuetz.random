@@ -281,13 +281,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter beta which is used for generation of fisher snedecor distributed random numbers.
         /// </param>
         /// <returns>A fisher snedecor distributed floating point random number.</returns>
-        public static double Sample(TGen generator, int alpha, int beta)
+        public static Func<TGen, int, int, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var helper1 = beta / (double) alpha;
             var csa = ChiSquareDistribution<TGen>.Sample(generator, alpha);
             var csb = ChiSquareDistribution<TGen>.Sample(generator, beta);
             return csa / csb * helper1;
-        }
+        };
 
         #endregion TRandom Helpers
     }

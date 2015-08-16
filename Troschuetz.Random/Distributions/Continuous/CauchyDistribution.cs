@@ -261,10 +261,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
         /// </param>
         /// <returns>A cauchy distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double gamma)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, gamma) =>
         {
             return alpha + gamma * Math.Tan(Math.PI * (generator.NextDouble() - 0.5));
-        }
+        };
 
         #endregion TRandom Helpers
     }

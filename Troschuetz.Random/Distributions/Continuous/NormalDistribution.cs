@@ -316,7 +316,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of normal distributed random numbers.
         /// </param>
         /// <returns>A normal distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double mu, double sigma)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, mu, sigma) =>
         {
             while (true)
             {
@@ -330,7 +330,7 @@ namespace Troschuetz.Random.Distributions.Continuous
                 var y = Math.Sqrt(-2.0 * Math.Log(w) / w) * sigma;
                 return generator.NextBoolean() ? v1 * y + mu : v2 * y + mu;
             }
-        }
+        };
 
         #endregion TRandom Helpers
     }

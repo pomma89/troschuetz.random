@@ -362,7 +362,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter gamma which is used for generation of triangular distributed random numbers.
         /// </param>
         /// <returns>A triangular distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double beta, double gamma)
+        public static Func<TGen, double, double, double, double> Sample { get; set; } = (generator, alpha, beta, gamma) =>
         {
             var helper1 = gamma - alpha;
             var helper2 = beta - alpha;
@@ -374,7 +374,7 @@ namespace Troschuetz.Random.Distributions.Continuous
                 return alpha + Math.Sqrt(genNum) * helper3;
             }
             return beta - Math.Sqrt(genNum * helper2 - helper1) * helper4;
-        }
+        };
 
         #endregion TRandom Helpers
     }

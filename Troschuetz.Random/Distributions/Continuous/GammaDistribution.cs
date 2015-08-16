@@ -267,7 +267,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter theta which is used for generation of gamma distributed random numbers.
         /// </param>
         /// <returns>A gamma distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double theta)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, theta) =>
         {
             var helper1 = alpha - Math.Floor(alpha);
             var helper2 = Math.E / (Math.E + helper1);
@@ -294,7 +294,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
 
             return xi * theta;
-        }
+        };
 
         #endregion TRandom Helpers
     }

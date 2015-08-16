@@ -267,10 +267,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
         /// </param>
         /// <returns>A fisher tippett distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double mu)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, mu) =>
         {
             return mu - alpha * Math.Log(-Math.Log(1.0 - generator.NextDouble()));
-        }
+        };
 
         #endregion TRandom Helpers
     }

@@ -224,14 +224,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter nu which is used for generation of student's t distributed random numbers.
         /// </param>
         /// <returns>A student's t distributed floating point random number.</returns>
-        public static double Sample(TGen generator, int nu)
+        public static Func<TGen, int, double> Sample { get; set; } = (generator, nu) =>
         {
             const double mu = 0.0;
             const double sigma = 1.0;
             var n = NormalDistribution<TGen>.Sample(generator, mu, sigma);
             var c = ChiSquareDistribution<TGen>.Sample(generator, nu);
             return n / Math.Sqrt(c / nu);
-        }
+        };
 
         #endregion TRandom Helpers
     }

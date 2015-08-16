@@ -211,13 +211,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
         /// </param>
         /// <returns>A rayleigh distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double sigma)
+        public static Func<TGen, double, double> Sample { get; set; } = (generator, sigma) =>
         {
             const double mu = 0.0;
             var n1 = Math.Pow(NormalDistribution<TGen>.Sample(generator, mu, sigma), 2);
             var n2 = Math.Pow(NormalDistribution<TGen>.Sample(generator, mu, sigma), 2);
             return Math.Sqrt(n1 + n2);
-        }
+        };
 
         #endregion TRandom Helpers
     }

@@ -296,12 +296,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter lambda which is used for generation of weibull distributed random numbers.
         /// </param>
         /// <returns>A weibull distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double lambda)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, lambda) =>
         {
             var helper1 = 1.0 / alpha;
             // Subtracts a random number from 1.0 to avoid Math.Log(0.0).
             return lambda * Math.Pow(-Math.Log(1.0 - generator.NextDouble()), helper1);
-        }
+        };
 
         #endregion TRandom Helpers
     }

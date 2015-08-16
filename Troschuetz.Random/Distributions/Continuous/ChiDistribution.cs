@@ -237,7 +237,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter alpha which is used for generation of chi distributed random numbers.
         /// </param>
         /// <returns>A chi distributed floating point random number.</returns>
-        public static double Sample(TGen generator, int alpha)
+        public static Func<TGen, int, double> Sample { get; set; } = (generator, alpha) =>
         {
             const double m = 0.0;
             const double s = 1.0;
@@ -247,7 +247,7 @@ namespace Troschuetz.Random.Distributions.Continuous
                 sum += Math.Pow(NormalDistribution<TGen>.Sample(generator, m, s), 2);
             }
             return Math.Sqrt(sum);
-        }
+        };
 
         #endregion TRandom Helpers
     }

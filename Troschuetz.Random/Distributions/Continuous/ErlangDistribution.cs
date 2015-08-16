@@ -263,7 +263,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter lambda which is used for generation of erlang distributed random numbers.
         /// </param>
         /// <returns>An erlang distributed floating point random number.</returns>
-        public static double Sample(TGen generator, int alpha, double lambda)
+        public static Func<TGen, int, double, double> Sample { get; set; } = (generator, alpha, lambda) =>
         {
             if (double.IsPositiveInfinity(lambda))
             {
@@ -307,7 +307,7 @@ namespace Troschuetz.Random.Distributions.Continuous
                     return alphafix * d * v / lambda;
                 }
             }
-        }
+        };
 
         #endregion TRandom Helpers
     }

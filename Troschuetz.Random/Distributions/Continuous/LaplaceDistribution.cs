@@ -261,12 +261,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter mu which is used for generation of laplace distributed random numbers.
         /// </param>
         /// <returns>A laplace distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double mu)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, mu) =>
         {
             var rand = 0.5 - generator.NextDouble();
-            var tmp = (rand == 0) ? double.NegativeInfinity : Math.Log(2.0 * Math.Abs(rand));
+            var tmp = (rand == 0.0) ? double.NegativeInfinity : Math.Log(2.0 * Math.Abs(rand));
             return mu - alpha * Math.Sign(rand) * tmp;
-        }
+        };
 
         #endregion TRandom Helpers
     }

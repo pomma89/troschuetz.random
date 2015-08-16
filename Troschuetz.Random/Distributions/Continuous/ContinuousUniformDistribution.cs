@@ -277,11 +277,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   random numbers.
         /// </param>
         /// <returns>A continuous uniform distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double beta)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var helper1 = beta - alpha;
             return alpha + generator.NextDouble() * helper1;
-        }
+        };
 
         #endregion TRandom Helpers
     }

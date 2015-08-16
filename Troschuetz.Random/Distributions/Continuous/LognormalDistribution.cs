@@ -285,12 +285,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of lognormal distributed random numbers.
         /// </param>
         /// <returns>A lognormal distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double mu, double sigma)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, mu, sigma) =>
         {
             const double nm = 0.0;
             const double ns = 1.0;
             return Math.Exp(NormalDistribution<TGen>.Sample(generator, nm, ns) * sigma + mu);
-        }
+        };
 
         #endregion TRandom Helpers
     }

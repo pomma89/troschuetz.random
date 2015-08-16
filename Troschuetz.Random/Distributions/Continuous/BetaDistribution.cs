@@ -280,12 +280,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter beta which is used for generation of beta distributed random numbers.
         /// </param>
         /// <returns>A beta distributed floating point random number.</returns>
-        public static double Sample(TGen generator, double alpha, double beta)
+        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var x = GammaDistribution<TGen>.Sample(generator, alpha, GammaDistribution<TGen>.DefaultTheta);
             var t = 1.0 / (x + GammaDistribution<TGen>.Sample(generator, beta, GammaDistribution<TGen>.DefaultTheta));
             return t == 0.0 ? 1.0 : x * t;
-        }
+        };
 
         #endregion TRandom Helpers
     }
