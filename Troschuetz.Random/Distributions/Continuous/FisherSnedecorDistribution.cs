@@ -265,7 +265,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="beta"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        [Pure]
         public static bool AreValidParams(int alpha, int beta)
         {
             return alpha > 0 && beta > 0;
@@ -282,10 +281,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter beta which is used for generation of fisher snedecor distributed random numbers.
         /// </param>
         /// <returns>A fisher snedecor distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, int alpha, int beta)
+        public static double Sample(TGen generator, int alpha, int beta)
         {
-            var helper1 = beta / (double)alpha;
+            var helper1 = beta / (double) alpha;
             var csa = ChiSquareDistribution<TGen>.Sample(generator, alpha);
             var csb = ChiSquareDistribution<TGen>.Sample(generator, beta);
             return csa / csb * helper1;

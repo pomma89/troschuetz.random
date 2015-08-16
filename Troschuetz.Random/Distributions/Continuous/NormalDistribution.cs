@@ -300,10 +300,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <see cref="_sigma"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [Pure]
         public static bool AreValidParams(double mu, double sigma)
         {
-            return !double.IsNaN(mu) && sigma > 0;
+            return !double.IsNaN(mu) && sigma > 0.0;
         }
 
         /// <summary>
@@ -317,8 +316,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of normal distributed random numbers.
         /// </param>
         /// <returns>A normal distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double mu, double sigma)
+        public static double Sample(TGen generator, double mu, double sigma)
         {
             while (true)
             {

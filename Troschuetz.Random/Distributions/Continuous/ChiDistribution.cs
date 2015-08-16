@@ -224,11 +224,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="alpha"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [Pure]
-        public static bool IsValidParam(int alpha)
+        public static Func<int, bool> IsValidParam { get; set; } = alpha =>
         {
             return alpha > 0;
-        }
+        };
 
         /// <summary>
         ///   Returns a chi distributed floating point random number.
@@ -238,8 +237,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter alpha which is used for generation of chi distributed random numbers.
         /// </param>
         /// <returns>A chi distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, int alpha)
+        public static double Sample(TGen generator, int alpha)
         {
             const double m = 0.0;
             const double s = 1.0;

@@ -211,7 +211,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="nu"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [Pure]
         public static bool IsValidParam(int nu)
         {
             return nu > 0;
@@ -225,8 +224,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter nu which is used for generation of student's t distributed random numbers.
         /// </param>
         /// <returns>A student's t distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, int nu)
+        public static double Sample(TGen generator, int nu)
         {
             const double mu = 0.0;
             const double sigma = 1.0;

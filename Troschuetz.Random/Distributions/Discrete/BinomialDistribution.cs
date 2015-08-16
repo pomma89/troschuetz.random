@@ -231,7 +231,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </remarks>
         public static Func<double, int, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
-            return alpha >= 0 && alpha <= 1 && beta >= 0;
+            return alpha >= 0.0 && alpha <= 1.0 && beta >= 0;
         };
 
         /// <summary>

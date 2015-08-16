@@ -337,7 +337,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             var sum = 0.0;
             foreach (var w in weights)
             {
-                if (w < 0.0 || Double.IsNaN(w))
+                if (w < 0.0 || double.IsNaN(w))
                 {
                     return false;
                 }

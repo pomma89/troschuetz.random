@@ -245,11 +245,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="gamma"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [Pure]
-        public static bool AreValidParams(double alpha, double gamma)
+        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, gamma) =>
         {
-            return !double.IsNaN(alpha) && gamma > 0;
-        }
+            return !double.IsNaN(alpha) && gamma > 0.0;
+        };
 
         /// <summary>
         ///   Returns a cauchy distributed floating point random number.
@@ -262,8 +261,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
         /// </param>
         /// <returns>A cauchy distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double alpha, double gamma)
+        public static double Sample(TGen generator, double alpha, double gamma)
         {
             return alpha + gamma * Math.Tan(Math.PI * (generator.NextDouble() - 0.5));
         }

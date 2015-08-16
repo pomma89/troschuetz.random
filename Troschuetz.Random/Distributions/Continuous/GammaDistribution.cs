@@ -251,10 +251,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="theta"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        [Pure]
         public static bool AreValidParams(double alpha, double theta)
         {
-            return alpha > 0 && theta > 0;
+            return alpha > 0.0 && theta > 0.0;
         }
 
         /// <summary>
@@ -268,8 +267,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter theta which is used for generation of gamma distributed random numbers.
         /// </param>
         /// <returns>A gamma distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double alpha, double theta)
+        public static double Sample(TGen generator, double alpha, double theta)
         {
             var helper1 = alpha - Math.Floor(alpha);
             var helper2 = Math.E / (Math.E + helper1);

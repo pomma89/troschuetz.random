@@ -254,11 +254,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="beta"/> are greater than one;
         ///   otherwise, it returns false.
         /// </returns>
-        [Pure]
-        public static bool AreValidParams(double alpha, double beta)
+        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
-            return alpha > 1 && beta > 1;
-        }
+            return alpha > 1.0 && beta > 1.0;
+        };
 
         /// <summary>
         ///   Returns a beta prime distributed floating point random number.
@@ -271,8 +270,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter beta which is used for generation of beta prime distributed random numbers.
         /// </param>
         /// <returns>A beta prime distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double alpha, double beta)
+        public static double Sample(TGen generator, double alpha, double beta)
         {
             var betaVariate = BetaDistribution<TGen>.Sample(generator, alpha, beta);
             var tmp = 1.0 - betaVariate;

@@ -79,7 +79,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of poisson distributed random numbers.
@@ -164,10 +163,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidLambda(double value)
-        {
-            return IsValidParam(value);
-        }
+        public bool IsValidLambda(double value) => IsValidParam(value);
 
         #endregion Instance Methods
 
@@ -241,7 +237,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="PoissonDistribution{TGen}"/> class.
         /// </remarks>
-        public static Func<double, bool> IsValidParam { get; set; } = lambda => lambda > 0;
+        public static Func<double, bool> IsValidParam { get; set; } = lambda => lambda > 0.0;
 
         /// <summary>
         ///   Declares a function returning a poisson distributed 32-bit signed integer.

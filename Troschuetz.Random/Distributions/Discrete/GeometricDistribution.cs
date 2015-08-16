@@ -243,7 +243,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </remarks>
         public static Func<double, bool> IsValidParam { get; set; } = alpha =>
         {
-            return alpha > 0 && alpha <= 1;
+            return alpha > 0.0 && alpha <= 1.0;
         };
 
         /// <summary>

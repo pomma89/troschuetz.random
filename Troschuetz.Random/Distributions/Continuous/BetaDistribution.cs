@@ -264,11 +264,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="beta"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        [Pure]
-        public static bool AreValidParams(double alpha, double beta)
+        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
-            return alpha > 0 && beta > 0;
-        }
+            return alpha > 0.0 && beta > 0.0;
+        };
 
         /// <summary>
         ///   Returns a beta distributed floating point random number.
@@ -281,7 +280,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter beta which is used for generation of beta distributed random numbers.
         /// </param>
         /// <returns>A beta distributed floating point random number.</returns>
-        internal static double Sample(TGen generator, double alpha, double beta)
+        public static double Sample(TGen generator, double alpha, double beta)
         {
             var x = GammaDistribution<TGen>.Sample(generator, alpha, GammaDistribution<TGen>.DefaultTheta);
             var t = 1.0 / (x + GammaDistribution<TGen>.Sample(generator, beta, GammaDistribution<TGen>.DefaultTheta));

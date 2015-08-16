@@ -245,10 +245,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="alpha"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [Pure]
         public static bool AreValidParams(double alpha, double mu)
         {
-            return alpha > 0 && !double.IsNaN(mu);
+            return alpha > 0.0 && !double.IsNaN(mu);
         }
 
         /// <summary>
@@ -262,8 +261,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter mu which is used for generation of laplace distributed random numbers.
         /// </param>
         /// <returns>A laplace distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double alpha, double mu)
+        public static double Sample(TGen generator, double alpha, double mu)
         {
             var rand = 0.5 - generator.NextDouble();
             var tmp = (rand == 0) ? double.NegativeInfinity : Math.Log(2.0 * Math.Abs(rand));

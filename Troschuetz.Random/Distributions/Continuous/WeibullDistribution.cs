@@ -280,10 +280,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="lambda"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        [Pure]
         public static bool AreValidParams(double alpha, double lambda)
         {
-            return alpha > 0 && lambda > 0;
+            return alpha > 0.0 && lambda > 0.0;
         }
 
         /// <summary>
@@ -297,8 +296,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter lambda which is used for generation of weibull distributed random numbers.
         /// </param>
         /// <returns>A weibull distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double alpha, double lambda)
+        public static double Sample(TGen generator, double alpha, double lambda)
         {
             var helper1 = 1.0 / alpha;
             // Subtracts a random number from 1.0 to avoid Math.Log(0.0).

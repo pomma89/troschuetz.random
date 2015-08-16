@@ -269,10 +269,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="sigma"/> is greater than or equal to zero; otherwise, it
         ///   returns false.
         /// </returns>
-        [Pure]
         public static bool AreValidParams(double mu, double sigma)
         {
-            return !double.IsNaN(mu) && sigma >= 0;
+            return !double.IsNaN(mu) && sigma >= 0.0;
         }
 
         /// <summary>
@@ -286,8 +285,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of lognormal distributed random numbers.
         /// </param>
         /// <returns>A lognormal distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double mu, double sigma)
+        public static double Sample(TGen generator, double mu, double sigma)
         {
             const double nm = 0.0;
             const double ns = 1.0;

@@ -198,10 +198,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="sigma"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        [Pure]
         public static bool IsValidParam(double sigma)
         {
-            return sigma > 0;
+            return sigma > 0.0;
         }
 
         /// <summary>
@@ -212,8 +211,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
         /// </param>
         /// <returns>A rayleigh distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double sigma)
+        public static double Sample(TGen generator, double sigma)
         {
             const double mu = 0.0;
             var n1 = Math.Pow(NormalDistribution<TGen>.Sample(generator, mu, sigma), 2);

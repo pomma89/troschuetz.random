@@ -247,11 +247,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="lambda"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        [Pure]
-        public static bool AreValidParams(int alpha, double lambda)
+        public static Func<int, double, bool> AreValidParams { get; set; } = (alpha, lambda) =>
         {
-            return alpha > 0 && lambda > 0;
-        }
+            return alpha > 0 && lambda > 0.0;
+        };
 
         /// <summary>
         ///   Returns an erlang distributed floating point random number.
@@ -264,8 +263,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter lambda which is used for generation of erlang distributed random numbers.
         /// </param>
         /// <returns>An erlang distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, int alpha, double lambda)
+        public static double Sample(TGen generator, int alpha, double lambda)
         {
             if (double.IsPositiveInfinity(lambda))
             {

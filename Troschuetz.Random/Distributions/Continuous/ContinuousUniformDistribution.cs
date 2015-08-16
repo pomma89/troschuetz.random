@@ -259,11 +259,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> is less than or equal to <paramref name="beta"/>;
         ///   otherwise, it returns false.
         /// </returns>
-        [Pure]
-        public static bool AreValidParams(double alpha, double beta)
+        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
             return alpha <= beta;
-        }
+        };
 
         /// <summary>
         ///   Returns a continuous uniform distributed floating point random number.
@@ -278,8 +277,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   random numbers.
         /// </param>
         /// <returns>A continuous uniform distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double alpha, double beta)
+        public static double Sample(TGen generator, double alpha, double beta)
         {
             var helper1 = beta - alpha;
             return alpha + generator.NextDouble() * helper1;
