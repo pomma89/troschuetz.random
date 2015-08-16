@@ -165,69 +165,81 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <see langword="true"/> if value is greater than 0.0, and less than or equal to 1.0;
         ///   otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidAlpha(double value)
-        {
-            return IsValidParam(value);
-        }
+        public bool IsValidAlpha(double value) => IsValidParam(value);
 
         #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
-        public double Minimum
-        {
-            get { return 1.0; }
-        }
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => 1.0;
 
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => double.PositiveInfinity;
 
-        public double Mean
-        {
-            get { return 1.0 / Alpha; }
-        }
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Mean => 1.0 / Alpha;
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
         }
 
-        public double Variance
-        {
-            get { return (1.0 - Alpha) / Math.Pow(Alpha, 2.0); }
-        }
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Variance => (1.0 - Alpha) / Math.Pow(Alpha, 2.0);
 
-        public double[] Mode
-        {
-            get { return new[] { 1.0 }; }
-        }
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
+        public double[] Mode => new[] { 1.0 };
 
-        public int Next()
-        {
-            return Sample(TypedGenerator, _alpha);
-        }
+        /// <summary>
+        ///   Returns a distributed random number.
+        /// </summary>
+        /// <returns>A distributed 32-bit signed integer.</returns>
+        public int Next() => Sample(TypedGenerator, _alpha);
 
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha);
-        }
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(TypedGenerator, _alpha);
 
         #endregion IDiscreteDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether geometric distribution is defined under given parameter.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of geometric distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than zero and if it is less than or equal
+        ///   Determines whether geometric distribution is defined under given parameter. The
+        ///   default definition returns true if alpha is greater than zero and if it is less than or equal
         ///   to one; otherwise, it returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="GeometricDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<double, bool> IsValidParam { get; } = alpha =>
         {
@@ -242,6 +254,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   The parameter alpha which is used for generation of geometric distributed random numbers.
         /// </param>
         /// <returns>A geometric distributed 32-bit signed integer.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="GeometricDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<TGen, double, int> Sample { get; } = (generator, alpha) =>
         {

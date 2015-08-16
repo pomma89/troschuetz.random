@@ -158,23 +158,61 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         #region IDiscreteDistribution Members
 
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
         public double Minimum => 0.0;
 
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
         public double Maximum => Beta;
 
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
         public double Mean => Alpha * Beta;
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
         }
 
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
         public double Variance => Alpha * (1.0 - Alpha) * Beta;
 
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
         public double[] Mode => new[] { Math.Floor(Alpha * (Beta + 1.0)) };
 
+        /// <summary>
+        ///   Returns a distributed random number.
+        /// </summary>
+        /// <returns>A distributed 32-bit signed integer.</returns>
         public int Next() => Sample(TypedGenerator, _alpha, _beta);
 
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
         public double NextDouble() => Sample(TypedGenerator, _alpha, _beta);
 
         #endregion IDiscreteDistribution Members
@@ -182,19 +220,14 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether binomial distribution is defined under given parameters.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of binomial distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of binomial distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than or equal to zero and less than or
-        ///   equal to one, and if <paramref name="beta"/> is greater than or equal to zero;
+        ///   Determines whether binomial distribution is defined under given parameters. The
+        ///   default definition returns true if alpha is greater than or equal to zero and less than or
+        ///   equal to one, and if beta is greater than or equal to zero;
         ///   otherwise, it returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="BinomialDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<double, int, bool> AreValidParams { get; } = (alpha, beta) =>
         {
@@ -212,6 +245,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   The parameter beta which is used for generation of binomial distributed random numbers.
         /// </param>
         /// <returns>A binomial distributed 32-bit signed integer.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="BinomialDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<TGen, double, int, int> Sample { get; } = (generator, alpha, beta) =>
         {

@@ -132,7 +132,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Determines whether exponential distribution is defined under given parameter. The
-        ///   default definition retursn true if lambda is greater than zero; otherwise, it returns false.
+        ///   default definition returns true if lambda is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="ExponentialDistribution{TGen}"/> class.

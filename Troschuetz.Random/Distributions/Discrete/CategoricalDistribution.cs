@@ -211,10 +211,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   False if any of the weights is negative or if the sum of parameters is 0.0;
         ///   otherwise, it returns true.
         /// </returns>
-        public bool AreValidWeights(IEnumerable<double> weights)
-        {
-            return IsValidParam(weights);
-        }
+        public bool AreValidWeights(IEnumerable<double> weights) => IsValidParam(weights);
 
         /// <summary>
         ///   Computes the unnormalized cumulative distribution function
@@ -269,58 +266,80 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         #region IDiscreteDistribution Members
 
-        public double Minimum
-        {
-            get { return 0; }
-        }
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => 0;
 
-        public double Maximum
-        {
-            get { return _weights.Count - 1; }
-        }
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => _weights.Count - 1;
 
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
         public double Mean { get; private set; }
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median { get; private set; }
 
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
         public double Variance { get; private set; }
 
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
         public double[] Mode { get; private set; }
 
-        public int Next()
-        {
-            return Sample(TypedGenerator, _weights.Count, _cdf, _weightsSum);
-        }
+        /// <summary>
+        ///   Returns a distributed random number.
+        /// </summary>
+        /// <returns>A distributed 32-bit signed integer.</returns>
+        public int Next() => Sample(TypedGenerator, _weights.Count, _cdf, _weightsSum);
 
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _weights.Count, _cdf, _weightsSum);
-        }
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(TypedGenerator, _weights.Count, _cdf, _weightsSum);
 
         #endregion
 
         #region Object Members
 
-        public override string ToString()
-        {
-            return "Categorical(ValueCount = " + _weights.Count + ")";
-        }
+        public override string ToString() => "Categorical(ValueCount = " + _weights.Count + ")";
 
         #endregion
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether categorical distribution is defined under given weights.
-        /// </summary>
-        /// <param name="weights">
-        ///   The weights which are used for generation of categorical distributed random numbers.
-        ///   Weights do not need to be normalized as this is often impossible using floating point arithmetic.
-        /// </param>
-        /// <returns>
-        ///   False if any of the weights is negative or if the sum of parameters is 0.0;
+        ///   Determines whether categorical distribution is defined under given weights. The
+        ///   default definition returns false if any of the weights is negative or if the sum of parameters is 0.0;
         ///   otherwise, it returns true.
-        /// </returns>
+        /// 
+        ///   Weights do not need to be normalized as this is often impossible using floating point arithmetic.
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="CategoricalDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<IEnumerable<double>, bool> IsValidParam { get; } = weights =>
         {
@@ -346,6 +365,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <returns>
         ///   A categorical distributed 32-bit signed integer.
         /// </returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="CategoricalDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<TGen, int, double[], double, int> Sample { get; } = (generator, weightsCount, cdf, weightsSum) =>
         {

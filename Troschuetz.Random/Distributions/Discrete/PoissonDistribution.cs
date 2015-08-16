@@ -172,63 +172,74 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         #region IDiscreteDistribution Members
 
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => 0.0;
 
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => double.PositiveInfinity;
 
-        public double Mean
-        {
-            get { return _lambda; }
-        }
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Mean => _lambda;
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
         }
 
-        public double Variance
-        {
-            get { return _lambda; }
-        }
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Variance => _lambda;
 
-        public double[] Mode
-        {
-            get
-            {
-                // Checks if the value of lambda is a whole number.
-                return _lambda == Math.Floor(_lambda) ? new[] { _lambda - 1.0, _lambda } : new[] { Math.Floor(_lambda) };
-            }
-        }
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
+        public double[] Mode => _lambda == Math.Floor(_lambda) ? new[] { _lambda - 1.0, _lambda } : new[] { Math.Floor(_lambda) };
 
-        public int Next()
-        {
-            return Sample(TypedGenerator, _lambda);
-        }
+        /// <summary>
+        ///   Returns a distributed random number.
+        /// </summary>
+        /// <returns>A distributed 32-bit signed integer.</returns>
+        public int Next() => Sample(TypedGenerator, _lambda);
 
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _lambda);
-        }
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(TypedGenerator, _lambda);
 
         #endregion IDiscreteDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether poisson distribution is defined under given parameter.
+        ///   Determines whether poisson distribution is defined under given parameter. The
+        ///   default definition returns true if lambda is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of poisson distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="lambda"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="PoissonDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<double, bool> IsValidParam { get; } = lambda => lambda > 0;
 
@@ -240,6 +251,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   The parameter lambda which is used for generation of poisson distributed random numbers.
         /// </param>
         /// <returns>A poisson distributed 32-bit signed integer.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="PoissonDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<TGen, double, int> Sample { get; } = (generator, lambda) =>
         {

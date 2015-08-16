@@ -148,10 +148,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <see langword="true"/> if value is less than or equal to <see cref="Beta"/>;
         ///   otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidAlpha(int value)
-        {
-            return AreValidParams(value, _beta);
-        }
+        public bool IsValidAlpha(int value) => AreValidParams(value, _beta);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
@@ -161,74 +158,82 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <see langword="true"/> if value is greater than or equal to <see cref="Alpha"/>, and
         ///   less than <see cref="int.MaxValue"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidBeta(int value)
-        {
-            return AreValidParams(_alpha, value);
-        }
+        public bool IsValidBeta(int value) => AreValidParams(_alpha, value);
 
         #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
-        public double Minimum
-        {
-            get { return Alpha; }
-        }
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => Alpha;
 
-        public double Maximum
-        {
-            get { return _beta; }
-        }
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => _beta;
 
-        public double Mean
-        {
-            get { return Alpha / 2.0 + _beta / 2.0; }
-        }
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Mean => Alpha / 2.0 + _beta / 2.0;
 
-        public double Median
-        {
-            get { return Alpha / 2.0 + _beta / 2.0; }
-        }
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Median => Alpha / 2.0 + _beta / 2.0;
 
-        public double Variance
-        {
-            get { return (Math.Pow(_beta - Alpha + 1.0, 2.0) - 1.0) / 12.0; }
-        }
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Variance => (Math.Pow(_beta - Alpha + 1.0, 2.0) - 1.0) / 12.0;
 
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
         public double[] Mode
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMode); }
         }
 
-        public int Next()
-        {
-            return Sample(TypedGenerator, _alpha, _beta);
-        }
+        /// <summary>
+        ///   Returns a distributed random number.
+        /// </summary>
+        /// <returns>A distributed 32-bit signed integer.</returns>
+        public int Next() => Sample(TypedGenerator, _alpha, _beta);
 
-        public double NextDouble()
-        {
-            return Sample(TypedGenerator, _alpha, _beta);
-        }
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta);
 
         #endregion IDiscreteDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether discrete uniform distribution is defined under given parameters.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is less than or equal to <paramref name="beta"/>, and
-        ///   if <paramref name="beta"/> is less than <see cref="int.MaxValue"/>; otherwise, it
+        ///   Determines whether discrete uniform distribution is defined under given parameters. The
+        ///   default definition returns true if alpha is less than or equal to beta, and
+        ///   if beta is less than <see cref="int.MaxValue"/>; otherwise, it
         ///   returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="DiscreteUniformDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<int, int, bool> AreValidParams { get; } = (alpha, beta) =>
         {
@@ -247,6 +252,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
         /// </param>
         /// <returns>A discrete uniform distributed 32-bit signed integer.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="DiscreteUniformDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<TGen, int, int, int> Sample { get; } = (generator, alpha, beta) =>
         {

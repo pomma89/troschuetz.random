@@ -115,19 +115,49 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         #region IDiscreteDistribution Members
 
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
         public double Minimum => 0.0;
 
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
         public double Maximum => 1.0;
 
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
         public double Mean => Alpha;
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
         }
 
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
         public double Variance => Alpha * (1.0 - Alpha);
 
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
         public double[] Mode
         {
             get
@@ -140,8 +170,16 @@ namespace Troschuetz.Random.Distributions.Discrete
             }
         }
 
+        /// <summary>
+        ///   Returns a distributed random number.
+        /// </summary>
+        /// <returns>A distributed 32-bit signed integer.</returns>
         public int Next() => Sample(TypedGenerator, _alpha);
 
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
         public double NextDouble() => Sample(TypedGenerator, _alpha);
 
         #endregion IDiscreteDistribution Members
@@ -149,15 +187,13 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether bernoulli distribution is defined under given parameter.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than or equal to zero and less than or
+        ///   Determines whether bernoulli distribution is defined under given parameter. The
+        ///   default definition returns true if alpha is greater than or equal to zero and less than or
         ///   equal to one; otherwise, it returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="BernoulliDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<double, bool> IsValidParam { get; } = alpha =>
         {
@@ -172,6 +208,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
         /// </param>
         /// <returns>A bernoulli distributed 32-bit signed integer.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="BernoulliDistribution{TGen}"/> class.
+        /// </remarks>
         [Pure]
         public static Func<TGen, double, int> Sample { get; } = (generator, alpha) =>
         {
