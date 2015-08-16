@@ -211,10 +211,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="nu"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        public static bool IsValidParam(int nu)
+        public static Func<int, bool> IsValidParam { get; set; } = nu =>
         {
             return nu > 0;
-        }
+        };
 
         /// <summary>
         ///   Returns a student's t distributed floating point random number.

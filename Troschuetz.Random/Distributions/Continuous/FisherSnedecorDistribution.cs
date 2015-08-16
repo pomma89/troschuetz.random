@@ -265,10 +265,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="beta"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        public static bool AreValidParams(int alpha, int beta)
+        public static Func<int, int, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
             return alpha > 0 && beta > 0;
-        }
+        };
 
         /// <summary>
         ///   Returns a fisher snedecor distributed floating point random number.

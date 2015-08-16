@@ -280,10 +280,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="lambda"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        public static bool AreValidParams(double alpha, double lambda)
+        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, lambda) =>
         {
             return alpha > 0.0 && lambda > 0.0;
-        }
+        };
 
         /// <summary>
         ///   Returns a weibull distributed floating point random number.

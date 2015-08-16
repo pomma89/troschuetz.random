@@ -260,10 +260,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="beta"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        public static bool AreValidParams(double alpha, double beta)
+        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
             return alpha > 0.0 && beta > 0.0;
-        }
+        };
 
         /// <summary>
         ///   Returns a pareto distributed floating point random number.

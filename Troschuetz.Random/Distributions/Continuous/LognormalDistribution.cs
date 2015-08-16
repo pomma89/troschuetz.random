@@ -269,10 +269,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="sigma"/> is greater than or equal to zero; otherwise, it
         ///   returns false.
         /// </returns>
-        public static bool AreValidParams(double mu, double sigma)
+        public static Func<double, double, bool> AreValidParams { get; set; } = (mu, sigma) =>
         {
             return !double.IsNaN(mu) && sigma >= 0.0;
-        }
+        };
 
         /// <summary>
         ///   Returns a lognormal distributed floating point random number.

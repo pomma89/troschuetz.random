@@ -300,10 +300,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <see cref="_sigma"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        public static bool AreValidParams(double mu, double sigma)
+        public static Func<double, double, bool> AreValidParams { get; set; } = (mu, sigma) =>
         {
             return !double.IsNaN(mu) && sigma > 0.0;
-        }
+        };
 
         /// <summary>
         ///   Returns a normal distributed floating point random number.

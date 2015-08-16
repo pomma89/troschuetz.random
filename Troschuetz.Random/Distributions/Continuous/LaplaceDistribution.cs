@@ -245,10 +245,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="alpha"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        public static bool AreValidParams(double alpha, double mu)
+        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, mu) =>
         {
             return alpha > 0.0 && !double.IsNaN(mu);
-        }
+        };
 
         /// <summary>
         ///   Returns a laplace distributed floating point random number.

@@ -251,10 +251,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   True if <paramref name="alpha"/> and <paramref name="theta"/> are greater than zero;
         ///   otherwise, it returns false.
         /// </returns>
-        public static bool AreValidParams(double alpha, double theta)
+        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, theta) =>
         {
             return alpha > 0.0 && theta > 0.0;
-        }
+        };
 
         /// <summary>
         ///   Returns a gamma distributed floating point random number.

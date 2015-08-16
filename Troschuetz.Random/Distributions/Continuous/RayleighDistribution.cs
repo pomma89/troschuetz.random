@@ -198,10 +198,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   True if <paramref name="sigma"/> is greater than zero; otherwise, it returns false.
         /// </returns>
-        public static bool IsValidParam(double sigma)
+        public static Func<double, bool> IsValidParam { get; set; } = sigma =>
         {
             return sigma > 0.0;
-        }
+        };
 
         /// <summary>
         ///   Returns a rayleigh distributed floating point random number.

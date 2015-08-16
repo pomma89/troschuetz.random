@@ -343,10 +343,10 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="beta"/> is greater than or equal to <paramref name="gamma"/>;
         ///   otherwise, it returns false.
         /// </returns>
-        public static bool AreValidParams(double alpha, double beta, double gamma)
+        public static Func<double, double, double, bool> AreValidParams { get; set; } = (alpha, beta, gamma) =>
         {
             return alpha < beta && alpha <= gamma && beta >= gamma;
-        }
+        };
 
         /// <summary>
         ///   Returns a triangular distributed floating point random number.
