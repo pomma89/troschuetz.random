@@ -234,17 +234,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether laplace distribution is defined under given parameters.
+        ///   Determines whether laplace distribution is defined under given parameters. The
+        ///   default definition returns true if alpha is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of laplace distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of laplace distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="LaplaceDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, mu) =>
         {
             return alpha > 0.0 && !double.IsNaN(mu);
@@ -261,6 +256,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter mu which is used for generation of laplace distributed random numbers.
         /// </param>
         /// <returns>A laplace distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="LaplaceDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, mu) =>
         {
             var rand = 0.5 - generator.NextDouble();

@@ -235,18 +235,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether erlang distribution is defined under given parameters.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> and <paramref name="lambda"/> are greater than zero;
+        ///   Determines whether erlang distribution is defined under given parameters. The
+        ///   default definition returns true if alpha and lambda are greater than zero;
         ///   otherwise, it returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ErlangDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<int, double, bool> AreValidParams { get; set; } = (alpha, lambda) =>
         {
             return alpha > 0 && lambda > 0.0;
@@ -263,6 +258,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter lambda which is used for generation of erlang distributed random numbers.
         /// </param>
         /// <returns>An erlang distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ErlangDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, int, double, double> Sample { get; set; } = (generator, alpha, lambda) =>
         {
             if (double.IsPositiveInfinity(lambda))

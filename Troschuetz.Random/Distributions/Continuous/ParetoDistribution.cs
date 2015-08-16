@@ -248,18 +248,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether pareto distribution is defined under given parameters.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of pareto distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of pareto distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> and <paramref name="beta"/> are greater than zero;
+        ///   Determines whether pareto distribution is defined under given parameters. The
+        ///   default definition returns true if alpha and beta are greater than zero;
         ///   otherwise, it returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ParetoDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
             return alpha > 0.0 && beta > 0.0;
@@ -276,6 +271,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter beta which is used for generation of pareto distributed random numbers.
         /// </param>
         /// <returns>A pareto distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ParetoDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var helper1 = 1.0 / beta;

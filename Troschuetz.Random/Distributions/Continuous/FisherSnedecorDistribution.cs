@@ -253,18 +253,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether fisher snedecor distribution is defined under given parameters.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher snedecor distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of fisher snedecor distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> and <paramref name="beta"/> are greater than zero;
+        ///   Determines whether fisher snedecor distribution is defined under given parameters. The
+        ///   default definition returns true if alpha and beta are greater than zero;
         ///   otherwise, it returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="FisherSnedecorDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<int, int, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
             return alpha > 0 && beta > 0;
@@ -281,6 +276,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter beta which is used for generation of fisher snedecor distributed random numbers.
         /// </param>
         /// <returns>A fisher snedecor distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="FisherSnedecorDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, int, int, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var helper1 = beta / (double) alpha;

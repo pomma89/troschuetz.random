@@ -190,14 +190,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether rayleigh distribution is defined under given parameter.
+        ///   Determines whether rayleigh distribution is defined under given parameter. The
+        ///   default definition returns true if sigma is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="sigma"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="RayleighDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<double, bool> IsValidParam { get; set; } = sigma =>
         {
             return sigma > 0.0;
@@ -211,6 +209,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
         /// </param>
         /// <returns>A rayleigh distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="RayleighDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, double, double> Sample { get; set; } = (generator, sigma) =>
         {
             const double mu = 0.0;

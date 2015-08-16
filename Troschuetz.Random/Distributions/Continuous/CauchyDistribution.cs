@@ -234,17 +234,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether cauchy distribution is defined under given parameters.
+        ///   Determines whether cauchy distribution is defined under given parameters. The
+        ///   default definition returns true if gamma is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of cauchy distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="gamma"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="CauchyDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, gamma) =>
         {
             return !double.IsNaN(alpha) && gamma > 0.0;

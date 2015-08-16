@@ -245,20 +245,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether continuous uniform distribution is defined under given parameters.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is less than or equal to <paramref name="beta"/>;
+        ///   Determines whether continuous uniform distribution is defined under given parameters. The
+        ///   default definition returns true if alpha is less than or equal to beta;
         ///   otherwise, it returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ContinuousUniformDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
             return alpha <= beta;
@@ -277,6 +270,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   random numbers.
         /// </param>
         /// <returns>A continuous uniform distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ContinuousUniformDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var helper1 = beta - alpha;

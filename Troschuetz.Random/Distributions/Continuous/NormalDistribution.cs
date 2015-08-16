@@ -289,17 +289,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether normal distribution is defined under given parameters.
+        ///   Determines whether normal distribution is defined under given parameters. The
+        ///   default definition returns true if sigma is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <see cref="_sigma"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="NormalDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (mu, sigma) =>
         {
             return !double.IsNaN(mu) && sigma > 0.0;
@@ -316,6 +311,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of normal distributed random numbers.
         /// </param>
         /// <returns>A normal distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="NormalDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, double, double, double> Sample { get; set; } = (generator, mu, sigma) =>
         {
             while (true)

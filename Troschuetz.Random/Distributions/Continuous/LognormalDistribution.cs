@@ -257,18 +257,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether lognormal distribution is defined under given parameters.
-        /// </summary>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of lognormal distributed random numbers.
-        /// </param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of lognormal distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="sigma"/> is greater than or equal to zero; otherwise, it
+        ///   Determines whether lognormal distribution is defined under given parameters. The
+        ///   default definition returns true if sigma is greater than or equal to zero; otherwise, it
         ///   returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="LognormalDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (mu, sigma) =>
         {
             return !double.IsNaN(mu) && sigma >= 0.0;
@@ -285,6 +280,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of lognormal distributed random numbers.
         /// </param>
         /// <returns>A lognormal distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="LognormalDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, double, double, double> Sample { get; set; } = (generator, mu, sigma) =>
         {
             const double nm = 0.0;

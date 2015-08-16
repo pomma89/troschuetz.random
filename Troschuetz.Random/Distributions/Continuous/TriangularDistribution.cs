@@ -326,23 +326,15 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether triangular distribution is defined under given parameters.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is less than <paramref name="beta"/>, and if
-        ///   <paramref name="alpha"/> is less than or equal to <paramref name="gamma"/>, and if
-        ///   <paramref name="beta"/> is greater than or equal to <paramref name="gamma"/>;
+        ///   Determines whether triangular distribution is defined under given parameters. The
+        ///   default definition returns true if alpha is less than beta, and if
+        ///   alpha is less than or equal to gamma, and if
+        ///   beta is greater than or equal to gamma;
         ///   otherwise, it returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="TriangularDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<double, double, double, bool> AreValidParams { get; set; } = (alpha, beta, gamma) =>
         {
             return alpha < beta && alpha <= gamma && beta >= gamma;
@@ -362,6 +354,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter gamma which is used for generation of triangular distributed random numbers.
         /// </param>
         /// <returns>A triangular distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="TriangularDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, double, double, double, double> Sample { get; set; } = (generator, alpha, beta, gamma) =>
         {
             var helper1 = gamma - alpha;

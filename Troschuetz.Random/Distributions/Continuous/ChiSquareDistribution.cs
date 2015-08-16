@@ -198,14 +198,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether chi square distribution is defined under given parameter.
+        ///   Determines whether chi square distribution is defined under given parameter. The
+        ///   default definition returns true if alpha is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of chi square distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ChiSquareDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<int, bool> IsValidParam { get; set; } = alpha =>
         {
             return alpha > 0;
@@ -219,6 +217,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter alpha which is used for generation of chi square distributed random numbers.
         /// </param>
         /// <returns>A chi square distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ChiSquareDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, int, double> Sample { get; set; } = (generator, alpha) =>
         {
             const double m = 0.0;

@@ -239,18 +239,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether gamma distribution is defined under given parameters.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of gamma distributed random numbers.
-        /// </param>
-        /// <param name="theta">
-        ///   The parameter theta which is used for generation of gamma distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> and <paramref name="theta"/> are greater than zero;
+        ///   Determines whether gamma distribution is defined under given parameters. The
+        ///   default definition returns true if alpha and theta are greater than zero;
         ///   otherwise, it returns false.
-        /// </returns>
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="GammaDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, theta) =>
         {
             return alpha > 0.0 && theta > 0.0;
@@ -267,6 +262,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter theta which is used for generation of gamma distributed random numbers.
         /// </param>
         /// <returns>A gamma distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="GammaDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, theta) =>
         {
             var helper1 = alpha - Math.Floor(alpha);

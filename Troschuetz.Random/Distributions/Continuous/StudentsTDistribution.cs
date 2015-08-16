@@ -203,14 +203,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether student's t distribution is defined under given parameter.
+        ///   Determines whether student's t distribution is defined under given parameter. The
+        ///   default definition returns true if nu is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="nu">
-        ///   The parameter nu which is used for generation of student's t distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="nu"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="StudentsTDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<int, bool> IsValidParam { get; set; } = nu =>
         {
             return nu > 0;
@@ -224,6 +222,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter nu which is used for generation of student's t distributed random numbers.
         /// </param>
         /// <returns>A student's t distributed floating point random number.</returns>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="StudentsTDistribution{TGen}"/> class.
+        /// </remarks>
         public static Func<TGen, int, double> Sample { get; set; } = (generator, nu) =>
         {
             const double mu = 0.0;
