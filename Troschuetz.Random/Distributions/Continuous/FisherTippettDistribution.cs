@@ -162,16 +162,28 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         #region IContinuousDistribution Members
 
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
         public double Minimum
         {
             get { return double.NegativeInfinity; }
         }
 
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
         public double Maximum
         {
             get { return double.PositiveInfinity; }
         }
 
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
         public double Mean
         {
             get
@@ -181,21 +193,43 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get { return Mu - Alpha * Math.Log(Math.Log(2)); }
         }
 
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
         public double Variance
         {
             get { return Math.Pow(Math.PI, 2.0) / 6.0 * Math.Pow(Alpha, 2.0); }
         }
 
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
         public double[] Mode
         {
             get { return new[] { Mu }; }
         }
 
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
         public double NextDouble()
         {
             return Sample(TypedGenerator, _alpha, _mu);

@@ -241,21 +241,39 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         #region IContinuousDistribution Members
 
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
         public double Minimum
         {
             get { return _alpha; }
         }
 
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
         public double Maximum
         {
             get { return _beta; }
         }
 
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
         public double Mean
         {
             get { return _alpha / 3.0 + _beta / 3.0 + _gamma / 3.0; }
         }
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get
@@ -268,6 +286,12 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
         public double Variance
         {
             get
@@ -277,11 +301,21 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
         public double[] Mode
         {
             get { return new[] { _gamma }; }
         }
 
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
         public double NextDouble()
         {
             return Sample(TypedGenerator, _alpha, _beta, _gamma);

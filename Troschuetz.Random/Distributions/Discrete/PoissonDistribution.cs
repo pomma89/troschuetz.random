@@ -241,8 +241,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="PoissonDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<double, bool> IsValidParam { get; } = lambda => lambda > 0;
+        public static Func<double, bool> IsValidParam { get; set; } = lambda => lambda > 0;
 
         /// <summary>
         ///   Declares a function returning a poisson distributed 32-bit signed integer.
@@ -250,8 +249,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="PoissonDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<TGen, double, int> Sample { get; } = (generator, lambda) =>
+        public static Func<TGen, double, int> Sample { get; set; } = (generator, lambda) =>
         {
             // See contribution of JcBernack on BitBucket (issue #2) and see Wikipedia page about
             // Poisson distribution (https://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables).

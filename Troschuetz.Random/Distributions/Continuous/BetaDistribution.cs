@@ -159,31 +159,61 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         #region IContinuousDistribution Members
 
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
         public double Minimum
         {
             get { return 0.0; }
         }
 
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
         public double Maximum
         {
             get { return 1.0; }
         }
 
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
         public double Mean
         {
             get { return _alpha / (_alpha + _beta); }
         }
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
         }
 
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
         public double Variance
         {
             get { return (_alpha * _beta) / (Math.Pow(_alpha + _beta, 2.0) * (_alpha + _beta + 1.0)); }
         }
 
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
         public double[] Mode
         {
             get
@@ -208,6 +238,10 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
         public double NextDouble()
         {
             return Sample(TypedGenerator, _alpha, _beta);
@@ -249,9 +283,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>A beta distributed floating point random number.</returns>
         internal static double Sample(TGen generator, double alpha, double beta)
         {
-            var x = GammaDistribution<TGen>.Sample(generator, alpha, GammaDistribution.DefaultTheta);
-            var t = 1.0 / (x + GammaDistribution<TGen>.Sample(generator, beta, GammaDistribution.DefaultTheta));
-            return t == 0 ? 1 : x * t;
+            var x = GammaDistribution<TGen>.Sample(generator, alpha, GammaDistribution<TGen>.DefaultTheta);
+            var t = 1.0 / (x + GammaDistribution<TGen>.Sample(generator, beta, GammaDistribution<TGen>.DefaultTheta));
+            return t == 0.0 ? 1.0 : x * t;
         }
 
         #endregion TRandom Helpers

@@ -20,19 +20,19 @@
 
 namespace Troschuetz.Random
 {
+    using Core;
     using Distributions.Continuous;
     using Distributions.Discrete;
-    using PommaLabs.Thrower;
     using Generators;
+    using PommaLabs.Thrower;
     using System;
     using System.Collections.Generic;
-    using Core;
     using System.Runtime.CompilerServices;
 
     /// <summary>
-    ///   A random generator class similar to the one Python offers,
-    ///   providing functions similar to the ones found in <see cref="System.Random"/>
-    ///   and functions returning random numbers according to a particular kind of distribution.
+    ///   A random generator class similar to the one Python offers, providing functions similar to
+    ///   the ones found in <see cref="System.Random"/> and functions returning random numbers
+    ///   according to a particular kind of distribution.
     /// </summary>
     [Serializable]
     public class TRandom<TGen> : IGenerator where TGen : IGenerator
@@ -52,9 +52,7 @@ namespace Troschuetz.Random
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A bernoulli distributed 32-bit signed integer.
-        /// </returns>
+        /// <returns>A bernoulli distributed 32-bit signed integer.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
@@ -63,9 +61,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BernoulliDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="BernoulliDistribution"/> for each group of parameters.
         /// </remarks>
         public int Bernoulli(double alpha)
         {
@@ -79,9 +77,7 @@ namespace Troschuetz.Random
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of bernoulli distributed 32-bit signed integers.
-        /// </returns>
+        /// <returns>An infinite sequence of bernoulli distributed 32-bit signed integers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
@@ -90,9 +86,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BernoulliDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="BernoulliDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> BernoulliSamples(double alpha)
         {
@@ -110,21 +106,19 @@ namespace Troschuetz.Random
         /// <param name="beta">
         ///   The parameter beta which is used for generation of binomial distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A binomial distributed 32-bit signed integer.
-        /// </returns>
+        /// <returns>A binomial distributed 32-bit signed integer.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than zero or greater than one,
-        ///   or <paramref name="beta"/> is less than zero.
+        ///   <paramref name="alpha"/> is less than zero or greater than one, or
+        ///   <paramref name="beta"/> is less than zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BinomialDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BinomialDistribution{TGen}.Next"/>, with
+        ///   a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BinomialDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="BinomialDistribution"/> for each group of parameters.
         /// </remarks>
         public int Binomial(double alpha, int beta)
         {
@@ -142,21 +136,19 @@ namespace Troschuetz.Random
         /// <param name="beta">
         ///   The parameter beta which is used for generation of binomial distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of binomial distributed 32-bit signed integers.
-        /// </returns>
+        /// <returns>An infinite sequence of binomial distributed 32-bit signed integers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than zero or greater than one,
-        ///   or <paramref name="beta"/> is less than zero.
+        ///   <paramref name="alpha"/> is less than zero or greater than one, or
+        ///   <paramref name="beta"/> is less than zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BinomialDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BinomialDistribution{TGen}.Next"/>, with
+        ///   a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BinomialDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="BinomialDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> BinomialSamples(double alpha, int beta)
         {
@@ -169,12 +161,10 @@ namespace Troschuetz.Random
         ///   Returns a categorical distributed 32-bit signed integer.
         /// </summary>
         /// <param name="valueCount">
-        ///   The parameter valueCount which is used for generation of binomial distributed random numbers
-        ///   by setting the number of equi-distributed "weights" the distribution will have.
+        ///   The parameter valueCount which is used for generation of binomial distributed random
+        ///   numbers by setting the number of equi-distributed "weights" the distribution will have.
         /// </param>
-        /// <returns>
-        ///   A categorical distributed 32-bit signed integer.
-        /// </returns>
+        /// <returns>A categorical distributed 32-bit signed integer.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="valueCount"/> is less than or equal to zero.
         /// </exception>
@@ -183,9 +173,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public int Categorical(int valueCount)
         {
@@ -200,12 +190,10 @@ namespace Troschuetz.Random
         ///   Returns an infinite sequence of categorical distributed 32-bit signed integers.
         /// </summary>
         /// <param name="valueCount">
-        ///   The parameter valueCount which is used for generation of binomial distributed random numbers
-        ///   by setting the number of equi-distributed "weights" the distribution will have.
+        ///   The parameter valueCount which is used for generation of binomial distributed random
+        ///   numbers by setting the number of equi-distributed "weights" the distribution will have.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of categorical distributed 32-bit signed integers.
-        /// </returns>
+        /// <returns>An infinite sequence of categorical distributed 32-bit signed integers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="valueCount"/> is less than or equal to zero.
         /// </exception>
@@ -214,9 +202,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> CategoricalSamples(int valueCount)
         {
@@ -234,12 +222,8 @@ namespace Troschuetz.Random
         ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
         ///   as this is often impossible using floating point arithmetic.
         /// </param>
-        /// <returns>
-        ///   A categorical distributed 32-bit signed integer.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="weights"/> is null.
-        /// </exception>
+        /// <returns>A categorical distributed 32-bit signed integer.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="weights"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="weights"/> is empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
@@ -249,9 +233,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public int Categorical(ICollection<double> weights)
         {
@@ -270,12 +254,8 @@ namespace Troschuetz.Random
         ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
         ///   as this is often impossible using floating point arithmetic.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of categorical distributed 32-bit signed integers.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="weights"/> is null.
-        /// </exception>
+        /// <returns>An infinite sequence of categorical distributed 32-bit signed integers.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="weights"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="weights"/> is empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
@@ -285,9 +265,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CategoricalDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> CategoricalSamples(ICollection<double> weights)
         {
@@ -303,26 +283,26 @@ namespace Troschuetz.Random
         ///   Returns a discrete uniform distributed 32-bit signed integer.
         /// </summary>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of discrete uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A discrete uniform distributed 32-bit signed integer.
-        /// </returns>
+        /// <returns>A discrete uniform distributed 32-bit signed integer.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>,
-        ///   or <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
+        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>, or
+        ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="DiscreteUniformDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="DiscreteUniformDistribution{TGen}.Next"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="DiscreteUniformDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="DiscreteUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public int DiscreteUniform(int alpha, int beta)
         {
@@ -335,7 +315,8 @@ namespace Troschuetz.Random
         ///   Returns an infinite sequence of discrete uniform distributed 32-bit signed integers.
         /// </summary>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of discrete uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
@@ -344,17 +325,18 @@ namespace Troschuetz.Random
         ///   An infinite sequence of discrete uniform distributed 32-bit signed integers.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>,
-        ///   or <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
+        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>, or
+        ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="DiscreteUniformDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="DiscreteUniformDistribution{TGen}.Next"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="DiscreteUniformDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="DiscreteUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> DiscreteUniformSamples(int alpha, int beta)
         {
@@ -369,9 +351,7 @@ namespace Troschuetz.Random
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of geometric distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A geometric distributed 32-bit signed integer.
-        /// </returns>
+        /// <returns>A geometric distributed 32-bit signed integer.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
@@ -380,9 +360,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="GeometricDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="GeometricDistribution"/> for each group of parameters.
         /// </remarks>
         public int Geometric(double alpha)
         {
@@ -397,9 +377,7 @@ namespace Troschuetz.Random
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of geometric distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of geometric distributed 32-bit signed integers.
-        /// </returns>
+        /// <returns>An infinite sequence of geometric distributed 32-bit signed integers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
@@ -408,9 +386,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="GeometricDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="GeometricDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> GeometricSamples(double alpha)
         {
@@ -425,20 +403,18 @@ namespace Troschuetz.Random
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of poisson distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A poisson distributed 32-bit signed integer.
-        /// </returns>
+        /// <returns>A poisson distributed 32-bit signed integer.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PoissonDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PoissonDistribution{TGen}.Next"/>, with
+        ///   a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="PoissonDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="PoissonDistribution"/> for each group of parameters.
         /// </remarks>
         public int Poisson(double lambda)
         {
@@ -453,20 +429,18 @@ namespace Troschuetz.Random
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of poisson distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of poisson distributed 32-bit signed integers.
-        /// </returns>
+        /// <returns>An infinite sequence of poisson distributed 32-bit signed integers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PoissonDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PoissonDistribution{TGen}.Next"/>, with
+        ///   a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="PoissonDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="PoissonDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> PoissonSamples(double lambda)
         {
@@ -488,9 +462,7 @@ namespace Troschuetz.Random
         /// <param name="beta">
         ///   The parameter beta which is used for generation of beta distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A beta distributed floating point random number.
-        /// </returns>
+        /// <returns>A beta distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
@@ -499,9 +471,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BetaDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="BetaDistribution"/> for each group of parameters.
         /// </remarks>
         public double Beta(double alpha, double beta)
         {
@@ -518,9 +490,7 @@ namespace Troschuetz.Random
         /// <param name="beta">
         ///   The parameter beta which is used for generation of beta distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of beta distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of beta distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
@@ -529,9 +499,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BetaDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="BetaDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> BetaSamples(double alpha, double beta)
         {
@@ -548,20 +518,19 @@ namespace Troschuetz.Random
         /// <param name="beta">
         ///   The parameter beta which is used for generation of beta prime distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A beta prime distributed floating point random number.
-        /// </returns>
+        /// <returns>A beta prime distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to one.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BetaPrimeDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="BetaPrimeDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BetaPrimeDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="BetaPrimeDistribution"/> for each group of parameters.
         /// </remarks>
         public double BetaPrime(double alpha, double beta)
         {
@@ -585,13 +554,14 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to one.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BetaPrimeDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="BetaPrimeDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="BetaPrimeDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="BetaPrimeDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> BetaPrimeSamples(double alpha, double beta)
         {
@@ -608,9 +578,7 @@ namespace Troschuetz.Random
         /// <param name="gamma">
         ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A cauchy distributed floating point random number.
-        /// </returns>
+        /// <returns>A cauchy distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="gamma"/> is less than or equal to zero.
         /// </exception>
@@ -619,9 +587,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CauchyDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="CauchyDistribution"/> for each group of parameters.
         /// </remarks>
         public double Cauchy(double alpha, double gamma)
         {
@@ -638,9 +606,7 @@ namespace Troschuetz.Random
         /// <param name="gamma">
         ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of cauchy distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of cauchy distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="gamma"/> is less than or equal to zero.
         /// </exception>
@@ -649,9 +615,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="CauchyDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="CauchyDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> CauchySamples(double alpha, double gamma)
         {
@@ -665,9 +631,7 @@ namespace Troschuetz.Random
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of chi distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A chi distributed floating point random number.
-        /// </returns>
+        /// <returns>A chi distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
@@ -676,9 +640,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ChiDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ChiDistribution"/> for each group of parameters.
         /// </remarks>
         public double Chi(int alpha)
         {
@@ -692,9 +656,7 @@ namespace Troschuetz.Random
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of chi distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of chi distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of chi distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
@@ -703,9 +665,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ChiDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ChiDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ChiSamples(int alpha)
         {
@@ -719,20 +681,19 @@ namespace Troschuetz.Random
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of chi square distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A chi square distributed floating point random number.
-        /// </returns>
+        /// <returns>A chi square distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ChiSquareDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="ChiSquareDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ChiSquareDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ChiSquareDistribution"/> for each group of parameters.
         /// </remarks>
         public double ChiSquare(int alpha)
         {
@@ -753,13 +714,14 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ChiSquareDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="ChiSquareDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ChiSquareDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ChiSquareDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ChiSquareSamples(int alpha)
         {
@@ -771,25 +733,26 @@ namespace Troschuetz.Random
         ///   Returns a continuous uniform distributed floating point random number.
         /// </summary>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter beta which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
-        /// <returns>
-        ///   A continuous uniform distributed floating point random number.
-        /// </returns>
+        /// <returns>A continuous uniform distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ContinuousUniformDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="ContinuousUniformDistribution{TGen}.NextDouble"/>, with a prior adjustement
+        ///   of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ContinuousUniformDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ContinuousUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public double ContinuousUniform(double alpha, double beta)
         {
@@ -801,10 +764,12 @@ namespace Troschuetz.Random
         ///   Returns an infinite sequence of continuous uniform distributed floating point random numbers.
         /// </summary>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter alpha which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed random numbers.
+        ///   The parameter beta which is used for generation of continuous uniform distributed
+        ///   random numbers.
         /// </param>
         /// <returns>
         ///   An infinite sequence of continuous uniform distributed floating point random numbers.
@@ -813,13 +778,14 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ContinuousUniformDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="ContinuousUniformDistribution{TGen}.NextDouble"/>, with a prior adjustement
+        ///   of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ContinuousUniformDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ContinuousUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ContinuousUniformSamples(double alpha, double beta)
         {
@@ -836,9 +802,7 @@ namespace Troschuetz.Random
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of erlang distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An erlang distributed floating point random number.
-        /// </returns>
+        /// <returns>An erlang distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
@@ -847,9 +811,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ErlangDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ErlangDistribution"/> for each group of parameters.
         /// </remarks>
         public double Erlang(int alpha, double lambda)
         {
@@ -866,9 +830,7 @@ namespace Troschuetz.Random
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of erlang distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of erlang distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of erlang distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
@@ -877,9 +839,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ErlangDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ErlangDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ErlangSamples(int alpha, double lambda)
         {
@@ -893,20 +855,19 @@ namespace Troschuetz.Random
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of exponential distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An exponential distributed floating point random number.
-        /// </returns>
+        /// <returns>An exponential distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ExponentialDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="ExponentialDistribution{TGen}.NextDouble"/>, with a prior adjustement of
+        ///   the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ExponentialDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ExponentialDistribution"/> for each group of parameters.
         /// </remarks>
         public double Exponential(double lambda)
         {
@@ -928,13 +889,14 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ExponentialDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="ExponentialDistribution{TGen}.NextDouble"/>, with a prior adjustement of
+        ///   the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ExponentialDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ExponentialDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ExponentialSamples(double lambda)
         {
@@ -952,20 +914,19 @@ namespace Troschuetz.Random
         /// <param name="beta">
         ///   The parameter beta which is used for generation of fisher snedecor distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A fisher snedecor distributed floating point random number.
-        /// </returns>
+        /// <returns>A fisher snedecor distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="FisherSnedecorDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="FisherSnedecorDistribution{TGen}.NextDouble"/>, with a prior adjustement of
+        ///   the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="FisherSnedecorDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="FisherSnedecorDistribution"/> for each group of parameters.
         /// </remarks>
         public double FisherSnedecor(int alpha, int beta)
         {
@@ -989,13 +950,14 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="FisherSnedecorDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="FisherSnedecorDistribution{TGen}.NextDouble"/>, with a prior adjustement of
+        ///   the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="FisherSnedecorDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="FisherSnedecorDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> FisherSnedecorSamples(int alpha, int beta)
         {
@@ -1012,20 +974,19 @@ namespace Troschuetz.Random
         /// <param name="mu">
         ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A fisher tippett distributed floating point random number.
-        /// </returns>
+        /// <returns>A fisher tippett distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="FisherTippettDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="FisherTippettDistribution{TGen}.NextDouble"/>, with a prior adjustement of
+        ///   the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="FisherTippettDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="FisherTippettDistribution"/> for each group of parameters.
         /// </remarks>
         public double FisherTippett(double alpha, double mu)
         {
@@ -1049,13 +1010,14 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="FisherTippettDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="FisherTippettDistribution{TGen}.NextDouble"/>, with a prior adjustement of
+        ///   the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="FisherTippettDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="FisherTippettDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> FisherTippettSamples(double alpha, double mu)
         {
@@ -1072,9 +1034,7 @@ namespace Troschuetz.Random
         /// <param name="theta">
         ///   The parameter theta which is used for generation of gamma distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A gamma distributed floating point random number.
-        /// </returns>
+        /// <returns>A gamma distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
@@ -1083,9 +1043,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="GammaDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="GammaDistribution"/> for each group of parameters.
         /// </remarks>
         public double Gamma(double alpha, double theta)
         {
@@ -1102,9 +1062,7 @@ namespace Troschuetz.Random
         /// <param name="theta">
         ///   The parameter theta which is used for generation of gamma distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of gamma distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of gamma distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
@@ -1113,9 +1071,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="GammaDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="GammaDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> GammaSamples(double alpha, double theta)
         {
@@ -1132,9 +1090,7 @@ namespace Troschuetz.Random
         /// <param name="mu">
         ///   The parameter mu which is used for generation of laplace distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A laplace distributed floating point random number.
-        /// </returns>
+        /// <returns>A laplace distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
@@ -1143,9 +1099,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="LaplaceDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="LaplaceDistribution"/> for each group of parameters.
         /// </remarks>
         public double Laplace(double alpha, double mu)
         {
@@ -1162,9 +1118,7 @@ namespace Troschuetz.Random
         /// <param name="mu">
         ///   The parameter mu which is used for generation of laplace distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of laplace distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of laplace distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
@@ -1173,9 +1127,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="LaplaceDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="LaplaceDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> LaplaceSamples(double alpha, double mu)
         {
@@ -1192,20 +1146,19 @@ namespace Troschuetz.Random
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of lognormal distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A lognormal distributed floating point random number.
-        /// </returns>
+        /// <returns>A lognormal distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="LognormalDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="LognormalDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="LognormalDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="LognormalDistribution"/> for each group of parameters.
         /// </remarks>
         public double Lognormal(double mu, double sigma)
         {
@@ -1229,13 +1182,14 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="LognormalDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="LognormalDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="LognormalDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="LognormalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> LognormalSamples(double mu, double sigma)
         {
@@ -1252,9 +1206,7 @@ namespace Troschuetz.Random
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of normal distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A normal distributed floating point random number.
-        /// </returns>
+        /// <returns>A normal distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
@@ -1263,9 +1215,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="NormalDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="NormalDistribution"/> for each group of parameters.
         /// </remarks>
         public double Normal(double mu, double sigma)
         {
@@ -1283,9 +1235,7 @@ namespace Troschuetz.Random
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of normal distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of normal distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of normal distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
@@ -1294,9 +1244,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="NormalDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="NormalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> NormalSamples(double mu, double sigma)
         {
@@ -1314,9 +1264,7 @@ namespace Troschuetz.Random
         /// <param name="beta">
         ///   The parameter beta which is used for generation of pareto distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A pareto distributed floating point random number.
-        /// </returns>
+        /// <returns>A pareto distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
@@ -1325,9 +1273,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ParetoDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ParetoDistribution"/> for each group of parameters.
         /// </remarks>
         public double Pareto(double alpha, double beta)
         {
@@ -1344,9 +1292,7 @@ namespace Troschuetz.Random
         /// <param name="beta">
         ///   The parameter beta which is used for generation of pareto distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of pareto distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of pareto distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
@@ -1355,9 +1301,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="ParetoDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="ParetoDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ParetoSamples(double alpha, double beta)
         {
@@ -1374,9 +1320,7 @@ namespace Troschuetz.Random
         /// <param name="beta">
         ///   The parameter beta which is used for generation of power distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A power distributed floating point random number.
-        /// </returns>
+        /// <returns>A power distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
@@ -1385,9 +1329,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="PowerDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="PowerDistribution"/> for each group of parameters.
         /// </remarks>
         public double Power(double alpha, double beta)
         {
@@ -1404,9 +1348,7 @@ namespace Troschuetz.Random
         /// <param name="beta">
         ///   The parameter beta which is used for generation of power distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of power distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of power distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
@@ -1415,9 +1357,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="PowerDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="PowerDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> PowerSamples(double alpha, double beta)
         {
@@ -1431,20 +1373,19 @@ namespace Troschuetz.Random
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A rayleigh distributed floating point random number.
-        /// </returns>
+        /// <returns>A rayleigh distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="RayleighDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="RayleighDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="RayleighDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="RayleighDistribution"/> for each group of parameters.
         /// </remarks>
         public double Rayleigh(double sigma)
         {
@@ -1465,13 +1406,14 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="RayleighDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="RayleighDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="RayleighDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="RayleighDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> RayleighSamples(double sigma)
         {
@@ -1485,20 +1427,19 @@ namespace Troschuetz.Random
         /// <param name="nu">
         ///   The parameter nu which is used for generation of student's t distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A student's t distributed floating point random number.
-        /// </returns>
+        /// <returns>A student's t distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="StudentsTDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="StudentsTDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="StudentsTDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="StudentsTDistribution"/> for each group of parameters.
         /// </remarks>
         public double StudentsT(int nu)
         {
@@ -1519,13 +1460,14 @@ namespace Troschuetz.Random
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="StudentsTDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="StudentsTDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="StudentsTDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="StudentsTDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> StudentsTSamples(int nu)
         {
@@ -1545,22 +1487,21 @@ namespace Troschuetz.Random
         /// <param name="gamma">
         ///   The parameter gamma which is used for generation of triangular distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A triangular distributed floating point random number.
-        /// </returns>
+        /// <returns>A triangular distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than or equal to <paramref name="beta"/>,
-        ///   or <paramref name="alpha"/> is greater than <paramref name="gamma"/>,
-        ///   or <paramref name="beta"/> is less than <paramref name="gamma"/>.
+        ///   <paramref name="alpha"/> is greater than or equal to <paramref name="beta"/>, or
+        ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
+        ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="TriangularDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="TriangularDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="TriangularDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="TriangularDistribution"/> for each group of parameters.
         /// </remarks>
         public double Triangular(double alpha, double beta, double gamma)
         {
@@ -1584,18 +1525,19 @@ namespace Troschuetz.Random
         ///   An infinite sequence of triangular distributed floating point random numbers.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than or equal to <paramref name="beta"/>,
-        ///   or <paramref name="alpha"/> is greater than <paramref name="gamma"/>,
-        ///   or <paramref name="beta"/> is less than <paramref name="gamma"/>.
+        ///   <paramref name="alpha"/> is greater than or equal to <paramref name="beta"/>, or
+        ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
+        ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="TriangularDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to
+        ///   <see cref="TriangularDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="TriangularDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="TriangularDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> TriangularSamples(double alpha, double beta, double gamma)
         {
@@ -1612,9 +1554,7 @@ namespace Troschuetz.Random
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of weibull distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   A weibull distributed floating point random number.
-        /// </returns>
+        /// <returns>A weibull distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
@@ -1623,9 +1563,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="WeibullDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="WeibullDistribution"/> for each group of parameters.
         /// </remarks>
         public double Weibull(double alpha, double lambda)
         {
@@ -1642,9 +1582,7 @@ namespace Troschuetz.Random
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of weibull distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of weibull distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of weibull distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
@@ -1653,9 +1591,9 @@ namespace Troschuetz.Random
         ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters.
-        ///   If you absolutely need the best performance, you may consider using
-        ///   an instance of <see cref="WeibullDistribution"/> for each group of parameters.
+        ///   This method is slightly more efficient when called with the same parameters. If you
+        ///   absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="WeibullDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> WeibullSamples(double alpha, double lambda)
         {
@@ -1667,29 +1605,194 @@ namespace Troschuetz.Random
 
         #region IGenerator Members
 
+        /// <summary>
+        ///   The seed value used by the generator.
+        /// </summary>
         public uint Seed => _gen.Seed;
 
+        /// <summary>
+        ///   Gets a value indicating whether the random number generator can be reset, so that it
+        ///   produces the same random number sequence again.
+        /// </summary>
         public bool CanReset => _gen.CanReset;
 
+        /// <summary>
+        ///   Resets the random number generator using the initial seed, so that it produces the
+        ///   same random number sequence again. To understand whether this generator can be reset,
+        ///   you can query the <see cref="P:Troschuetz.Random.IGenerator.CanReset"/> property.
+        /// </summary>
+        /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         public bool Reset() => _gen.Reset(Seed);
+
+        /// <summary>
+        ///   Resets the random number generator using the specified seed, so that it produces the
+        ///   same random number sequence again. To understand whether this generator can be reset,
+        ///   you can query the <see cref="P:Troschuetz.Random.IGenerator.CanReset"/> property.
+        /// </summary>
+        /// <param name="seed">The seed value used by the generator.</param>
+        /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         public bool Reset(uint seed) => _gen.Reset(seed);
 
+        /// <summary>
+        ///   Returns a nonnegative random number less than <see cref="F:System.Int32.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to 0, and less than
+        ///   <see cref="F:System.Int32.MaxValue"/>; that is, the range of return values includes 0
+        ///   but not <see cref="F:System.Int32.MaxValue"/>.
+        /// </returns>
         public int Next() => _gen.Next();
+
+        /// <summary>
+        ///   Returns a nonnegative random number less than or equal to <see cref="F:System.Int32.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
+        ///   <see cref="F:System.Int32.MaxValue"/>; that is, the range of return values includes 0
+        ///   and <see cref="F:System.Int32.MaxValue"/>.
+        /// </returns>
         public int NextInclusiveMaxValue() => _gen.NextInclusiveMaxValue();
+
+        /// <summary>
+        ///   Returns a nonnegative random number less than the specified maximum.
+        /// </summary>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to 0, and less than
+        ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to 0.
+        /// </exception>
         public int Next(int maxValue) => _gen.Next(maxValue);
+
+        /// <summary>
+        ///   Returns a random number within the specified range.
+        /// </summary>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">
+        ///   The exclusive upper bound of the random number to be generated.
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </param>
+        /// <returns>
+        ///   A 32-bit signed integer greater than or equal to <paramref name="minValue"/>, and less
+        ///   than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </exception>
         public int Next(int minValue, int maxValue) => _gen.Next(minValue, maxValue);
 
+        /// <summary>
+        ///   Returns a nonnegative floating point random number less than 1.0.
+        /// </summary>
+        /// <returns>
+        ///   A double-precision floating point number greater than or equal to 0.0, and less than
+        ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
+        /// </returns>
         public double NextDouble() => _gen.NextDouble();
+
+        /// <summary>
+        ///   Returns a nonnegative floating point random number less than the specified maximum.
+        /// </summary>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
+        /// <returns>
+        ///   A double-precision floating point number greater than or equal to 0.0, and less than
+        ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to 0.0.
+        /// </exception>
+        /// <exception cref="T:System.ArgumentException">
+        ///   <paramref name="maxValue"/> cannot be <see cref="F:System.Double.PositiveInfinity"/>.
+        /// </exception>
         public double NextDouble(double maxValue) => _gen.NextDouble(maxValue);
+
+        /// <summary>
+        ///   Returns a floating point random number within the specified range.
+        /// </summary>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
+        /// <returns>
+        ///   A double-precision floating point number greater than or equal to
+        ///   <paramref name="minValue"/>, and less than <paramref name="maxValue"/>; that is, the
+        ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </exception>
+        /// <exception cref="T:System.ArgumentException">
+        ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
+        ///   cannot be <see cref="F:System.Double.PositiveInfinity"/>.
+        /// </exception>
         public double NextDouble(double minValue, double maxValue) => _gen.NextDouble(minValue, maxValue);
 
+        /// <summary>
+        ///   Returns an unsigned random number.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to
+        ///   <see cref="F:System.UInt32.MinValue"/> and less than or equal to <see cref="F:System.UInt32.MaxValue"/>.
+        /// </returns>
         public uint NextUInt() => _gen.NextUInt();
+
+        /// <summary>
+        ///   Returns an unsigned random number less than the specified maximum.
+        /// </summary>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to
+        ///   <see cref="F:System.UInt32.MinValue"/> and less than <paramref name="maxValue"/>; that
+        ///   is, the range of return values includes <see cref="F:System.UInt32.MinValue"/> but not <paramref name="maxValue"/>.
+        /// </returns>
         public uint NextUInt(uint maxValue) => _gen.NextUInt(maxValue);
+
+        /// <summary>
+        ///   Returns an unsigned random number less than <see cref="F:System.UInt32.MaxValue"/>.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to
+        ///   <see cref="F:System.UInt32.MinValue"/> and less than <see cref="F:System.UInt32.MaxValue"/>.
+        /// </returns>
         public uint NextUIntExclusiveMaxValue() => _gen.NextUIntExclusiveMaxValue();
+
+        /// <summary>
+        ///   Returns an unsigned random number within the specified range.
+        /// </summary>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <paramref name="minValue"/> and
+        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        /// </returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        /// </exception>
         public uint NextUInt(uint minValue, uint maxValue) => _gen.NextUInt(minValue, maxValue);
 
+        /// <summary>
+        ///   Returns a random Boolean value.
+        /// </summary>
+        /// <remarks>
+        ///   Buffers 31 random bits for future calls, so the random number generator is only
+        ///   invoked once in every 31 calls.
+        /// </remarks>
+        /// <returns>A <see cref="T:System.Boolean"/> value.</returns>
         public bool NextBoolean() => _gen.NextBoolean();
 
+        /// <summary>
+        ///   Fills the elements of a specified array of bytes with random numbers.
+        /// </summary>
+        /// <remarks>
+        ///   Each element of the array of bytes is set to a random number greater than or equal to
+        ///   0, and less than or equal to <see cref="F:System.Byte.MaxValue"/>.
+        /// </remarks>
+        /// <param name="buffer">An array of bytes to contain random numbers.</param>
+        /// <exception cref="T:System.ArgumentNullException">
+        ///   <paramref name="buffer"/> is null.
+        /// </exception>
         public void NextBytes(byte[] buffer)
         {
             _gen.NextBytes(buffer);
@@ -1699,6 +1802,10 @@ namespace Troschuetz.Random
 
         #region Object Members
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
         public override string ToString() => string.Format("Generator: {0}", _gen);
 
         #endregion Object Members
@@ -1706,6 +1813,7 @@ namespace Troschuetz.Random
         #region Private Members
 
 #if PORTABLE
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         static IEnumerable<TRet> InfiniteLoop<T1, T2, TRet>(Func<T1, T2, TRet> f, T1 a1, T2 a2)
@@ -1717,6 +1825,7 @@ namespace Troschuetz.Random
         }
 
 #if PORTABLE
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, TRet>(Func<T1, T2, T3, TRet> f, T1 a1, T2 a2, T3 a3)
@@ -1728,6 +1837,7 @@ namespace Troschuetz.Random
         }
 
 #if PORTABLE
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, T4, TRet>(Func<T1, T2, T3, T4, TRet> f, T1 a1, T2 a2, T3 a3, T4 a4)
@@ -1742,24 +1852,24 @@ namespace Troschuetz.Random
     }
 
     /// <summary>
-    ///   A random generator class similar to the one Python offers,
-    ///   providing functions similar to the ones found in <see cref="Random"/>
-    ///   and functions returning random numbers according to a particular kind of distribution.
+    ///   A random generator class similar to the one Python offers, providing functions similar to
+    ///   the ones found in <see cref="Random"/> and functions returning random numbers according to
+    ///   a particular kind of distribution.
     /// </summary>
     [Serializable]
     public sealed class TRandom : TRandom<IGenerator>
     {
         /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
-        ///   and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
         /// </summary>
         public TRandom() : this(new NumericalRecipes3Q1Generator(Environment.TickCount))
         {
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
-        ///   and the specified seed.
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public TRandom(int seed) : this(new NumericalRecipes3Q1Generator(seed))
@@ -1767,8 +1877,8 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
-        ///   and the specified seed.
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public TRandom(uint seed) : this(new NumericalRecipes3Q1Generator(seed))
@@ -1785,21 +1895,21 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
-        ///   and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
         /// </summary>
         public static TRandom<NumericalRecipes3Q1Generator> New() => new TRandom<NumericalRecipes3Q1Generator>(new NumericalRecipes3Q1Generator(Environment.TickCount));
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
-        ///   and the specified seed.
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public static TRandom<NumericalRecipes3Q1Generator> New(int seed) => new TRandom<NumericalRecipes3Q1Generator>(new NumericalRecipes3Q1Generator(seed));
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as underlying generator
-        ///   and the specified seed.
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public static TRandom<NumericalRecipes3Q1Generator> New(uint seed) => new TRandom<NumericalRecipes3Q1Generator>(new NumericalRecipes3Q1Generator(seed));

@@ -113,18 +113,52 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         #region IContinuousDistribution Members
 
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
         public double Minimum => 0.0;
 
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
         public double Maximum => double.PositiveInfinity;
 
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
         public double Mean => 1.0 / _lambda;
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median => Math.Log(2.0) / _lambda;
 
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
         public double Variance => Math.Pow(_lambda, -2.0);
 
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
         public double[] Mode => new[] { 0.0 };
 
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
         public double NextDouble() => Sample(TypedGenerator, _lambda);
 
         #endregion IContinuousDistribution Members
@@ -138,8 +172,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <remarks>
         ///   This is an extensibility point for the <see cref="ExponentialDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<double, bool> IsValidParam { get; } = lambda => lambda > 0.0;
+        public static Func<double, bool> IsValidParam { get; set; } = lambda => lambda > 0.0;
 
         /// <summary>
         ///   Declares a function returning an exponential distributed floating point random number.
@@ -147,8 +180,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <remarks>
         ///   This is an extensibility point for the <see cref="ExponentialDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<TGen, double, double> Sample { get; } = (generator, lambda) =>
+        public static Func<TGen, double, double> Sample { get; set; } = (generator, lambda) =>
         {
             // Algorithm taken from "Numerical Recipes in C++", 3rd edition. 
             double u;

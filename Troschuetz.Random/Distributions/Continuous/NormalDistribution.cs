@@ -178,7 +178,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <see cref="sigma"/> is less than or equal to zero.
+        ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         public NormalDistribution(TGen generator, double mu, double sigma) : base(generator)
         {
@@ -215,36 +215,70 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         #region IContinuousDistribution Members
 
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
         public double Minimum
         {
             get { return double.NegativeInfinity; }
         }
 
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
         public double Maximum
         {
             get { return double.PositiveInfinity; }
         }
 
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
         public double Mean
         {
             get { return _mu; }
         }
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get { return _mu; }
         }
 
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
         public double Variance
         {
             get { return Math.Pow(_sigma, 2.0); }
         }
 
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
         public double[] Mode
         {
             get { return new[] { _mu }; }
         }
 
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
         public double NextDouble()
         {
             return Sample(TypedGenerator, _mu, _sigma);
@@ -368,7 +402,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of normal distributed random numbers.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <see cref="sigma"/> is less than or equal to zero.
+        ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         public NormalDistribution(double mu, double sigma) : base(new NumericalRecipes3Q1Generator(), mu, sigma)
         {
@@ -391,7 +425,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of normal distributed random numbers.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <see cref="sigma"/> is less than or equal to zero.
+        ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         public NormalDistribution(uint seed, double mu, double sigma) : base(new NumericalRecipes3Q1Generator(seed), mu, sigma)
         {
@@ -414,7 +448,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <see cref="sigma"/> is less than or equal to zero.
+        ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         public NormalDistribution(IGenerator generator, double mu, double sigma) : base(generator, mu, sigma)
         {

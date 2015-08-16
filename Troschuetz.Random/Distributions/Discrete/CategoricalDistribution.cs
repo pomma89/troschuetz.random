@@ -332,8 +332,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="CategoricalDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<IEnumerable<double>, bool> IsValidParam { get; } = weights =>
+        public static Func<IEnumerable<double>, bool> IsValidParam { get; set; } = weights =>
         {
             var sum = 0.0;
             foreach (var w in weights)
@@ -353,8 +352,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="CategoricalDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<TGen, int, double[], double, int> Sample { get; } = (generator, weightsCount, cdf, weightsSum) =>
+        public static Func<TGen, int, double[], double, int> Sample { get; set; } = (generator, weightsCount, cdf, weightsSum) =>
         {
             var u = generator.NextDouble(weightsSum);
             var minIdx = 0;

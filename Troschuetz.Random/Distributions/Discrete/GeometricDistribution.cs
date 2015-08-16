@@ -241,8 +241,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="GeometricDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<double, bool> IsValidParam { get; } = alpha =>
+        public static Func<double, bool> IsValidParam { get; set; } = alpha =>
         {
             return alpha > 0 && alpha <= 1;
         };
@@ -253,8 +252,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="GeometricDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<TGen, double, int> Sample { get; } = (generator, alpha) =>
+        public static Func<TGen, double, int> Sample { get; set; } = (generator, alpha) =>
         {
             var samples = 1;
             for (; generator.NextDouble() >= alpha; samples++)

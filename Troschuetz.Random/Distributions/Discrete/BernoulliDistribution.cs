@@ -195,8 +195,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="BernoulliDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<double, bool> IsValidParam { get; } = alpha =>
+        public static Func<double, bool> IsValidParam { get; set; } = alpha =>
         {
             return alpha >= 0.0 && alpha <= 1.0;
         };
@@ -207,8 +206,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="BernoulliDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<TGen, double, int> Sample { get; } = (generator, alpha) =>
+        public static Func<TGen, double, int> Sample { get; set; } = (generator, alpha) =>
         {
             return generator.NextDouble() < alpha ? 1 : 0;
         };

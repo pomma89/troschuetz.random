@@ -229,8 +229,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="BinomialDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<double, int, bool> AreValidParams { get; } = (alpha, beta) =>
+        public static Func<double, int, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
             return alpha >= 0 && alpha <= 1 && beta >= 0;
         };
@@ -241,8 +240,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="BinomialDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<TGen, double, int, int> Sample { get; } = (generator, alpha, beta) =>
+        public static Func<TGen, double, int, int> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var successes = 0;
             for (var i = 0; i < beta; i++)

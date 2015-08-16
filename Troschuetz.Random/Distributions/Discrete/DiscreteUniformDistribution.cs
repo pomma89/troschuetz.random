@@ -234,8 +234,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="DiscreteUniformDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<int, int, bool> AreValidParams { get; } = (alpha, beta) =>
+        public static Func<int, int, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
             return alpha <= beta && beta < int.MaxValue;
         };
@@ -246,8 +245,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="DiscreteUniformDistribution{TGen}"/> class.
         /// </remarks>
-        [Pure]
-        public static Func<TGen, int, int, int> Sample { get; } = (generator, alpha, beta) =>
+        public static Func<TGen, int, int, int> Sample { get; set; } = (generator, alpha, beta) =>
         {
             return generator.Next(alpha, beta + 1);
         };
