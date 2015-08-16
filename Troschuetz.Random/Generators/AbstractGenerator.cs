@@ -154,7 +154,7 @@ namespace Troschuetz.Random.Generators
         public int Next()
         {
             int result;
-            while ((result = NextInclusiveMaxValue()) == int.MaxValue) { }
+            do result = NextInclusiveMaxValue(); while (result == int.MaxValue);
 
             // Postconditions
             Debug.Assert(result >= 0 && result < int.MaxValue);
@@ -321,7 +321,7 @@ namespace Troschuetz.Random.Generators
         public uint NextUIntExclusiveMaxValue()
         {
             uint result;
-            while ((result = NextUInt()) == uint.MaxValue) { }
+            do result = NextUInt(); while (result == uint.MaxValue);
 
             // Postconditions
             Debug.Assert(result < uint.MaxValue);
