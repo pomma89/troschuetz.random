@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random.Tests Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,30 +13,30 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random.Tests.Discrete
 {
-    using System;
     using Distributions.Discrete;
     using NUnit.Framework;
+    using System;
 
     public sealed class PoissonDistributionTests : DiscreteDistributionTests<PoissonDistribution>
     {
         protected override PoissonDistribution GetDist(PoissonDistribution other = null)
         {
-            return new PoissonDistribution {Lambda = GetLambda(other)};
+            return new PoissonDistribution { Lambda = GetLambda(other) };
         }
 
         protected override PoissonDistribution GetDist(uint seed, PoissonDistribution other = null)
         {
-            return new PoissonDistribution(seed) {Lambda = GetLambda(other)};
+            return new PoissonDistribution(seed) { Lambda = GetLambda(other) };
         }
 
         protected override PoissonDistribution GetDist(IGenerator gen, PoissonDistribution other = null)
         {
-            return new PoissonDistribution(gen) {Lambda = GetLambda(other)};
+            return new PoissonDistribution(gen) { Lambda = GetLambda(other) };
         }
 
         protected override PoissonDistribution GetDistWithParams(PoissonDistribution other = null)
@@ -53,7 +53,7 @@ namespace Troschuetz.Random.Tests.Discrete
         {
             return new PoissonDistribution(gen, GetLambda(other));
         }
-        
+
         [TestCase(double.NaN)]
         [TestCase(0)]
         [TestCase(TinyNeg)]

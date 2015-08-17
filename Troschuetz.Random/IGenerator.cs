@@ -35,37 +35,35 @@ namespace Troschuetz.Random
         uint Seed { get; }
 
         /// <summary>
-        ///   Gets a value indicating whether the random number generator can be reset,
-        ///   so that it produces the same random number sequence again.
+        ///   Gets a value indicating whether the random number generator can be reset, so that it
+        ///   produces the same random number sequence again.
         /// </summary>
         [Pure]
         bool CanReset { get; }
 
         /// <summary>
-        ///   Resets the random number generator using the initial seed, so that it produces the same random number sequence again.
-        ///   To understand whether this generator can be reset, you can query the <see cref="CanReset"/> property.
+        ///   Resets the random number generator using the initial seed, so that it produces the
+        ///   same random number sequence again. To understand whether this generator can be reset,
+        ///   you can query the <see cref="CanReset"/> property.
         /// </summary>
-        /// <returns>
-        ///   True if the random number generator was reset; otherwise, false.
-        /// </returns>
+        /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         bool Reset();
 
         /// <summary>
-        ///   Resets the random number generator using the specified seed, so that it produces the same random number sequence again.
-        ///   To understand whether this generator can be reset, you can query the <see cref="CanReset"/> property.
+        ///   Resets the random number generator using the specified seed, so that it produces the
+        ///   same random number sequence again. To understand whether this generator can be reset,
+        ///   you can query the <see cref="CanReset"/> property.
         /// </summary>
         /// <param name="seed">The seed value used by the generator.</param>
-        /// <returns>
-        ///   True if the random number generator was reset; otherwise, false.
-        /// </returns>
+        /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         bool Reset(uint seed);
 
         /// <summary>
         ///   Returns a nonnegative random number less than <see cref="int.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than <see cref="int.MaxValue"/>;
-        ///   that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than
+        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
         /// </returns>
         int Next();
 
@@ -73,20 +71,18 @@ namespace Troschuetz.Random
         ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to <see cref="int.MaxValue"/>;
-        ///   that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
+        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
         int NextInclusiveMaxValue();
 
         /// <summary>
         ///   Returns a nonnegative random number less than the specified maximum.
         /// </summary>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated.
-        /// </param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than <paramref name="maxValue"/>;
-        ///   that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than
+        ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to 0.
@@ -96,17 +92,15 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Returns a random number within the specified range.
         /// </summary>
-        /// <param name="minValue">
-        ///   The inclusive lower bound of the random number to be generated.
-        /// </param>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
         /// <param name="maxValue">
         ///   The exclusive upper bound of the random number to be generated.
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </param>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to <paramref name="minValue"/>, and less than
-        ///   <paramref name="maxValue"/>; that is, the range of return values includes <paramref name="minValue"/> but
-        ///   not <paramref name="maxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to <paramref name="minValue"/>, and less
+        ///   than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
@@ -117,43 +111,34 @@ namespace Troschuetz.Random
         ///   Returns a nonnegative floating point random number less than 1.0.
         /// </summary>
         /// <returns>
-        ///   A double-precision floating point number greater than or equal to 0.0, and less than 1.0;
-        ///   that is, the range of return values includes 0.0 but not 1.0.
+        ///   A double-precision floating point number greater than or equal to 0.0, and less than
+        ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
         /// </returns>
         double NextDouble();
 
         /// <summary>
         ///   Returns a nonnegative floating point random number less than the specified maximum.
         /// </summary>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated.
-        /// </param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A double-precision floating point number greater than or equal to 0.0,
-        ///   and less than <paramref name="maxValue"/>; that is, the range of return values
-        ///   includes 0 but not <paramref name="maxValue"/>.
+        ///   A double-precision floating point number greater than or equal to 0.0, and less than
+        ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to 0.0.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.
-        /// </exception>
+        /// <exception cref="ArgumentException"><paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.</exception>
         double NextDouble(double maxValue);
 
         /// <summary>
         ///   Returns a floating point random number within the specified range.
         /// </summary>
-        /// <param name="minValue">
-        ///   The inclusive lower bound of the random number to be generated.
-        /// </param>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated.
-        /// </param>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A double-precision floating point number greater than or equal to <paramref name="minValue"/>,
-        ///   and less than <paramref name="maxValue"/>; that is, the range of return values
-        ///   includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        ///   A double-precision floating point number greater than or equal to
+        ///   <paramref name="minValue"/>, and less than <paramref name="maxValue"/>; that is, the
+        ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
@@ -185,9 +170,7 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Returns an unsigned random number less than the specified maximum.
         /// </summary>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated.
-        /// </param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
         ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
         ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
@@ -198,16 +181,12 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Returns an unsigned random number within the specified range.
         /// </summary>
-        /// <param name="minValue">
-        ///   The inclusive lower bound of the random number to be generated.
-        /// </param>
-        /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated.
-        /// </param>
+        /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
         ///   A 32-bit unsigned integer greater than or equal to <paramref name="minValue"/> and
-        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes <paramref name="minValue"/> but
-        ///   not <paramref name="maxValue"/>.
+        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
@@ -218,8 +197,8 @@ namespace Troschuetz.Random
         ///   Returns a random Boolean value.
         /// </summary>
         /// <remarks>
-        ///   Buffers 31 random bits for future calls, so the random number generator
-        ///   is only invoked once in every 31 calls.
+        ///   Buffers 31 random bits for future calls, so the random number generator is only
+        ///   invoked once in every 31 calls.
         /// </remarks>
         /// <returns>A <see cref="bool"/> value.</returns>
         bool NextBoolean();
@@ -228,13 +207,11 @@ namespace Troschuetz.Random
         ///   Fills the elements of a specified array of bytes with random numbers.
         /// </summary>
         /// <remarks>
-        ///   Each element of the array of bytes is set to a random number greater than or equal to 0,
-        ///   and less than or equal to <see cref="byte.MaxValue"/>.
+        ///   Each element of the array of bytes is set to a random number greater than or equal to
+        ///   0, and less than or equal to <see cref="byte.MaxValue"/>.
         /// </remarks>
         /// <param name="buffer">An array of bytes to contain random numbers.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="buffer"/> is null.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
         void NextBytes(byte[] buffer);
     }
 }

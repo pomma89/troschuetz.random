@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random.Tests Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,30 +13,30 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random.Tests.Continuous
 {
-    using System;
     using Distributions.Continuous;
     using NUnit.Framework;
+    using System;
 
     public sealed class ErlangDistributionTests : ContinuousDistributionTests<ErlangDistribution>
     {
         protected override ErlangDistribution GetDist(ErlangDistribution other = null)
         {
-            return new ErlangDistribution {Alpha = GetAlpha(other), Lambda = GetLambda(other)};
+            return new ErlangDistribution { Alpha = GetAlpha(other), Lambda = GetLambda(other) };
         }
 
         protected override ErlangDistribution GetDist(uint seed, ErlangDistribution other = null)
         {
-            return new ErlangDistribution(seed) {Alpha = GetAlpha(other), Lambda = GetLambda(other)};
+            return new ErlangDistribution(seed) { Alpha = GetAlpha(other), Lambda = GetLambda(other) };
         }
 
         protected override ErlangDistribution GetDist(IGenerator gen, ErlangDistribution other = null)
         {
-            return new ErlangDistribution(gen) {Alpha = GetAlpha(other), Lambda = GetLambda(other)};
+            return new ErlangDistribution(gen) { Alpha = GetAlpha(other), Lambda = GetLambda(other) };
         }
 
         protected override ErlangDistribution GetDistWithParams(ErlangDistribution other = null)
@@ -53,7 +53,7 @@ namespace Troschuetz.Random.Tests.Continuous
         {
             return new ErlangDistribution(gen, GetAlpha(other), GetLambda(other));
         }
-        
+
         [TestCase(double.NaN)]
         [TestCase(0)]
         [TestCase(SmallNeg)]
@@ -66,7 +66,7 @@ namespace Troschuetz.Random.Tests.Continuous
             Assert.False(Dist.IsValidAlpha(i));
             Dist.Alpha = i;
         }
-        
+
         [TestCase(double.NaN)]
         [TestCase(0)]
         [TestCase(TinyNeg)]

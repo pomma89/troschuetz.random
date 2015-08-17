@@ -20,7 +20,6 @@
 
 using PommaLabs.Thrower;
 using System;
-using System.Runtime.CompilerServices;
 using Troschuetz.Random.Core;
 
 namespace Troschuetz.Random.Distributions
@@ -40,7 +39,7 @@ namespace Troschuetz.Random.Distributions
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             Generator = generator;
-        }        
+        }
 
         #region IDistribution members
 

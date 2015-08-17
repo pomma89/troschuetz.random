@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random.Tests Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,32 +13,32 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random.Tests.Continuous
 {
-    using System;
     using Distributions.Continuous;
     using NUnit.Framework;
+    using System;
 
     public sealed class GammaDistributionTests : ContinuousDistributionTests<GammaDistribution>
     {
         protected override GammaDistribution GetDist(GammaDistribution other = null)
         {
-            return new GammaDistribution {Alpha = GetAlpha(other), Theta = GetTheta(other)};
+            return new GammaDistribution { Alpha = GetAlpha(other), Theta = GetTheta(other) };
         }
 
         protected override GammaDistribution GetDist(uint seed, GammaDistribution other = null)
         {
-            return new GammaDistribution(seed) {Alpha = GetAlpha(other), Theta = GetTheta(other)};
+            return new GammaDistribution(seed) { Alpha = GetAlpha(other), Theta = GetTheta(other) };
         }
 
         protected override GammaDistribution GetDist(IGenerator gen, GammaDistribution other = null)
         {
-            return new GammaDistribution(gen) {Alpha = GetAlpha(other), Theta = GetTheta(other)};
+            return new GammaDistribution(gen) { Alpha = GetAlpha(other), Theta = GetTheta(other) };
         }
-        
+
         protected override GammaDistribution GetDistWithParams(GammaDistribution other = null)
         {
             return new GammaDistribution(GetAlpha(other), GetTheta(other));
@@ -53,7 +53,7 @@ namespace Troschuetz.Random.Tests.Continuous
         {
             return new GammaDistribution(gen, GetAlpha(other), GetTheta(other));
         }
-        
+
         [TestCase(double.NaN)]
         [TestCase(0)]
         [TestCase(TinyNeg)]
@@ -66,7 +66,7 @@ namespace Troschuetz.Random.Tests.Continuous
             Assert.False(Dist.IsValidAlpha(d));
             Dist.Alpha = d;
         }
-        
+
         [TestCase(double.NaN)]
         [TestCase(0)]
         [TestCase(TinyNeg)]

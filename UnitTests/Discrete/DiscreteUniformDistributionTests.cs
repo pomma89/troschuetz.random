@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random.Tests Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,30 +13,30 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random.Tests.Discrete
 {
-    using System;
     using Distributions.Discrete;
     using NUnit.Framework;
+    using System;
 
     public sealed class DiscreteUniformDistributionTests : DiscreteDistributionTests<DiscreteUniformDistribution>
     {
         protected override DiscreteUniformDistribution GetDist(DiscreteUniformDistribution other = null)
         {
-            return new DiscreteUniformDistribution {Beta = GetBeta(other), Alpha = GetAlpha(other)};
+            return new DiscreteUniformDistribution { Beta = GetBeta(other), Alpha = GetAlpha(other) };
         }
 
         protected override DiscreteUniformDistribution GetDist(uint seed, DiscreteUniformDistribution other = null)
         {
-            return new DiscreteUniformDistribution(seed) {Beta = GetBeta(other), Alpha = GetAlpha(other)};
+            return new DiscreteUniformDistribution(seed) { Beta = GetBeta(other), Alpha = GetAlpha(other) };
         }
 
         protected override DiscreteUniformDistribution GetDist(IGenerator gen, DiscreteUniformDistribution other = null)
         {
-            return new DiscreteUniformDistribution(gen) {Beta = GetBeta(other), Alpha = GetAlpha(other)};
+            return new DiscreteUniformDistribution(gen) { Beta = GetBeta(other), Alpha = GetAlpha(other) };
         }
 
         protected override DiscreteUniformDistribution GetDistWithParams(DiscreteUniformDistribution other = null)

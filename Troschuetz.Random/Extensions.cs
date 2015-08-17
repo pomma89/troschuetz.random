@@ -20,12 +20,12 @@
 
 namespace Troschuetz.Random
 {
+    using Core;
     using PommaLabs.Thrower;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
-    using Core;
 
     /// <summary>
     ///   Module containing extension methods for many interfaces exposed by this library.
@@ -105,9 +105,7 @@ namespace Troschuetz.Random
         /// <param name="generator">The generator from which random numbers are drawn.</param>
         /// <param name="buffer">An array of bytes to contain random numbers.</param>
         /// <returns>An infinite sequence of true values.</returns>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="buffer"/> is null.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
         [Pure]
         public static IEnumerable<bool> Bytes<TGen>(this TGen generator, byte[] buffer) where TGen : IGenerator
         {

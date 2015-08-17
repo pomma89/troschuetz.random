@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random.Tests Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,30 +13,30 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random.Tests.Continuous
 {
-    using System;
     using Distributions.Continuous;
     using NUnit.Framework;
+    using System;
 
     public sealed class ContinuousUniformDistributionTests : ContinuousDistributionTests<ContinuousUniformDistribution>
     {
         protected override ContinuousUniformDistribution GetDist(ContinuousUniformDistribution other = null)
         {
-            return new ContinuousUniformDistribution {Beta = GetBeta(other), Alpha = GetAlpha(other)};
+            return new ContinuousUniformDistribution { Beta = GetBeta(other), Alpha = GetAlpha(other) };
         }
 
         protected override ContinuousUniformDistribution GetDist(uint seed, ContinuousUniformDistribution other = null)
         {
-            return new ContinuousUniformDistribution(seed) {Beta = GetBeta(other), Alpha = GetAlpha(other)};
+            return new ContinuousUniformDistribution(seed) { Beta = GetBeta(other), Alpha = GetAlpha(other) };
         }
 
         protected override ContinuousUniformDistribution GetDist(IGenerator gen, ContinuousUniformDistribution other = null)
         {
-            return new ContinuousUniformDistribution(gen) {Beta = GetBeta(other), Alpha = GetAlpha(other)};
+            return new ContinuousUniformDistribution(gen) { Beta = GetBeta(other), Alpha = GetAlpha(other) };
         }
 
         protected override ContinuousUniformDistribution GetDistWithParams(ContinuousUniformDistribution other = null)
@@ -53,7 +53,7 @@ namespace Troschuetz.Random.Tests.Continuous
         {
             return new ContinuousUniformDistribution(gen, GetAlpha(other), GetBeta(other));
         }
-        
+
         [TestCase(double.NaN, 1.0)]
         [TestCase(1.0, double.NaN)]
         [TestCase(TinyPos, TinyNeg)]

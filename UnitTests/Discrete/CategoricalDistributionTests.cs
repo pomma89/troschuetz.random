@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random.Tests Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,16 +13,16 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random.Tests.Discrete
 {
+    using Distributions.Discrete;
+    using NUnit.Framework;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Distributions.Discrete;
-    using NUnit.Framework;
 
     public sealed class CategoricalDistributionTests : DiscreteDistributionTests<CategoricalDistribution>
     {
@@ -65,7 +65,7 @@ namespace Troschuetz.Random.Tests.Discrete
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Weights_WrongValues(double d1, double d2, double d3)
         {
-            var w = new List<double> {d1, d2, d3};
+            var w = new List<double> { d1, d2, d3 };
             Assert.False(CategoricalDistribution.IsValidParam(w));
             Assert.False(Dist.AreValidWeights(w));
             Dist.Weights = w;
@@ -74,7 +74,7 @@ namespace Troschuetz.Random.Tests.Discrete
         [Test]
         public void Median_EvenEquiWeights()
         {
-            Dist = new CategoricalDistribution(new double[] {1, 1, 1, 1, 1, 1});
+            Dist = new CategoricalDistribution(new double[] { 1, 1, 1, 1, 1, 1 });
             for (var i = 0; i < Iterations; ++i)
                 Results[i] = Dist.Next();
             AssertDist(Dist);
@@ -83,7 +83,7 @@ namespace Troschuetz.Random.Tests.Discrete
         [Test]
         public void Median_OddEquiWeights()
         {
-            Dist = new CategoricalDistribution(new double[] {1, 1, 1, 1, 1});
+            Dist = new CategoricalDistribution(new double[] { 1, 1, 1, 1, 1 });
             for (var i = 0; i < Iterations; ++i)
                 Results[i] = Dist.Next();
             AssertDist(Dist);
@@ -99,7 +99,7 @@ namespace Troschuetz.Random.Tests.Discrete
         ICollection<double> GetWeights(IWeightsDistribution<double> d)
         {
             Func<double> r = () => Rand.NextDouble(0.1, 10);
-            return d == null ? new List<double> {r(), r(), r(), r(), r()} : d.Weights;
+            return d == null ? new List<double> { r(), r(), r(), r(), r() } : d.Weights;
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random.Tests Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,30 +13,30 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random.Tests.Continuous
 {
-    using System;
     using Distributions.Continuous;
     using NUnit.Framework;
+    using System;
 
     public sealed class CauchyDistributionTests : ContinuousDistributionTests<CauchyDistribution>
     {
         protected override CauchyDistribution GetDist(CauchyDistribution other = null)
         {
-            return new CauchyDistribution {Alpha = GetAlpha(other), Gamma = GetGamma(other)};
+            return new CauchyDistribution { Alpha = GetAlpha(other), Gamma = GetGamma(other) };
         }
 
         protected override CauchyDistribution GetDist(uint seed, CauchyDistribution other = null)
         {
-            return new CauchyDistribution(seed) {Alpha = GetAlpha(other), Gamma = GetGamma(other)};
+            return new CauchyDistribution(seed) { Alpha = GetAlpha(other), Gamma = GetGamma(other) };
         }
 
         protected override CauchyDistribution GetDist(IGenerator gen, CauchyDistribution other = null)
         {
-            return new CauchyDistribution(gen) {Alpha = GetAlpha(other), Gamma = GetGamma(other)};
+            return new CauchyDistribution(gen) { Alpha = GetAlpha(other), Gamma = GetGamma(other) };
         }
 
         protected override CauchyDistribution GetDistWithParams(CauchyDistribution other = null)
@@ -53,7 +53,7 @@ namespace Troschuetz.Random.Tests.Continuous
         {
             return new CauchyDistribution(gen, GetAlpha(other), GetGamma(other));
         }
-        
+
         [TestCase(double.NaN)]
         [TestCase(0)]
         [TestCase(TinyNeg)]

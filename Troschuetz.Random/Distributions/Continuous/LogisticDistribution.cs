@@ -60,8 +60,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         double _mu;
 
         /// <summary>
-        ///   Stores the parameter sigma which is used for generation of logistic distributed
-        ///   random numbers.
+        ///   Stores the parameter sigma which is used for generation of logistic distributed random numbers.
         /// </summary>
         double _sigma;
 
@@ -230,9 +229,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Determines whether the specified value is valid for parameter <see cref="Sigma"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
         public bool IsValidSigma(double value) => AreValidParams(Mu, value);
 
         #endregion Instance Methods
@@ -293,8 +290,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Determines whether logistic distribution is defined under given parameters. The
-        ///   default definition returns true if sigma is greater than zero; otherwise,
-        ///   it returns false.
+        ///   default definition returns true if sigma is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="LogisticDistribution"/> class.

@@ -25,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of power distributed random numbers.
@@ -305,9 +304,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether power distribution is defined under given parameters. The
-        ///   default definition returns true if alpha and beta are greater than zero;
-        ///   otherwise, it returns false.
+        ///   Determines whether power distribution is defined under given parameters. The default
+        ///   definition returns true if alpha and beta are greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="PowerDistribution"/> class.

@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random.Tests Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,21 +13,21 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random.Tests
 {
-    using System;
-    using System.Collections.Generic;
     using Distributions.Continuous;
     using Distributions.Discrete;
     using NUnit.Framework;
     using Random.Generators;
+    using System;
+    using System.Collections.Generic;
 
-// ReSharper disable InconsistentNaming
+    // ReSharper disable InconsistentNaming
     public sealed class TRandomTests : GeneratorTests
-// ReSharper restore InconsistentNaming
+    // ReSharper restore InconsistentNaming
     {
         #region Setup/Teardown
 
@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Tests
         public override void SetUp()
         {
             base.SetUp();
-            
+
             _seed = Environment.TickCount;
             _rand = new TRandom(GetCurrentGenerator());
             _otherRand = new TRandom(GetCurrentGenerator());
@@ -44,10 +44,10 @@ namespace Troschuetz.Random.Tests
         [TearDown]
         public void TearDown()
         {
-            _currGen = (_currGen + 1)%GeneratorCount;
+            _currGen = (_currGen + 1) % GeneratorCount;
         }
 
-        #endregion
+        #endregion Setup/Teardown
 
         const int GeneratorCount = 5;
         TRandom _rand;
@@ -72,23 +72,28 @@ namespace Troschuetz.Random.Tests
 
         IGenerator GetCurrentGenerator()
         {
-            switch (_currGen) {
+            switch (_currGen)
+            {
                 case 0:
                     return new ALFGenerator(_seed);
+
                 case 1:
                     return new MT19937Generator(_seed);
+
                 case 2:
                     return new StandardGenerator(_seed);
+
                 case 3:
                     return new TRandom(_seed);
+
                 case 4:
                     return new XorShift128Generator(_seed);
-                    // Until GeneratorCount - 1
+                // Until GeneratorCount - 1
                 default:
                     throw new Exception("Should not be here!!!");
             }
         }
-        
+
         /*=============================================================================
             Bernoulli distribution
         =============================================================================*/
@@ -101,7 +106,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Bernoulli_RightParameters(double a)
         {
-            var d = new BernoulliDistribution {Alpha = a};
+            var d = new BernoulliDistribution { Alpha = a };
             Assert.True(d.IsValidAlpha(a));
             Assert.AreEqual(d.Alpha, a);
             AssertRightDiscreteOutput(_rand.Bernoulli, d.Alpha, d);
@@ -142,7 +147,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Binomial_RightParameters(double a, int b)
         {
-            var d = new BinomialDistribution {Alpha = a, Beta = b};
+            var d = new BinomialDistribution { Alpha = a, Beta = b };
             Assert.True(d.IsValidAlpha(a) && d.IsValidBeta(b));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Beta, b);
@@ -197,7 +202,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Categorical_Weights_RightParameters(params double[] args)
         {
-            var d = new CategoricalDistribution {Weights = args};
+            var d = new CategoricalDistribution { Weights = args };
             Assert.True(d.AreValidWeights(args));
             AssertRightDiscreteOutput(_rand.Categorical, args, d);
         }
@@ -248,7 +253,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void DiscreteUniform_RightParameters(int a, int b)
         {
-            var d = new DiscreteUniformDistribution {Beta = b, Alpha = a};
+            var d = new DiscreteUniformDistribution { Beta = b, Alpha = a };
             Assert.True(d.IsValidBeta(b) && d.IsValidAlpha(a));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Beta, b);
@@ -289,7 +294,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Geometric_RightParameters(double a)
         {
-            var d = new GeometricDistribution {Alpha = a};
+            var d = new GeometricDistribution { Alpha = a };
             Assert.True(d.IsValidAlpha(a));
             Assert.AreEqual(d.Alpha, a);
             AssertRightDiscreteOutput(_rand.Geometric, d.Alpha, d);
@@ -329,7 +334,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Poisson_RightParameters(double l)
         {
-            var d = new PoissonDistribution {Lambda = l};
+            var d = new PoissonDistribution { Lambda = l };
             Assert.True(d.IsValidLambda(l));
             AssertRightDiscreteOutput(_rand.Poisson, d.Lambda, d);
         }
@@ -365,7 +370,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Beta_RightParameters(double a, double b)
         {
-            var d = new BetaDistribution {Alpha = a, Beta = b};
+            var d = new BetaDistribution { Alpha = a, Beta = b };
             Assert.True(d.IsValidAlpha(a) && d.IsValidBeta(b));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Beta, b);
@@ -397,7 +402,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void BetaPrime_RightParameters(double a, double b)
         {
-            var d = new BetaPrimeDistribution {Alpha = a, Beta = b};
+            var d = new BetaPrimeDistribution { Alpha = a, Beta = b };
             Assert.True(d.IsValidAlpha(a) && d.IsValidBeta(b));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Beta, b);
@@ -429,7 +434,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Cauchy_RightParameters(double a, double g)
         {
-            var d = new CauchyDistribution {Alpha = a, Gamma = g};
+            var d = new CauchyDistribution { Alpha = a, Gamma = g };
             Assert.True(d.IsValidAlpha(a) && d.IsValidGamma(g));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Gamma, g);
@@ -461,7 +466,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Chi_RightParameters(int a)
         {
-            var d = new ChiDistribution {Alpha = a};
+            var d = new ChiDistribution { Alpha = a };
             Assert.True(d.IsValidAlpha(a));
             Assert.AreEqual(d.Alpha, a);
             AssertRightContinuousOutput(_rand.Chi, d.Alpha, d);
@@ -493,7 +498,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void ChiSquare_RightParameters(int a)
         {
-            var d = new ChiSquareDistribution {Alpha = a};
+            var d = new ChiSquareDistribution { Alpha = a };
             Assert.True(d.IsValidAlpha(a));
             Assert.AreEqual(d.Alpha, a);
             AssertRightContinuousOutput(_rand.ChiSquare, d.Alpha, d);
@@ -526,7 +531,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void ContinuousUniform_RightParameters(double a, double b)
         {
-            var d = new ContinuousUniformDistribution {Beta = b, Alpha = a};
+            var d = new ContinuousUniformDistribution { Beta = b, Alpha = a };
             Assert.True(d.IsValidAlpha(a) && d.IsValidBeta(b));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Beta, b);
@@ -562,7 +567,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Erlang_RightParameters(int a, double l)
         {
-            var d = new ErlangDistribution {Alpha = a, Lambda = l};
+            var d = new ErlangDistribution { Alpha = a, Lambda = l };
             Assert.True(d.IsValidAlpha(a) && d.IsValidLambda(l));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Lambda, l);
@@ -597,7 +602,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Exponential_RightParameters(double l)
         {
-            var d = new ExponentialDistribution {Lambda = l};
+            var d = new ExponentialDistribution { Lambda = l };
             Assert.True(d.IsValidLambda(l));
             Assert.AreEqual(d.Lambda, l);
             AssertRightContinuousOutput(_rand.Exponential, d.Lambda, d);
@@ -616,7 +621,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Exponential_SameOutputForDist(double l)
         {
-            var d = new ExponentialDistribution(GetCurrentGenerator()) {Lambda = l};
+            var d = new ExponentialDistribution(GetCurrentGenerator()) { Lambda = l };
             Assert.True(d.IsValidLambda(l));
             Assert.AreEqual(d.Lambda, l);
             AssertSameContinuousOutputForDist(_rand.Exponential, d, l);
@@ -639,7 +644,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void FisherSnedecor_RightParameters(int a, int b)
         {
-            var d = new FisherSnedecorDistribution {Alpha = a, Beta = b};
+            var d = new FisherSnedecorDistribution { Alpha = a, Beta = b };
             Assert.True(d.IsValidAlpha(a) && d.IsValidBeta(b));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Beta, b);
@@ -671,7 +676,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void FisherTippett_RightParameters(double a, double m)
         {
-            var d = new FisherTippettDistribution {Alpha = a, Mu = m};
+            var d = new FisherTippettDistribution { Alpha = a, Mu = m };
             Assert.True(d.IsValidAlpha(a) && d.IsValidMu(m));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Mu, m);
@@ -703,7 +708,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Gamma_RightParameters(double a, double t)
         {
-            var d = new GammaDistribution {Alpha = a, Theta = t};
+            var d = new GammaDistribution { Alpha = a, Theta = t };
             Assert.True(d.IsValidAlpha(a) && d.IsValidTheta(t));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Theta, t);
@@ -735,7 +740,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Laplace_RightParameters(double a, double m)
         {
-            var d = new LaplaceDistribution {Alpha = a, Mu = m};
+            var d = new LaplaceDistribution { Alpha = a, Mu = m };
             Assert.True(d.IsValidAlpha(a) && d.IsValidMu(m));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Mu, m);
@@ -799,7 +804,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Lognormal_RightParameters(double m, double s)
         {
-            var d = new LognormalDistribution {Mu = m, Sigma = s};
+            var d = new LognormalDistribution { Mu = m, Sigma = s };
             Assert.True(d.IsValidMu(m) && d.IsValidSigma(s));
             Assert.AreEqual(d.Mu, m);
             Assert.AreEqual(d.Sigma, s);
@@ -831,7 +836,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Normal_RightParameters(double m, double s)
         {
-            var d = new NormalDistribution {Mu = m, Sigma = s};
+            var d = new NormalDistribution { Mu = m, Sigma = s };
             Assert.True(d.IsValidMu(m) && d.IsValidSigma(s));
             Assert.AreEqual(d.Mu, m);
             Assert.AreEqual(d.Sigma, s);
@@ -857,7 +862,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Normal_SameOutputForDist(double m, double s)
         {
-            var d = new NormalDistribution(GetCurrentGenerator()) {Mu = m, Sigma = s};
+            var d = new NormalDistribution(GetCurrentGenerator()) { Mu = m, Sigma = s };
             Assert.True(d.IsValidMu(m) && d.IsValidSigma(s));
             Assert.AreEqual(d.Mu, m);
             Assert.AreEqual(d.Sigma, s);
@@ -881,7 +886,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Pareto_RightParameters(double a, double b)
         {
-            var d = new ParetoDistribution {Alpha = a, Beta = b};
+            var d = new ParetoDistribution { Alpha = a, Beta = b };
             Assert.True(d.IsValidAlpha(a) && d.IsValidBeta(b));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Beta, b);
@@ -913,7 +918,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Power_RightParameters(double a, double b)
         {
-            var d = new PowerDistribution {Alpha = a, Beta = b};
+            var d = new PowerDistribution { Alpha = a, Beta = b };
             Assert.True(d.IsValidAlpha(a) && d.IsValidBeta(b));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Beta, b);
@@ -946,7 +951,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Rayleigh_RightParameters(double s)
         {
-            var d = new RayleighDistribution {Sigma = s};
+            var d = new RayleighDistribution { Sigma = s };
             Assert.True(d.IsValidSigma(s));
             Assert.AreEqual(d.Sigma, s);
             AssertRightContinuousOutput(_rand.Rayleigh, d.Sigma, d);
@@ -979,7 +984,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void StudentsT_RightParameters(int n)
         {
-            var d = new StudentsTDistribution {Nu = n};
+            var d = new StudentsTDistribution { Nu = n };
             Assert.True(d.IsValidNu(n));
             Assert.AreEqual(d.Nu, n);
             AssertRightContinuousOutput(_rand.StudentsT, d.Nu = n, d);
@@ -1011,7 +1016,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Triangular_RightParameters(double a, double b, double g)
         {
-            var d = new TriangularDistribution {Beta = b, Gamma = g, Alpha = a};
+            var d = new TriangularDistribution { Beta = b, Gamma = g, Alpha = a };
             Assert.True(d.IsValidAlpha(a) && d.IsValidBeta(b) && d.IsValidGamma(g));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Beta, b);
@@ -1044,7 +1049,7 @@ namespace Troschuetz.Random.Tests
         [Repeat(GeneratorCount)]
         public void Weibull_RightParameters(double a, double l)
         {
-            var d = new WeibullDistribution {Alpha = a, Lambda = l};
+            var d = new WeibullDistribution { Alpha = a, Lambda = l };
             Assert.True(d.IsValidAlpha(a) && d.IsValidLambda(l));
             Assert.AreEqual(d.Alpha, a);
             Assert.AreEqual(d.Lambda, l);
@@ -1076,14 +1081,14 @@ namespace Troschuetz.Random.Tests
         public void Reset_SameSequence()
         {
             if (!_rand.CanReset) Assert.Pass();
-            for (var i = 0; i < Iterations/2; ++i)
+            for (var i = 0; i < Iterations / 2; ++i)
                 Results[i] = _rand.Exponential(1);
-            for (var i = Iterations/2; i < Iterations; ++i)
+            for (var i = Iterations / 2; i < Iterations; ++i)
                 Results[i] = _rand.Normal(1, 0.1);
             _rand.Reset();
-            for (var i = 0; i < Iterations/2; ++i)
+            for (var i = 0; i < Iterations / 2; ++i)
                 Assert.AreEqual(Results[i], _rand.Exponential(1));
-            for (var i = Iterations/2; i < Iterations; ++i)
+            for (var i = Iterations / 2; i < Iterations; ++i)
                 Assert.AreEqual(Results[i], _rand.Normal(1, 0.1));
         }
 
@@ -1106,7 +1111,8 @@ namespace Troschuetz.Random.Tests
         static void AssertSameDiscreteOutput<T>(Func<T, int> gen, Func<T, IEnumerable<int>> infGen, T arg)
         {
             var infGenEn = infGen(arg).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 infGenEn.MoveNext();
                 Assert.AreEqual(gen(arg), infGenEn.Current);
             }
@@ -1117,7 +1123,8 @@ namespace Troschuetz.Random.Tests
                                                      T1 arg1, T2 arg2)
         {
             var infGenEn = infGen(arg1, arg2).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 infGenEn.MoveNext();
                 Assert.AreEqual(gen(arg1, arg2), infGenEn.Current);
             }
@@ -1129,12 +1136,15 @@ namespace Troschuetz.Random.Tests
         {
             var aEn = infGen(a).GetEnumerator();
             var bEn = infGen(b).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
-                if (i%2 == 0) {
+            for (var i = 0; i < Iterations; ++i)
+            {
+                if (i % 2 == 0)
+                {
                     aEn.MoveNext();
                     Assert.AreEqual(gen(a), aEn.Current);
                 }
-                else {
+                else
+                {
                     bEn.MoveNext();
                     Assert.AreEqual(gen(b), bEn.Current);
                 }
@@ -1147,12 +1157,15 @@ namespace Troschuetz.Random.Tests
         {
             var aEn = infGen(a1, a2).GetEnumerator();
             var bEn = infGen(b1, b2).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
-                if (i%2 == 0) {
+            for (var i = 0; i < Iterations; ++i)
+            {
+                if (i % 2 == 0)
+                {
                     aEn.MoveNext();
                     Assert.AreEqual(gen(a1, a2), aEn.Current);
                 }
-                else {
+                else
+                {
                     bEn.MoveNext();
                     Assert.AreEqual(gen(b1, b2), bEn.Current);
                 }
@@ -1184,7 +1197,8 @@ namespace Troschuetz.Random.Tests
 
         static void AssertSameContinuousOutputForDist<T>(Func<T, double> gen, IContinuousDistribution dist, T arg)
         {
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 Assert.AreEqual(gen(arg), dist.NextDouble());
             }
         }
@@ -1192,7 +1206,8 @@ namespace Troschuetz.Random.Tests
         static void AssertSameContinuousOutput<T1, T2>(Func<T1, T2, double> gen, IContinuousDistribution dist,
                                                        T1 arg1, T2 arg2)
         {
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 Assert.AreEqual(gen(arg1, arg2), dist.NextDouble());
             }
         }
@@ -1200,7 +1215,8 @@ namespace Troschuetz.Random.Tests
         static void AssertSameContinuousOutput<T>(Func<T, double> gen, Func<T, IEnumerable<double>> infGen, T arg)
         {
             var infGenEn = infGen(arg).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 infGenEn.MoveNext();
                 Assert.AreEqual(gen(arg), infGenEn.Current);
             }
@@ -1211,7 +1227,8 @@ namespace Troschuetz.Random.Tests
                                                        T1 arg1, T2 arg2)
         {
             var infGenEn = infGen(arg1, arg2).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 infGenEn.MoveNext();
                 Assert.AreEqual(gen(arg1, arg2), infGenEn.Current);
             }
@@ -1222,7 +1239,8 @@ namespace Troschuetz.Random.Tests
                                                            T1 arg1, T2 arg2, T3 arg3)
         {
             var infGenEn = infGen(arg1, arg2, arg3).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 infGenEn.MoveNext();
                 Assert.AreEqual(gen(arg1, arg2, arg3), infGenEn.Current);
             }
@@ -1234,12 +1252,15 @@ namespace Troschuetz.Random.Tests
         {
             var aEn = infGen(a).GetEnumerator();
             var bEn = infGen(b).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
-                if (i%2 == 0) {
+            for (var i = 0; i < Iterations; ++i)
+            {
+                if (i % 2 == 0)
+                {
                     aEn.MoveNext();
                     Assert.AreEqual(gen(a), aEn.Current);
                 }
-                else {
+                else
+                {
                     bEn.MoveNext();
                     Assert.AreEqual(gen(b), bEn.Current);
                 }
@@ -1252,12 +1273,15 @@ namespace Troschuetz.Random.Tests
         {
             var aEn = infGen(a1, a2).GetEnumerator();
             var bEn = infGen(b1, b2).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
-                if (i%2 == 0) {
+            for (var i = 0; i < Iterations; ++i)
+            {
+                if (i % 2 == 0)
+                {
                     aEn.MoveNext();
                     Assert.AreEqual(gen(a1, a2), aEn.Current);
                 }
-                else {
+                else
+                {
                     bEn.MoveNext();
                     Assert.AreEqual(gen(b1, b2), bEn.Current);
                 }
@@ -1270,12 +1294,15 @@ namespace Troschuetz.Random.Tests
         {
             var aEn = infGen(a1, a2, a3).GetEnumerator();
             var bEn = infGen(b1, b2, b3).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
-                if (i%2 == 0) {
+            for (var i = 0; i < Iterations; ++i)
+            {
+                if (i % 2 == 0)
+                {
                     aEn.MoveNext();
                     Assert.AreEqual(gen(a1, a2, a3), aEn.Current);
                 }
-                else {
+                else
+                {
                     bEn.MoveNext();
                     Assert.AreEqual(gen(b1, b2, b3), bEn.Current);
                 }

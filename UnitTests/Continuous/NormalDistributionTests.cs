@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random.Tests Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,32 +13,32 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random.Tests.Continuous
 {
-    using System;
     using Distributions.Continuous;
     using NUnit.Framework;
+    using System;
 
     public sealed class NormalDistributionTests : ContinuousDistributionTests<NormalDistribution>
     {
         protected override NormalDistribution GetDist(NormalDistribution other = null)
         {
-            return new NormalDistribution {Mu = GetMu(other), Sigma = GetSigma(other)};
+            return new NormalDistribution { Mu = GetMu(other), Sigma = GetSigma(other) };
         }
 
         protected override NormalDistribution GetDist(uint seed, NormalDistribution other = null)
         {
-            return new NormalDistribution(seed) {Mu = GetMu(other), Sigma = GetSigma(other)};
+            return new NormalDistribution(seed) { Mu = GetMu(other), Sigma = GetSigma(other) };
         }
 
         protected override NormalDistribution GetDist(IGenerator gen, NormalDistribution other = null)
         {
-            return new NormalDistribution(gen) {Mu = GetMu(other), Sigma = GetSigma(other)};
+            return new NormalDistribution(gen) { Mu = GetMu(other), Sigma = GetSigma(other) };
         }
-        
+
         protected override NormalDistribution GetDistWithParams(NormalDistribution other = null)
         {
             return new NormalDistribution(GetMu(other), GetSigma(other));
@@ -53,7 +53,7 @@ namespace Troschuetz.Random.Tests.Continuous
         {
             return new NormalDistribution(gen, GetMu(other), GetSigma(other));
         }
-        
+
         [TestCase(double.NaN)]
         [TestCase(0)]
         [TestCase(TinyNeg)]

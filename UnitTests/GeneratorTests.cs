@@ -1,8 +1,8 @@
 ﻿/*
  * Copyright © 2012 Alessio Parma (alessio.parma@gmail.com)
- * 
+ *
  * This file is part of Troschuetz.Random.Tests Class Library.
- * 
+ *
  * Troschuetz.Random is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -13,16 +13,16 @@
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 namespace Troschuetz.Random.Tests
 {
+    using NUnit.Framework;
+    using PommaLabs.KVLite;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using NUnit.Framework;
-    using PommaLabs.KVLite;
 
     public abstract partial class GeneratorTests : TestBase
     {
@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Tests
             _currGen = !_currGen;
         }
 
-        #endregion
+        #endregion Setup/Teardown
 
         const int RepetitionCount = 2;
         IGenerator _generator;
@@ -80,7 +80,8 @@ namespace Troschuetz.Random.Tests
             var otherGen = GetGenerator(_generator.Seed);
             var bytesEn = _generator.Bytes(b1).GetEnumerator();
             bytesEn.MoveNext();
-            for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext()) {
+            for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext())
+            {
                 otherGen.NextBytes(b2);
                 Assert.AreEqual(b2, b1);
             }
@@ -95,14 +96,16 @@ namespace Troschuetz.Random.Tests
             var otherGen = GetGenerator(_generator.Seed);
             var bytesEn = _generator.Bytes(b1).GetEnumerator();
             bytesEn.MoveNext();
-            for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext()) {
+            for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext())
+            {
                 otherGen.NextBytes(b2);
                 Assert.AreEqual(b2, b1);
             }
             _generator.Reset();
             otherGen.Reset();
             bytesEn.MoveNext();
-            for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext()) {
+            for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext())
+            {
                 otherGen.NextBytes(b2);
                 Assert.AreEqual(b2, b1);
             }
@@ -500,7 +503,8 @@ namespace Troschuetz.Random.Tests
         [Repeat(RepetitionCount)]
         public void NextUIntExclusiveMaxValue_NoMaxValue()
         {
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 Assert.AreNotEqual(uint.MaxValue, _generator.NextUIntExclusiveMaxValue());
             }
         }
@@ -509,11 +513,13 @@ namespace Troschuetz.Random.Tests
         [Repeat(RepetitionCount)]
         public void NextUIntExclusiveMaxValue_NoMaxValue_AfterReset()
         {
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 Assert.AreNotEqual(uint.MaxValue, _generator.NextUIntExclusiveMaxValue());
             }
             _generator.Reset();
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 Assert.AreNotEqual(uint.MaxValue, _generator.NextUIntExclusiveMaxValue());
             }
         }
@@ -568,8 +574,9 @@ namespace Troschuetz.Random.Tests
         [Test]
         public void Choice_OneItem()
         {
-            var list = new[] {1};
-            for (var i = 0; i < Iterations; ++i) {
+            var list = new[] { 1 };
+            for (var i = 0; i < Iterations; ++i)
+            {
                 Assert.AreEqual(1, _generator.Choice(list));
             }
         }
@@ -585,16 +592,19 @@ namespace Troschuetz.Random.Tests
         public void Choice_ManyItems(int len)
         {
             var list = new int[len];
-            for (var i = 0; i < len; ++i) {
+            for (var i = 0; i < len; ++i)
+            {
                 list[i] = i;
             }
             var counts = new double[len];
-            for (var i = 0; i < Iterations*2; ++i) {
+            for (var i = 0; i < Iterations * 2; ++i)
+            {
                 counts[_generator.Choice(list)]++;
             }
-            var expected = Iterations*2/len;
-            var tolerance = expected/20;
-            for (var i = 0; i < len; ++i) {
+            var expected = Iterations * 2 / len;
+            var tolerance = expected / 20;
+            for (var i = 0; i < len; ++i)
+            {
                 Assert.Less(Math.Abs(expected - counts[i]), tolerance);
             }
         }
@@ -602,14 +612,16 @@ namespace Troschuetz.Random.Tests
         [Test]
         public void Choice_FromString()
         {
-            var str = new[] {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
+            var str = new[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' };
             var counts = new double[str.Length];
-            for (var i = 0; i < Iterations*2; ++i) {
+            for (var i = 0; i < Iterations * 2; ++i)
+            {
                 counts[_generator.Choice(str) - 'A']++;
             }
-            var expected = Iterations*2/str.Length;
-            var tolerance = expected/20;
-            for (var i = 0; i < str.Length; ++i) {
+            var expected = Iterations * 2 / str.Length;
+            var tolerance = expected / 20;
+            for (var i = 0; i < str.Length; ++i)
+            {
                 Assert.Less(Math.Abs(expected - counts[i]), tolerance);
             }
         }
@@ -631,8 +643,9 @@ namespace Troschuetz.Random.Tests
         [Test]
         public void Choice_IEnumerable_OneItem()
         {
-            var list = new[] {1};
-            for (var i = 0; i < Iterations; ++i) {
+            var list = new[] { 1 };
+            for (var i = 0; i < Iterations; ++i)
+            {
                 Assert.AreEqual(1, _generator.Choice(list));
             }
         }
@@ -648,16 +661,19 @@ namespace Troschuetz.Random.Tests
         public void Choice_IEnumerable_ManyItems(int len)
         {
             var list = new int[len];
-            for (var i = 0; i < len; ++i) {
+            for (var i = 0; i < len; ++i)
+            {
                 list[i] = i;
             }
             var counts = new double[len];
-            for (var i = 0; i < Iterations*2; ++i) {
+            for (var i = 0; i < Iterations * 2; ++i)
+            {
                 counts[_generator.Choice(list)]++;
             }
-            var expected = Iterations*2/len;
-            var tolerance = expected/20;
-            for (var i = 0; i < len; ++i) {
+            var expected = Iterations * 2 / len;
+            var tolerance = expected / 20;
+            for (var i = 0; i < len; ++i)
+            {
                 Assert.Less(Math.Abs(expected - counts[i]), tolerance);
             }
         }
@@ -683,9 +699,10 @@ namespace Troschuetz.Random.Tests
         [Test]
         public void Choices_OneItem()
         {
-            var list = new[] {1};
+            var list = new[] { 1 };
             var en = _generator.Choices(list).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 en.MoveNext();
                 Assert.AreEqual(1, en.Current);
             }
@@ -702,18 +719,21 @@ namespace Troschuetz.Random.Tests
         public void Choices_ManyItems(int len)
         {
             var list = new int[len];
-            for (var i = 0; i < len; ++i) {
+            for (var i = 0; i < len; ++i)
+            {
                 list[i] = i;
             }
             var counts = new double[len];
             var en = _generator.Choices(list).GetEnumerator();
-            for (var i = 0; i < Iterations*2; ++i) {
+            for (var i = 0; i < Iterations * 2; ++i)
+            {
                 en.MoveNext();
                 counts[en.Current]++;
             }
-            var expected = Iterations*2/len;
-            var tolerance = expected/20;
-            for (var i = 0; i < len; ++i) {
+            var expected = Iterations * 2 / len;
+            var tolerance = expected / 20;
+            for (var i = 0; i < len; ++i)
+            {
                 Assert.Less(Math.Abs(expected - counts[i]), tolerance);
             }
         }
@@ -721,16 +741,18 @@ namespace Troschuetz.Random.Tests
         [Test]
         public void Choices_FromString()
         {
-            var str = new[] {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
+            var str = new[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' };
             var counts = new double[str.Length];
             var en = _generator.Choices(str).GetEnumerator();
-            for (var i = 0; i < Iterations*2; ++i) {
+            for (var i = 0; i < Iterations * 2; ++i)
+            {
                 en.MoveNext();
                 counts[en.Current - 'A']++;
             }
-            var expected = Iterations*2/str.Length;
-            var tolerance = expected/20;
-            for (var i = 0; i < str.Length; ++i) {
+            var expected = Iterations * 2 / str.Length;
+            var tolerance = expected / 20;
+            for (var i = 0; i < str.Length; ++i)
+            {
                 Assert.Less(Math.Abs(expected - counts[i]), tolerance);
             }
         }
@@ -752,9 +774,10 @@ namespace Troschuetz.Random.Tests
         [Test]
         public void Choices_IEnumerable_OneItem()
         {
-            var list = new[] {1};
+            var list = new[] { 1 };
             var en = _generator.Choices(list).GetEnumerator();
-            for (var i = 0; i < Iterations; ++i) {
+            for (var i = 0; i < Iterations; ++i)
+            {
                 en.MoveNext();
                 Assert.AreEqual(1, en.Current);
             }
@@ -771,18 +794,21 @@ namespace Troschuetz.Random.Tests
         public void Choices_IEnumerable_ManyItems(int len)
         {
             var list = new int[len];
-            for (var i = 0; i < len; ++i) {
+            for (var i = 0; i < len; ++i)
+            {
                 list[i] = i;
             }
             var counts = new double[len];
             var en = _generator.Choices(list).GetEnumerator();
-            for (var i = 0; i < Iterations*2; ++i) {
+            for (var i = 0; i < Iterations * 2; ++i)
+            {
                 en.MoveNext();
                 counts[en.Current]++;
             }
-            var expected = Iterations*2/len;
-            var tolerance = expected/20;
-            for (var i = 0; i < len; ++i) {
+            var expected = Iterations * 2 / len;
+            var tolerance = expected / 20;
+            for (var i = 0; i < len; ++i)
+            {
                 Assert.Less(Math.Abs(expected - counts[i]), tolerance);
             }
         }
