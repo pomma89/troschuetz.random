@@ -145,6 +145,7 @@
     <Compile Include="Continuous\FisherTippettDistributionTests.cs" />
     <Compile Include="Continuous\GammaDistributionTests.cs" />
     <Compile Include="Continuous\LaplaceDistributionTests.cs" />
+    <Compile Include="Continuous\LogisticDistributionTests.cs" />
     <Compile Include="Continuous\LognormalDistributionTests.cs" />
     <Compile Include="Continuous\NormalDistributionTests.cs" />
     <Compile Include="Continuous\ParetoDistributionTests.cs" />

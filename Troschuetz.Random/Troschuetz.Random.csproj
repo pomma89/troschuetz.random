@@ -133,6 +133,7 @@
   <ItemGroup>
     <Compile Include="Core\ErrorMessages.cs" />
     <Compile Include="Distributions\AbstractDistribution.cs" />
+    <Compile Include="Distributions\Continuous\LogisticDistribution.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Generators\AbstractGenerator.cs" />
     <Compile Include="Generators\NumericalRecipes3Generator.cs" />
