@@ -173,6 +173,9 @@
     <Compile Include="..\Troschuetz.Random\Distributions\Continuous\LaplaceDistribution.cs">
       <Link>Distributions\Continuous\LaplaceDistribution.cs</Link>
     </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\LogisticDistribution.cs">
+      <Link>Distributions\Continuous\LogisticDistribution.cs</Link>
+    </Compile>
     <Compile Include="..\Troschuetz.Random\Distributions\Continuous\LognormalDistribution.cs">
       <Link>Distributions\Continuous\LognormalDistribution.cs</Link>
     </Compile>

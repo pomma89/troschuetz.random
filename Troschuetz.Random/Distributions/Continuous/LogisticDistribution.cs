@@ -159,7 +159,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of logistic distributed random numbers.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="sigma"/> is less than zero.
+        ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         public LogisticDistribution(double mu, double sigma) : this(new XorShift128Generator(), mu, sigma)
         {
@@ -182,7 +182,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   The parameter sigma which is used for generation of logistic distributed random numbers.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="sigma"/> is less than zero.
+        ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         public LogisticDistribution(uint seed, double mu, double sigma)
             : this(new XorShift128Generator(seed), mu, sigma)
@@ -206,7 +206,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="sigma"/> is less than zero.
+        ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         public LogisticDistribution(IGenerator generator, double mu, double sigma) : base(generator)
         {
@@ -231,7 +231,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is greater than or equal to 0.0; otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.
         /// </returns>
         public bool IsValidSigma(double value) => AreValidParams(Mu, value);
 
@@ -293,7 +293,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Determines whether logistic distribution is defined under given parameters. The
-        ///   default definition returns true if sigma is greater than or equal to zero; otherwise,
+        ///   default definition returns true if sigma is greater than zero; otherwise,
         ///   it returns false.
         /// </summary>
         /// <remarks>

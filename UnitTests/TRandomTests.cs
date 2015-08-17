@@ -759,6 +759,38 @@ namespace Troschuetz.Random.Tests
         }
 
         /*=============================================================================
+            Logistic distribution
+        =============================================================================*/
+
+        [TestCase(5, 0.5)]
+        [TestCase(10, 1)]
+        [Repeat(GeneratorCount)]
+        public void Logistic_RightParameters(double m, double s)
+        {
+            var d = new LogisticDistribution { Mu = m, Sigma = s };
+            Assert.True(d.IsValidMu(m) && d.IsValidSigma(s));
+            Assert.AreEqual(d.Mu, m);
+            Assert.AreEqual(d.Sigma, s);
+            AssertRightContinuousOutput(_rand.Logistic, d.Mu, d.Sigma, d);
+        }
+
+        [TestCase(5, 0.5)]
+        [TestCase(10, 1)]
+        [Repeat(GeneratorCount)]
+        public void Logistic_SameOutput(double m, double s)
+        {
+            AssertSameContinuousOutput(_rand.Logistic, _otherRand.LogisticSamples, m, s);
+        }
+
+        [TestCase(5, 0.5, 10, 1)]
+        [TestCase(10, 1, 20, 2)]
+        [Repeat(GeneratorCount)]
+        public void Logistic_SameInterleavedOutput(double m1, double s1, double m2, double s2)
+        {
+            AssertSameInterleavedContinuousOutput(_rand.Logistic, _otherRand.LogisticSamples, m1, s1, m2, s2);
+        }
+
+        /*=============================================================================
             Lognormal distribution
         =============================================================================*/
 

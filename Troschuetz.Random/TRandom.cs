@@ -49,16 +49,16 @@ namespace Troschuetz.Random
         #region Construction
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as
-        ///   underlying generator and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
+        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
+        ///   and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
         /// </summary>
         public TRandom() : this(new NR3Q1Generator(Environment.TickCount))
         {
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as
-        ///   underlying generator and the specified seed.
+        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
+        ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public TRandom(int seed) : this(new NR3Q1Generator(seed))
@@ -66,8 +66,8 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as
-        ///   underlying generator and the specified seed.
+        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
+        ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public TRandom(uint seed) : this(new NR3Q1Generator(seed))
@@ -86,21 +86,21 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as
-        ///   underlying generator and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
+        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
+        ///   and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
         /// </summary>
         public static TRandom New() => new TRandom(new NR3Q1Generator(Environment.TickCount));
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as
-        ///   underlying generator and the specified seed.
+        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
+        ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public static TRandom New(int seed) => new TRandom(new NR3Q1Generator(seed));
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as
-        ///   underlying generator and the specified seed.
+        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
+        ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public static TRandom New(uint seed) => new TRandom(new NR3Q1Generator(seed));
@@ -128,11 +128,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="BernoulliDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="BernoulliDistribution"/> for each group of parameters.
         /// </remarks>
         public int Bernoulli(double alpha)
@@ -153,11 +152,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="BernoulliDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="BernoulliDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> BernoulliSamples(double alpha)
@@ -182,11 +180,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="BinomialDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="BinomialDistribution"/> for each group of parameters.
         /// </remarks>
         public int Binomial(double alpha, int beta)
@@ -211,11 +208,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="BinomialDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="BinomialDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> BinomialSamples(double alpha, int beta)
@@ -237,11 +233,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="CategoricalDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public int Categorical(int valueCount)
@@ -266,11 +261,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="CategoricalDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> CategoricalSamples(int valueCount)
@@ -297,11 +291,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="CategoricalDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public int Categorical(ICollection<double> weights)
@@ -328,11 +321,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="CategoricalDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="CategoricalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> CategoricalSamples(ICollection<double> weights)
@@ -361,11 +353,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="DiscreteUniformDistribution.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   with a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="DiscreteUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public int DiscreteUniform(int alpha, int beta)
@@ -393,11 +384,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="DiscreteUniformDistribution.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   with a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="DiscreteUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> DiscreteUniformSamples(int alpha, int beta)
@@ -418,11 +408,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="GeometricDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="GeometricDistribution"/> for each group of parameters.
         /// </remarks>
         public int Geometric(double alpha)
@@ -443,11 +432,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="GeometricDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="GeometricDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> GeometricSamples(double alpha)
@@ -468,11 +456,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="PoissonDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="PoissonDistribution"/> for each group of parameters.
         /// </remarks>
         public int Poisson(double lambda)
@@ -493,11 +480,10 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="PoissonDistribution.Next"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="PoissonDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<int> PoissonSamples(double lambda)
@@ -524,12 +510,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BetaDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BetaDistribution.Sample"/>, with a prior
+        ///   check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="BetaDistribution"/> for each group of parameters.
         /// </remarks>
         public double Beta(double alpha, double beta)
@@ -552,12 +537,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BetaDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BetaDistribution.Sample"/>, with a prior
+        ///   check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="BetaDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> BetaSamples(double alpha, double beta)
@@ -580,12 +564,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to one.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BetaPrimeDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BetaPrimeDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="BetaPrimeDistribution"/> for each group of parameters.
         /// </remarks>
         public double BetaPrime(double alpha, double beta)
@@ -610,12 +593,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to one.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BetaPrimeDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BetaPrimeDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="BetaPrimeDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> BetaPrimeSamples(double alpha, double beta)
@@ -638,12 +620,11 @@ namespace Troschuetz.Random
         ///   <paramref name="gamma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="CauchyDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="CauchyDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="CauchyDistribution"/> for each group of parameters.
         /// </remarks>
         public double Cauchy(double alpha, double gamma)
@@ -666,12 +647,11 @@ namespace Troschuetz.Random
         ///   <paramref name="gamma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="CauchyDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="CauchyDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="CauchyDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> CauchySamples(double alpha, double gamma)
@@ -691,12 +671,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ChiDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ChiDistribution.Sample"/>, with a prior
+        ///   check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ChiDistribution"/> for each group of parameters.
         /// </remarks>
         public double Chi(int alpha)
@@ -716,12 +695,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ChiDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ChiDistribution.Sample"/>, with a prior
+        ///   check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ChiDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ChiSamples(int alpha)
@@ -741,12 +719,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ChiSquareDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ChiSquareDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ChiSquareDistribution"/> for each group of parameters.
         /// </remarks>
         public double ChiSquare(int alpha)
@@ -768,12 +745,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ChiSquareDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ChiSquareDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ChiSquareDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ChiSquareSamples(int alpha)
@@ -798,13 +774,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="ContinuousUniformDistribution.NextDouble"/>, with a prior adjustement of
-        ///   the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ContinuousUniformDistribution.Sample"/>,
+        ///   with a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ContinuousUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public double ContinuousUniform(double alpha, double beta)
@@ -831,13 +805,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="ContinuousUniformDistribution.NextDouble"/>, with a prior adjustement of
-        ///   the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ContinuousUniformDistribution.Sample"/>,
+        ///   with a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ContinuousUniformDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ContinuousUniformSamples(double alpha, double beta)
@@ -860,12 +832,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ErlangDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ErlangDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ErlangDistribution"/> for each group of parameters.
         /// </remarks>
         public double Erlang(int alpha, double lambda)
@@ -888,12 +859,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ErlangDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ErlangDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ErlangDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ErlangSamples(int alpha, double lambda)
@@ -913,12 +883,11 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ExponentialDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ExponentialDistribution.Sample"/>, with
+        ///   a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ExponentialDistribution"/> for each group of parameters.
         /// </remarks>
         public double Exponential(double lambda)
@@ -940,12 +909,11 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ExponentialDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ExponentialDistribution.Sample"/>, with
+        ///   a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ExponentialDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ExponentialSamples(double lambda)
@@ -968,13 +936,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="FisherSnedecorDistribution.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="FisherSnedecorDistribution.Sample"/>,
+        ///   with a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="FisherSnedecorDistribution"/> for each group of parameters.
         /// </remarks>
         public double FisherSnedecor(int alpha, int beta)
@@ -999,13 +965,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="FisherSnedecorDistribution.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="FisherSnedecorDistribution.Sample"/>,
+        ///   with a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="FisherSnedecorDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> FisherSnedecorSamples(int alpha, int beta)
@@ -1028,12 +992,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="FisherTippettDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="FisherTippettDistribution.Sample"/>,
+        ///   with a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="FisherTippettDistribution"/> for each group of parameters.
         /// </remarks>
         public double FisherTippett(double alpha, double mu)
@@ -1058,12 +1021,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="FisherTippettDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="FisherTippettDistribution.Sample"/>,
+        ///   with a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="FisherTippettDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> FisherTippettSamples(double alpha, double mu)
@@ -1086,12 +1048,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="GammaDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="GammaDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="GammaDistribution"/> for each group of parameters.
         /// </remarks>
         public double Gamma(double alpha, double theta)
@@ -1114,12 +1075,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="GammaDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="GammaDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="GammaDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> GammaSamples(double alpha, double theta)
@@ -1142,12 +1102,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="LaplaceDistribution.NextDouble"/>, with
-        ///   a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="LaplaceDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="LaplaceDistribution"/> for each group of parameters.
         /// </remarks>
         public double Laplace(double alpha, double mu)
@@ -1170,18 +1129,73 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="LaplaceDistribution.NextDouble"/>, with
-        ///   a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="LaplaceDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="LaplaceDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> LaplaceSamples(double alpha, double mu)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(LaplaceDistribution.AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
             return InfiniteLoop(LaplaceDistribution.Sample, Generator, alpha, mu);
+        }
+
+        /// <summary>
+        ///   Returns a logistic distributed floating point random number.
+        /// </summary>
+        /// <param name="mu">
+        ///   The parameter mu which is used for generation of logistic distributed random numbers.
+        /// </param>
+        /// <param name="sigma">
+        ///   The parameter sigma which is used for generation of logistic distributed random numbers.
+        /// </param>
+        /// <returns>A logistic distributed floating point random number.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="sigma"/> is less than or equal to zero.
+        /// </exception>
+        /// <remarks>
+        ///   This method simply wraps a call to <see cref="LogisticDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
+        /// </remarks>
+        /// <remarks>
+        ///   If you absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="LogisticDistribution"/> for each group of parameters.
+        /// </remarks>
+        public double Logistic(double mu, double sigma)
+        {
+            Raise<ArgumentOutOfRangeException>.IfNot(LogisticDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            return LogisticDistribution.Sample(Generator, mu, sigma);
+        }
+
+        /// <summary>
+        ///   Returns an infinite sequence of logistic distributed floating point random numbers.
+        /// </summary>
+        /// <param name="mu">
+        ///   The parameter mu which is used for generation of logistic distributed random numbers.
+        /// </param>
+        /// <param name="sigma">
+        ///   The parameter sigma which is used for generation of logistic distributed random numbers.
+        /// </param>
+        /// <returns>
+        ///   An infinite sequence of logistic distributed floating point random numbers.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="sigma"/> is less than or equal to zero.
+        /// </exception>
+        /// <remarks>
+        ///   This method simply wraps a call to <see cref="LogisticDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
+        /// </remarks>
+        /// <remarks>
+        ///   If you absolutely need the best performance, you may consider using an instance of
+        ///   <see cref="LogisticDistribution"/> for each group of parameters.
+        /// </remarks>
+        public IEnumerable<double> LogisticSamples(double mu, double sigma)
+        {
+            Raise<ArgumentOutOfRangeException>.IfNot(LogisticDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            return InfiniteLoop(LogisticDistribution.Sample, Generator, mu, sigma);
         }
 
         /// <summary>
@@ -1198,12 +1212,11 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="LognormalDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="LognormalDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="LognormalDistribution"/> for each group of parameters.
         /// </remarks>
         public double Lognormal(double mu, double sigma)
@@ -1228,12 +1241,11 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="LognormalDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="LognormalDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="LognormalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> LognormalSamples(double mu, double sigma)
@@ -1256,12 +1268,11 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="NormalDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="NormalDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="NormalDistribution"/> for each group of parameters.
         /// </remarks>
         public double Normal(double mu, double sigma)
@@ -1284,12 +1295,11 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="NormalDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="NormalDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="NormalDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> NormalSamples(double mu, double sigma)
@@ -1312,12 +1322,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ParetoDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ParetoDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ParetoDistribution"/> for each group of parameters.
         /// </remarks>
         public double Pareto(double alpha, double beta)
@@ -1340,12 +1349,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ParetoDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ParetoDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="ParetoDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> ParetoSamples(double alpha, double beta)
@@ -1368,12 +1376,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PowerDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PowerDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="PowerDistribution"/> for each group of parameters.
         /// </remarks>
         public double Power(double alpha, double beta)
@@ -1396,12 +1403,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PowerDistribution.NextDouble"/>, with a
-        ///   prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PowerDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="PowerDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> PowerSamples(double alpha, double beta)
@@ -1421,12 +1427,11 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="RayleighDistribution.NextDouble"/>, with
-        ///   a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="RayleighDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="RayleighDistribution"/> for each group of parameters.
         /// </remarks>
         public double Rayleigh(double sigma)
@@ -1448,12 +1453,11 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="RayleighDistribution.NextDouble"/>, with
-        ///   a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="RayleighDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="RayleighDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> RayleighSamples(double sigma)
@@ -1473,12 +1477,11 @@ namespace Troschuetz.Random
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="StudentsTDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="StudentsTDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="StudentsTDistribution"/> for each group of parameters.
         /// </remarks>
         public double StudentsT(int nu)
@@ -1500,12 +1503,11 @@ namespace Troschuetz.Random
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="StudentsTDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="StudentsTDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="StudentsTDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> StudentsTSamples(int nu)
@@ -1533,12 +1535,11 @@ namespace Troschuetz.Random
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="TriangularDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="TriangularDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="TriangularDistribution"/> for each group of parameters.
         /// </remarks>
         public double Triangular(double alpha, double beta, double gamma)
@@ -1568,12 +1569,11 @@ namespace Troschuetz.Random
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="TriangularDistribution.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="TriangularDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="TriangularDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> TriangularSamples(double alpha, double beta, double gamma)
@@ -1596,12 +1596,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="WeibullDistribution.NextDouble"/>, with
-        ///   a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="WeibullDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="WeibullDistribution"/> for each group of parameters.
         /// </remarks>
         public double Weibull(double alpha, double lambda)
@@ -1624,12 +1623,11 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="WeibullDistribution.NextDouble"/>, with
-        ///   a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="WeibullDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
-        ///   This method is slightly more efficient when called with the same parameters. If you
-        ///   absolutely need the best performance, you may consider using an instance of
+        ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="WeibullDistribution"/> for each group of parameters.
         /// </remarks>
         public IEnumerable<double> WeibullSamples(double alpha, double lambda)
