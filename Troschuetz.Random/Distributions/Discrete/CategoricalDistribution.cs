@@ -125,7 +125,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         {
             Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Weights.Count, DefaultValueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
+            Debug.Assert(Weights.All(w => TMath.AreEqual(w, 1.0 / DefaultValueCount)));
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Weights.Count, DefaultValueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
+            Debug.Assert(Weights.All(w => TMath.AreEqual(w, 1.0 / DefaultValueCount)));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
             Debug.Assert(Equals(Weights.Count, DefaultValueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
+            Debug.Assert(Weights.All(w => TMath.AreEqual(w, 1.0 / DefaultValueCount)));
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         {
             Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Weights.Count, valueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / valueCount));
+            Debug.Assert(Weights.All(w => TMath.AreEqual(w, 1.0 / valueCount)));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Weights.Count, valueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / valueCount));
+            Debug.Assert(Weights.All(w => TMath.AreEqual(w, 1.0 / valueCount)));
         }
 
         /// <summary>
@@ -434,6 +434,10 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         #region Object Members
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
         public override string ToString() => "Categorical(ValueCount = " + _weights.Count + ")";
 
         #endregion Object Members
@@ -479,7 +483,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             {
                 var idx = (maxIdx - minIdx) / 2 + minIdx;
                 var c = cdf[idx];
-                if (u == c)
+                if (TMath.AreEqual(u, c))
                 {
                     minIdx = idx;
                     break;

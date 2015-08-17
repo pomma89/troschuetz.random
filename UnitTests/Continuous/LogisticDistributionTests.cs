@@ -81,7 +81,7 @@ namespace Troschuetz.Random.Tests.Continuous
                 return d.Sigma;
             }
             double s;
-            do s = Rand.NextDouble(); while (s == 0.0);
+            do s = Rand.NextDouble(); while (TMath.IsZero(s));
             return s;
         }
     }

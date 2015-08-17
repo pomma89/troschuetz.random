@@ -14,7 +14,7 @@ namespace Troschuetz.Random
         public const double Epsilon = 1E-6;
 
         /// <summary>
-        ///   Safely check if given double is zero.
+        ///   Safely checks if given double is zero.
         /// </summary>
         /// <param name="d">A double.</param>
         /// <returns>True if given double is near zero, false otherwise.</returns>
@@ -22,6 +22,17 @@ namespace Troschuetz.Random
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static bool IsZero(double d) => d > -Epsilon && d < Epsilon;
+
+        /// <summary>
+        ///   Safely checks if given doubles are equal.
+        /// </summary>
+        /// <param name="d1">A double.</param>
+        /// <param name="d2">A double.</param>
+        /// <returns>True if given doubles are safely equal, false otherwise.</returns>
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public static bool AreEqual(double d1, double d2) => IsZero(d1 - d2);
 
         /// <summary>
         ///   Fast square power.

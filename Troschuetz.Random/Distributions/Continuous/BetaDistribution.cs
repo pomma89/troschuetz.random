@@ -294,11 +294,11 @@ namespace Troschuetz.Random.Distributions.Continuous
                 {
                     return new[] { 0.0, 1.0 };
                 }
-                if (((_alpha < 1) && (_beta >= 1)) || ((_alpha == 1) && (_beta > 1)))
+                if (((_alpha < 1) && (_beta >= 1)) || (TMath.AreEqual(_alpha, 1) && (_beta > 1)))
                 {
                     return new[] { 0.0 };
                 }
-                if (((_alpha >= 1) && (_beta < 1)) || ((_alpha > 1) && (_beta == 1)))
+                if (((_alpha >= 1) && (_beta < 1)) || ((_alpha > 1) && TMath.AreEqual(_beta, 1)))
                 {
                     return new[] { 1.0 };
                 }
@@ -339,7 +339,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             // Formula: Gamma(a,1) / (Gamma(a,1) + Gamma(b,1)) ~ Beta(a,b)
             var x = GammaDistribution.Sample(generator, alpha, GammaDistribution.DefaultTheta);
             double t;
-            do t = (x + GammaDistribution.Sample(generator, beta, GammaDistribution.DefaultTheta)); while (t == 0.0);
+            do t = (x + GammaDistribution.Sample(generator, beta, GammaDistribution.DefaultTheta)); while (TMath.IsZero(t));
             return x / t;
         };
 

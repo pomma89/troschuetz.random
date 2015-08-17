@@ -283,7 +283,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="NotSupportedException">
         ///   Thrown if mode is not defined for given distribution with some parameters.
         /// </exception>
-        public double[] Mode => _lambda == Math.Floor(_lambda) ? new[] { _lambda - 1.0, _lambda } : new[] { Math.Floor(_lambda) };
+        public double[] Mode => TMath.AreEqual(_lambda, Math.Floor(_lambda)) ? new[] { _lambda - 1.0, _lambda } : new[] { Math.Floor(_lambda) };
 
         /// <summary>
         ///   Returns a distributed random number.

@@ -1841,7 +1841,7 @@ namespace Troschuetz.Random
         ///   Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
-        public string ToString() => string.Format("Generator: {0}", Generator);
+        public override string ToString() => string.Format("Generator: {0}", Generator);
 
         #endregion Object Members
 
