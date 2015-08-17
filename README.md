@@ -23,7 +23,10 @@ The tester is not distributed on NuGet, but it can be [downloaded here](https://
 
 ## Extensibility ##
 
-After a request from a user, the library has been modified in order to allow it to be easily extended or modified. As of version 4.0.0, these extensibility cases are supported:
+After a request from a user, the library has been modified in order to allow it to be easily extended or modified. 
+
+As of version 4.0.0, these extensibility cases are supported:
+
 * Defining a custom generator by extending the AbstractGenerator class.
 * Defining a custom distribution, by extending the AbstractDistribution class and by implementing either IContinuousDistribution or IDiscreteDistribution.
 * Change the core definition of a standard distribution, by redefining the static Sample delegate, used to generate distributed numbers, and the static IsValidParam/AreValidParams delegate, used to validate parameters.
