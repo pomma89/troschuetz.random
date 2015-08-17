@@ -706,13 +706,13 @@ namespace Troschuetz.Random.Tests
         [TestCase(5, 0.5)]
         [TestCase(10, 1)]
         [Repeat(GeneratorCount)]
-        public void Gamma_RightParameters(double a, double t)
+        public void Gamma_RightParameters(double a, double b)
         {
-            var d = new GammaDistribution { Alpha = a, Theta = t };
-            Assert.True(d.IsValidAlpha(a) && d.IsValidTheta(t));
+            var d = new GammaDistribution { Alpha = a, Beta = b };
+            Assert.True(d.IsValidAlpha(a) && d.IsValidBeta(b));
             Assert.AreEqual(d.Alpha, a);
-            Assert.AreEqual(d.Theta, t);
-            AssertRightContinuousOutput(_rand.Gamma, d.Alpha, d.Theta, d);
+            Assert.AreEqual(d.Beta, b);
+            AssertRightContinuousOutput(_rand.Gamma, d.Alpha, d.Beta, d);
         }
 
         [TestCase(5, 0.5)]

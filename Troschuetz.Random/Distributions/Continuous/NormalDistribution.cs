@@ -367,7 +367,7 @@ namespace Troschuetz.Random.Distributions.Continuous
                 var v1 = 2.0 * generator.NextDouble() - 1.0;
                 var v2 = 2.0 * generator.NextDouble() - 1.0;
                 var w = v1 * v1 + v2 * v2;
-                if (w > 1)
+                if (w >= 1.0 || TMath.IsZero(w))
                 {
                     continue;
                 }

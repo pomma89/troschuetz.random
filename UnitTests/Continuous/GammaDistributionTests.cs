@@ -26,32 +26,32 @@ namespace Troschuetz.Random.Tests.Continuous
     {
         protected override GammaDistribution GetDist(GammaDistribution other = null)
         {
-            return new GammaDistribution { Alpha = GetAlpha(other), Theta = GetTheta(other) };
+            return new GammaDistribution { Alpha = GetAlpha(other), Beta = GetBeta(other) };
         }
 
         protected override GammaDistribution GetDist(uint seed, GammaDistribution other = null)
         {
-            return new GammaDistribution(seed) { Alpha = GetAlpha(other), Theta = GetTheta(other) };
+            return new GammaDistribution(seed) { Alpha = GetAlpha(other), Beta = GetBeta(other) };
         }
 
         protected override GammaDistribution GetDist(IGenerator gen, GammaDistribution other = null)
         {
-            return new GammaDistribution(gen) { Alpha = GetAlpha(other), Theta = GetTheta(other) };
+            return new GammaDistribution(gen) { Alpha = GetAlpha(other), Beta = GetBeta(other) };
         }
 
         protected override GammaDistribution GetDistWithParams(GammaDistribution other = null)
         {
-            return new GammaDistribution(GetAlpha(other), GetTheta(other));
+            return new GammaDistribution(GetAlpha(other), GetBeta(other));
         }
 
         protected override GammaDistribution GetDistWithParams(uint seed, GammaDistribution other = null)
         {
-            return new GammaDistribution(seed, GetAlpha(other), GetTheta(other));
+            return new GammaDistribution(seed, GetAlpha(other), GetBeta(other));
         }
 
         protected override GammaDistribution GetDistWithParams(IGenerator gen, GammaDistribution other = null)
         {
-            return new GammaDistribution(gen, GetAlpha(other), GetTheta(other));
+            return new GammaDistribution(gen, GetAlpha(other), GetBeta(other));
         }
 
         [TestCase(double.NaN)]
@@ -73,11 +73,11 @@ namespace Troschuetz.Random.Tests.Continuous
         [TestCase(SmallNeg)]
         [TestCase(LargeNeg)]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Theta_WrongValues(double d)
+        public void Beta_WrongValues(double d)
         {
             Assert.False(GammaDistribution.AreValidParams(1, d));
-            Assert.False(Dist.IsValidTheta(d));
-            Dist.Theta = d;
+            Assert.False(Dist.IsValidBeta(d));
+            Dist.Beta = d;
         }
 
         // alpha > 0
@@ -86,10 +86,10 @@ namespace Troschuetz.Random.Tests.Continuous
             return d == null ? Rand.NextDouble(0.1, 10) : d.Alpha;
         }
 
-        // theta > 0
-        double GetTheta(IThetaDistribution<double> d)
+        // beta > 0
+        double GetBeta(IBetaDistribution<double> d)
         {
-            return d == null ? Rand.NextDouble(0.1, 10) : d.Theta;
+            return d == null ? Rand.NextDouble(0.1, 10) : d.Beta;
         }
     }
 }

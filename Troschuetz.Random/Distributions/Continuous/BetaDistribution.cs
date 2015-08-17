@@ -337,9 +337,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             // Formula: Gamma(a,1) / (Gamma(a,1) + Gamma(b,1)) ~ Beta(a,b)
-            var x = GammaDistribution.Sample(generator, alpha, GammaDistribution.DefaultTheta);
+            var x = GammaDistribution.Sample(generator, alpha, GammaDistribution.DefaultBeta);
             double t;
-            do t = (x + GammaDistribution.Sample(generator, beta, GammaDistribution.DefaultTheta)); while (TMath.IsZero(t));
+            do t = (x + GammaDistribution.Sample(generator, beta, GammaDistribution.DefaultBeta)); while (TMath.IsZero(t));
             return x / t;
         };
 

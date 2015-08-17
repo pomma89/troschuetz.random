@@ -1040,12 +1040,12 @@ namespace Troschuetz.Random
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of gamma distributed random numbers.
         /// </param>
-        /// <param name="theta">
-        ///   The parameter theta which is used for generation of gamma distributed random numbers.
+        /// <param name="beta">
+        ///   The parameter beta which is used for generation of gamma distributed random numbers.
         /// </param>
         /// <returns>A gamma distributed floating point random number.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
+        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="GammaDistribution.Sample"/>, with a
@@ -1055,10 +1055,10 @@ namespace Troschuetz.Random
         ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="GammaDistribution"/> for each group of parameters.
         /// </remarks>
-        public double Gamma(double alpha, double theta)
+        public double Gamma(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(GammaDistribution.AreValidParams(alpha, theta), ErrorMessages.InvalidParams);
-            return GammaDistribution.Sample(Generator, alpha, theta);
+            Raise<ArgumentOutOfRangeException>.IfNot(GammaDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            return GammaDistribution.Sample(Generator, alpha, beta);
         }
 
         /// <summary>
@@ -1067,12 +1067,12 @@ namespace Troschuetz.Random
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of gamma distributed random numbers.
         /// </param>
-        /// <param name="theta">
-        ///   The parameter theta which is used for generation of gamma distributed random numbers.
+        /// <param name="beta">
+        ///   The parameter beta which is used for generation of gamma distributed random numbers.
         /// </param>
         /// <returns>An infinite sequence of gamma distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
+        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to <see cref="GammaDistribution.Sample"/>, with a
@@ -1082,10 +1082,10 @@ namespace Troschuetz.Random
         ///   If you absolutely need the best performance, you may consider using an instance of
         ///   <see cref="GammaDistribution"/> for each group of parameters.
         /// </remarks>
-        public IEnumerable<double> GammaSamples(double alpha, double theta)
+        public IEnumerable<double> GammaSamples(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(GammaDistribution.AreValidParams(alpha, theta), ErrorMessages.InvalidParams);
-            return InfiniteLoop(GammaDistribution.Sample, Generator, alpha, theta);
+            Raise<ArgumentOutOfRangeException>.IfNot(GammaDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            return InfiniteLoop(GammaDistribution.Sample, Generator, alpha, beta);
         }
 
         /// <summary>
