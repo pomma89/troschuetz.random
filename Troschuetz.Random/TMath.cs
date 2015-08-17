@@ -39,7 +39,7 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="d">A double.</param>
         /// <returns>True if given double is near zero, false otherwise.</returns>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static bool IsZero(double d) => d > -Tolerance && d < Tolerance;
@@ -50,7 +50,7 @@ namespace Troschuetz.Random
         /// <param name="d1">A double.</param>
         /// <param name="d2">A double.</param>
         /// <returns>True if given doubles are safely equal, false otherwise.</returns>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static bool AreEqual(double d1, double d2) => IsZero(d1 - d2);
@@ -60,7 +60,7 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="d">A double.</param>
         /// <returns>The square of given double.</returns>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static double Square(double d) => IsZero(d) ? 0.0 : d * d;
@@ -68,7 +68,7 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Generates a new seed, using all information available, including time.
         /// </summary>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static uint Seed()

@@ -1847,7 +1847,7 @@ namespace Troschuetz.Random
 
         #region Private Members
 
-#if PORTABLE
+#if NET45
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -1859,7 +1859,7 @@ namespace Troschuetz.Random
             }
         }
 
-#if PORTABLE
+#if NET45
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -1871,7 +1871,7 @@ namespace Troschuetz.Random
             }
         }
 
-#if PORTABLE
+#if NET45
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif

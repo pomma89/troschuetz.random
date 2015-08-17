@@ -161,7 +161,7 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit signed integer greater than or equal to 0, and less than
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
         /// </returns>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public int Next()
@@ -194,7 +194,7 @@ namespace Troschuetz.Random.Generators
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to 0.
         /// </exception>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public int Next(int maxValue)
@@ -225,7 +225,7 @@ namespace Troschuetz.Random.Generators
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public int Next(int minValue, int maxValue)
@@ -263,7 +263,7 @@ namespace Troschuetz.Random.Generators
         ///   <paramref name="maxValue"/> must be greater than or equal to 0.0.
         /// </exception>
         /// <exception cref="ArgumentException"><paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.</exception>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public double NextDouble(double maxValue)
@@ -296,7 +296,7 @@ namespace Troschuetz.Random.Generators
         ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
         ///   cannot be <see cref="double.PositiveInfinity"/>.
         /// </exception>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public double NextDouble(double minValue, double maxValue)
@@ -328,7 +328,7 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
         ///   less than <see cref="uint.MaxValue"/>.
         /// </returns>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public uint NextUIntExclusiveMaxValue()
@@ -350,7 +350,7 @@ namespace Troschuetz.Random.Generators
         ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
         ///   <see cref="uint.MinValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public uint NextUInt(uint maxValue)
@@ -378,7 +378,7 @@ namespace Troschuetz.Random.Generators
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public uint NextUInt(uint minValue, uint maxValue)
@@ -401,7 +401,7 @@ namespace Troschuetz.Random.Generators
         ///   invoked once in every 31 calls.
         /// </remarks>
         /// <returns>A <see cref="bool"/> value.</returns>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public bool NextBoolean()
@@ -430,7 +430,7 @@ namespace Troschuetz.Random.Generators
         /// </remarks>
         /// <param name="buffer">An array of bytes to contain random numbers.</param>
         /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public void NextBytes(byte[] buffer)

@@ -108,7 +108,7 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override int NextInclusiveMaxValue()
@@ -127,7 +127,7 @@ namespace Troschuetz.Random.Generators
         ///   A double-precision floating point number greater than or equal to 0.0, and less than
         ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
         /// </returns>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override double NextDouble()
@@ -146,7 +146,7 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
         ///   less than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
-#if PORTABLE
+#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override uint NextUInt()
