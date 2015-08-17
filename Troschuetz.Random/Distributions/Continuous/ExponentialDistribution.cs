@@ -80,24 +80,24 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public ExponentialDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultLambda)
+        public ExponentialDistribution() : this(new NR3Q1Generator(), DefaultLambda)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Equals(Lambda, DefaultLambda));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public ExponentialDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultLambda)
+        public ExponentialDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultLambda)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Lambda, DefaultLambda));
         }
@@ -116,7 +116,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of exponential distributed random numbers.
@@ -124,15 +124,15 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
-        public ExponentialDistribution(double lambda) : this(new NumericalRecipes3Q1Generator(), lambda)
+        public ExponentialDistribution(double lambda) : this(new NR3Q1Generator(), lambda)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Equals(Lambda, lambda));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -143,9 +143,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
-        public ExponentialDistribution(uint seed, double lambda) : this(new NumericalRecipes3Q1Generator(seed), lambda)
+        public ExponentialDistribution(uint seed, double lambda) : this(new NR3Q1Generator(seed), lambda)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Lambda, lambda));
         }
@@ -252,7 +252,6 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </remarks>
         public static Func<IGenerator, double, double> Sample { get; set; } = (generator, lambda) =>
         {
-            // Algorithm taken from "Numerical Recipes in C++", 3rd edition.
             double u;
             do u = generator.NextDouble(); while (u == 0.0);
             return -Math.Log(u) / lambda;

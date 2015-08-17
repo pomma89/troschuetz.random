@@ -14,9 +14,8 @@ All the hard work behind this library was done by Stefan Troschütz, and for whi
 You can find the modified source code and the available documentation at the project URL.
         </description>
         <releaseNotes>
-* BREAKING CHANGE: NumericalRecipes3Q1 is the new default generator.
 * BREAKING CHANGE: Generic TRandom and generic distributions have been removed.
-* Added new generators taken from "Numerical Recipes in C++", 3rd edition. Those generators are: NumericalRecipes3 (Ran), NumericalRecipes3Q1 (Ranq1), NumericalRecipes3Q2 (Ranq2).
+* Added new generators from a famous book about numerical analysis: NR3, NR3Q1, NR3Q2.
 * Implemented library extensiibility (feature #3). See project README for further details.
 * Added the logistic distribution.
         </releaseNotes>
@@ -31,7 +30,7 @@ You can find the modified source code and the available documentation at the pro
             <dependency id="Thrower" version="1.1" />
         </dependencies>
         <references></references>
-        <tags>random distribution generator normal exponential python alf mt19937 xorshift128 numerical recipes ran</tags>
+        <tags>random distribution generator normal exponential python alf mt19937 xorshift128</tags>
     </metadata>
     <files>
         <file src="lib\" target="lib" />

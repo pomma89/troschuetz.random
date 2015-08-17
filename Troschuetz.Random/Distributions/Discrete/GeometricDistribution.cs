@@ -136,24 +136,24 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public GeometricDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultAlpha)
+        public GeometricDistribution() : this(new NR3Q1Generator(), DefaultAlpha)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public GeometricDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha)
+        public GeometricDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultAlpha)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
         }
@@ -172,7 +172,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of geometric distributed random numbers.
@@ -180,15 +180,15 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
-        public GeometricDistribution(double alpha) : this(new NumericalRecipes3Q1Generator(), alpha)
+        public GeometricDistribution(double alpha) : this(new NR3Q1Generator(), alpha)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Equals(Alpha, alpha));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -199,9 +199,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
-        public GeometricDistribution(uint seed, double alpha) : this(new NumericalRecipes3Q1Generator(seed), alpha)
+        public GeometricDistribution(uint seed, double alpha) : this(new NR3Q1Generator(seed), alpha)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
         }

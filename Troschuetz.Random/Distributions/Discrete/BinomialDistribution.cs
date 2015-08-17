@@ -109,25 +109,25 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public BinomialDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta)
+        public BinomialDistribution() : this(new NR3Q1Generator(), DefaultAlpha, DefaultBeta)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public BinomialDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta)
+        public BinomialDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultAlpha, DefaultBeta)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
@@ -148,7 +148,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of binomial distributed random numbers.
@@ -160,16 +160,16 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <paramref name="alpha"/> is less than zero or greater than one, or
         ///   <paramref name="beta"/> is less than zero.
         /// </exception>
-        public BinomialDistribution(double alpha, int beta) : this(new NumericalRecipes3Q1Generator(), alpha, beta)
+        public BinomialDistribution(double alpha, int beta) : this(new NR3Q1Generator(), alpha, beta)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -185,9 +185,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <paramref name="beta"/> is less than zero.
         /// </exception>
         public BinomialDistribution(uint seed, double alpha, int beta)
-            : this(new NumericalRecipes3Q1Generator(seed), alpha, beta)
+            : this(new NR3Q1Generator(seed), alpha, beta)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));

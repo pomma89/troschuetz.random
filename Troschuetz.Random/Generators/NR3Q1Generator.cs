@@ -25,14 +25,12 @@ using System.Runtime.CompilerServices;
 namespace Troschuetz.Random.Generators
 {
     /// <summary>
-    ///   A generator whose original code has been found on "Numerical Recipes in C++", 3rd edition.
-    ///   Inside the book, it is named "Ranq2" and it is a "backup" generator which should be used
-    ///   if "Ranq1" (here <see cref="NumericalRecipes3Q1Generator"/>) has too short a period and
-    ///   "Ran" (here <see cref="NumericalRecipes3Generator"/>) is too slow.
+    ///   A generator whose original code has been found in a famous book about numerical analysis.
+    ///   Inside the book, it is the recommended generator for everyday use.
     /// </summary>
-    /// <remarks>This generator has a period of ~ 8.5 * 10^37.</remarks>
+    /// <remarks>This generator has a period of ~ 1.8 * 10^19.</remarks>
     [Serializable]
-    public sealed class NumericalRecipes3Q2Generator : AbstractGenerator
+    public sealed class NR3Q1Generator : AbstractGenerator
     {
         #region Constants
 
@@ -43,52 +41,45 @@ namespace Troschuetz.Random.Generators
         public const ulong SeedV = 4101842887655102017UL;
 
         /// <summary>
-        ///   Represents the seed for the <see cref="_w"/> variable. This field is constant.
-        /// </summary>
-        /// <remarks>The value of this constant is 1.</remarks>
-        public const ulong SeedW = 1UL;
-
-        /// <summary>
         ///   Represents the seed for the <see cref="ulong"/> numbers generation. This field is constant.
         /// </summary>
-        /// <remarks>The value of this constant is 4294957665.</remarks>
-        public const ulong SeedU = 4294957665UL;
+        /// <remarks>The value of this constant is 2685821657736338717.</remarks>
+        public const ulong SeedU = 2685821657736338717UL;
 
         #endregion Constants
 
         ulong _v;
-        ulong _w;
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NumericalRecipes3Q2Generator"/> class,
+        ///   Initializes a new instance of the <see cref="NR3Q1Generator"/> class,
         ///   using a time-dependent default seed value.
         /// </summary>
-        public NumericalRecipes3Q2Generator() : base((uint) Math.Abs(Environment.TickCount))
+        public NR3Q1Generator() : base((uint) Math.Abs(Environment.TickCount))
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NumericalRecipes3Q2Generator"/> class,
+        ///   Initializes a new instance of the <see cref="NR3Q1Generator"/> class,
         ///   using the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   A number used to calculate a starting value for the pseudo-random number sequence. If
         ///   a negative number is specified, the absolute value of the number is used.
         /// </param>
-        public NumericalRecipes3Q2Generator(int seed) : base((uint) Math.Abs(seed))
+        public NR3Q1Generator(int seed) : base((uint) Math.Abs(seed))
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NumericalRecipes3Q2Generator"/> class,
+        ///   Initializes a new instance of the <see cref="NR3Q1Generator"/> class,
         ///   using the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public NumericalRecipes3Q2Generator(uint seed) : base(seed)
+        public NR3Q1Generator(uint seed) : base(seed)
         {
         }
 
@@ -114,9 +105,7 @@ namespace Troschuetz.Random.Generators
             base.Reset(seed);
 
             _v = SeedV;
-            _w = SeedW;
             _v ^= seed;
-            _w = NextULong();
             _v = NextULong();
             return true;
         }
@@ -134,11 +123,10 @@ namespace Troschuetz.Random.Generators
         public override int NextInclusiveMaxValue()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
-            _v ^= _v >> 17;
-            _v ^= _v << 31;
-            _v ^= _v >> 8;
-            _w = SeedU * (_w & 0xFFFFFFFFUL) + (_w >> 32);
-            var result = (int) ((_v ^ _w) >> 33);
+            _v ^= _v >> 21;
+            _v ^= _v << 35;
+            _v ^= _v >> 4;
+            var result = (int) ((_v * SeedU) >> 33);
 
             // Postconditions
             Debug.Assert(result >= 0);
@@ -158,11 +146,10 @@ namespace Troschuetz.Random.Generators
         public override double NextDouble()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
-            _v ^= _v >> 17;
-            _v ^= _v << 31;
-            _v ^= _v >> 8;
-            _w = SeedU * (_w & 0xFFFFFFFFUL) + (_w >> 32);
-            var result = (_v ^ _w) * ULongToDoubleMultiplier;
+            _v ^= _v >> 21;
+            _v ^= _v << 35;
+            _v ^= _v >> 4;
+            var result = (_v * SeedU) * ULongToDoubleMultiplier;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < 1.0);
@@ -182,11 +169,10 @@ namespace Troschuetz.Random.Generators
         public override uint NextUInt()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
-            _v ^= _v >> 17;
-            _v ^= _v << 31;
-            _v ^= _v >> 8;
-            _w = SeedU * (_w & 0xFFFFFFFFUL) + (_w >> 32);
-            return (uint) (_v ^ _w);
+            _v ^= _v >> 21;
+            _v ^= _v << 35;
+            _v ^= _v >> 4;
+            return (uint) (_v * SeedU);
         }
 
         /// <summary>
@@ -201,11 +187,10 @@ namespace Troschuetz.Random.Generators
 #endif
         public ulong NextULong()
         {
-            _v ^= _v >> 17;
-            _v ^= _v << 31;
-            _v ^= _v >> 8;
-            _w = SeedU * (_w & 0xFFFFFFFFUL) + (_w >> 32);
-            return _v ^ _w;
+            _v ^= _v >> 21;
+            _v ^= _v << 35;
+            _v ^= _v >> 4;
+            return _v * SeedU;
         }
 
         #endregion IGenerator members

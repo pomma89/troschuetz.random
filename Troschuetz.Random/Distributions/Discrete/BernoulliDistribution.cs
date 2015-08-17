@@ -80,24 +80,24 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
         /// </summary>
-        public BernoulliDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultAlpha)
+        public BernoulliDistribution() : this(new NR3Q1Generator(), DefaultAlpha)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public BernoulliDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha)
+        public BernoulliDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultAlpha)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
         }
@@ -116,7 +116,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
@@ -124,15 +124,15 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
-        public BernoulliDistribution(double alpha) : this(new NumericalRecipes3Q1Generator(), alpha)
+        public BernoulliDistribution(double alpha) : this(new NR3Q1Generator(), alpha)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Equals(Alpha, alpha));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -143,9 +143,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
-        public BernoulliDistribution(uint seed, double alpha) : this(new NumericalRecipes3Q1Generator(seed), alpha)
+        public BernoulliDistribution(uint seed, double alpha) : this(new NR3Q1Generator(seed), alpha)
         {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator is NR3Q1Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
         }

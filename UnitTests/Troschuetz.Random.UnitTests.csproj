@@ -162,7 +162,7 @@
     <Compile Include="Discrete\GeometricDistributionTests.cs" />
     <Compile Include="Discrete\PoissonDistributionTests.cs" />
     <Compile Include="DistributionTests.cs" />
-    <Compile Include="Generators\NumericalRecipes3GeneratorTests.cs" />
+    <Compile Include="Generators\NR3GeneratorTests.cs" />
     <Compile Include="Generators\ALFGeneratorTests.cs" />
     <Compile Include="Generators\MT19937GeneratorTests.cs" />
     <Compile Include="Generators\StandardGeneratorTests.cs" />
