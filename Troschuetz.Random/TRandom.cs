@@ -35,14 +35,84 @@ namespace Troschuetz.Random
     ///   according to a particular kind of distribution.
     /// </summary>
     [Serializable]
-    public class TRandom<TGen> : IGenerator where TGen : IGenerator
+    public sealed class TRandom : IGenerator
     {
-        readonly TGen _gen;
+        #region Fields
 
-        internal TRandom(TGen generator)
+        /// <summary>
+        ///   The generator used by <see cref="TRandom"/>.
+        /// </summary>
+        readonly IGenerator _gen;
+
+        #endregion Fields
+
+        #region Construction
+
+        /// <summary>
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
+        /// </summary>
+        public TRandom() : this(new NumericalRecipes3Q1Generator(Environment.TickCount))
         {
+        }
+
+        /// <summary>
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the specified seed.
+        /// </summary>
+        /// <param name="seed">The seed used to initialize the generator.</param>
+        public TRandom(int seed) : this(new NumericalRecipes3Q1Generator(seed))
+        {
+        }
+
+        /// <summary>
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the specified seed.
+        /// </summary>
+        /// <param name="seed">The seed used to initialize the generator.</param>
+        public TRandom(uint seed) : this(new NumericalRecipes3Q1Generator(seed))
+        {
+        }
+
+        /// <summary>
+        ///   Constructs a new instance with the specified generator.
+        /// </summary>
+        /// <param name="generator">The generator used to produce random numbers.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is null.</exception>
+        public TRandom(IGenerator generator)
+        {
+            RaiseArgumentNullException.IfIsNull(generator, nameof(generator));
             _gen = generator;
         }
+
+        /// <summary>
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
+        /// </summary>
+        public static TRandom New() => new TRandom(new NumericalRecipes3Q1Generator(Environment.TickCount));
+
+        /// <summary>
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the specified seed.
+        /// </summary>
+        /// <param name="seed">The seed used to initialize the generator.</param>
+        public static TRandom New(int seed) => new TRandom(new NumericalRecipes3Q1Generator(seed));
+
+        /// <summary>
+        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
+        ///   underlying generator and the specified seed.
+        /// </summary>
+        /// <param name="seed">The seed used to initialize the generator.</param>
+        public static TRandom New(uint seed) => new TRandom(new NumericalRecipes3Q1Generator(seed));
+
+        /// <summary>
+        ///   Constructs a new instance with the specified generator.
+        /// </summary>
+        /// <param name="generator">The generator used to produce random numbers.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is null.</exception>
+        public static TRandom New(IGenerator generator) => new TRandom(generator);
+
+        #endregion Construction
 
         #region Discrete Distributions
 
@@ -57,8 +127,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BernoulliDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BernoulliDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -82,8 +152,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BernoulliDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BernoulliDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -92,8 +162,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> BernoulliSamples(double alpha)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(BernoulliDistribution.IsValidParam(alpha),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(BernoulliDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
             return InfiniteLoop(BernoulliDistribution.Sample, _gen, alpha);
         }
 
@@ -112,8 +181,8 @@ namespace Troschuetz.Random
         ///   <paramref name="beta"/> is less than zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BinomialDistribution{TGen}.Next"/>, with
-        ///   a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BinomialDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -122,8 +191,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Binomial(double alpha, int beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(BinomialDistribution.AreValidParams(alpha, beta),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(BinomialDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return BinomialDistribution.Sample(_gen, alpha, beta);
         }
 
@@ -142,8 +210,8 @@ namespace Troschuetz.Random
         ///   <paramref name="beta"/> is less than zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BinomialDistribution{TGen}.Next"/>, with
-        ///   a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BinomialDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -152,8 +220,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> BinomialSamples(double alpha, int beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(BinomialDistribution.AreValidParams(alpha, beta),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(BinomialDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return InfiniteLoop(BinomialDistribution.Sample, _gen, alpha, beta);
         }
 
@@ -169,8 +236,8 @@ namespace Troschuetz.Random
         ///   <paramref name="valueCount"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="CategoricalDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="CategoricalDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -198,8 +265,8 @@ namespace Troschuetz.Random
         ///   <paramref name="valueCount"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="CategoricalDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="CategoricalDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -229,8 +296,8 @@ namespace Troschuetz.Random
         ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="CategoricalDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="CategoricalDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -239,8 +306,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Categorical(ICollection<double> weights)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(CategoricalDistribution.IsValidParam(weights),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(CategoricalDistribution.IsValidParam(weights), ErrorMessages.InvalidParams);
             double[] cdf;
             double weightsSum;
             CategoricalDistribution.SetUp(weights.Count, weights, out cdf, out weightsSum);
@@ -261,8 +327,8 @@ namespace Troschuetz.Random
         ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="CategoricalDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="CategoricalDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -271,8 +337,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> CategoricalSamples(ICollection<double> weights)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(CategoricalDistribution.IsValidParam(weights),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(CategoricalDistribution.IsValidParam(weights), ErrorMessages.InvalidParams);
             double[] cdf;
             double weightsSum;
             CategoricalDistribution.SetUp(weights.Count, weights, out cdf, out weightsSum);
@@ -295,9 +360,8 @@ namespace Troschuetz.Random
         ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="DiscreteUniformDistribution{TGen}.Next"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="DiscreteUniformDistribution.Next"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -306,8 +370,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int DiscreteUniform(int alpha, int beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(DiscreteUniformDistribution.AreValidParams(alpha, beta),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(DiscreteUniformDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return DiscreteUniformDistribution.Sample(_gen, alpha, beta);
         }
 
@@ -329,9 +392,8 @@ namespace Troschuetz.Random
         ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="DiscreteUniformDistribution{TGen}.Next"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="DiscreteUniformDistribution.Next"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -340,8 +402,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> DiscreteUniformSamples(int alpha, int beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(DiscreteUniformDistribution.AreValidParams(alpha, beta),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(DiscreteUniformDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return InfiniteLoop(DiscreteUniformDistribution.Sample, _gen, alpha, beta);
         }
 
@@ -356,8 +417,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="GeometricDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="GeometricDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -366,8 +427,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Geometric(double alpha)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(GeometricDistribution.IsValidParam(alpha),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(GeometricDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
             return GeometricDistribution.Sample(_gen, alpha);
         }
 
@@ -382,8 +442,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="GeometricDistribution{TGen}.Next"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="GeometricDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -392,8 +452,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> GeometricSamples(double alpha)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(GeometricDistribution.IsValidParam(alpha),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(GeometricDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
             return InfiniteLoop(GeometricDistribution.Sample, _gen, alpha);
         }
 
@@ -408,8 +467,8 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PoissonDistribution{TGen}.Next"/>, with
-        ///   a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PoissonDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -418,8 +477,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Poisson(double lambda)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(PoissonDistribution.IsValidParam(lambda),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(PoissonDistribution.IsValidParam(lambda), ErrorMessages.InvalidParams);
             return PoissonDistribution.Sample(_gen, lambda);
         }
 
@@ -434,8 +492,8 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PoissonDistribution{TGen}.Next"/>, with
-        ///   a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PoissonDistribution.Next"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -444,8 +502,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> PoissonSamples(double lambda)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(PoissonDistribution.IsValidParam(lambda),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(PoissonDistribution.IsValidParam(lambda), ErrorMessages.InvalidParams);
             return InfiniteLoop(PoissonDistribution.Sample, _gen, lambda);
         }
 
@@ -467,8 +524,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BetaDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BetaDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -477,7 +534,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Beta(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(BetaDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(BetaDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return BetaDistribution.Sample(_gen, alpha, beta);
         }
 
@@ -495,8 +552,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="BetaDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="BetaDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -505,7 +562,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> BetaSamples(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(BetaDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(BetaDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return InfiniteLoop(BetaDistribution.Sample, _gen, alpha, beta);
         }
 
@@ -523,9 +580,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to one.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="BetaPrimeDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="BetaPrimeDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -534,7 +590,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double BetaPrime(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(BetaPrimeDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(BetaPrimeDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return BetaPrimeDistribution.Sample(_gen, alpha, beta);
         }
 
@@ -554,9 +610,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to one.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="BetaPrimeDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="BetaPrimeDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -565,7 +620,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> BetaPrimeSamples(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(BetaPrimeDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(BetaPrimeDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return InfiniteLoop(BetaPrimeDistribution.Sample, _gen, alpha, beta);
         }
 
@@ -583,8 +638,8 @@ namespace Troschuetz.Random
         ///   <paramref name="gamma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="CauchyDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="CauchyDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -593,7 +648,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Cauchy(double alpha, double gamma)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(CauchyDistribution.AreValidParams(alpha, gamma));
+            Raise<ArgumentOutOfRangeException>.IfNot(CauchyDistribution.AreValidParams(alpha, gamma), ErrorMessages.InvalidParams);
             return CauchyDistribution.Sample(_gen, alpha, gamma);
         }
 
@@ -611,8 +666,8 @@ namespace Troschuetz.Random
         ///   <paramref name="gamma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="CauchyDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="CauchyDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -621,7 +676,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> CauchySamples(double alpha, double gamma)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(CauchyDistribution.AreValidParams(alpha, gamma));
+            Raise<ArgumentOutOfRangeException>.IfNot(CauchyDistribution.AreValidParams(alpha, gamma), ErrorMessages.InvalidParams);
             return InfiniteLoop(CauchyDistribution.Sample, _gen, alpha, gamma);
         }
 
@@ -636,8 +691,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ChiDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ChiDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -646,7 +701,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Chi(int alpha)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ChiDistribution.IsValidParam(alpha));
+            Raise<ArgumentOutOfRangeException>.IfNot(ChiDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
             return ChiDistribution.Sample(_gen, alpha);
         }
 
@@ -661,8 +716,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ChiDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ChiDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -671,7 +726,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ChiSamples(int alpha)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ChiDistribution.IsValidParam(alpha));
+            Raise<ArgumentOutOfRangeException>.IfNot(ChiDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
             return InfiniteLoop(ChiDistribution.Sample, _gen, alpha);
         }
 
@@ -686,9 +741,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="ChiSquareDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="ChiSquareDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -697,7 +751,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double ChiSquare(int alpha)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ChiSquareDistribution.IsValidParam(alpha));
+            Raise<ArgumentOutOfRangeException>.IfNot(ChiSquareDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
             return ChiSquareDistribution.Sample(_gen, alpha);
         }
 
@@ -714,9 +768,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="ChiSquareDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="ChiSquareDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -725,7 +778,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ChiSquareSamples(int alpha)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ChiSquareDistribution.IsValidParam(alpha));
+            Raise<ArgumentOutOfRangeException>.IfNot(ChiSquareDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
             return InfiniteLoop(ChiSquareDistribution.Sample, _gen, alpha);
         }
 
@@ -746,8 +799,8 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to
-        ///   <see cref="ContinuousUniformDistribution{TGen}.NextDouble"/>, with a prior adjustement
-        ///   of the distribution parameters.
+        ///   <see cref="ContinuousUniformDistribution.NextDouble"/>, with a prior adjustement of
+        ///   the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -756,7 +809,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double ContinuousUniform(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ContinuousUniformDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(ContinuousUniformDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return ContinuousUniformDistribution.Sample(_gen, alpha, beta);
         }
 
@@ -779,8 +832,8 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to
-        ///   <see cref="ContinuousUniformDistribution{TGen}.NextDouble"/>, with a prior adjustement
-        ///   of the distribution parameters.
+        ///   <see cref="ContinuousUniformDistribution.NextDouble"/>, with a prior adjustement of
+        ///   the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -789,7 +842,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ContinuousUniformSamples(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ContinuousUniformDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(ContinuousUniformDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return InfiniteLoop(ContinuousUniformDistribution.Sample, _gen, alpha, beta);
         }
 
@@ -807,8 +860,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ErlangDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ErlangDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -817,7 +870,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Erlang(int alpha, double lambda)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ErlangDistribution.AreValidParams(alpha, lambda));
+            Raise<ArgumentOutOfRangeException>.IfNot(ErlangDistribution.AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
             return ErlangDistribution.Sample(_gen, alpha, lambda);
         }
 
@@ -835,8 +888,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ErlangDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ErlangDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -845,7 +898,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ErlangSamples(int alpha, double lambda)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ErlangDistribution.AreValidParams(alpha, lambda));
+            Raise<ArgumentOutOfRangeException>.IfNot(ErlangDistribution.AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
             return InfiniteLoop(ErlangDistribution.Sample, _gen, alpha, lambda);
         }
 
@@ -860,9 +913,8 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="ExponentialDistribution{TGen}.NextDouble"/>, with a prior adjustement of
-        ///   the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ExponentialDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -871,8 +923,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Exponential(double lambda)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ExponentialDistribution.IsValidParam(lambda),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(ExponentialDistribution.IsValidParam(lambda), ErrorMessages.InvalidParams);
             return ExponentialDistribution.Sample(_gen, lambda);
         }
 
@@ -889,9 +940,8 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="ExponentialDistribution{TGen}.NextDouble"/>, with a prior adjustement of
-        ///   the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ExponentialDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -900,8 +950,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ExponentialSamples(double lambda)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ExponentialDistribution.IsValidParam(lambda),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(ExponentialDistribution.IsValidParam(lambda), ErrorMessages.InvalidParams);
             return InfiniteLoop(ExponentialDistribution.Sample, _gen, lambda);
         }
 
@@ -920,8 +969,8 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to
-        ///   <see cref="FisherSnedecorDistribution{TGen}.NextDouble"/>, with a prior adjustement of
-        ///   the distribution parameters.
+        ///   <see cref="FisherSnedecorDistribution.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -930,7 +979,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double FisherSnedecor(int alpha, int beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(FisherSnedecorDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(FisherSnedecorDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return FisherSnedecorDistribution.Sample(_gen, alpha, beta);
         }
 
@@ -951,8 +1000,8 @@ namespace Troschuetz.Random
         /// </exception>
         /// <remarks>
         ///   This method simply wraps a call to
-        ///   <see cref="FisherSnedecorDistribution{TGen}.NextDouble"/>, with a prior adjustement of
-        ///   the distribution parameters.
+        ///   <see cref="FisherSnedecorDistribution.NextDouble"/>, with a prior adjustement of the
+        ///   distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -961,7 +1010,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> FisherSnedecorSamples(int alpha, int beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(FisherSnedecorDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(FisherSnedecorDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return InfiniteLoop(FisherSnedecorDistribution.Sample, _gen, alpha, beta);
         }
 
@@ -979,9 +1028,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="FisherTippettDistribution{TGen}.NextDouble"/>, with a prior adjustement of
-        ///   the distribution parameters.
+        ///   This method simply wraps a call to <see cref="FisherTippettDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -990,7 +1038,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double FisherTippett(double alpha, double mu)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(FisherTippettDistribution.AreValidParams(alpha, mu));
+            Raise<ArgumentOutOfRangeException>.IfNot(FisherTippettDistribution.AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
             return FisherTippettDistribution.Sample(_gen, alpha, mu);
         }
 
@@ -1010,9 +1058,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="FisherTippettDistribution{TGen}.NextDouble"/>, with a prior adjustement of
-        ///   the distribution parameters.
+        ///   This method simply wraps a call to <see cref="FisherTippettDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1021,7 +1068,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> FisherTippettSamples(double alpha, double mu)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(FisherTippettDistribution.AreValidParams(alpha, mu));
+            Raise<ArgumentOutOfRangeException>.IfNot(FisherTippettDistribution.AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
             return InfiniteLoop(FisherTippettDistribution.Sample, _gen, alpha, mu);
         }
 
@@ -1039,8 +1086,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="GammaDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="GammaDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1049,7 +1096,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Gamma(double alpha, double theta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(GammaDistribution.AreValidParams(alpha, theta));
+            Raise<ArgumentOutOfRangeException>.IfNot(GammaDistribution.AreValidParams(alpha, theta), ErrorMessages.InvalidParams);
             return GammaDistribution.Sample(_gen, alpha, theta);
         }
 
@@ -1067,8 +1114,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="GammaDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="GammaDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1077,7 +1124,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> GammaSamples(double alpha, double theta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(GammaDistribution.AreValidParams(alpha, theta));
+            Raise<ArgumentOutOfRangeException>.IfNot(GammaDistribution.AreValidParams(alpha, theta), ErrorMessages.InvalidParams);
             return InfiniteLoop(GammaDistribution.Sample, _gen, alpha, theta);
         }
 
@@ -1095,8 +1142,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="LaplaceDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="LaplaceDistribution.NextDouble"/>, with
+        ///   a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1105,7 +1152,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Laplace(double alpha, double mu)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(LaplaceDistribution.AreValidParams(alpha, mu));
+            Raise<ArgumentOutOfRangeException>.IfNot(LaplaceDistribution.AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
             return LaplaceDistribution.Sample(_gen, alpha, mu);
         }
 
@@ -1123,8 +1170,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="LaplaceDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="LaplaceDistribution.NextDouble"/>, with
+        ///   a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1133,7 +1180,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> LaplaceSamples(double alpha, double mu)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(LaplaceDistribution.AreValidParams(alpha, mu));
+            Raise<ArgumentOutOfRangeException>.IfNot(LaplaceDistribution.AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
             return InfiniteLoop(LaplaceDistribution.Sample, _gen, alpha, mu);
         }
 
@@ -1151,9 +1198,8 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="LognormalDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="LognormalDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1162,7 +1208,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Lognormal(double mu, double sigma)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(LognormalDistribution.AreValidParams(mu, sigma));
+            Raise<ArgumentOutOfRangeException>.IfNot(LognormalDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
             return LognormalDistribution.Sample(_gen, mu, sigma);
         }
 
@@ -1182,9 +1228,8 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="LognormalDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="LognormalDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1193,7 +1238,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> LognormalSamples(double mu, double sigma)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(LognormalDistribution.AreValidParams(mu, sigma));
+            Raise<ArgumentOutOfRangeException>.IfNot(LognormalDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
             return InfiniteLoop(LognormalDistribution.Sample, _gen, mu, sigma);
         }
 
@@ -1211,8 +1256,8 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="NormalDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="NormalDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1221,8 +1266,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Normal(double mu, double sigma)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(NormalDistribution.AreValidParams(mu, sigma),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(NormalDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
             return NormalDistribution.Sample(_gen, mu, sigma);
         }
 
@@ -1240,8 +1284,8 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="NormalDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="NormalDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1250,8 +1294,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> NormalSamples(double mu, double sigma)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(NormalDistribution.AreValidParams(mu, sigma),
-                                                           ErrorMessages.InvalidParams);
+            Raise<ArgumentOutOfRangeException>.IfNot(NormalDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
             return InfiniteLoop(NormalDistribution.Sample, _gen, mu, sigma);
         }
 
@@ -1269,8 +1312,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ParetoDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ParetoDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1279,7 +1322,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Pareto(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ParetoDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(ParetoDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return ParetoDistribution.Sample(_gen, alpha, beta);
         }
 
@@ -1297,8 +1340,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ParetoDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ParetoDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1307,7 +1350,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ParetoSamples(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(ParetoDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(ParetoDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return InfiniteLoop(ParetoDistribution.Sample, _gen, alpha, beta);
         }
 
@@ -1325,8 +1368,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PowerDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PowerDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1335,7 +1378,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Power(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(PowerDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(PowerDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return PowerDistribution.Sample(_gen, alpha, beta);
         }
 
@@ -1353,8 +1396,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PowerDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PowerDistribution.NextDouble"/>, with a
+        ///   prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1363,7 +1406,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> PowerSamples(double alpha, double beta)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(PowerDistribution.AreValidParams(alpha, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(PowerDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             return InfiniteLoop(PowerDistribution.Sample, _gen, alpha, beta);
         }
 
@@ -1378,9 +1421,8 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="RayleighDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="RayleighDistribution.NextDouble"/>, with
+        ///   a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1389,7 +1431,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Rayleigh(double sigma)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(RayleighDistribution.IsValidParam(sigma));
+            Raise<ArgumentOutOfRangeException>.IfNot(RayleighDistribution.IsValidParam(sigma), ErrorMessages.InvalidParams);
             return RayleighDistribution.Sample(_gen, sigma);
         }
 
@@ -1406,9 +1448,8 @@ namespace Troschuetz.Random
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="RayleighDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="RayleighDistribution.NextDouble"/>, with
+        ///   a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1417,7 +1458,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> RayleighSamples(double sigma)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(RayleighDistribution.IsValidParam(sigma));
+            Raise<ArgumentOutOfRangeException>.IfNot(RayleighDistribution.IsValidParam(sigma), ErrorMessages.InvalidParams);
             return InfiniteLoop(RayleighDistribution.Sample, _gen, sigma);
         }
 
@@ -1432,9 +1473,8 @@ namespace Troschuetz.Random
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="StudentsTDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="StudentsTDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1443,7 +1483,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double StudentsT(int nu)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(StudentsTDistribution.IsValidParam(nu));
+            Raise<ArgumentOutOfRangeException>.IfNot(StudentsTDistribution.IsValidParam(nu), ErrorMessages.InvalidParams);
             return StudentsTDistribution.Sample(_gen, nu);
         }
 
@@ -1460,9 +1500,8 @@ namespace Troschuetz.Random
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="StudentsTDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="StudentsTDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1471,7 +1510,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> StudentsTSamples(int nu)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(StudentsTDistribution.IsValidParam(nu));
+            Raise<ArgumentOutOfRangeException>.IfNot(StudentsTDistribution.IsValidParam(nu), ErrorMessages.InvalidParams);
             return InfiniteLoop(StudentsTDistribution.Sample, _gen, nu);
         }
 
@@ -1494,9 +1533,8 @@ namespace Troschuetz.Random
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="TriangularDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="TriangularDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1505,7 +1543,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Triangular(double alpha, double beta, double gamma)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(TriangularDistribution.AreValidParams(alpha, beta, gamma));
+            Raise<ArgumentOutOfRangeException>.IfNot(TriangularDistribution.AreValidParams(alpha, beta, gamma), ErrorMessages.InvalidParams);
             return TriangularDistribution.Sample(_gen, alpha, beta, gamma);
         }
 
@@ -1530,9 +1568,8 @@ namespace Troschuetz.Random
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to
-        ///   <see cref="TriangularDistribution{TGen}.NextDouble"/>, with a prior adjustement of the
-        ///   distribution parameters.
+        ///   This method simply wraps a call to <see cref="TriangularDistribution.NextDouble"/>,
+        ///   with a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1541,7 +1578,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> TriangularSamples(double alpha, double beta, double gamma)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(TriangularDistribution.AreValidParams(alpha, beta, gamma));
+            Raise<ArgumentOutOfRangeException>.IfNot(TriangularDistribution.AreValidParams(alpha, beta, gamma), ErrorMessages.InvalidParams);
             return InfiniteLoop(TriangularDistribution.Sample, _gen, alpha, beta, gamma);
         }
 
@@ -1559,8 +1596,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="WeibullDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="WeibullDistribution.NextDouble"/>, with
+        ///   a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1569,7 +1606,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Weibull(double alpha, double lambda)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(WeibullDistribution.AreValidParams(alpha, lambda));
+            Raise<ArgumentOutOfRangeException>.IfNot(WeibullDistribution.AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
             return WeibullDistribution.Sample(_gen, alpha, lambda);
         }
 
@@ -1587,8 +1624,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="WeibullDistribution{TGen}.NextDouble"/>,
-        ///   with a prior adjustement of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="WeibullDistribution.NextDouble"/>, with
+        ///   a prior adjustement of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   This method is slightly more efficient when called with the same parameters. If you
@@ -1597,7 +1634,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> WeibullSamples(double alpha, double lambda)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(WeibullDistribution.AreValidParams(alpha, lambda));
+            Raise<ArgumentOutOfRangeException>.IfNot(WeibullDistribution.AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
             return InfiniteLoop(WeibullDistribution.Sample, _gen, alpha, lambda);
         }
 
@@ -1806,7 +1843,7 @@ namespace Troschuetz.Random
         ///   Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
-        public override string ToString() => string.Format("Generator: {0}", _gen);
+        public string ToString() => string.Format("Generator: {0}", _gen);
 
         #endregion Object Members
 
@@ -1849,76 +1886,5 @@ namespace Troschuetz.Random
         }
 
         #endregion Private Members
-    }
-
-    /// <summary>
-    ///   A random generator class similar to the one Python offers, providing functions similar to
-    ///   the ones found in <see cref="Random"/> and functions returning random numbers according to
-    ///   a particular kind of distribution.
-    /// </summary>
-    [Serializable]
-    public sealed class TRandom : TRandom<IGenerator>
-    {
-        /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
-        ///   underlying generator and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
-        /// </summary>
-        public TRandom() : this(new NumericalRecipes3Q1Generator(Environment.TickCount))
-        {
-        }
-
-        /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
-        ///   underlying generator and the specified seed.
-        /// </summary>
-        /// <param name="seed">The seed used to initialize the generator.</param>
-        public TRandom(int seed) : this(new NumericalRecipes3Q1Generator(seed))
-        {
-        }
-
-        /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
-        ///   underlying generator and the specified seed.
-        /// </summary>
-        /// <param name="seed">The seed used to initialize the generator.</param>
-        public TRandom(uint seed) : this(new NumericalRecipes3Q1Generator(seed))
-        {
-        }
-
-        /// <summary>
-        ///   Constructs a new instance with the specified generator.
-        /// </summary>
-        /// <param name="generator">The generator used to produce random numbers.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is null.</exception>
-        public TRandom(IGenerator generator) : base(generator)
-        {
-        }
-
-        /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
-        ///   underlying generator and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
-        /// </summary>
-        public static TRandom<NumericalRecipes3Q1Generator> New() => new TRandom<NumericalRecipes3Q1Generator>(new NumericalRecipes3Q1Generator(Environment.TickCount));
-
-        /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
-        ///   underlying generator and the specified seed.
-        /// </summary>
-        /// <param name="seed">The seed used to initialize the generator.</param>
-        public static TRandom<NumericalRecipes3Q1Generator> New(int seed) => new TRandom<NumericalRecipes3Q1Generator>(new NumericalRecipes3Q1Generator(seed));
-
-        /// <summary>
-        ///   Constructs a new instance with <see cref="NumericalRecipes3Q1Generator"/> as
-        ///   underlying generator and the specified seed.
-        /// </summary>
-        /// <param name="seed">The seed used to initialize the generator.</param>
-        public static TRandom<NumericalRecipes3Q1Generator> New(uint seed) => new TRandom<NumericalRecipes3Q1Generator>(new NumericalRecipes3Q1Generator(seed));
-
-        /// <summary>
-        ///   Constructs a new instance with the specified generator.
-        /// </summary>
-        /// <param name="generator">The generator used to produce random numbers.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is null.</exception>
-        public static TRandom<TGen> New<TGen>(TGen generator) where TGen : IGenerator => new TRandom<TGen>(generator);
     }
 }
