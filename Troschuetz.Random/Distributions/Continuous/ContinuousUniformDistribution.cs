@@ -112,27 +112,27 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
-        ///   using a <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public ContinuousUniformDistribution()
-            : this(new NR3Q1Generator(), DefaultAlpha, DefaultBeta)
+            : this(new XorShift128Generator(), DefaultAlpha, DefaultBeta)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
-        ///   using a <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
         public ContinuousUniformDistribution(uint seed)
-            : this(new NR3Q1Generator(seed), DefaultAlpha, DefaultBeta)
+            : this(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Beta, DefaultBeta));
@@ -154,7 +154,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
-        ///   using a <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of continuous uniform distributed
@@ -168,16 +168,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
         /// </exception>
         public ContinuousUniformDistribution(double alpha, double beta)
-            : this(new NR3Q1Generator(), alpha, beta)
+            : this(new XorShift128Generator(), alpha, beta)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
-        ///   using a <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -194,9 +194,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
         /// </exception>
         public ContinuousUniformDistribution(uint seed, double alpha, double beta)
-            : this(new NR3Q1Generator(seed), alpha, beta)
+            : this(new XorShift128Generator(seed), alpha, beta)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Beta, beta));

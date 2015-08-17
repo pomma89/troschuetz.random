@@ -34,8 +34,8 @@ namespace Troschuetz.Random.Generators
     /// 
     ///   Therefore, in order to build a new generator, one must "simply" override the
     ///   <see cref="Reset(uint)"/>, which is used to automatically initialize the generator, and
-    ///   the generator methods, which, as stated above, are used to generate every
-    ///   kind of random object exposed by the interface.
+    ///   the generator methods, which, as stated above, are used to generate every kind of random
+    ///   object exposed by the interface.
     /// 
     ///   All generators implemented in this library extend this abstract class.
     /// </summary>
@@ -49,19 +49,15 @@ namespace Troschuetz.Random.Generators
         ///   greater than or equal to 0.0 and less than 1.0 when it gets applied to a nonnegative
         ///   32-bit unsigned integer.
         /// </summary>
-        /// <remarks>
-        ///   The value has been generated from 1.0 / (uint.MaxValue + 1.0).
-        /// </remarks>
-        protected const double UIntToDoubleMultiplier =  2.32830643653869628E-10;
+        /// <remarks>The value has been generated from 1.0 / (uint.MaxValue + 1.0).</remarks>
+        protected const double UIntToDoubleMultiplier = 2.32830643653869628E-10;
 
         /// <summary>
         ///   Represents the multiplier that computes a double-precision floating point number
         ///   greater than or equal to 0.0 and less than 1.0 when it gets applied to a nonnegative
         ///   32-bit unsigned integer.
         /// </summary>
-        /// <remarks>
-        ///   The value has been generated from 1.0 / (ulong.MaxValue + 1.0).
-        /// </remarks>
+        /// <remarks>The value has been generated from 1.0 / (ulong.MaxValue + 1.0).</remarks>
         protected const double ULongToDoubleMultiplier = 5.42101086242752217E-20;
 
         #endregion Constants

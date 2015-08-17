@@ -79,24 +79,24 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
-        public StudentsTDistribution() : this(new NR3Q1Generator(), DefaultNu)
+        public StudentsTDistribution() : this(new XorShift128Generator(), DefaultNu)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Nu, DefaultNu));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public StudentsTDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultNu)
+        public StudentsTDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultNu)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Nu, DefaultNu));
         }
@@ -115,7 +115,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="nu">
         ///   The parameter nu which is used for generation of student's t distributed random numbers.
@@ -123,15 +123,15 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
-        public StudentsTDistribution(int nu) : this(new NR3Q1Generator(), nu)
+        public StudentsTDistribution(int nu) : this(new XorShift128Generator(), nu)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Nu, nu));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -142,9 +142,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
-        public StudentsTDistribution(uint seed, int nu) : this(new NR3Q1Generator(seed), nu)
+        public StudentsTDistribution(uint seed, int nu) : this(new XorShift128Generator(seed), nu)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Nu, nu));
         }

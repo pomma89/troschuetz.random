@@ -80,24 +80,24 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
-        public ExponentialDistribution() : this(new NR3Q1Generator(), DefaultLambda)
+        public ExponentialDistribution() : this(new XorShift128Generator(), DefaultLambda)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Lambda, DefaultLambda));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public ExponentialDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultLambda)
+        public ExponentialDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultLambda)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Lambda, DefaultLambda));
         }
@@ -116,7 +116,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="lambda">
         ///   The parameter lambda which is used for generation of exponential distributed random numbers.
@@ -124,15 +124,15 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
-        public ExponentialDistribution(double lambda) : this(new NR3Q1Generator(), lambda)
+        public ExponentialDistribution(double lambda) : this(new XorShift128Generator(), lambda)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Lambda, lambda));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -143,9 +143,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
-        public ExponentialDistribution(uint seed, double lambda) : this(new NR3Q1Generator(seed), lambda)
+        public ExponentialDistribution(uint seed, double lambda) : this(new XorShift128Generator(seed), lambda)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Lambda, lambda));
         }

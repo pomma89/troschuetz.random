@@ -20,12 +20,9 @@
 
 namespace Troschuetz.Random.Generators
 {
-    using PommaLabs.Thrower;
     using System;
-    using Core;
-    using System.Runtime.InteropServices;
-    using System.Runtime.CompilerServices;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
 
     /// <summary>
     ///   Represents a simple pseudo-random number generator.
@@ -40,7 +37,8 @@ namespace Troschuetz.Random.Generators
         #region Fields
 
         /// <summary>
-        ///   Stores a byte array used to compute the result of <see cref="NextUInt()"/>, starting from the output of <see cref="AbstractGenerator.NextBytes"/>.
+        ///   Stores a byte array used to compute the result of <see cref="NextUInt()"/>, starting
+        ///   from the output of <see cref="AbstractGenerator.NextBytes"/>.
         /// </summary>
         byte[] _uintBuffer;
 
@@ -49,31 +47,31 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         Random _generator;
 
-        #endregion
+        #endregion Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="StandardGenerator"/> class,
-        ///   using a time-dependent default seed value.
+        ///   Initializes a new instance of the <see cref="StandardGenerator"/> class, using a
+        ///   time-dependent default seed value.
         /// </summary>
         public StandardGenerator() : this(Environment.TickCount)
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="StandardGenerator"/> class,
-        ///   using the specified seed value.
+        ///   Initializes a new instance of the <see cref="StandardGenerator"/> class, using the
+        ///   specified seed value.
         /// </summary>
         /// <param name="seed">
-        ///   A number used to calculate a starting value for the pseudo-random number sequence.
-        ///   If a negative number is specified, the absolute value of the number is used. 
+        ///   A number used to calculate a starting value for the pseudo-random number sequence. If
+        ///   a negative number is specified, the absolute value of the number is used.
         /// </param>
         public StandardGenerator(int seed) : base((uint) Math.Abs(seed))
         {
         }
 
-        #endregion
+        #endregion Construction
 
         #region IGenerator members
 
@@ -84,13 +82,12 @@ namespace Troschuetz.Random.Generators
         public override bool CanReset => true;
 
         /// <summary>
-        ///   Resets the random number generator using the specified seed, so that it produces the same random number sequence again.
-        ///   To understand whether this generator can be reset, you can query the <see cref="CanReset"/> property.
+        ///   Resets the random number generator using the specified seed, so that it produces the
+        ///   same random number sequence again. To understand whether this generator can be reset,
+        ///   you can query the <see cref="CanReset"/> property.
         /// </summary>
         /// <param name="seed">The seed value used by the generator.</param>
-        /// <returns>
-        ///   True if the random number generator was reset; otherwise, false.
-        /// </returns>
+        /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         public override bool Reset(uint seed)
         {
             base.Reset(seed);
@@ -158,6 +155,6 @@ namespace Troschuetz.Random.Generators
             return BitConverter.ToUInt32(_uintBuffer, 0);
         }
 
-        #endregion
+        #endregion IGenerator members
     }
 }

@@ -165,25 +165,25 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
-        public NormalDistribution() : this(new NR3Q1Generator(), DefaultMu, DefaultSigma)
+        public NormalDistribution() : this(new XorShift128Generator(), DefaultMu, DefaultSigma)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Mu, DefaultMu));
             Debug.Assert(Equals(Sigma, DefaultSigma));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public NormalDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultMu, DefaultSigma)
+        public NormalDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultMu, DefaultSigma)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Mu, DefaultMu));
             Debug.Assert(Equals(Sigma, DefaultSigma));
@@ -204,7 +204,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="mu">
         ///   The parameter mu which is used for generation of normal distributed random numbers.
@@ -215,16 +215,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
-        public NormalDistribution(double mu, double sigma) : this(new NR3Q1Generator(), mu, sigma)
+        public NormalDistribution(double mu, double sigma) : this(new XorShift128Generator(), mu, sigma)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Mu, mu));
             Debug.Assert(Equals(Sigma, sigma));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -238,9 +238,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
-        public NormalDistribution(uint seed, double mu, double sigma) : this(new NR3Q1Generator(seed), mu, sigma)
+        public NormalDistribution(uint seed, double mu, double sigma) : this(new XorShift128Generator(seed), mu, sigma)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Mu, mu));
             Debug.Assert(Equals(Sigma, sigma));

@@ -118,25 +118,25 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="WeibullDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
-        public WeibullDistribution() : this(new NR3Q1Generator(), DefaultAlpha, DefaultLambda)
+        public WeibullDistribution() : this(new XorShift128Generator(), DefaultAlpha, DefaultLambda)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Lambda, DefaultLambda));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="WeibullDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public WeibullDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultAlpha, DefaultLambda)
+        public WeibullDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultAlpha, DefaultLambda)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Lambda, DefaultLambda));
@@ -157,7 +157,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="WeibullDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of weibull distributed random numbers.
@@ -168,16 +168,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
-        public WeibullDistribution(double alpha, double lambda) : this(new NR3Q1Generator(), alpha, lambda)
+        public WeibullDistribution(double alpha, double lambda) : this(new XorShift128Generator(), alpha, lambda)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Lambda, lambda));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="WeibullDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -192,9 +192,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
         public WeibullDistribution(uint seed, double alpha, double lambda)
-            : this(new NR3Q1Generator(seed), alpha, lambda)
+            : this(new XorShift128Generator(seed), alpha, lambda)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Lambda, lambda));

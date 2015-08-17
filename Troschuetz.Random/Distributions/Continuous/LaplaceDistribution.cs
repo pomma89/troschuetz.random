@@ -109,25 +109,25 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
-        public LaplaceDistribution() : this(new NR3Q1Generator(), DefaultAlpha, DefaultMu)
+        public LaplaceDistribution() : this(new XorShift128Generator(), DefaultAlpha, DefaultMu)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Mu, DefaultMu));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public LaplaceDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultAlpha, DefaultMu)
+        public LaplaceDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultAlpha, DefaultMu)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Mu, DefaultMu));
@@ -148,7 +148,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of laplace distributed random numbers.
@@ -159,16 +159,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
-        public LaplaceDistribution(double alpha, double mu) : this(new NR3Q1Generator(), alpha, mu)
+        public LaplaceDistribution(double alpha, double mu) : this(new XorShift128Generator(), alpha, mu)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Mu, mu));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -182,9 +182,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
-        public LaplaceDistribution(uint seed, double alpha, double mu) : this(new NR3Q1Generator(seed), alpha, mu)
+        public LaplaceDistribution(uint seed, double alpha, double mu) : this(new XorShift128Generator(seed), alpha, mu)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Mu, mu));

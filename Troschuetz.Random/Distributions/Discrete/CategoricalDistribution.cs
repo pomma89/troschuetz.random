@@ -119,25 +119,25 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
-        public CategoricalDistribution() : this(new NR3Q1Generator(), DefaultValueCount)
+        public CategoricalDistribution() : this(new XorShift128Generator(), DefaultValueCount)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Weights.Count, DefaultValueCount));
             Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public CategoricalDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultValueCount)
+        public CategoricalDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultValueCount)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Weights.Count, DefaultValueCount));
             Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
@@ -158,7 +158,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="valueCount">
         ///   The parameter valueCount which is used for generation of binomial distributed random
@@ -167,16 +167,16 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="valueCount"/> is less than or equal to zero.
         /// </exception>
-        public CategoricalDistribution(int valueCount) : this(new NR3Q1Generator(), valueCount)
+        public CategoricalDistribution(int valueCount) : this(new XorShift128Generator(), valueCount)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Weights.Count, valueCount));
             Debug.Assert(Weights.All(w => w == 1.0 / valueCount));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -188,9 +188,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="valueCount"/> is less than or equal to zero.
         /// </exception>
-        public CategoricalDistribution(uint seed, int valueCount) : this(new NR3Q1Generator(seed), valueCount)
+        public CategoricalDistribution(uint seed, int valueCount) : this(new XorShift128Generator(seed), valueCount)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Weights.Count, valueCount));
             Debug.Assert(Weights.All(w => w == 1.0 / valueCount));
@@ -198,7 +198,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="weights">
         ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
@@ -209,14 +209,14 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
         /// </exception>
-        public CategoricalDistribution(ICollection<double> weights) : this(new NR3Q1Generator(), weights)
+        public CategoricalDistribution(ICollection<double> weights) : this(new XorShift128Generator(), weights)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -231,9 +231,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
         /// </exception>
         public CategoricalDistribution(uint seed, ICollection<double> weights)
-            : this(new NR3Q1Generator(seed), weights)
+            : this(new XorShift128Generator(seed), weights)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
         }
 

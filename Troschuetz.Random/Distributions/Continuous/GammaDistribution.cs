@@ -108,27 +108,27 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public GammaDistribution()
-            : this(new NR3Q1Generator(), DefaultAlpha, DefaultTheta)
+            : this(new XorShift128Generator(), DefaultAlpha, DefaultTheta)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Theta, DefaultTheta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
         public GammaDistribution(uint seed)
-            : this(new NR3Q1Generator(seed), DefaultAlpha, DefaultTheta)
+            : this(new XorShift128Generator(seed), DefaultAlpha, DefaultTheta)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
             Debug.Assert(Equals(Theta, DefaultTheta));
@@ -150,7 +150,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of gamma distributed random numbers.
@@ -162,16 +162,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
         public GammaDistribution(double alpha, double theta)
-            : this(new NR3Q1Generator(), alpha, theta)
+            : this(new XorShift128Generator(), alpha, theta)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Theta, theta));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -186,9 +186,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
         public GammaDistribution(uint seed, double alpha, double theta)
-            : this(new NR3Q1Generator(seed), alpha, theta)
+            : this(new XorShift128Generator(seed), alpha, theta)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Alpha, alpha));
             Debug.Assert(Equals(Theta, theta));

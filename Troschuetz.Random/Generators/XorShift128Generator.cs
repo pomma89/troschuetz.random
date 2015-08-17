@@ -78,46 +78,35 @@ namespace Troschuetz.Random.Generators
         #region Constants
 
         /// <summary>
+        ///   Represents the seed for the <see cref="_x"/> variable. This field is constant.
+        /// </summary>
+        /// <remarks>
+        ///   The value of this constant is 521288629, left shifted by 32 bits. The right side will
+        ///   be filled with the specified seed.
+        /// </remarks>
+        public const ulong SeedX = 521288629U << 32;
+
+        /// <summary>
         ///   Represents the seed for the <see cref="_y"/> variable. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 362436069.</remarks>
-        public const uint SeedY = 362436069U;
-
-        /// <summary>
-        ///   Represents the seed for the <see cref="_z"/> variable. This field is constant.
-        /// </summary>
-        /// <remarks>The value of this constant is 521288629.</remarks>
-        public const uint SeedZ = 521288629U;
-
-        /// <summary>
-        ///   Represents the seed for the <see cref="_w"/> variable. This field is constant.
-        /// </summary>
-        /// <remarks>The value of this constant is 88675123.</remarks>
-        public const uint SeedW = 88675123U;
+        public const ulong SeedY = 4101842887655102017UL;
 
         #endregion Constants
 
         #region Fields
 
         /// <summary>
-        ///   Stores the last generated unsigned random number.
+        ///   The first part of the generator state. It is important that <see cref="_x"/> and
+        ///   <see cref="_y"/> are not zero at the same time.
         /// </summary>
-        uint _w;
+        ulong _x;
 
         /// <summary>
-        ///   Stores the last but three unsigned random number.
+        ///   The second part of the generator state. It is important that <see cref="_x"/> and
+        ///   <see cref="_y"/> are not zero at the same time.
         /// </summary>
-        uint _x;
-
-        /// <summary>
-        ///   Stores the last but two unsigned random number.
-        /// </summary>
-        uint _y;
-
-        /// <summary>
-        ///   Stores the last but one unsigned random number.
-        /// </summary>
-        uint _z;
+        ulong _y;
 
         #endregion Fields
 
@@ -175,12 +164,10 @@ namespace Troschuetz.Random.Generators
         {
             base.Reset(seed);
 
-            // "The seed set for xor128 is four 32-bit integers x,y,z,w not all 0, ..." (George
-            // Marsaglia) To meet that requirement the y, z, w seeds are constant values greater 0.
-            _x = seed;
+            // "The seed set for xor128 is two 64-bit integers x,y not all 0, ..." (George
+            // Marsaglia) To meet that requirement the x, y seeds are constant values greater 0.
+            _x = SeedX + seed;
             _y = SeedY;
-            _z = SeedZ;
-            _w = SeedW;
             return true;
         }
 
@@ -192,16 +179,20 @@ namespace Troschuetz.Random.Generators
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
 #if PORTABLE
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override int NextInclusiveMaxValue()
         {
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            var t = (_x ^ (_x << 11));
-            _x = _y;
-            _y = _z;
-            _z = _w;
-            var result = (int) ((_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8))) >> 1);
+            // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
+            var tx = _x;
+            var ty = _y;
+            _x = ty;
+            tx ^= tx << 23;
+            tx ^= tx >> 17;
+            tx ^= ty ^ (ty >> 26);
+            _y = tx;
+            var result = (int) ((tx + ty) >> 33);
 
             // Postconditions
             Debug.Assert(result >= 0);
@@ -216,16 +207,20 @@ namespace Troschuetz.Random.Generators
         ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
         /// </returns>
 #if PORTABLE
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override double NextDouble()
         {
-            // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
-            var t = (_x ^ (_x << 11));
-            _x = _y;
-            _y = _z;
-            _z = _w;
-            var result = (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8))) * UIntToDoubleMultiplier;
+            // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
+            var tx = _x;
+            var ty = _y;
+            _x = ty;
+            tx ^= tx << 23;
+            tx ^= tx >> 17;
+            tx ^= ty ^ (ty >> 26);
+            _y = tx;
+            var result = (tx + ty) * ULongToDoubleMultiplier;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < 1.0);
@@ -240,15 +235,43 @@ namespace Troschuetz.Random.Generators
         ///   less than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
 #if PORTABLE
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override uint NextUInt()
         {
-            var t = (_x ^ (_x << 11));
-            _x = _y;
-            _y = _z;
-            _z = _w;
-            return (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8)));
+            // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
+            var tx = _x;
+            var ty = _y;
+            _x = ty;
+            tx ^= tx << 23;
+            tx ^= tx >> 17;
+            tx ^= ty ^ (ty >> 26);
+            _y = tx;
+            return (uint) (tx + ty);
+        }
+
+        /// <summary>
+        ///   Returns an unsigned long random number.
+        /// </summary>
+        /// <returns>
+        ///   A 64-bit unsigned integer greater than or equal to <see cref="ulong.MinValue"/> and
+        ///   less than or equal to <see cref="ulong.MaxValue"/>.
+        /// </returns>
+#if PORTABLE
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public ulong NextULong()
+        {
+            var tx = _x;
+            var ty = _y;
+            _x = ty;
+            tx ^= tx << 23;
+            tx ^= tx >> 17;
+            tx ^= ty ^ (ty >> 26);
+            _y = tx;
+            return tx + ty;
         }
 
         #endregion IGenerator members

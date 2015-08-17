@@ -77,16 +77,16 @@ namespace Troschuetz.Random.Generators
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NR3Generator"/> class,
-        ///   using a time-dependent default seed value.
+        ///   Initializes a new instance of the <see cref="NR3Generator"/> class, using a
+        ///   time-dependent default seed value.
         /// </summary>
         public NR3Generator() : base((uint) Math.Abs(Environment.TickCount))
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NR3Generator"/> class,
-        ///   using the specified seed value.
+        ///   Initializes a new instance of the <see cref="NR3Generator"/> class, using the
+        ///   specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   A number used to calculate a starting value for the pseudo-random number sequence. If
@@ -97,8 +97,8 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NR3Generator"/> class,
-        ///   using the specified seed value.
+        ///   Initializes a new instance of the <see cref="NR3Generator"/> class, using the
+        ///   specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.

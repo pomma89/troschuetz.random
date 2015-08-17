@@ -111,25 +111,25 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LogisticDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
-        public LogisticDistribution() : this(new NR3Q1Generator(), DefaultMu, DefaultSigma)
+        public LogisticDistribution() : this(new XorShift128Generator(), DefaultMu, DefaultSigma)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Mu, DefaultMu));
             Debug.Assert(Equals(Sigma, DefaultSigma));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LogisticDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        public LogisticDistribution(uint seed) : this(new NR3Q1Generator(seed), DefaultMu, DefaultSigma)
+        public LogisticDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultMu, DefaultSigma)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Mu, DefaultMu));
             Debug.Assert(Equals(Sigma, DefaultSigma));
@@ -150,7 +150,7 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LogisticDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> as underlying random number generator.
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="mu">
         ///   The parameter mu which is used for generation of logistic distributed random numbers.
@@ -161,16 +161,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
-        public LogisticDistribution(double mu, double sigma) : this(new NR3Q1Generator(), mu, sigma)
+        public LogisticDistribution(double mu, double sigma) : this(new XorShift128Generator(), mu, sigma)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Mu, mu));
             Debug.Assert(Equals(Sigma, sigma));
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LogisticDistribution"/> class, using a
-        ///   <see cref="NR3Q1Generator"/> with the specified seed value.
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -185,9 +185,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="sigma"/> is less than zero.
         /// </exception>
         public LogisticDistribution(uint seed, double mu, double sigma)
-            : this(new NR3Q1Generator(seed), mu, sigma)
+            : this(new XorShift128Generator(seed), mu, sigma)
         {
-            Debug.Assert(Generator is NR3Q1Generator);
+            Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
             Debug.Assert(Equals(Mu, mu));
             Debug.Assert(Equals(Sigma, sigma));
