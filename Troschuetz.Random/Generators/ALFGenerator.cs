@@ -131,7 +131,7 @@ namespace Troschuetz.Random.Generators
         ///   Initializes a new instance of the <see cref="ALFGenerator"/> class, using a
         ///   time-dependent default seed value.
         /// </summary>
-        public ALFGenerator() : base((uint) Math.Abs(Environment.TickCount))
+        public ALFGenerator() : base(TMath.Seed())
         {
         }
 

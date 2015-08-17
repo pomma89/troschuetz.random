@@ -55,7 +55,7 @@ namespace Troschuetz.Random.Generators
         ///   Initializes a new instance of the <see cref="StandardGenerator"/> class, using a
         ///   time-dependent default seed value.
         /// </summary>
-        public StandardGenerator() : this(Environment.TickCount)
+        public StandardGenerator() : this((int) (TMath.Seed() >> 1))
         {
         }
 

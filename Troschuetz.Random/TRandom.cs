@@ -49,28 +49,28 @@ namespace Troschuetz.Random
         #region Construction
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
-        ///   and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
+        ///   and the default seed (which corresponds to <see cref="TMath.Seed()"/>).
         /// </summary>
-        public TRandom() : this(new NR3Q1Generator(Environment.TickCount))
+        public TRandom() : this(new XorShift128Generator(TMath.Seed()))
         {
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        public TRandom(int seed) : this(new NR3Q1Generator(seed))
+        public TRandom(int seed) : this(new XorShift128Generator(seed))
         {
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        public TRandom(uint seed) : this(new NR3Q1Generator(seed))
+        public TRandom(uint seed) : this(new XorShift128Generator(seed))
         {
         }
 
@@ -86,24 +86,24 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
-        ///   and the default seed (which corresponds to <see cref="Environment.TickCount"/>).
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
+        ///   and the default seed (which corresponds to <see cref="TMath.Seed()"/>).
         /// </summary>
-        public static TRandom New() => new TRandom(new NR3Q1Generator(Environment.TickCount));
+        public static TRandom New() => new TRandom(new XorShift128Generator(TMath.Seed()));
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        public static TRandom New(int seed) => new TRandom(new NR3Q1Generator(seed));
+        public static TRandom New(int seed) => new TRandom(new XorShift128Generator(seed));
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="NR3Q1Generator"/> as underlying generator
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
         ///   and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
-        public static TRandom New(uint seed) => new TRandom(new NR3Q1Generator(seed));
+        public static TRandom New(uint seed) => new TRandom(new XorShift128Generator(seed));
 
         /// <summary>
         ///   Constructs a new instance with the specified generator.

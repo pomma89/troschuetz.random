@@ -24,10 +24,8 @@ namespace Troschuetz.Random.Tests
     using Random.Generators;
     using System;
     using System.Collections.Generic;
-
-    // ReSharper disable InconsistentNaming
+    
     public sealed class TRandomTests : GeneratorTests
-    // ReSharper restore InconsistentNaming
     {
         #region Setup/Teardown
 

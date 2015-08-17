@@ -173,18 +173,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Troschuetz.Random\Troschuetz.Random.csproj">
-      <Project>{A1FF7728-605F-401A-A9FC-51FA56852E9E}</Project>
-      <Name>Troschuetz.Random</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="KVLite.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Troschuetz.Random.NET40\Troschuetz.Random.NET40.csproj">
+      <Project>{6b947182-cf4b-45fe-a1ae-47a28c514040}</Project>
+      <Name>Troschuetz.Random.NET40</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

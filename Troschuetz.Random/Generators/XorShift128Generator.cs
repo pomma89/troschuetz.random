@@ -125,7 +125,7 @@ namespace Troschuetz.Random.Generators
         ///   Initializes a new instance of the <see cref="XorShift128Generator"/> class, using a
         ///   time-dependent default seed value.
         /// </summary>
-        public XorShift128Generator() : base((uint) Math.Abs(Environment.TickCount))
+        public XorShift128Generator() : base(TMath.Seed())
         {
         }
 

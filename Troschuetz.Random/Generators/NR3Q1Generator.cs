@@ -65,7 +65,7 @@ namespace Troschuetz.Random.Generators
         ///   Initializes a new instance of the <see cref="NR3Q1Generator"/> class, using a
         ///   time-dependent default seed value.
         /// </summary>
-        public NR3Q1Generator() : base((uint) Math.Abs(Environment.TickCount))
+        public NR3Q1Generator() : base(TMath.Seed())
         {
         }
 

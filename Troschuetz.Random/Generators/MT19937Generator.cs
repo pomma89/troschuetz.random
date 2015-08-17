@@ -142,7 +142,7 @@ namespace Troschuetz.Random.Generators
         ///   Initializes a new instance of the <see cref="MT19937Generator"/> class, using a
         ///   time-dependent default seed value.
         /// </summary>
-        public MT19937Generator() : base((uint) Math.Abs(Environment.TickCount))
+        public MT19937Generator() : base(TMath.Seed())
         {
         }
 
