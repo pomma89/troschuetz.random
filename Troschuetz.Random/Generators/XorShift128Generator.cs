@@ -108,6 +108,15 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         ulong _y;
 
+        /// <summary>
+        ///   Generators like <see cref="NextDouble"/> and <see cref="NextInclusiveMaxValue"/> use
+        ///   only 32 bits to produce a random result, even if the core algorithm of this generator
+        ///   produces 64 random bits at each iteration. Therefore, instead of throwing 32 bits away
+        ///   every time those methods are called, we use this flag to signal that there 32 bits
+        ///   still available and ready to be used.
+        /// </summary>
+        bool _bytesAvailable;
+
         #endregion Fields
 
         #region Construction
@@ -168,6 +177,7 @@ namespace Troschuetz.Random.Generators
             // Marsaglia) To meet that requirement the x, y seeds are constant values greater 0.
             _x = SeedX + seed;
             _y = SeedY;
+            _bytesAvailable = false;
             return true;
         }
 
@@ -184,6 +194,12 @@ namespace Troschuetz.Random.Generators
 #endif
         public override int NextInclusiveMaxValue()
         {
+            if (_bytesAvailable)
+            {
+                _bytesAvailable = false;
+                return (int) ((_x + _y) << ULongToIntShift >> ULongToIntShift);
+            }
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             var tx = _x;
             var ty = _y;
@@ -192,7 +208,9 @@ namespace Troschuetz.Random.Generators
             tx ^= tx >> 17;
             tx ^= ty ^ (ty >> 26);
             _y = tx;
-            var result = (int) ((tx + ty) >> 33);
+            _bytesAvailable = true;
+
+            var result = (int) ((tx + ty) >> ULongToIntShift);
 
             // Postconditions
             Debug.Assert(result >= 0);
@@ -212,6 +230,12 @@ namespace Troschuetz.Random.Generators
 #endif
         public override double NextDouble()
         {
+            if (_bytesAvailable)
+            {
+                _bytesAvailable = false;
+                return (int) ((_x + _y) << ULongToIntShift >> ULongToIntShift) * IntToDoubleMultiplier;
+            }
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             var tx = _x;
             var ty = _y;
@@ -220,7 +244,9 @@ namespace Troschuetz.Random.Generators
             tx ^= tx >> 17;
             tx ^= ty ^ (ty >> 26);
             _y = tx;
-            var result = (tx + ty) * ULongToDoubleMultiplier;
+            _bytesAvailable = true;
+
+            var result = (int) ((tx + ty) >> ULongToIntShift) * IntToDoubleMultiplier;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < 1.0);
@@ -240,6 +266,12 @@ namespace Troschuetz.Random.Generators
 #endif
         public override uint NextUInt()
         {
+            if (_bytesAvailable)
+            {
+                _bytesAvailable = false;
+                return (uint) ((_x + _y) << ULongToUIntShift >> ULongToUIntShift);
+            }
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             var tx = _x;
             var ty = _y;
@@ -248,7 +280,9 @@ namespace Troschuetz.Random.Generators
             tx ^= tx >> 17;
             tx ^= ty ^ (ty >> 26);
             _y = tx;
-            return (uint) (tx + ty);
+            _bytesAvailable = true;
+
+            return (uint) ((tx + ty) >> ULongToUIntShift);
         }
 
         /// <summary>
@@ -271,6 +305,7 @@ namespace Troschuetz.Random.Generators
             tx ^= tx >> 17;
             tx ^= ty ^ (ty >> 26);
             _y = tx;
+            _bytesAvailable = false;
             return tx + ty;
         }
 

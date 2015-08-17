@@ -50,6 +50,15 @@ namespace Troschuetz.Random.Generators
 
         ulong _v;
 
+        /// <summary>
+        ///   Generators like <see cref="NextDouble"/> and <see cref="NextInclusiveMaxValue"/> use
+        ///   only 32 bits to produce a random result, even if the core algorithm of this generator
+        ///   produces 64 random bits at each iteration. Therefore, instead of throwing 32 bits away
+        ///   every time those methods are called, we use this flag to signal that there 32 bits
+        ///   still available and ready to be used.
+        /// </summary>
+        bool _bytesAvailable;
+
         #region Construction
 
         /// <summary>
@@ -107,6 +116,7 @@ namespace Troschuetz.Random.Generators
             _v = SeedV;
             _v ^= seed;
             _v = NextULong();
+            _bytesAvailable = false;
             return true;
         }
 
@@ -122,11 +132,19 @@ namespace Troschuetz.Random.Generators
 #endif
         public override int NextInclusiveMaxValue()
         {
+            if (_bytesAvailable)
+            {
+                _bytesAvailable = false;
+                return (int) ((_v * SeedU) << ULongToIntShift >> ULongToIntShift);
+            }
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             _v ^= _v >> 21;
             _v ^= _v << 35;
             _v ^= _v >> 4;
-            var result = (int) ((_v * SeedU) >> 33);
+            _bytesAvailable = true;
+
+            var result = (int) ((_v * SeedU) >> ULongToIntShift);
 
             // Postconditions
             Debug.Assert(result >= 0);
@@ -145,11 +163,19 @@ namespace Troschuetz.Random.Generators
 #endif
         public override double NextDouble()
         {
+            if (_bytesAvailable)
+            {
+                _bytesAvailable = false;
+                return (int) ((_v * SeedU) << ULongToIntShift >> ULongToIntShift) * IntToDoubleMultiplier;
+            }
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             _v ^= _v >> 21;
             _v ^= _v << 35;
             _v ^= _v >> 4;
-            var result = (_v * SeedU) * ULongToDoubleMultiplier;
+            _bytesAvailable = true;
+
+            var result = (int) ((_v * SeedU) >> ULongToIntShift) * IntToDoubleMultiplier;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < 1.0);
@@ -168,11 +194,18 @@ namespace Troschuetz.Random.Generators
 #endif
         public override uint NextUInt()
         {
+            if (_bytesAvailable)
+            {
+                _bytesAvailable = false;
+                return (uint) ((_v * SeedU) << ULongToUIntShift >> ULongToUIntShift);
+            }
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             _v ^= _v >> 21;
             _v ^= _v << 35;
             _v ^= _v >> 4;
-            return (uint) (_v * SeedU);
+            _bytesAvailable = true;
+            return (uint) ((_v * SeedU) >> ULongToUIntShift);
         }
 
         /// <summary>
@@ -190,6 +223,7 @@ namespace Troschuetz.Random.Generators
             _v ^= _v >> 21;
             _v ^= _v << 35;
             _v ^= _v >> 4;
+            _bytesAvailable = false;
             return _v * SeedU;
         }
 

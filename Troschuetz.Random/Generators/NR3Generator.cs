@@ -71,6 +71,16 @@ namespace Troschuetz.Random.Generators
         ulong _u;
         ulong _v;
         ulong _w;
+        ulong _x;
+
+        /// <summary>
+        ///   Generators like <see cref="NextDouble"/> and <see cref="NextInclusiveMaxValue"/> use
+        ///   only 32 bits to produce a random result, even if the core algorithm of this generator
+        ///   produces 64 random bits at each iteration. Therefore, instead of throwing 32 bits away
+        ///   every time those methods are called, we use this flag to signal that there 32 bits
+        ///   still available and ready to be used.
+        /// </summary>
+        bool _bytesAvailable;
 
         #endregion Fields
 
@@ -136,6 +146,7 @@ namespace Troschuetz.Random.Generators
             NextULong();
             _w = _v;
             NextULong();
+            _bytesAvailable = false;
             return true;
         }
 
@@ -151,16 +162,24 @@ namespace Troschuetz.Random.Generators
 #endif
         public override int NextInclusiveMaxValue()
         {
+            if (_bytesAvailable)
+            {
+                _bytesAvailable = false;
+                return (int) (((_x + _v) ^ _w) << ULongToIntShift >> ULongToIntShift);
+            }
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             _u = _u * SeedU1 + SeedU2;
             _v ^= _v >> 17;
             _v ^= _v << 31;
             _v ^= _v >> 8;
             _w = SeedU3 * (_w & 0xFFFFFFFFUL) + (_w >> 32);
-            var x = _u ^ (_u << 21);
-            x ^= x >> 35;
-            x ^= x << 4;
-            var result = (int) (((x + _v) ^ _w) >> 33);
+            _x = _u ^ (_u << 21);
+            _x ^= _x >> 35;
+            _x ^= _x << 4;
+            _bytesAvailable = true;
+
+            var result = (int) (((_x + _v) ^ _w) >> ULongToIntShift);
 
             // Postconditions
             Debug.Assert(result >= 0);
@@ -179,16 +198,24 @@ namespace Troschuetz.Random.Generators
 #endif
         public override double NextDouble()
         {
+            if (_bytesAvailable)
+            {
+                _bytesAvailable = false;
+                return (int) (((_x + _v) ^ _w) << ULongToIntShift >> ULongToIntShift) * IntToDoubleMultiplier;
+            }
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             _u = _u * SeedU1 + SeedU2;
             _v ^= _v >> 17;
             _v ^= _v << 31;
             _v ^= _v >> 8;
             _w = SeedU3 * (_w & 0xFFFFFFFFUL) + (_w >> 32);
-            var x = _u ^ (_u << 21);
-            x ^= x >> 35;
-            x ^= x << 4;
-            var result = ((x + _v) ^ _w) * ULongToDoubleMultiplier;
+            _x = _u ^ (_u << 21);
+            _x ^= _x >> 35;
+            _x ^= _x << 4;
+            _bytesAvailable = true;
+
+            var result = (int) (((_x + _v) ^ _w) >> ULongToIntShift) * IntToDoubleMultiplier;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < 1.0);
@@ -207,16 +234,23 @@ namespace Troschuetz.Random.Generators
 #endif
         public override uint NextUInt()
         {
+            if (_bytesAvailable)
+            {
+                _bytesAvailable = false;
+                return (uint) (((_x + _v) ^ _w) << ULongToUIntShift >> ULongToUIntShift);
+            }
+
             // Its faster to explicitly calculate the unsigned random number than simply call NextULong().
             _u = _u * SeedU1 + SeedU2;
             _v ^= _v >> 17;
             _v ^= _v << 31;
             _v ^= _v >> 8;
             _w = SeedU3 * (_w & 0xFFFFFFFFUL) + (_w >> 32);
-            var x = _u ^ (_u << 21);
-            x ^= x >> 35;
-            x ^= x << 4;
-            return (uint) ((x + _v) ^ _w);
+            _x = _u ^ (_u << 21);
+            _x ^= _x >> 35;
+            _x ^= _x << 4;
+            _bytesAvailable = true;
+            return (uint) (((_x + _v) ^ _w) >> ULongToUIntShift);
         }
 
         /// <summary>
@@ -236,10 +270,11 @@ namespace Troschuetz.Random.Generators
             _v ^= _v << 31;
             _v ^= _v >> 8;
             _w = SeedU3 * (_w & 0xFFFFFFFFUL) + (_w >> 32);
-            var x = _u ^ (_u << 21);
-            x ^= x >> 35;
-            x ^= x << 4;
-            return (x + _v) ^ _w;
+            _x = _u ^ (_u << 21);
+            _x ^= _x >> 35;
+            _x ^= _x << 4;
+            _bytesAvailable = false;
+            return (_x + _v) ^ _w;
         }
 
         #endregion IGenerator members

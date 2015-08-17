@@ -275,7 +275,7 @@ namespace Troschuetz.Random.Generators
             {
                 Fill();
             }
-            var result = _x[_i++] * UIntToDoubleMultiplier;
+            var result = (int) (_x[_i++] >> 1) * IntToDoubleMultiplier;
 
             // Postconditions
             Debug.Assert(result >= 0.0 && result < 1.0);

@@ -45,20 +45,37 @@ namespace Troschuetz.Random.Generators
         #region Constants
 
         /// <summary>
-        ///   Represents the multiplier that computes a double-precision floating point number
-        ///   greater than or equal to 0.0 and less than 1.0 when it gets applied to a nonnegative
+        ///   The number of left shifts required to transform a 64-bit unsigned integer into a
+        ///   nonnegative 32-bit signed integer.
+        /// </summary>
+        protected const byte ULongToIntShift = 33;
+
+        /// <summary>
+        ///   The number of left shifts required to transform a 64-bit unsigned integer into a
         ///   32-bit unsigned integer.
         /// </summary>
-        /// <remarks>The value has been generated from 1.0 / (uint.MaxValue + 1.0).</remarks>
-        protected const double UIntToDoubleMultiplier = 2.32830643653869628E-10;
+        protected const byte ULongToUIntShift = 32;
 
         /// <summary>
         ///   Represents the multiplier that computes a double-precision floating point number
         ///   greater than or equal to 0.0 and less than 1.0 when it gets applied to a nonnegative
-        ///   32-bit unsigned integer.
+        ///   32-bit signed integer.
         /// </summary>
-        /// <remarks>The value has been generated from 1.0 / (ulong.MaxValue + 1.0).</remarks>
-        protected const double ULongToDoubleMultiplier = 5.42101086242752217E-20;
+        protected const double IntToDoubleMultiplier = 1.0 / (int.MaxValue + 1.0);
+
+        /// <summary>
+        ///   Represents the multiplier that computes a double-precision floating point number
+        ///   greater than or equal to 0.0 and less than 1.0 when it gets applied to a 32-bit
+        ///   unsigned integer.
+        /// </summary>
+        protected const double UIntToDoubleMultiplier = 1.0 / (uint.MaxValue + 1.0);
+
+        /// <summary>
+        ///   Represents the multiplier that computes a double-precision floating point number
+        ///   greater than or equal to 0.0 and less than 1.0 when it gets applied to a 64-bit
+        ///   unsigned integer.
+        /// </summary>
+        protected const double ULongToDoubleMultiplier = 1.0 / (ulong.MaxValue + 1.0);
 
         #endregion Constants
 
