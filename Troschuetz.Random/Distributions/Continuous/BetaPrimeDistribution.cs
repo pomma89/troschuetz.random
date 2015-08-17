@@ -280,7 +280,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         {
             get
             {
-                if (_beta > 2)
+                if (_beta > 2.0)
                 {
                     return _alpha * (_alpha + _beta - 1.0) / (Sqr(_beta - 1.0) * (_beta - 2.0));
                 }

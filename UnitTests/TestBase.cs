@@ -95,7 +95,7 @@ namespace Troschuetz.Random.Tests
         {
             var hc = series.Count/2;
             if (hc%2 == 0)
-                return series[hc - 1]/2 + series[hc]/2;
+                return series[hc - 1]/2.0 + series[hc]/2.0;
             return series[hc];
         }
 

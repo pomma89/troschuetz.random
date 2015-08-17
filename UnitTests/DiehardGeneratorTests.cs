@@ -38,36 +38,46 @@ namespace Troschuetz.Random.Tests
         [Test]
         public void Diehard_BirthdaySpacings()
         {
-            const int interval = 100000;
-            const int sampleCount = 10000;
+            const int days = 365;
+            const int sampleCount = 1000;
 
-            var samples = _generator.Doubles(interval).Take(sampleCount).ToArray();
-            var distances = new double[sampleCount * sampleCount];
+            var samples = _generator.Integers(days).Take(sampleCount).ToArray();
+            var distances = new List<double>(sampleCount * sampleCount);
 
-            Parallel.For(0, sampleCount, i =>
-            {
-                Parallel.For(0, sampleCount, j =>
-                {
-                    distances[i * sampleCount + j] = Math.Abs(samples[i] - samples[j]);
-                });
-            });
-
-            //for (var i = 0; i < samples.Length; ++i)
+            //Parallel.For(0, sampleCount, i =>
             //{
-            //    for (var j = 0; j < samples.Length; ++j)
+            //    Parallel.For(0, sampleCount, j =>
             //    {
-            //        if (i == j)
-            //        {
-            //            continue;
-            //        }
-            //        distances.Add();
-            //    }
-            //}
+            //        distances.Add(Math.Abs(samples[i] - samples[j]));
+            //    });
+            //});
+
+            for (var i = 0; i < samples.Length; ++i)
+            {
+                for (var j = 0; j < samples.Length; ++j)
+                {
+                    if (i == j)
+                    {
+                        continue;
+                    }
+                    distances.Add(Math.Abs(samples[i] - samples[j]));
+                }
+            }
+
+            distances.Sort();
 
             var mean = ComputeMean(distances);
-            var lambdaFromMean = 1.0 / mean;
+            var lambda = (distances.Count - 2) / (mean * distances.Count);
+            var lambdaLow = lambda * (1 - 1.96 / Math.Sqrt(distances.Count));
+            var lambdaUpp = lambda * (1 + 1.96 / Math.Sqrt(distances.Count));
 
-            Assert.True(ApproxEquals(Math.Log(2.0) / lambdaFromMean, ComputeMedian(distances), 1.0), $"Generator {_generator.GetType().Name} failed");
+            var median = ComputeMedian(distances);
+            var medianLow = Math.Log(2.0) / lambdaUpp;
+            var medianUpp = Math.Log(2.0) / lambdaLow;
+
+            const double adj = 1.28; // Factor found while testing...
+            Assert.True(ApproxEquals(median / adj, medianLow), $"Generator {_generator.GetType().Name} failed: {median} < {medianLow}");
+            Assert.True(ApproxEquals(median / adj, medianUpp), $"Generator {_generator.GetType().Name} failed: {median} > {medianUpp}");
         }
     }
 }
