@@ -34,8 +34,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   presented on <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
     /// </remarks>
     [Serializable]
-    public class GammaDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IThetaDistribution<double>
-        where TGen : IGenerator
+    public sealed class GammaDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IThetaDistribution<double>
     {
         #region Constants
 
@@ -108,6 +107,94 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public GammaDistribution()
+            : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultTheta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Theta, DefaultTheta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public GammaDistribution(uint seed)
+            : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultTheta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Theta, DefaultTheta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public GammaDistribution(IGenerator generator)
+            : this(generator, DefaultAlpha, DefaultTheta)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Theta, DefaultTheta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of gamma distributed random numbers.
+        /// </param>
+        /// <param name="theta">
+        ///   The parameter theta which is used for generation of gamma distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
+        /// </exception>
+        public GammaDistribution(double alpha, double theta)
+            : this(new NumericalRecipes3Q1Generator(), alpha, theta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Theta, theta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of gamma distributed random numbers.
+        /// </param>
+        /// <param name="theta">
+        ///   The parameter theta which is used for generation of gamma distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
+        /// </exception>
+        public GammaDistribution(uint seed, double alpha, double theta)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha, theta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Theta, theta));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using the
         ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -122,7 +209,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
         /// </exception>
-        public GammaDistribution(TGen generator, double alpha, double theta) : base(generator)
+        public GammaDistribution(IGenerator generator, double alpha, double theta) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, theta), ErrorMessages.InvalidParams);
             _alpha = alpha;
@@ -210,7 +297,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha, _theta);
+        public double NextDouble() => Sample(Generator, _alpha, _theta);
 
         #endregion IContinuousDistribution Members
 
@@ -222,7 +309,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="GammaDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="GammaDistribution"/> class.
         /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, theta) =>
         {
@@ -233,9 +320,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a gamma distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="GammaDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="GammaDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, theta) =>
+        public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, theta) =>
         {
             var helper1 = alpha - Math.Floor(alpha);
             var helper2 = Math.E / (Math.E + helper1);
@@ -265,130 +352,5 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of gamma distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="GammaDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class GammaDistribution : GammaDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public GammaDistribution()
-            : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultTheta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Theta, DefaultTheta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public GammaDistribution(uint seed)
-            : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultTheta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Theta, DefaultTheta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public GammaDistribution(IGenerator generator)
-            : base(generator, DefaultAlpha, DefaultTheta)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Theta, DefaultTheta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of gamma distributed random numbers.
-        /// </param>
-        /// <param name="theta">
-        ///   The parameter theta which is used for generation of gamma distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
-        /// </exception>
-        public GammaDistribution(double alpha, double theta)
-            : base(new NumericalRecipes3Q1Generator(), alpha, theta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Theta, theta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of gamma distributed random numbers.
-        /// </param>
-        /// <param name="theta">
-        ///   The parameter theta which is used for generation of gamma distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
-        /// </exception>
-        public GammaDistribution(uint seed, double alpha, double theta)
-            : base(new NumericalRecipes3Q1Generator(seed), alpha, theta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Theta, theta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GammaDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of gamma distributed random numbers.
-        /// </param>
-        /// <param name="theta">
-        ///   The parameter theta which is used for generation of gamma distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="theta"/> are less than or equal to zero.
-        /// </exception>
-        public GammaDistribution(IGenerator generator, double alpha, double theta) : base(generator, alpha, theta)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Theta, theta));
-        }
-
-        #endregion Construction
     }
 }

@@ -34,8 +34,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   information presented on <a href="http://en.wikipedia.org/wiki/F-distribution">Wikipedia - F-distribution</a>.
     /// </remarks>
     [Serializable]
-    public class FisherSnedecorDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, IBetaDistribution<int>
-        where TGen : IGenerator
+    public sealed class FisherSnedecorDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<int>, IBetaDistribution<int>
     {
         #region Constants
 
@@ -105,6 +104,90 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public FisherSnedecorDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public FisherSnedecorDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
+        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public FisherSnedecorDistribution(IGenerator generator) : this(generator, DefaultAlpha, DefaultBeta)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of fisher snedecor distributed random numbers.
+        /// </param>
+        /// <param name="beta">
+        ///   The parameter beta which is used for generation of fisher snedecor distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
+        /// </exception>
+        public FisherSnedecorDistribution(int alpha, int beta) : this(new NumericalRecipes3Q1Generator(), alpha, beta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Beta, beta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of fisher snedecor distributed random numbers.
+        /// </param>
+        /// <param name="beta">
+        ///   The parameter beta which is used for generation of fisher snedecor distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
+        /// </exception>
+        public FisherSnedecorDistribution(uint seed, int alpha, int beta)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha, beta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Beta, beta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
         ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
@@ -118,7 +201,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
-        public FisherSnedecorDistribution(TGen generator, int alpha, int beta) : base(generator)
+        public FisherSnedecorDistribution(IGenerator generator, int alpha, int beta) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             _alpha = alpha;
@@ -230,7 +313,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta);
+        public double NextDouble() => Sample(Generator, _alpha, _beta);
 
         #endregion IContinuousDistribution Members
 
@@ -242,7 +325,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="FisherSnedecorDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="FisherSnedecorDistribution"/> class.
         /// </remarks>
         public static Func<int, int, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
@@ -253,137 +336,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a fisher snedecor distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="FisherSnedecorDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="FisherSnedecorDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, int, int, double> Sample { get; set; } = (generator, alpha, beta) =>
+        public static Func<IGenerator, int, int, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var helper1 = beta / (double) alpha;
-            var csa = ChiSquareDistribution<TGen>.Sample(generator, alpha);
-            var csb = ChiSquareDistribution<TGen>.Sample(generator, beta);
+            var csa = ChiSquareDistribution.Sample(generator, alpha);
+            var csb = ChiSquareDistribution.Sample(generator, beta);
             return csa / csb * helper1;
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of Fisher-Snedecor distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="FisherSnedecorDistribution"/> type bases upon
-    ///   information presented on <a href="http://en.wikipedia.org/wiki/F-distribution">Wikipedia - F-distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class FisherSnedecorDistribution : FisherSnedecorDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public FisherSnedecorDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public FisherSnedecorDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public FisherSnedecorDistribution(IGenerator generator) : base(generator, DefaultAlpha, DefaultBeta)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher snedecor distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of fisher snedecor distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
-        /// </exception>
-        public FisherSnedecorDistribution(int alpha, int beta) : base(new NumericalRecipes3Q1Generator(), alpha, beta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher snedecor distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of fisher snedecor distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
-        /// </exception>
-        public FisherSnedecorDistribution(uint seed, int alpha, int beta)
-            : base(new NumericalRecipes3Q1Generator(seed), alpha, beta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher snedecor distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of fisher snedecor distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
-        /// </exception>
-        public FisherSnedecorDistribution(IGenerator generator, int alpha, int beta) : base(generator, alpha, beta)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-        }
-
-        #endregion Construction
     }
 }

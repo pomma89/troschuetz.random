@@ -35,8 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   distribution</a> and <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class ErlangDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, ILambdaDistribution<double>
-        where TGen : IGenerator
+    public sealed class ErlangDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<int>, ILambdaDistribution<double>
     {
         #region Constants
 
@@ -110,6 +109,94 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public ErlangDistribution()
+            : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultLambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public ErlangDistribution(uint seed)
+            : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultLambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public ErlangDistribution(IGenerator generator)
+            : this(generator, DefaultAlpha, DefaultLambda)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
+        /// </param>
+        /// <param name="lambda">
+        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
+        /// </exception>
+        public ErlangDistribution(int alpha, double lambda)
+            : this(new NumericalRecipes3Q1Generator(), alpha, lambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Lambda, lambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
+        /// </param>
+        /// <param name="lambda">
+        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
+        /// </exception>
+        public ErlangDistribution(uint seed, int alpha, double lambda)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha, lambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Lambda, lambda));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
         ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -124,7 +211,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
-        public ErlangDistribution(TGen generator, int alpha, double lambda)
+        public ErlangDistribution(IGenerator generator, int alpha, double lambda)
             : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
@@ -203,7 +290,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha, _lambda);
+        public double NextDouble() => Sample(Generator, _alpha, _lambda);
 
         #endregion IContinuousDistribution Members
 
@@ -215,7 +302,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="ErlangDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="ErlangDistribution"/> class.
         /// </remarks>
         public static Func<int, double, bool> AreValidParams { get; set; } = (alpha, lambda) =>
         {
@@ -226,9 +313,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning an erlang distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="ErlangDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="ErlangDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, int, double, double> Sample { get; set; } = (generator, alpha, lambda) =>
+        public static Func<IGenerator, int, double, double> Sample { get; set; } = (generator, alpha, lambda) =>
         {
             if (double.IsPositiveInfinity(lambda))
             {
@@ -251,11 +338,11 @@ namespace Troschuetz.Random.Distributions.Continuous
             var c = 1.0 / Math.Sqrt(9.0 * d);
             while (true)
             {
-                var x = NormalDistribution<TGen>.Sample(generator, mu, sigma);
+                var x = NormalDistribution.Sample(generator, mu, sigma);
                 var v = 1.0 + (c * x);
                 while (v <= 0.0)
                 {
-                    x = NormalDistribution<TGen>.Sample(generator, mu, sigma);
+                    x = NormalDistribution.Sample(generator, mu, sigma);
                     v = 1.0 + (c * x);
                 }
 
@@ -275,131 +362,5 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of erlang distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="ErlangDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Erlang_distribution">Wikipedia - Erlang
-    ///   distribution</a> and <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class ErlangDistribution : ErlangDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public ErlangDistribution()
-            : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultLambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public ErlangDistribution(uint seed)
-            : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultLambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public ErlangDistribution(IGenerator generator)
-            : base(generator, DefaultAlpha, DefaultLambda)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
-        /// </exception>
-        public ErlangDistribution(int alpha, double lambda)
-            : base(new NumericalRecipes3Q1Generator(), alpha, lambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
-        /// </exception>
-        public ErlangDistribution(uint seed, int alpha, double lambda)
-            : base(new NumericalRecipes3Q1Generator(seed), alpha, lambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
-        /// </exception>
-        public ErlangDistribution(IGenerator generator, int alpha, double lambda) : base(generator, alpha, lambda)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        #endregion Construction
     }
 }

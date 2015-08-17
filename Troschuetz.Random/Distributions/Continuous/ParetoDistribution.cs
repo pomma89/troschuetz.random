@@ -35,9 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   distribution</a> and <a href="http://www.xycoon.com/par_random.htm">Xycoon - Pareto Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class ParetoDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
-                                            IBetaDistribution<double>
-        where TGen : IGenerator
+    public sealed class ParetoDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>
     {
         #region Constants
 
@@ -110,6 +108,90 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public ParetoDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public ParetoDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public ParetoDistribution(IGenerator generator) : this(generator, DefaultAlpha, DefaultBeta)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of pareto distributed random numbers.
+        /// </param>
+        /// <param name="beta">
+        ///   The parameter beta which is used for generation of pareto distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
+        /// </exception>
+        public ParetoDistribution(double alpha, double beta) : this(new NumericalRecipes3Q1Generator(), alpha, beta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Beta, beta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of pareto distributed random numbers.
+        /// </param>
+        /// <param name="beta">
+        ///   The parameter beta which is used for generation of pareto distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
+        /// </exception>
+        public ParetoDistribution(uint seed, double alpha, double beta)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha, beta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Beta, beta));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using the
         ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -124,7 +206,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
-        public ParetoDistribution(TGen generator, double alpha, double beta) : base(generator)
+        public ParetoDistribution(IGenerator generator, double alpha, double beta) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             _alpha = alpha;
@@ -219,7 +301,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta);
+        public double NextDouble() => Sample(Generator, _alpha, _beta);
 
         #endregion IContinuousDistribution Members
 
@@ -230,7 +312,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   definition returns true if alpha and beta are greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="ParetoDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="ParetoDistribution"/> class.
         /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
@@ -241,136 +323,14 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a pareto distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="ParetoDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="ParetoDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
+        public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             var helper1 = 1.0 / beta;
             return alpha / Math.Pow(1.0 - generator.NextDouble(), helper1);
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of pareto distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="ParetoDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Pareto_distribution">Wikipedia - Pareto
-    ///   distribution</a> and <a href="http://www.xycoon.com/par_random.htm">Xycoon - Pareto Distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class ParetoDistribution : ParetoDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public ParetoDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public ParetoDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public ParetoDistribution(IGenerator generator) : base(generator, DefaultAlpha, DefaultBeta)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of pareto distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of pareto distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
-        /// </exception>
-        public ParetoDistribution(double alpha, double beta) : base(new NumericalRecipes3Q1Generator(), alpha, beta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of pareto distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of pareto distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
-        /// </exception>
-        public ParetoDistribution(uint seed, double alpha, double beta)
-            : base(new NumericalRecipes3Q1Generator(seed), alpha, beta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ParetoDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of pareto distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of pareto distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
-        /// </exception>
-        public ParetoDistribution(IGenerator generator, double alpha, double beta) : base(generator, alpha, beta)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-        }
-
-        #endregion Construction
     }
 }

@@ -92,8 +92,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   Networks Class Library</a>.
     /// </remarks>
     [Serializable]
-    public class PoissonDistribution<TGen> : AbstractDistribution<TGen>, IDiscreteDistribution, ILambdaDistribution<double>
-        where TGen : IGenerator
+    public sealed class PoissonDistribution : AbstractDistribution, IDiscreteDistribution, ILambdaDistribution<double>
     {
         #region Constants
 
@@ -137,6 +136,78 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public PoissonDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultLambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public PoissonDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultLambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public PoissonDistribution(IGenerator generator) : this(generator, DefaultLambda)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="lambda">
+        ///   The parameter lambda which is used for generation of poisson distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="lambda"/> is less than or equal to zero.
+        /// </exception>
+        public PoissonDistribution(double lambda) : this(new NumericalRecipes3Q1Generator(), lambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Lambda, lambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="lambda">
+        ///   The parameter lambda which is used for generation of poisson distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="lambda"/> is less than or equal to zero.
+        /// </exception>
+        public PoissonDistribution(uint seed, double lambda) : this(new NumericalRecipes3Q1Generator(seed), lambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Lambda, lambda));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using the
         ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -148,7 +219,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
-        public PoissonDistribution(TGen generator, double lambda) : base(generator)
+        public PoissonDistribution(IGenerator generator, double lambda) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(lambda), ErrorMessages.InvalidParams);
             _lambda = lambda;
@@ -218,13 +289,13 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Returns a distributed random number.
         /// </summary>
         /// <returns>A distributed 32-bit signed integer.</returns>
-        public int Next() => Sample(TypedGenerator, _lambda);
+        public int Next() => Sample(Generator, _lambda);
 
         /// <summary>
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _lambda);
+        public double NextDouble() => Sample(Generator, _lambda);
 
         #endregion IDiscreteDistribution Members
 
@@ -235,7 +306,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   definition returns true if lambda is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="PoissonDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="PoissonDistribution"/> class.
         /// </remarks>
         public static Func<double, bool> IsValidParam { get; set; } = lambda => lambda > 0.0;
 
@@ -243,9 +314,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Declares a function returning a poisson distributed 32-bit signed integer.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="PoissonDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="PoissonDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, double, int> Sample { get; set; } = (generator, lambda) =>
+        public static Func<IGenerator, double, int> Sample { get; set; } = (generator, lambda) =>
         {
             // See contribution of JcBernack on BitBucket (issue #2) and see Wikipedia page about
             // Poisson distribution (https://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables).
@@ -273,114 +344,5 @@ namespace Troschuetz.Random.Distributions.Discrete
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of poisson distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The poisson distribution generates only discrete numbers. <br/> The implementation of the
-    ///   <see cref="PoissonDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Poisson_distribution">Wikipedia - Poisson
-    ///   distribution</a> and the implementation in the
-    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
-    ///   Networks Class Library</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class PoissonDistribution : PoissonDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public PoissonDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultLambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public PoissonDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultLambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public PoissonDistribution(IGenerator generator) : base(generator, DefaultLambda)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of poisson distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="lambda"/> is less than or equal to zero.
-        /// </exception>
-        public PoissonDistribution(double lambda) : base(new NumericalRecipes3Q1Generator(), lambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of poisson distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="lambda"/> is less than or equal to zero.
-        /// </exception>
-        public PoissonDistribution(uint seed, double lambda) : base(new NumericalRecipes3Q1Generator(seed), lambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="PoissonDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of poisson distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="lambda"/> is less than or equal to zero.
-        /// </exception>
-        public PoissonDistribution(IGenerator generator, double lambda) : base(generator, lambda)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        #endregion Construction
     }
 }

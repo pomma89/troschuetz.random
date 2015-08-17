@@ -30,7 +30,7 @@ namespace Troschuetz.Random
     public interface IDistribution
     {
         /// <summary>
-        ///   Gets a <see cref="IGenerator"/> object that can be used as underlying random number generator.
+        ///   Gets the <see cref="IGenerator"/> object that is used as underlying random number generator.
         /// </summary>
         [Pure]
         IGenerator Generator { get; }

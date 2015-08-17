@@ -55,9 +55,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
     /// </remarks>
     [Serializable]
-    public class TriangularDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
-                                                       IBetaDistribution<double>, IGammaDistribution<double>
-        where TGen : IGenerator
+    public sealed class TriangularDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>, IGammaDistribution<double>
     {
         #region Constants
 
@@ -166,6 +164,107 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public TriangularDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta, DefaultGamma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+            Debug.Assert(Equals(Gamma, DefaultGamma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public TriangularDistribution(uint seed)
+            : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta, DefaultGamma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+            Debug.Assert(Equals(Gamma, DefaultGamma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using
+        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public TriangularDistribution(IGenerator generator) : this(generator, DefaultAlpha, DefaultBeta, DefaultGamma)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+            Debug.Assert(Equals(Gamma, DefaultGamma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of triangular distributed random numbers.
+        /// </param>
+        /// <param name="beta">
+        ///   The parameter beta which is used for generation of triangular distributed random numbers.
+        /// </param>
+        /// <param name="gamma">
+        ///   The parameter gamma which is used for generation of triangular distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is greater than or equal to <paramref name="beta"/>, or
+        ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
+        ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
+        /// </exception>
+        public TriangularDistribution(double alpha, double beta, double gamma)
+            : this(new NumericalRecipes3Q1Generator(), alpha, beta, gamma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Beta, beta));
+            Debug.Assert(Equals(Gamma, gamma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of triangular distributed random numbers.
+        /// </param>
+        /// <param name="beta">
+        ///   The parameter beta which is used for generation of triangular distributed random numbers.
+        /// </param>
+        /// <param name="gamma">
+        ///   The parameter gamma which is used for generation of triangular distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is greater than or equal to <paramref name="beta"/>, or
+        ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
+        ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
+        /// </exception>
+        public TriangularDistribution(uint seed, double alpha, double beta, double gamma)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha, beta, gamma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Beta, beta));
+            Debug.Assert(Equals(Gamma, gamma));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using
         ///   the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -185,7 +284,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
-        public TriangularDistribution(TGen generator, double alpha, double beta, double gamma) : base(generator)
+        public TriangularDistribution(IGenerator generator, double alpha, double beta, double gamma) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, beta, gamma), ErrorMessages.InvalidParams);
             _alpha = alpha;
@@ -288,7 +387,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta, _gamma);
+        public double NextDouble() => Sample(Generator, _alpha, _beta, _gamma);
 
         #endregion IContinuousDistribution Members
 
@@ -301,7 +400,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="TriangularDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="TriangularDistribution"/> class.
         /// </remarks>
         public static Func<double, double, double, bool> AreValidParams { get; set; } = (alpha, beta, gamma) =>
         {
@@ -312,9 +411,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a triangular distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="TriangularDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="TriangularDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, double, double, double, double> Sample { get; set; } = (generator, alpha, beta, gamma) =>
+        public static Func<IGenerator, double, double, double, double> Sample { get; set; } = (generator, alpha, beta, gamma) =>
         {
             var helper1 = gamma - alpha;
             var helper2 = beta - alpha;
@@ -329,151 +428,5 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of triangular distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="TriangularDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Triangular_distribution">Wikipedia -
-    ///   Triangular distribution</a> and the implementation in the
-    ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class TriangularDistribution : TriangularDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public TriangularDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta, DefaultGamma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-            Debug.Assert(Equals(Gamma, DefaultGamma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public TriangularDistribution(uint seed)
-            : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta, DefaultGamma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-            Debug.Assert(Equals(Gamma, DefaultGamma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public TriangularDistribution(IGenerator generator) : base(generator, DefaultAlpha, DefaultBeta, DefaultGamma)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-            Debug.Assert(Equals(Gamma, DefaultGamma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than or equal to <paramref name="beta"/>, or
-        ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
-        ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
-        /// </exception>
-        public TriangularDistribution(double alpha, double beta, double gamma)
-            : base(new NumericalRecipes3Q1Generator(), alpha, beta, gamma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-            Debug.Assert(Equals(Gamma, gamma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than or equal to <paramref name="beta"/>, or
-        ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
-        ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
-        /// </exception>
-        public TriangularDistribution(uint seed, double alpha, double beta, double gamma)
-            : base(new NumericalRecipes3Q1Generator(seed), alpha, beta, gamma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-            Debug.Assert(Equals(Gamma, gamma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than or equal to <paramref name="beta"/>, or
-        ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
-        ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
-        /// </exception>
-        public TriangularDistribution(IGenerator generator, double alpha, double beta, double gamma) : base(generator, alpha, beta, gamma)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-            Debug.Assert(Equals(Gamma, gamma));
-        }
-
-        #endregion Construction
     }
 }

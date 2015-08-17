@@ -36,8 +36,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Student t Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class StudentsTDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, INuDistribution<int>
-        where TGen : IGenerator
+    public sealed class StudentsTDistribution : AbstractDistribution, IContinuousDistribution, INuDistribution<int>
     {
         #region Constants
 
@@ -79,6 +78,78 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public StudentsTDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultNu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Nu, DefaultNu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public StudentsTDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultNu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Nu, DefaultNu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public StudentsTDistribution(IGenerator generator) : this(generator, DefaultNu)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Nu, DefaultNu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="nu">
+        ///   The parameter nu which is used for generation of student's t distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="nu"/> is less than or equal to zero.
+        /// </exception>
+        public StudentsTDistribution(int nu) : this(new NumericalRecipes3Q1Generator(), nu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Nu, nu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="nu">
+        ///   The parameter nu which is used for generation of student's t distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="nu"/> is less than or equal to zero.
+        /// </exception>
+        public StudentsTDistribution(uint seed, int nu) : this(new NumericalRecipes3Q1Generator(seed), nu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Nu, nu));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using the
         ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -90,7 +161,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
-        public StudentsTDistribution(TGen generator, int nu) : base(generator)
+        public StudentsTDistribution(IGenerator generator, int nu) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(nu), ErrorMessages.InvalidParams);
             _nu = nu;
@@ -177,7 +248,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _nu);
+        public double NextDouble() => Sample(Generator, _nu);
 
         #endregion IContinuousDistribution Members
 
@@ -188,7 +259,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   default definition returns true if nu is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="StudentsTDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="StudentsTDistribution"/> class.
         /// </remarks>
         public static Func<int, bool> IsValidParam { get; set; } = nu =>
         {
@@ -199,124 +270,17 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a student's t distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="StudentsTDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="StudentsTDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, int, double> Sample { get; set; } = (generator, nu) =>
+        public static Func<IGenerator, int, double> Sample { get; set; } = (generator, nu) =>
         {
             const double mu = 0.0;
             const double sigma = 1.0;
-            var n = NormalDistribution<TGen>.Sample(generator, mu, sigma);
-            var c = ChiSquareDistribution<TGen>.Sample(generator, nu);
+            var n = NormalDistribution.Sample(generator, mu, sigma);
+            var c = ChiSquareDistribution.Sample(generator, nu);
             return n / Math.Sqrt(c / nu);
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of t-distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="StudentsTDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Student%27s_t-distribution">Wikipedia -
-    ///   Student's t-distribution</a> and <a href="http://www.xycoon.com/stt_random.htm">Xycoon -
-    ///   Student t Distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class StudentsTDistribution : StudentsTDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public StudentsTDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultNu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Nu, DefaultNu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public StudentsTDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultNu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Nu, DefaultNu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public StudentsTDistribution(IGenerator generator) : base(generator, DefaultNu)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Nu, DefaultNu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="nu">
-        ///   The parameter nu which is used for generation of student's t distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="nu"/> is less than or equal to zero.
-        /// </exception>
-        public StudentsTDistribution(int nu) : base(new NumericalRecipes3Q1Generator(), nu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Nu, nu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="nu">
-        ///   The parameter nu which is used for generation of student's t distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="nu"/> is less than or equal to zero.
-        /// </exception>
-        public StudentsTDistribution(uint seed, int nu) : base(new NumericalRecipes3Q1Generator(seed), nu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Nu, nu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="nu">
-        ///   The parameter nu which is used for generation of student's t distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="nu"/> is less than or equal to zero.
-        /// </exception>
-        public StudentsTDistribution(IGenerator generator, int nu) : base(generator, nu)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Nu, nu));
-        }
-
-        #endregion Construction
     }
 }

@@ -35,8 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Rayleigh Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class RayleighDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, ISigmaDistribution<double>
-        where TGen : IGenerator
+    public sealed class RayleighDistribution : AbstractDistribution, IContinuousDistribution, ISigmaDistribution<double>
     {
         #region Constants
 
@@ -79,6 +78,78 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public RayleighDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultSigma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Sigma, DefaultSigma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public RayleighDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultSigma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Sigma, DefaultSigma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public RayleighDistribution(IGenerator generator) : this(generator, DefaultSigma)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Sigma, DefaultSigma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="sigma">
+        ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="sigma"/> is less than or equal to zero.
+        /// </exception>
+        public RayleighDistribution(double sigma) : this(new NumericalRecipes3Q1Generator(), sigma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Sigma, sigma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="sigma">
+        ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="sigma"/> is less than or equal to zero.
+        /// </exception>
+        public RayleighDistribution(uint seed, double sigma) : this(new NumericalRecipes3Q1Generator(seed), sigma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Sigma, sigma));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using the
         ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -90,7 +161,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
-        public RayleighDistribution(TGen generator, double sigma)
+        public RayleighDistribution(IGenerator generator, double sigma)
             : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(sigma), ErrorMessages.InvalidParams);
@@ -158,7 +229,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _sigma);
+        public double NextDouble() => Sample(Generator, _sigma);
 
         #endregion IContinuousDistribution Members
 
@@ -169,7 +240,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   definition returns true if sigma is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="RayleighDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="RayleighDistribution"/> class.
         /// </remarks>
         public static Func<double, bool> IsValidParam { get; set; } = sigma =>
         {
@@ -180,122 +251,16 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a rayleigh distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="RayleighDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="RayleighDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, double, double> Sample { get; set; } = (generator, sigma) =>
+        public static Func<IGenerator, double, double> Sample { get; set; } = (generator, sigma) =>
         {
             const double mu = 0.0;
-            var n1 = Sqr(NormalDistribution<TGen>.Sample(generator, mu, sigma));
-            var n2 = Sqr(NormalDistribution<TGen>.Sample(generator, mu, sigma));
+            var n1 = Sqr(NormalDistribution.Sample(generator, mu, sigma));
+            var n2 = Sqr(NormalDistribution.Sample(generator, mu, sigma));
             return Math.Sqrt(n1 + n2);
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of rayleigh distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="RayleighDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Rayleigh_distribution">Wikipedia -
-    ///   Rayleigh Distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class RayleighDistribution : RayleighDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public RayleighDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultSigma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Sigma, DefaultSigma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public RayleighDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultSigma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Sigma, DefaultSigma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public RayleighDistribution(IGenerator generator) : base(generator, DefaultSigma)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Sigma, DefaultSigma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="sigma"/> is less than or equal to zero.
-        /// </exception>
-        public RayleighDistribution(double sigma) : base(new NumericalRecipes3Q1Generator(), sigma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Sigma, sigma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="sigma"/> is less than or equal to zero.
-        /// </exception>
-        public RayleighDistribution(uint seed, double sigma) : base(new NumericalRecipes3Q1Generator(seed), sigma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Sigma, sigma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="RayleighDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="sigma"/> is less than or equal to zero.
-        /// </exception>
-        public RayleighDistribution(IGenerator generator, double sigma) : base(generator, sigma)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Sigma, sigma));
-        }
-
-        #endregion Construction
     }
 }

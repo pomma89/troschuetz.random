@@ -35,9 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Laplace_distribution">Wikipedia - Fisher-Tippett distribution</a>.
     /// </remarks>
     [Serializable]
-    public class FisherTippettDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
-                                                   IMuDistribution<double>
-        where TGen : IGenerator
+    public sealed class FisherTippettDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IMuDistribution<double>
     {
         #region Constants
 
@@ -113,6 +111,90 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
+        ///   a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public FisherTippettDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultMu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Mu, DefaultMu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
+        ///   a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public FisherTippettDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultMu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Mu, DefaultMu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
+        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public FisherTippettDistribution(IGenerator generator) : this(generator, DefaultAlpha, DefaultMu)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Mu, DefaultMu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
+        ///   a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
+        /// </param>
+        /// <param name="mu">
+        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than or equal to zero.
+        /// </exception>
+        public FisherTippettDistribution(double alpha, double mu) : this(new NumericalRecipes3Q1Generator(), alpha, mu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Mu, mu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
+        ///   a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
+        /// </param>
+        /// <param name="mu">
+        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than or equal to zero.
+        /// </exception>
+        public FisherTippettDistribution(uint seed, double alpha, double mu)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha, mu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Mu, mu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
         ///   the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
@@ -126,7 +208,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
-        public FisherTippettDistribution(TGen generator, double alpha, double mu) : base(generator)
+        public FisherTippettDistribution(IGenerator generator, double alpha, double mu) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
             _alpha = alpha;
@@ -201,7 +283,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha, _mu);
+        public double NextDouble() => Sample(Generator, _alpha, _mu);
 
         #endregion IContinuousDistribution Members
 
@@ -212,7 +294,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   default definition returns true if alpha is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="FisherTippettDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="FisherTippettDistribution"/> class.
         /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, mu) =>
         {
@@ -223,135 +305,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a fisher tippett distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="FisherTippettDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="FisherTippettDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, mu) =>
+        public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, mu) =>
         {
             return mu - alpha * Math.Log(-Math.Log(1.0 - generator.NextDouble()));
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of Fisher-Tippett distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="FisherTippettDistribution"/> type bases upon
-    ///   information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Laplace_distribution">Wikipedia - Fisher-Tippett distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class FisherTippettDistribution : FisherTippettDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public FisherTippettDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultMu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Mu, DefaultMu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public FisherTippettDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultMu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Mu, DefaultMu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public FisherTippettDistribution(IGenerator generator) : base(generator, DefaultAlpha, DefaultMu)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Mu, DefaultMu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public FisherTippettDistribution(double alpha, double mu) : base(new NumericalRecipes3Q1Generator(), alpha, mu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Mu, mu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public FisherTippettDistribution(uint seed, double alpha, double mu)
-            : base(new NumericalRecipes3Q1Generator(seed), alpha, mu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Mu, mu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public FisherTippettDistribution(IGenerator generator, double alpha, double mu) : base(generator, alpha, mu)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Mu, mu));
-        }
-
-        #endregion Construction
     }
 }

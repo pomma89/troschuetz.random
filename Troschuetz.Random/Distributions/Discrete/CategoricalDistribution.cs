@@ -60,8 +60,7 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   exactly normalized to sum to 1 in floating point representation.
     /// </remarks>
     [Serializable]
-    public class CategoricalDistribution<TGen> : AbstractDistribution<TGen>, IDiscreteDistribution, IWeightsDistribution<double>
-        where TGen : IGenerator
+    public sealed class CategoricalDistribution : AbstractDistribution, IDiscreteDistribution, IWeightsDistribution<double>
     {
         #region Constants
 
@@ -119,6 +118,126 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public CategoricalDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultValueCount)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Weights.Count, DefaultValueCount));
+            Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public CategoricalDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultValueCount)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Weights.Count, DefaultValueCount));
+            Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="CategoricalDistribution"/> class, using
+        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public CategoricalDistribution(IGenerator generator) : this(generator, DefaultValueCount)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Weights.Count, DefaultValueCount));
+            Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="valueCount">
+        ///   The parameter valueCount which is used for generation of binomial distributed random
+        ///   numbers by setting the number of equi-distributed "weights" the distribution will have.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="valueCount"/> is less than or equal to zero.
+        /// </exception>
+        public CategoricalDistribution(int valueCount) : this(new NumericalRecipes3Q1Generator(), valueCount)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Weights.Count, valueCount));
+            Debug.Assert(Weights.All(w => w == 1.0 / valueCount));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="valueCount">
+        ///   The parameter valueCount which is used for generation of binomial distributed random
+        ///   numbers by setting the number of equi-distributed "weights" the distribution will have.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="valueCount"/> is less than or equal to zero.
+        /// </exception>
+        public CategoricalDistribution(uint seed, int valueCount) : this(new NumericalRecipes3Q1Generator(seed), valueCount)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Weights.Count, valueCount));
+            Debug.Assert(Weights.All(w => w == 1.0 / valueCount));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="weights">
+        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
+        ///   as this is often impossible using floating point arithmetic.
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="weights"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="weights"/> is empty.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
+        /// </exception>
+        public CategoricalDistribution(ICollection<double> weights) : this(new NumericalRecipes3Q1Generator(), weights)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="weights">
+        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
+        ///   as this is often impossible using floating point arithmetic.
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="weights"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="weights"/> is empty.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
+        /// </exception>
+        public CategoricalDistribution(uint seed, ICollection<double> weights)
+            : this(new NumericalRecipes3Q1Generator(seed), weights)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="CategoricalDistribution"/> class, using
         ///   the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -131,7 +250,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="valueCount"/> is less than or equal to zero.
         /// </exception>
-        public CategoricalDistribution(TGen generator, int valueCount) : base(generator)
+        public CategoricalDistribution(IGenerator generator, int valueCount) : base(generator)
         {
             RaiseArgumentOutOfRangeException.IfIsEqual(valueCount, 0, ErrorMessages.InvalidParams);
             _weights = Ones(valueCount);
@@ -154,7 +273,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
         /// </exception>
-        public CategoricalDistribution(TGen generator, ICollection<double> weights) : base(generator)
+        public CategoricalDistribution(IGenerator generator, ICollection<double> weights) : base(generator)
         {
             RaiseArgumentNullException.IfIsNull(weights, nameof(weights), ErrorMessages.NullWeights);
             Raise<ArgumentException>.IfIsEmpty(weights);
@@ -303,13 +422,13 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Returns a distributed random number.
         /// </summary>
         /// <returns>A distributed 32-bit signed integer.</returns>
-        public int Next() => Sample(TypedGenerator, _weights.Count, _cdf, _weightsSum);
+        public int Next() => Sample(Generator, _weights.Count, _cdf, _weightsSum);
 
         /// <summary>
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _weights.Count, _cdf, _weightsSum);
+        public double NextDouble() => Sample(Generator, _weights.Count, _cdf, _weightsSum);
 
         #endregion IDiscreteDistribution Members
 
@@ -329,7 +448,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Weights do not need to be normalized as this is often impossible using floating point arithmetic.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="CategoricalDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="CategoricalDistribution"/> class.
         /// </remarks>
         public static Func<IEnumerable<double>, bool> IsValidParam { get; set; } = weights =>
         {
@@ -349,9 +468,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Declares a function returning a categorical distributed 32-bit signed integer.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="CategoricalDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="CategoricalDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, int, double[], double, int> Sample { get; set; } = (generator, weightsCount, cdf, weightsSum) =>
+        public static Func<IGenerator, int, double[], double, int> Sample { get; set; } = (generator, weightsCount, cdf, weightsSum) =>
         {
             var u = generator.NextDouble(weightsSum);
             var minIdx = 0;
@@ -398,184 +517,5 @@ namespace Troschuetz.Random.Distributions.Discrete
         }
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Implements the categorical distribution. For details about this distribution, see
-    ///   <a href="http://en.wikipedia.org/wiki/Categorical_distribution">Wikipedia - Categorical
-    ///   distribution</a>. This distribution is sometimes called the Discrete distribution.
-    /// </summary>
-    /// <remarks>
-    ///   The distribution is parameterized by a vector of ratios: in other words, the parameter
-    ///   does not have to be normalized and sum to 1. The reason is that some vectors can't be
-    ///   exactly normalized to sum to 1 in floating point representation.
-    /// </remarks>
-    [Serializable]
-    public sealed class CategoricalDistribution : CategoricalDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public CategoricalDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultValueCount)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Weights.Count, DefaultValueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public CategoricalDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultValueCount)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Weights.Count, DefaultValueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="CategoricalDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public CategoricalDistribution(IGenerator generator) : base(generator, DefaultValueCount)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Weights.Count, DefaultValueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / DefaultValueCount));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="valueCount">
-        ///   The parameter valueCount which is used for generation of binomial distributed random
-        ///   numbers by setting the number of equi-distributed "weights" the distribution will have.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="valueCount"/> is less than or equal to zero.
-        /// </exception>
-        public CategoricalDistribution(int valueCount) : base(new NumericalRecipes3Q1Generator(), valueCount)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Weights.Count, valueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / valueCount));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="valueCount">
-        ///   The parameter valueCount which is used for generation of binomial distributed random
-        ///   numbers by setting the number of equi-distributed "weights" the distribution will have.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="valueCount"/> is less than or equal to zero.
-        /// </exception>
-        public CategoricalDistribution(uint seed, int valueCount) : base(new NumericalRecipes3Q1Generator(seed), valueCount)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Weights.Count, valueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / valueCount));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="CategoricalDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="valueCount">
-        ///   The parameter valueCount which is used for generation of binomial distributed random
-        ///   numbers by setting the number of equi-distributed "weights" the distribution will have.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="valueCount"/> is less than or equal to zero.
-        /// </exception>
-        public CategoricalDistribution(IGenerator generator, int valueCount) : base(generator, valueCount)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Weights.Count, valueCount));
-            Debug.Assert(Weights.All(w => w == 1.0 / valueCount));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="weights">
-        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
-        ///   as this is often impossible using floating point arithmetic.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="weights"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="weights"/> is empty.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
-        /// </exception>
-        public CategoricalDistribution(ICollection<double> weights) : base(new NumericalRecipes3Q1Generator(), weights)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BinomialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="weights">
-        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
-        ///   as this is often impossible using floating point arithmetic.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="weights"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="weights"/> is empty.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
-        /// </exception>
-        public CategoricalDistribution(uint seed, ICollection<double> weights)
-            : base(new NumericalRecipes3Q1Generator(seed), weights)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="CategoricalDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="weights">
-        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
-        ///   as this is often impossible using floating point arithmetic.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="generator"/> or <paramref name="weights"/> are null.
-        /// </exception>
-        /// <exception cref="ArgumentException"><paramref name="weights"/> is empty.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   Any of the weights in <paramref name="weights"/> are negative or they sum to zero.
-        /// </exception>
-        public CategoricalDistribution(IGenerator generator, ICollection<double> weights) : base(generator, weights)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-        }
-
-        #endregion Construction
     }
 }

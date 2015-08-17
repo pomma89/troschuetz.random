@@ -35,9 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   presented on <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class PowerDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
-                                           IBetaDistribution<double>
-        where TGen : IGenerator
+    public sealed class PowerDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>
     {
         #region Constants
 
@@ -107,159 +105,6 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         #endregion Fields
 
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="PowerDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of power distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of power distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
-        /// </exception>
-        public PowerDistribution(TGen generator, double alpha, double beta) : base(generator)
-        {
-            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
-            _alpha = alpha;
-            _beta = beta;
-        }
-
-        #endregion Construction
-
-        #region Instance Methods
-
-        /// <summary>
-        ///   Determines whether the specified value is valid for parameter <see cref="Alpha"/>.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidAlpha(double value) => AreValidParams(value, Beta);
-
-        /// <summary>
-        ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidBeta(double value) => AreValidParams(_alpha, value);
-
-        #endregion Instance Methods
-
-        #region IContinuousDistribution Members
-
-        /// <summary>
-        ///   Gets the minimum possible value of distributed random numbers.
-        /// </summary>
-        public double Minimum => 0.0;
-
-        /// <summary>
-        ///   Gets the maximum possible value of distributed random numbers.
-        /// </summary>
-        public double Maximum => 1.0 / Beta;
-
-        /// <summary>
-        ///   Gets the mean of distributed random numbers.
-        /// </summary>
-        /// <exception cref="NotSupportedException">
-        ///   Thrown if mean is not defined for given distribution with some parameters.
-        /// </exception>
-        public double Mean => _alpha / Beta / (_alpha + 1.0);
-
-        /// <summary>
-        ///   Gets the median of distributed random numbers.
-        /// </summary>
-        /// <exception cref="NotSupportedException">
-        ///   Thrown if median is not defined for given distribution with some parameters.
-        /// </exception>
-        public double Median
-        {
-            get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
-        }
-
-        /// <summary>
-        ///   Gets the variance of distributed random numbers.
-        /// </summary>
-        /// <exception cref="NotSupportedException">
-        ///   Thrown if variance is not defined for given distribution with some parameters.
-        /// </exception>
-        public double Variance => _alpha / Sqr(Beta) / Sqr(_alpha + 1.0) / (_alpha + 2.0);
-
-        /// <summary>
-        ///   Gets the mode of distributed random numbers.
-        /// </summary>
-        /// <exception cref="NotSupportedException">
-        ///   Thrown if mode is not defined for given distribution with some parameters.
-        /// </exception>
-        public double[] Mode
-        {
-            get
-            {
-                if (_alpha > 1.0)
-                {
-                    return new[] { 1.0 / Beta };
-                }
-                if (_alpha < 1.0)
-                {
-                    return new[] { 0.0 };
-                }
-                throw new NotSupportedException(ErrorMessages.UndefinedModeForParams);
-            }
-        }
-
-        /// <summary>
-        ///   Returns a distributed floating point random number.
-        /// </summary>
-        /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta);
-
-        #endregion IContinuousDistribution Members
-
-        #region TRandom Helpers
-
-        /// <summary>
-        ///   Determines whether power distribution is defined under given parameters. The
-        ///   default definition returns true if alpha and beta are greater than zero;
-        ///   otherwise, it returns false.
-        /// </summary>
-        /// <remarks>
-        ///   This is an extensibility point for the <see cref="PowerDistribution{TGen}"/> class.
-        /// </remarks>
-        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, beta) =>
-        {
-            return alpha > 0.0 && beta > 0.0;
-        };
-
-        /// <summary>
-        ///   Declares a function returning a power distributed floating point random number.
-        /// </summary>
-        /// <remarks>
-        ///   This is an extensibility point for the <see cref="PowerDistribution{TGen}"/> class.
-        /// </remarks>
-        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
-        {
-            var helper1 = 1.0 / alpha;
-            return Math.Pow(generator.NextDouble(), helper1) / beta;
-        };
-
-        #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of power distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="PowerDistribution"/> type bases upon information
-    ///   presented on <a href="http://www.xycoon.com/power.htm">Xycoon - Power Distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class PowerDistribution : PowerDistribution<IGenerator>
-    {
         #region Construction
 
         /// <summary>
@@ -361,13 +206,129 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
-        public PowerDistribution(IGenerator generator, double alpha, double beta) : base(generator, alpha, beta)
+        public PowerDistribution(IGenerator generator, double alpha, double beta) : base(generator)
         {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            _alpha = alpha;
+            _beta = beta;
         }
 
         #endregion Construction
+
+        #region Instance Methods
+
+        /// <summary>
+        ///   Determines whether the specified value is valid for parameter <see cref="Alpha"/>.
+        /// </summary>
+        /// <param name="value">The value to check.</param>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
+        public bool IsValidAlpha(double value) => AreValidParams(value, Beta);
+
+        /// <summary>
+        ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
+        /// </summary>
+        /// <param name="value">The value to check.</param>
+        /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
+        public bool IsValidBeta(double value) => AreValidParams(_alpha, value);
+
+        #endregion Instance Methods
+
+        #region IContinuousDistribution Members
+
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => 0.0;
+
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => 1.0 / Beta;
+
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Mean => _alpha / Beta / (_alpha + 1.0);
+
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Median
+        {
+            get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
+        }
+
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Variance => _alpha / Sqr(Beta) / Sqr(_alpha + 1.0) / (_alpha + 2.0);
+
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
+        public double[] Mode
+        {
+            get
+            {
+                if (_alpha > 1.0)
+                {
+                    return new[] { 1.0 / Beta };
+                }
+                if (_alpha < 1.0)
+                {
+                    return new[] { 0.0 };
+                }
+                throw new NotSupportedException(ErrorMessages.UndefinedModeForParams);
+            }
+        }
+
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(Generator, _alpha, _beta);
+
+        #endregion IContinuousDistribution Members
+
+        #region TRandom Helpers
+
+        /// <summary>
+        ///   Determines whether power distribution is defined under given parameters. The
+        ///   default definition returns true if alpha and beta are greater than zero;
+        ///   otherwise, it returns false.
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="PowerDistribution"/> class.
+        /// </remarks>
+        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, beta) =>
+        {
+            return alpha > 0.0 && beta > 0.0;
+        };
+
+        /// <summary>
+        ///   Declares a function returning a power distributed floating point random number.
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="PowerDistribution"/> class.
+        /// </remarks>
+        public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
+        {
+            var helper1 = 1.0 / alpha;
+            return Math.Pow(generator.NextDouble(), helper1) / beta;
+        };
+
+        #endregion TRandom Helpers
     }
 }

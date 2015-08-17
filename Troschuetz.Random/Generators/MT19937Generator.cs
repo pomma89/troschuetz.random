@@ -332,7 +332,6 @@ namespace Troschuetz.Random.Generators
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override int NextInclusiveMaxValue()
@@ -364,7 +363,6 @@ namespace Troschuetz.Random.Generators
         ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
         /// </returns>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override double NextDouble()
@@ -396,7 +394,6 @@ namespace Troschuetz.Random.Generators
         ///   less than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
 #if PORTABLE
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public override uint NextUInt()

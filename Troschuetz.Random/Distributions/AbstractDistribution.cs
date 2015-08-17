@@ -20,6 +20,7 @@
 
 using PommaLabs.Thrower;
 using System;
+using System.Runtime.CompilerServices;
 using Troschuetz.Random.Core;
 
 namespace Troschuetz.Random.Distributions
@@ -27,33 +28,28 @@ namespace Troschuetz.Random.Distributions
     /// <summary>
     ///   Abstract class which implements some features shared across all distributions.
     /// </summary>
-    /// <typeparam name="TGen">The type of the generator used by the distribution.</typeparam>
-    /// <remarks>Generator type is explictly declared to allow better performances.</remarks>
     [Serializable]
-    public abstract class AbstractDistribution<TGen> where TGen : IGenerator
+    public abstract class AbstractDistribution
     {
         /// <summary>
         ///   Builds a distribution using given generator.
         /// </summary>
         /// <param name="generator">The generator that will be used by the distribution.</param>
         /// <exception cref="ArgumentNullException">Given generator is null.</exception>
-        protected AbstractDistribution(TGen generator)
+        protected AbstractDistribution(IGenerator generator)
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            TypedGenerator = generator;
+            Generator = generator;
         }
-
-        /// <summary>
-        ///   Stores a <typeparamref name="TGen"/> object that can be used as underlying random
-        ///   number generator.
-        /// </summary>
-        public TGen TypedGenerator { get; }
 
         /// <summary>
         ///   Fast square power, taken from "Numerical Recipes in C++", 3rd edition.
         /// </summary>
         /// <param name="d">A double.</param>
         /// <returns>The square of given double.</returns>
+#if PORTABLE
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         protected static double Sqr(double d) => (d == 0.0) ? 0.0 : d * d;
 
         #region IDistribution members
@@ -62,12 +58,12 @@ namespace Troschuetz.Random.Distributions
         ///   Gets a value indicating whether the random number distribution can be reset, so that
         ///   it produces the same random number sequence again.
         /// </summary>
-        public bool CanReset => TypedGenerator.CanReset;
+        public bool CanReset => Generator.CanReset;
 
         /// <summary>
-        ///   Gets a <see cref="IGenerator"/> object that can be used as underlying random number generator.
+        ///   Gets the <see cref="IGenerator"/> object that is used as underlying random number generator.
         /// </summary>
-        public IGenerator Generator => TypedGenerator;
+        public IGenerator Generator { get; }
 
         /// <summary>
         ///   Resets the random number distribution, so that it produces the same random number
@@ -76,7 +72,7 @@ namespace Troschuetz.Random.Distributions
         /// <returns>
         ///   <see langword="true"/>, if the random number distribution was reset; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool Reset() => TypedGenerator.Reset();
+        public bool Reset() => Generator.Reset();
 
         #endregion IDistribution members
     }

@@ -35,8 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Chi-square distribution</a>.
     /// </remarks>
     [Serializable]
-    public class ChiSquareDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>
-        where TGen : IGenerator
+    public sealed class ChiSquareDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<int>
     {
         #region Constants
 
@@ -80,6 +79,83 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public ChiSquareDistribution()
+            : this(new NumericalRecipes3Q1Generator(), DefaultAlpha)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public ChiSquareDistribution(uint seed)
+            : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public ChiSquareDistribution(IGenerator generator)
+            : this(generator, DefaultAlpha)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of chi square distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than or equal to zero.
+        /// </exception>
+        public ChiSquareDistribution(int alpha)
+            : this(new NumericalRecipes3Q1Generator(), alpha)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of chi square distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than or equal to zero.
+        /// </exception>
+        public ChiSquareDistribution(uint seed, int alpha)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using the
         ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -91,7 +167,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
-        public ChiSquareDistribution(TGen generator, int alpha)
+        public ChiSquareDistribution(IGenerator generator, int alpha)
             : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(alpha), ErrorMessages.InvalidParams);
@@ -169,7 +245,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha);
+        public double NextDouble() => Sample(Generator, _alpha);
 
         #endregion IContinuousDistribution Members
 
@@ -180,7 +256,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   default definition returns true if alpha is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="ChiSquareDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="ChiSquareDistribution"/> class.
         /// </remarks>
         public static Func<int, bool> IsValidParam { get; set; } = alpha =>
         {
@@ -191,131 +267,20 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a chi square distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="ChiSquareDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="ChiSquareDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, int, double> Sample { get; set; } = (generator, alpha) =>
+        public static Func<IGenerator, int, double> Sample { get; set; } = (generator, alpha) =>
         {
             const double m = 0.0;
             const double s = 1.0;
             var sum = 0.0;
             for (var i = 0; i < alpha; i++)
             {
-                sum += Sqr(NormalDistribution<TGen>.Sample(generator, m, s));
+                sum += Sqr(NormalDistribution.Sample(generator, m, s));
             }
             return sum;
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of chi-square distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="ChiSquareDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Chi-square_distribution">Wikipedia -
-    ///   Chi-square distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class ChiSquareDistribution : ChiSquareDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public ChiSquareDistribution()
-            : base(new NumericalRecipes3Q1Generator(), DefaultAlpha)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public ChiSquareDistribution(uint seed)
-            : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public ChiSquareDistribution(IGenerator generator)
-            : base(generator, DefaultAlpha)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of chi square distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public ChiSquareDistribution(int alpha)
-            : base(new NumericalRecipes3Q1Generator(), alpha)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of chi square distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public ChiSquareDistribution(uint seed, int alpha)
-            : base(new NumericalRecipes3Q1Generator(seed), alpha)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ChiSquareDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of chi square distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public ChiSquareDistribution(IGenerator generator, int alpha) : base(generator, alpha)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-        }
-
-        #endregion Construction
     }
 }

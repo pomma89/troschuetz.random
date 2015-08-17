@@ -35,8 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   distribution</a> and <a href="http://www.xycoon.com/cauchy2p_random.htm">Xycoon - Cauchy Distribution</a>.
     /// </remarks>
     [Serializable]
-    public class CauchyDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>, IGammaDistribution<double>
-        where TGen : IGenerator
+    public sealed class CauchyDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IGammaDistribution<double>
     {
         #region Constants
 
@@ -109,6 +108,94 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public CauchyDistribution()
+            : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultGamma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Gamma, DefaultGamma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public CauchyDistribution(uint seed)
+            : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultGamma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Gamma, DefaultGamma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public CauchyDistribution(IGenerator generator)
+            : this(generator, DefaultAlpha, DefaultGamma)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Gamma, DefaultGamma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of cauchy distributed random numbers.
+        /// </param>
+        /// <param name="gamma">
+        ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="gamma"/> is less than or equal to zero.
+        /// </exception>
+        public CauchyDistribution(double alpha, double gamma)
+            : this(new NumericalRecipes3Q1Generator(), alpha, gamma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Gamma, gamma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of cauchy distributed random numbers.
+        /// </param>
+        /// <param name="gamma">
+        ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="gamma"/> is less than or equal to zero.
+        /// </exception>
+        public CauchyDistribution(uint seed, double alpha, double gamma)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha, gamma)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Gamma, gamma));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using the
         ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -123,7 +210,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="gamma"/> is less than or equal to zero.
         /// </exception>
-        public CauchyDistribution(TGen generator, double alpha, double gamma)
+        public CauchyDistribution(IGenerator generator, double alpha, double gamma)
             : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, gamma), ErrorMessages.InvalidParams);
@@ -205,7 +292,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha, _gamma);
+        public double NextDouble() => Sample(Generator, _alpha, _gamma);
 
         #endregion IContinuousDistribution Members
 
@@ -216,7 +303,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   definition returns true if gamma is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="CauchyDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="CauchyDistribution"/> class.
         /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, gamma) =>
         {
@@ -227,139 +314,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a cauchy distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="CauchyDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="CauchyDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, gamma) =>
+        public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, gamma) =>
         {
             return alpha + gamma * Math.Tan(Math.PI * (generator.NextDouble() - 0.5));
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of cauchy distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="CauchyDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Cauchy_distribution">Wikipedia - Cauchy
-    ///   distribution</a> and <a href="http://www.xycoon.com/cauchy2p_random.htm">Xycoon - Cauchy Distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class CauchyDistribution : CauchyDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public CauchyDistribution()
-            : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultGamma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Gamma, DefaultGamma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public CauchyDistribution(uint seed)
-            : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultGamma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Gamma, DefaultGamma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public CauchyDistribution(IGenerator generator)
-            : base(generator, DefaultAlpha, DefaultGamma)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Gamma, DefaultGamma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of cauchy distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="gamma"/> is less than or equal to zero.
-        /// </exception>
-        public CauchyDistribution(double alpha, double gamma)
-            : base(new NumericalRecipes3Q1Generator(), alpha, gamma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Gamma, gamma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of cauchy distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="gamma"/> is less than or equal to zero.
-        /// </exception>
-        public CauchyDistribution(uint seed, double alpha, double gamma)
-            : base(new NumericalRecipes3Q1Generator(seed), alpha, gamma)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Gamma, gamma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="CauchyDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of cauchy distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of cauchy distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="gamma"/> is less than or equal to zero.
-        /// </exception>
-        public CauchyDistribution(IGenerator generator, double alpha, double gamma) : base(generator, alpha, gamma)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Gamma, gamma));
-        }
-
-        #endregion Construction
     }
 }

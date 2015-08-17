@@ -35,9 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Laplace distribution</a>.
     /// </remarks>
     [Serializable]
-    public class LaplaceDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
-                                             IMuDistribution<double>
-        where TGen : IGenerator
+    public sealed class LaplaceDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IMuDistribution<double>
     {
         #region Constants
 
@@ -110,6 +108,89 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public LaplaceDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultMu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Mu, DefaultMu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public LaplaceDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultMu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Mu, DefaultMu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public LaplaceDistribution(IGenerator generator) : this(generator, DefaultAlpha, DefaultMu)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Mu, DefaultMu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of laplace distributed random numbers.
+        /// </param>
+        /// <param name="mu">
+        ///   The parameter mu which is used for generation of laplace distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than or equal to zero.
+        /// </exception>
+        public LaplaceDistribution(double alpha, double mu) : this(new NumericalRecipes3Q1Generator(), alpha, mu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Mu, mu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of laplace distributed random numbers.
+        /// </param>
+        /// <param name="mu">
+        ///   The parameter mu which is used for generation of laplace distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than or equal to zero.
+        /// </exception>
+        public LaplaceDistribution(uint seed, double alpha, double mu) : this(new NumericalRecipes3Q1Generator(seed), alpha, mu)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Mu, mu));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using the
         ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -124,7 +205,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
-        public LaplaceDistribution(TGen generator, double alpha, double mu) : base(generator)
+        public LaplaceDistribution(IGenerator generator, double alpha, double mu) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
             _alpha = alpha;
@@ -199,7 +280,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha, _mu);
+        public double NextDouble() => Sample(Generator, _alpha, _mu);
 
         #endregion IContinuousDistribution Members
 
@@ -210,7 +291,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   definition returns true if alpha is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="LaplaceDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="LaplaceDistribution"/> class.
         /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, mu) =>
         {
@@ -221,9 +302,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a laplace distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="LaplaceDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="LaplaceDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, mu) =>
+        public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, mu) =>
         {
             var rand = 0.5 - generator.NextDouble();
             var tmp = (rand == 0.0) ? double.NegativeInfinity : Math.Log(2.0 * Math.Abs(rand));
@@ -231,126 +312,5 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of laplace distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="LaplaceDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Laplace_distribution">Wikipedia -
-    ///   Laplace distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class LaplaceDistribution : LaplaceDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public LaplaceDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultMu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Mu, DefaultMu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public LaplaceDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultMu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Mu, DefaultMu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public LaplaceDistribution(IGenerator generator) : base(generator, DefaultAlpha, DefaultMu)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Mu, DefaultMu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of laplace distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of laplace distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public LaplaceDistribution(double alpha, double mu) : base(new NumericalRecipes3Q1Generator(), alpha, mu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Mu, mu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of laplace distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of laplace distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public LaplaceDistribution(uint seed, double alpha, double mu) : base(new NumericalRecipes3Q1Generator(seed), alpha, mu)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Mu, mu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="LaplaceDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of laplace distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of laplace distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public LaplaceDistribution(IGenerator generator, double alpha, double mu) : base(generator, alpha, mu)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Mu, mu));
-        }
-
-        #endregion Construction
     }
 }

@@ -35,8 +35,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   <a href="http://en.wikipedia.org/wiki/Exponential_distribution">Wikipedia - Exponential distribution</a>.
     /// </remarks>
     [Serializable]
-    public class ExponentialDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, ILambdaDistribution<double>
-        where TGen : IGenerator
+    public sealed class ExponentialDistribution : AbstractDistribution, IContinuousDistribution, ILambdaDistribution<double>
     {
         #region Constants
 
@@ -80,6 +79,78 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public ExponentialDistribution() : this(new NumericalRecipes3Q1Generator(), DefaultLambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public ExponentialDistribution(uint seed) : this(new NumericalRecipes3Q1Generator(seed), DefaultLambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using
+        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public ExponentialDistribution(IGenerator generator) : this(generator, DefaultLambda)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="lambda">
+        ///   The parameter lambda which is used for generation of exponential distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="lambda"/> is less than or equal to zero.
+        /// </exception>
+        public ExponentialDistribution(double lambda) : this(new NumericalRecipes3Q1Generator(), lambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Lambda, lambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
+        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="lambda">
+        ///   The parameter lambda which is used for generation of exponential distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="lambda"/> is less than or equal to zero.
+        /// </exception>
+        public ExponentialDistribution(uint seed, double lambda) : this(new NumericalRecipes3Q1Generator(seed), lambda)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Lambda, lambda));
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using
         ///   the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
@@ -91,7 +162,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
-        public ExponentialDistribution(TGen generator, double lambda) : base(generator)
+        public ExponentialDistribution(IGenerator generator, double lambda) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(lambda), ErrorMessages.InvalidParams);
             _lambda = lambda;
@@ -158,7 +229,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _lambda);
+        public double NextDouble() => Sample(Generator, _lambda);
 
         #endregion IContinuousDistribution Members
 
@@ -169,7 +240,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   default definition returns true if lambda is greater than zero; otherwise, it returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="ExponentialDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="ExponentialDistribution"/> class.
         /// </remarks>
         public static Func<double, bool> IsValidParam { get; set; } = lambda => lambda > 0.0;
 
@@ -177,9 +248,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning an exponential distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="ExponentialDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="ExponentialDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, double, double> Sample { get; set; } = (generator, lambda) =>
+        public static Func<IGenerator, double, double> Sample { get; set; } = (generator, lambda) =>
         {
             // Algorithm taken from "Numerical Recipes in C++", 3rd edition.
             double u;
@@ -188,111 +259,5 @@ namespace Troschuetz.Random.Distributions.Continuous
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of exponential distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="ExponentialDistribution"/> type bases upon
-    ///   information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Exponential_distribution">Wikipedia - Exponential distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class ExponentialDistribution : ExponentialDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public ExponentialDistribution() : base(new NumericalRecipes3Q1Generator(), DefaultLambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public ExponentialDistribution(uint seed) : base(new NumericalRecipes3Q1Generator(seed), DefaultLambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public ExponentialDistribution(IGenerator generator) : base(generator, DefaultLambda)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of exponential distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="lambda"/> is less than or equal to zero.
-        /// </exception>
-        public ExponentialDistribution(double lambda) : base(new NumericalRecipes3Q1Generator(), lambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using a
-        ///   <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of exponential distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="lambda"/> is less than or equal to zero.
-        /// </exception>
-        public ExponentialDistribution(uint seed, double lambda) : base(new NumericalRecipes3Q1Generator(seed), lambda)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of exponential distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="lambda"/> is less than or equal to zero.
-        /// </exception>
-        public ExponentialDistribution(IGenerator generator, double lambda) : base(generator, lambda)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        #endregion Construction
     }
 }

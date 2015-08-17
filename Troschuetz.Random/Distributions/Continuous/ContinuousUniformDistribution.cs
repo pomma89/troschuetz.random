@@ -37,9 +37,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   Uniform distribution (continuous)</a>.
     /// </remarks>
     [Serializable]
-    public class ContinuousUniformDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
-                                                       IBetaDistribution<double>
-        where TGen : IGenerator
+    public sealed class ContinuousUniformDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>
     {
         #region Constants
 
@@ -114,6 +112,98 @@ namespace Troschuetz.Random.Distributions.Continuous
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        public ContinuousUniformDistribution()
+            : this(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public ContinuousUniformDistribution(uint seed)
+            : this(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
+        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public ContinuousUniformDistribution(IGenerator generator)
+            : this(generator, DefaultAlpha, DefaultBeta)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Beta, DefaultBeta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of continuous uniform distributed
+        ///   random numbers.
+        /// </param>
+        /// <param name="beta">
+        ///   The parameter beta which is used for generation of continuous uniform distributed
+        ///   random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
+        /// </exception>
+        public ContinuousUniformDistribution(double alpha, double beta)
+            : this(new NumericalRecipes3Q1Generator(), alpha, beta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Beta, beta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
+        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of continuous uniform distributed
+        ///   random numbers.
+        /// </param>
+        /// <param name="beta">
+        ///   The parameter beta which is used for generation of continuous uniform distributed
+        ///   random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
+        /// </exception>
+        public ContinuousUniformDistribution(uint seed, double alpha, double beta)
+            : this(new NumericalRecipes3Q1Generator(seed), alpha, beta)
+        {
+            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Beta, beta));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
         ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
@@ -129,7 +219,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
         /// </exception>
-        public ContinuousUniformDistribution(TGen generator, double alpha, double beta)
+        public ContinuousUniformDistribution(IGenerator generator, double alpha, double beta)
             : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
@@ -214,7 +304,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(TypedGenerator, _alpha, _beta);
+        public double NextDouble() => Sample(Generator, _alpha, _beta);
 
         #endregion IContinuousDistribution Members
 
@@ -226,7 +316,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   otherwise, it returns false.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="ContinuousUniformDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="ContinuousUniformDistribution"/> class.
         /// </remarks>
         public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, beta) =>
         {
@@ -237,146 +327,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Declares a function returning a continuous uniform distributed floating point random number.
         /// </summary>
         /// <remarks>
-        ///   This is an extensibility point for the <see cref="ContinuousUniformDistribution{TGen}"/> class.
+        ///   This is an extensibility point for the <see cref="ContinuousUniformDistribution"/> class.
         /// </remarks>
-        public static Func<TGen, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
+        public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
             return generator.NextDouble(alpha, beta);
         };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of continuous uniformly distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="ContinuousUniformDistribution"/> type bases upon
-    ///   information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28continuous%29">Wikipedia -
-    ///   Uniform distribution (continuous)</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class ContinuousUniformDistribution : ContinuousUniformDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
-        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        public ContinuousUniformDistribution()
-            : base(new NumericalRecipes3Q1Generator(), DefaultAlpha, DefaultBeta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
-        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        public ContinuousUniformDistribution(uint seed)
-            : base(new NumericalRecipes3Q1Generator(seed), DefaultAlpha, DefaultBeta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public ContinuousUniformDistribution(IGenerator generator)
-            : base(generator, DefaultAlpha, DefaultBeta)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Beta, DefaultBeta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
-        ///   using a <see cref="NumericalRecipes3Q1Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
-        /// </exception>
-        public ContinuousUniformDistribution(double alpha, double beta)
-            : base(new NumericalRecipes3Q1Generator(), alpha, beta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
-        ///   using a <see cref="NumericalRecipes3Q1Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
-        /// </exception>
-        public ContinuousUniformDistribution(uint seed, double alpha, double beta)
-            : base(new NumericalRecipes3Q1Generator(seed), alpha, beta)
-        {
-            Debug.Assert(Generator is NumericalRecipes3Q1Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ContinuousUniformDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of continuous uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of continuous uniform distributed
-        ///   random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>.
-        /// </exception>
-        public ContinuousUniformDistribution(IGenerator generator, double alpha, double beta) : base(generator, alpha, beta)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-        }
-
-        #endregion Construction
     }
 }

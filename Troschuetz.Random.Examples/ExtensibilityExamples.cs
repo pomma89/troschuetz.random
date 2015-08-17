@@ -19,7 +19,7 @@ namespace Troschuetz.Random.Examples
 
             // 2) Use SuperSillyContinuousDistribution to generate a few numbers.
             Console.WriteLine("Super silly distribution in action!");
-            var ssd = new SuperSillyContinuousDistribution<SuperSillyGenerator>(ssg);
+            var ssd = new SuperSillyContinuousDistribution(ssg);
             Console.WriteLine(ssd.NextDouble());
             Console.WriteLine(ssd.NextDouble());
             Console.WriteLine(ssd.NextDouble());
@@ -28,13 +28,21 @@ namespace Troschuetz.Random.Examples
 
             // 3) Use SuperSillyGenerator with a normal distribution.
             Console.WriteLine("Super silly generator with a normal distribution");
-            var normal = new NormalDistribution<SuperSillyGenerator>(ssg, 0, 1);
+            var normal = new NormalDistribution(ssg, 0, 1);
             Console.WriteLine(normal.NextDouble());
             Console.WriteLine(normal.NextDouble());
             Console.WriteLine(normal.NextDouble());
 
             // 4) Change the core logic of normal distribution with a... Silly one.
-            //NormalDistribution.
+            Console.WriteLine("Super silly redefinition of a normal distribution");
+            NormalDistribution.Sample = (generator, mu, sigma) =>
+            {
+                // Silly method!!!
+                return generator.NextDouble() + mu + sigma + mu * sigma;
+            };
+            Console.WriteLine(normal.NextDouble());
+            Console.WriteLine(normal.NextDouble());
+            Console.WriteLine(normal.NextDouble());
         }
     }
 
@@ -73,11 +81,10 @@ namespace Troschuetz.Random.Examples
     // Super silly continuous distribution which is provided as an example on how one can build a
     // new distribution. Of course, never use this distribution in production... It is super silly,
     // after all.
-    class SuperSillyContinuousDistribution<TGen> : AbstractDistribution<TGen>, IContinuousDistribution
-        where TGen : IGenerator
+    class SuperSillyContinuousDistribution : AbstractDistribution, IContinuousDistribution
     {
         // Just a simple constructor which passes the generator to the base constructor.
-        public SuperSillyContinuousDistribution(TGen generator) : base(generator)
+        public SuperSillyContinuousDistribution(IGenerator generator) : base(generator)
         {
         }
 
@@ -97,6 +104,6 @@ namespace Troschuetz.Random.Examples
         public double Variance => 1.0 / 12.0;
 
         // The generation method, in which you define the logic of your distribution.
-        public double NextDouble() => TypedGenerator.NextDouble();
+        public double NextDouble() => Generator.NextDouble();
     }
 }
