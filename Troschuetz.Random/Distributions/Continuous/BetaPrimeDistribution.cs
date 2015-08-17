@@ -329,7 +329,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         {
             var betaVariate = BetaDistribution.Sample(generator, alpha, beta);
             var tmp = 1.0 - betaVariate;
-            return tmp == 0 ? double.PositiveInfinity : betaVariate / tmp;
+            return TMath.IsZero(tmp) ? double.PositiveInfinity : betaVariate / tmp;
         };
 
         #endregion TRandom Helpers

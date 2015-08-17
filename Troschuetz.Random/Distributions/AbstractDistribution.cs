@@ -40,9 +40,7 @@ namespace Troschuetz.Random.Distributions
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             Generator = generator;
-        }
-
-        
+        }        
 
         #region IDistribution members
 

@@ -307,7 +307,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, mu) =>
         {
             var rand = 0.5 - generator.NextDouble();
-            var tmp = (rand == 0.0) ? double.NegativeInfinity : Math.Log(2.0 * Math.Abs(rand));
+            var tmp = TMath.IsZero(rand) ? double.NegativeInfinity : Math.Log(2.0 * Math.Abs(rand));
             return mu - alpha * Math.Sign(rand) * tmp;
         };
 

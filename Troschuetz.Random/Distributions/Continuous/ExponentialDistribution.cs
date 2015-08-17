@@ -253,7 +253,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public static Func<IGenerator, double, double> Sample { get; set; } = (generator, lambda) =>
         {
             double u;
-            do u = generator.NextDouble(); while (u == 0.0);
+            do u = generator.NextDouble(); while (TMath.IsZero(u));
             return -Math.Log(u) / lambda;
         };
 

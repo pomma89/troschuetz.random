@@ -461,7 +461,7 @@ namespace Troschuetz.Random.Distributions.Discrete
                 }
                 sum += w;
             }
-            return sum != 0.0;
+            return !TMath.IsZero(sum);
         };
 
         /// <summary>

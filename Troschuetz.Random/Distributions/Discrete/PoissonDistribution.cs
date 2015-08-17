@@ -327,7 +327,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             do
             {
                 k++;
-                while ((r = generator.NextDouble()).Equals(0.0))
+                while (TMath.IsZero(r = generator.NextDouble()))
                 {
                     // Cycle until the random number is not zero. According to the Wikipedia page,
                     // we should multiply p by a random number that must be greater than zero and
