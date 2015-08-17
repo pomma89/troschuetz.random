@@ -24,7 +24,7 @@ namespace Troschuetz.Random.Tests
     using NUnit.Framework;
     using PommaLabs.KVLite;
 
-    public abstract class GeneratorTests : TestBase
+    public abstract partial class GeneratorTests : TestBase
     {
         #region Setup/Teardown
 

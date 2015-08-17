@@ -86,12 +86,12 @@ namespace Troschuetz.Random.Tests
             return filtered;
         }
 
-        static double ComputeMean(ICollection<double> series)
+        protected static double ComputeMean(ICollection<double> series)
         {
             return series.Select(x => x/series.Count).Sum();
         }
 
-        static double ComputeMedian(IList<double> series)
+        protected static double ComputeMedian(IList<double> series)
         {
             var hc = series.Count/2;
             if (hc%2 == 0)
@@ -99,20 +99,27 @@ namespace Troschuetz.Random.Tests
             return series[hc];
         }
 
-        static double ComputeVariance(ICollection<double> series, double mean)
+        protected static double ComputeVariance(ICollection<double> series, double mean)
         {
             return series.Select(x => Math.Pow(x - mean, 2)/(series.Count - 1)).Sum();
         }
 
-        static bool ApproxEquals(double expected, double observed)
+        protected static bool ApproxEquals(double expected, double observed)
         {
-            if (double.IsNaN(expected)) {
+            return ApproxEquals(expected, observed, Epsilon);
+        }
+
+        protected static bool ApproxEquals(double expected, double observed, double epsilon)
+        {
+            if (double.IsNaN(expected))
+            {
                 Assert.Fail("NaN should not be returned");
             }
-            if (expected.Equals(0)) {
-                return Math.Abs(expected - observed) < Epsilon;
+            if (expected.Equals(0))
+            {
+                return Math.Abs(expected - observed) < epsilon;
             }
-            return Math.Abs((expected - observed)/expected) < Epsilon;
+            return Math.Abs((expected - observed) / expected) < epsilon;
         }
     }
 }

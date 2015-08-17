@@ -336,9 +336,11 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </remarks>
         public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
+            // Formula: Gamma(a,1) / (Gamma(a,1) + Gamma(b,1)) ~ Beta(a,b)
             var x = GammaDistribution.Sample(generator, alpha, GammaDistribution.DefaultTheta);
-            var t = 1.0 / (x + GammaDistribution.Sample(generator, beta, GammaDistribution.DefaultTheta));
-            return t == 0.0 ? 1.0 : x * t;
+            double t;
+            do t = (x + GammaDistribution.Sample(generator, beta, GammaDistribution.DefaultTheta)); while (t == 0.0);
+            return x / t;
         };
 
         #endregion TRandom Helpers

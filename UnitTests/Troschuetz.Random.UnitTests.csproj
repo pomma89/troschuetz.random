@@ -153,6 +153,7 @@
     <Compile Include="Continuous\StudentsTDistributionTests.cs" />
     <Compile Include="Continuous\TriangularDistributionTests.cs" />
     <Compile Include="Continuous\WeibullDistributionTests.cs" />
+    <Compile Include="DiehardGeneratorTests.cs" />
     <Compile Include="Discrete\BernoulliDistributionTests.cs" />
     <Compile Include="Discrete\BinomialDistributionTests.cs" />
     <Compile Include="Discrete\CategoricalDistributionTests.cs" />
