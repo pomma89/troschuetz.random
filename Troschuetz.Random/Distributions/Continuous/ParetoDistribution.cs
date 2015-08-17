@@ -283,7 +283,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             {
                 if (_beta > 2.0)
                 {
-                    return _beta * Sqr(Alpha) / Sqr(_beta - 1.0) / (_beta - 2.0);
+                    return _beta * TMath.Square(Alpha) / TMath.Square(_beta - 1.0) / (_beta - 2.0);
                 }
                 throw new NotSupportedException(ErrorMessages.UndefinedVarianceForParams);
             }

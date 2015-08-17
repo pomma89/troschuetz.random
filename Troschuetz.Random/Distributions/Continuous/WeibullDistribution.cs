@@ -294,7 +294,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance => Sqr(Lambda) * Gamma(1.0 + 2.0 / _alpha) - Sqr(Mean);
+        public double Variance => TMath.Square(Lambda) * Gamma(1.0 + 2.0 / _alpha) - TMath.Square(Mean);
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.

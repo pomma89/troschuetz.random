@@ -172,6 +172,7 @@
     <Compile Include="Generators\ALFGenerator.cs" />
     <Compile Include="Generators\MT19937Generator.cs" />
     <Compile Include="Generators\StandardGenerator.cs" />
+    <Compile Include="TMath.cs" />
     <Compile Include="TRandom.cs" />
   </ItemGroup>
   <ItemGroup>

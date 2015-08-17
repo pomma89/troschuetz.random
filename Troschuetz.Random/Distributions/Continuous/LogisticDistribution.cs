@@ -271,7 +271,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance => Sqr(Sigma) * Sqr(Math.PI) / 3.0;
+        public double Variance => TMath.Square(Sigma) * TMath.Square(Math.PI) / 3.0;
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -313,7 +313,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, mu, sigma) =>
         {
             double u;
-            do u = generator.NextDouble(); while (u * (1.0 - u) == 0.0);
+            do u = generator.NextDouble(); while (TMath.IsZero(u * (1.0 - u)));
             return mu + sigma * Math.Log(u / (1.0 - u));
         };
 

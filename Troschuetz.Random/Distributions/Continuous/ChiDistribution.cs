@@ -249,7 +249,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance => Alpha - Sqr(Mean);
+        public double Variance => Alpha - TMath.Square(Mean);
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -294,7 +294,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             var sum = 0.0;
             for (var i = 0; i < alpha; i++)
             {
-                sum += Sqr(NormalDistribution.Sample(generator, m, s));
+                sum += TMath.Square(NormalDistribution.Sample(generator, m, s));
             }
             return Math.Sqrt(sum);
         };

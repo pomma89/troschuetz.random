@@ -215,7 +215,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance => Sqr(_sigma) * (4.0 - Math.PI) / 2.0;
+        public double Variance => TMath.Square(_sigma) * (4.0 - Math.PI) / 2.0;
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -256,8 +256,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         public static Func<IGenerator, double, double> Sample { get; set; } = (generator, sigma) =>
         {
             const double mu = 0.0;
-            var n1 = Sqr(NormalDistribution.Sample(generator, mu, sigma));
-            var n2 = Sqr(NormalDistribution.Sample(generator, mu, sigma));
+            var n1 = TMath.Square(NormalDistribution.Sample(generator, mu, sigma));
+            var n2 = TMath.Square(NormalDistribution.Sample(generator, mu, sigma));
             return Math.Sqrt(n1 + n2);
         };
 

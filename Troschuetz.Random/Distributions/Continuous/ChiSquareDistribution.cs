@@ -276,7 +276,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             var sum = 0.0;
             for (var i = 0; i < alpha; i++)
             {
-                sum += Sqr(NormalDistribution.Sample(generator, m, s));
+                sum += TMath.Square(NormalDistribution.Sample(generator, m, s));
             }
             return sum;
         };

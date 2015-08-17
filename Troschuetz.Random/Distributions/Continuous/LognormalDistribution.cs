@@ -274,7 +274,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mean is not defined for given distribution with some parameters.
         /// </exception>
-        public double Mean => Math.Exp(Mu + 0.5 * Sqr(Sigma));
+        public double Mean => Math.Exp(Mu + 0.5 * TMath.Square(Sigma));
 
         /// <summary>
         ///   Gets the median of distributed random numbers.
@@ -290,7 +290,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        public double Variance => (Math.Exp(Sqr(Sigma)) - 1.0) * Math.Exp(2.0 * Mu + Sqr(Sigma));
+        public double Variance => (Math.Exp(TMath.Square(Sigma)) - 1.0) * Math.Exp(2.0 * Mu + TMath.Square(Sigma));
 
         /// <summary>
         ///   Gets the mode of distributed random numbers.
@@ -298,7 +298,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="NotSupportedException">
         ///   Thrown if mode is not defined for given distribution with some parameters.
         /// </exception>
-        public double[] Mode => new[] { Math.Exp(Mu - Sqr(Sigma)) };
+        public double[] Mode => new[] { Math.Exp(Mu - TMath.Square(Sigma)) };
 
         /// <summary>
         ///   Returns a distributed floating point random number.
