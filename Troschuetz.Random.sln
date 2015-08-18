@@ -15,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Tester", "Tester\Troschuetz.Random.Tester.csproj", "{598F64C2-1343-4202-B6A7-A91CF3248D0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Tester", "Troschuetz.Random.Tester\Troschuetz.Random.Tester.csproj", "{598F64C2-1343-4202-B6A7-A91CF3248D0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests", "UnitTests\Troschuetz.Random.UnitTests.csproj", "{B748E3AB-68DE-40E9-9BD0-0C113C70D260}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests", "Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.csproj", "{B748E3AB-68DE-40E9-9BD0-0C113C70D260}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NET40", "Troschuetz.Random.NET40\Troschuetz.Random.NET40.csproj", "{6B947182-CF4B-45FE-A1AE-47A28C514040}"
 EndProject
@@ -30,17 +30,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGetPack
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Logo", "Project Logo", "{07EA9A7E-47F0-4173-855E-4A5B6B517A66}"
 	ProjectSection(SolutionItems) = preProject
-		ProjectLogo\logo-128.png = ProjectLogo\logo-128.png
-		ProjectLogo\logo-256.png = ProjectLogo\logo-256.png
-		ProjectLogo\logo-32.png = ProjectLogo\logo-32.png
-		ProjectLogo\logo-64.png = ProjectLogo\logo-64.png
-		ProjectLogo\logo-original.png = ProjectLogo\logo-original.png
+		Project Logo\logo-128.png = Project Logo\logo-128.png
+		Project Logo\logo-256.png = Project Logo\logo-256.png
+		Project Logo\logo-32.png = Project Logo\logo-32.png
+		Project Logo\logo-64.png = Project Logo\logo-64.png
+		Project Logo\logo-original.png = Project Logo\logo-original.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Original Sources", "Original Sources", "{FDBA8F2C-3F3C-4320-BB07-BC7F7AEC7263}"
 	ProjectSection(SolutionItems) = preProject
-		OriginalSources\Random_src.zip = OriginalSources\Random_src.zip
-		OriginalSources\RandomTester_src.zip = OriginalSources\RandomTester_src.zip
+		Original Sources\Random_src.zip = Original Sources\Random_src.zip
+		Original Sources\RandomTester_src.zip = Original Sources\RandomTester_src.zip
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Examples", "Troschuetz.Random.Examples\Troschuetz.Random.Examples.csproj", "{52A4D144-3BA1-4768-9F3B-90F5DC86746B}"
