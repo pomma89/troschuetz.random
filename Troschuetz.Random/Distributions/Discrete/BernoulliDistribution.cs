@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -10,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -24,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of bernoulli distributed random numbers.
@@ -33,21 +33,22 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   The bernoulli distribution generates only discrete numbers. <br/> The implementation of
     ///   the <see cref="BernoulliDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Bernoulli_distribution">Wikipedia - Bernoulli distribution</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
-    public class BernoulliDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>
-        where TGen : IGenerator
+    public sealed class BernoulliDistribution : AbstractDistribution, IDiscreteDistribution, IAlphaDistribution<double>
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const double DefaultAlpha = 0.5;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter alpha which is used for generation of bernoulli distributed
@@ -75,9 +76,81 @@ namespace Troschuetz.Random.Distributions.Discrete
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        public BernoulliDistribution() : this(new XorShift128Generator(), DefaultAlpha)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public BernoulliDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultAlpha)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public BernoulliDistribution(IGenerator generator) : this(generator, DefaultAlpha)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than zero or greater than one.
+        /// </exception>
+        public BernoulliDistribution(double alpha) : this(new XorShift128Generator(), alpha)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than zero or greater than one.
+        /// </exception>
+        public BernoulliDistribution(uint seed, double alpha) : this(new XorShift128Generator(seed), alpha)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using the
@@ -91,7 +164,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than zero or greater than one.
         /// </exception>
-        public BernoulliDistribution(TGen generator, double alpha) : base(generator)
+        public BernoulliDistribution(IGenerator generator, double alpha) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(alpha), ErrorMessages.InvalidParams);
             _alpha = alpha;
@@ -109,40 +182,55 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <see langword="true"/> if value is greater than or equal to 0.0, and less than or
         ///   equal to 1.0; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidAlpha(double value)
-        {
-            return IsValidParam(value);
-        }
+        public bool IsValidAlpha(double value) => IsValidParam(value);
 
         #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => 0.0;
 
-        public double Maximum
-        {
-            get { return 1.0; }
-        }
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => 1.0;
 
-        public double Mean
-        {
-            get { return Alpha; }
-        }
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Mean => Alpha;
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
         }
 
-        public double Variance
-        {
-            get { return Alpha * (1.0 - Alpha); }
-        }
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Variance => Alpha * (1.0 - Alpha);
 
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
         public double[] Mode
         {
             get
@@ -155,158 +243,46 @@ namespace Troschuetz.Random.Distributions.Discrete
             }
         }
 
-        public int Next()
-        {
-            return Sample(Gen, _alpha);
-        }
+        /// <summary>
+        ///   Returns a distributed random number.
+        /// </summary>
+        /// <returns>A distributed 32-bit signed integer.</returns>
+        public int Next() => Sample(Generator, _alpha);
 
-        public double NextDouble()
-        {
-            return Sample(Gen, _alpha);
-        }
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(Generator, _alpha);
 
         #endregion IDiscreteDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether bernoulli distribution is defined under given parameter.
+        ///   Determines whether bernoulli distribution is defined under given parameter. The
+        ///   default definition returns true if alpha is greater than or equal to zero and less
+        ///   than or equal to one; otherwise, it returns false.
         /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than or equal to zero and less than or
-        ///   equal to one; otherwise, it returns false.
-        /// </returns>
-        [Pure]
-        public static bool IsValidParam(double alpha)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="BernoulliDistribution"/> class.
+        /// </remarks>
+        public static Func<double, bool> IsValidParam { get; set; } = alpha =>
         {
             return alpha >= 0.0 && alpha <= 1.0;
-        }
+        };
 
         /// <summary>
-        ///   Returns a bernoulli distributed 32-bit signed integer.
+        ///   Declares a function returning a bernoulli distributed 32-bit signed integer.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
-        /// </param>
-        /// <returns>A bernoulli distributed 32-bit signed integer.</returns>
-        [Pure]
-        internal static int Sample(TGen generator, double alpha)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="BernoulliDistribution"/> class.
+        /// </remarks>
+        public static Func<IGenerator, double, int> Sample { get; set; } = (generator, alpha) =>
         {
             return generator.NextDouble() < alpha ? 1 : 0;
-        }
+        };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of bernoulli distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The bernoulli distribution generates only discrete numbers. <br/> The implementation of
-    ///   the <see cref="BernoulliDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Bernoulli_distribution">Wikipedia - Bernoulli distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class BernoulliDistribution : BernoulliDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        public BernoulliDistribution() : base(new XorShift128Generator(), DefaultAlpha)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        [CLSCompliant(false)]
-        public BernoulliDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultAlpha)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public BernoulliDistribution(IGenerator generator) : base(generator, DefaultAlpha)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than zero or greater than one.
-        /// </exception>
-        public BernoulliDistribution(double alpha) : base(new XorShift128Generator(), alpha)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than zero or greater than one.
-        /// </exception>
-        [CLSCompliant(false)]
-        public BernoulliDistribution(uint seed, double alpha) : base(new XorShift128Generator(seed), alpha)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="BernoulliDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of bernoulli distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than zero or greater than one.
-        /// </exception>
-        public BernoulliDistribution(IGenerator generator, double alpha) : base(generator, alpha)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-        }
-
-        #endregion Construction
     }
 }

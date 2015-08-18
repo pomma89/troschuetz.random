@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -10,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -24,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of erlang distributed random numbers.
@@ -33,12 +33,13 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="ErlangDistribution"/> type bases upon information
     ///   presented on <a href="http://en.wikipedia.org/wiki/Erlang_distribution">Wikipedia - Erlang
     ///   distribution</a> and <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
-    public class ErlangDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<int>, ILambdaDistribution<double>
-        where TGen : IGenerator
+    public sealed class ErlangDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<int>, ILambdaDistribution<double>
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Alpha"/> if none is specified.
@@ -50,9 +51,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         public const double DefaultLambda = 1;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter lambda which is used for generation of rayleigh distributed
@@ -105,9 +106,97 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        public ErlangDistribution()
+            : this(new XorShift128Generator(), DefaultAlpha, DefaultLambda)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public ErlangDistribution(uint seed)
+            : this(new XorShift128Generator(seed), DefaultAlpha, DefaultLambda)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public ErlangDistribution(IGenerator generator)
+            : this(generator, DefaultAlpha, DefaultLambda)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Lambda, DefaultLambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
+        /// </param>
+        /// <param name="lambda">
+        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
+        /// </exception>
+        public ErlangDistribution(int alpha, double lambda)
+            : this(new XorShift128Generator(), alpha, lambda)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Lambda, lambda));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
+        /// </param>
+        /// <param name="lambda">
+        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
+        /// </exception>
+        public ErlangDistribution(uint seed, int alpha, double lambda)
+            : this(new XorShift128Generator(seed), alpha, lambda)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Lambda, lambda));
+        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
@@ -124,7 +213,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
         /// </exception>
-        public ErlangDistribution(TGen generator, int alpha, double lambda)
+        public ErlangDistribution(IGenerator generator, int alpha, double lambda)
             : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
@@ -141,96 +230,94 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidAlpha(int value)
-        {
-            return AreValidParams(value, _lambda);
-        }
+        public bool IsValidAlpha(int value) => AreValidParams(value, _lambda);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Lambda"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidLambda(double value)
-        {
-            return AreValidParams(_alpha, value);
-        }
+        public bool IsValidLambda(double value) => AreValidParams(_alpha, value);
 
         #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
-        public double Minimum
-        {
-            get { return 0.0; }
-        }
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => 0.0;
 
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => double.PositiveInfinity;
 
-        public double Mean
-        {
-            get { return Alpha / Lambda; }
-        }
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Mean => Alpha / Lambda;
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
         }
 
-        public double Variance
-        {
-            get { return Alpha / Math.Pow(Lambda, 2.0); }
-        }
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Variance => Alpha / TMath.Square(Lambda);
 
-        public double[] Mode
-        {
-            get { return new[] { (Alpha - 1) / Lambda }; }
-        }
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
+        public double[] Mode => new[] { (Alpha - 1) / Lambda };
 
-        public double NextDouble()
-        {
-            return Sample(Gen, _alpha, _lambda);
-        }
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(Generator, _alpha, _lambda);
 
         #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether erlang distribution is defined under given parameters.
+        ///   Determines whether erlang distribution is defined under given parameters. The default
+        ///   definition returns true if alpha and lambda are greater than zero; otherwise, it
+        ///   returns false.
         /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> and <paramref name="lambda"/> are greater than zero;
-        ///   otherwise, it returns false.
-        /// </returns>
-        [Pure]
-        public static bool AreValidParams(int alpha, double lambda)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ErlangDistribution"/> class.
+        /// </remarks>
+        public static Func<int, double, bool> AreValidParams { get; set; } = (alpha, lambda) =>
         {
-            return alpha > 0 && lambda > 0;
-        }
+            return alpha > 0 && lambda > 0.0;
+        };
 
         /// <summary>
-        ///   Returns an erlang distributed floating point random number.
+        ///   Declares a function returning an erlang distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <returns>An erlang distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, int alpha, double lambda)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="ErlangDistribution"/> class.
+        /// </remarks>
+        public static Func<IGenerator, int, double, double> Sample { get; set; } = (generator, alpha, lambda) =>
         {
             if (double.IsPositiveInfinity(lambda))
             {
@@ -253,11 +340,11 @@ namespace Troschuetz.Random.Distributions.Continuous
             var c = 1.0 / Math.Sqrt(9.0 * d);
             while (true)
             {
-                var x = NormalDistribution<TGen>.Sample(generator, mu, sigma);
+                var x = NormalDistribution.Sample(generator, mu, sigma);
                 var v = 1.0 + (c * x);
                 while (v <= 0.0)
                 {
-                    x = NormalDistribution<TGen>.Sample(generator, mu, sigma);
+                    x = NormalDistribution.Sample(generator, mu, sigma);
                     v = 1.0 + (c * x);
                 }
 
@@ -274,136 +361,8 @@ namespace Troschuetz.Random.Distributions.Continuous
                     return alphafix * d * v / lambda;
                 }
             }
-        }
+        };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of erlang distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="ErlangDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Erlang_distribution">Wikipedia - Erlang
-    ///   distribution</a> and <a href="http://www.xycoon.com/erlang_random.htm">Xycoon - Erlang Distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class ErlangDistribution : ErlangDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        public ErlangDistribution()
-            : base(new XorShift128Generator(), DefaultAlpha, DefaultLambda)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        [CLSCompliant(false)]
-        public ErlangDistribution(uint seed)
-            : base(new XorShift128Generator(seed), DefaultAlpha, DefaultLambda)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public ErlangDistribution(IGenerator generator)
-            : base(generator, DefaultAlpha, DefaultLambda)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Lambda, DefaultLambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
-        /// </exception>
-        public ErlangDistribution(int alpha, double lambda)
-            : base(new XorShift128Generator(), alpha, lambda)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
-        /// </exception>
-        [CLSCompliant(false)]
-        public ErlangDistribution(uint seed, int alpha, double lambda)
-            : base(new XorShift128Generator(seed), alpha, lambda)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ErlangDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <param name="lambda">
-        ///   The parameter lambda which is used for generation of erlang distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> or <paramref name="lambda"/> are less than or equal to zero.
-        /// </exception>
-        public ErlangDistribution(IGenerator generator, int alpha, double lambda) : base(generator, alpha, lambda)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Lambda, lambda));
-        }
-
-        #endregion Construction
     }
 }

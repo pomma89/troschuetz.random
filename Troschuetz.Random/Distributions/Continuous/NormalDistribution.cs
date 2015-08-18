@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -10,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -78,7 +79,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of normal distributed random numbers.
@@ -89,12 +89,13 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   distribution</a> and the implementation in the
     ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
     ///   Networks Class Library</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
-    public class NormalDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IMuDistribution<double>, ISigmaDistribution<double>
-        where TGen : IGenerator
+    public sealed class NormalDistribution : AbstractDistribution, IContinuousDistribution, IMuDistribution<double>, ISigmaDistribution<double>
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Mu"/> if none is specified.
@@ -106,9 +107,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         public const double DefaultSigma = 1;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter mu which is used for generation of normal distributed random numbers.
@@ -160,12 +161,95 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution{T}"/> class, using the
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        public NormalDistribution() : this(new XorShift128Generator(), DefaultMu, DefaultSigma)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Mu, DefaultMu));
+            Debug.Assert(Equals(Sigma, DefaultSigma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public NormalDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultMu, DefaultSigma)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Mu, DefaultMu));
+            Debug.Assert(Equals(Sigma, DefaultSigma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public NormalDistribution(IGenerator generator) : this(generator, DefaultMu, DefaultSigma)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Mu, DefaultMu));
+            Debug.Assert(Equals(Sigma, DefaultSigma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="mu">
+        ///   The parameter mu which is used for generation of normal distributed random numbers.
+        /// </param>
+        /// <param name="sigma">
+        ///   The parameter sigma which is used for generation of normal distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="sigma"/> is less than or equal to zero.
+        /// </exception>
+        public NormalDistribution(double mu, double sigma) : this(new XorShift128Generator(), mu, sigma)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Mu, mu));
+            Debug.Assert(Equals(Sigma, sigma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="mu">
+        ///   The parameter mu which is used for generation of normal distributed random numbers.
+        /// </param>
+        /// <param name="sigma">
+        ///   The parameter sigma which is used for generation of normal distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="sigma"/> is less than or equal to zero.
+        /// </exception>
+        public NormalDistribution(uint seed, double mu, double sigma) : this(new XorShift128Generator(seed), mu, sigma)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Mu, mu));
+            Debug.Assert(Equals(Sigma, sigma));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using the
         ///   specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
@@ -177,9 +261,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <see cref="sigma"/> is less than or equal to zero.
+        ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
-        public NormalDistribution(TGen generator, double mu, double sigma) : base(generator)
+        public NormalDistribution(IGenerator generator, double mu, double sigma) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
             _mu = mu;
@@ -195,235 +279,105 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/>.</returns>
-        public bool IsValidMu(double value)
-        {
-            return AreValidParams(value, _sigma);
-        }
+        public bool IsValidMu(double value) => AreValidParams(value, _sigma);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Sigma"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidSigma(double value)
-        {
-            return AreValidParams(_mu, value);
-        }
+        public bool IsValidSigma(double value) => AreValidParams(_mu, value);
 
         #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
-        public double Minimum
-        {
-            get { return double.NegativeInfinity; }
-        }
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => double.NegativeInfinity;
 
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => double.PositiveInfinity;
 
-        public double Mean
-        {
-            get { return _mu; }
-        }
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Mean => _mu;
 
-        public double Median
-        {
-            get { return _mu; }
-        }
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Median => _mu;
 
-        public double Variance
-        {
-            get { return Math.Pow(_sigma, 2.0); }
-        }
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Variance => TMath.Square(_sigma);
 
-        public double[] Mode
-        {
-            get { return new[] { _mu }; }
-        }
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
+        public double[] Mode => new[] { _mu };
 
-        public double NextDouble()
-        {
-            return Sample(Gen, _mu, _sigma);
-        }
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(Generator, _mu, _sigma);
 
         #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether normal distribution is defined under given parameters.
+        ///   Determines whether normal distribution is defined under given parameters. The default
+        ///   definition returns true if sigma is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <see cref="_sigma"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
-        [Pure]
-        public static bool AreValidParams(double mu, double sigma)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="NormalDistribution"/> class.
+        /// </remarks>
+        public static Func<double, double, bool> AreValidParams { get; set; } = (mu, sigma) =>
         {
-            return !double.IsNaN(mu) && sigma > 0;
-        }
+            return !double.IsNaN(mu) && sigma > 0.0;
+        };
 
         /// <summary>
-        ///   Returns a normal distributed floating point random number.
+        ///   Declares a function returning a normal distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <returns>A normal distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double mu, double sigma)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="NormalDistribution"/> class.
+        /// </remarks>
+        public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, mu, sigma) =>
         {
             while (true)
             {
                 var v1 = 2.0 * generator.NextDouble() - 1.0;
                 var v2 = 2.0 * generator.NextDouble() - 1.0;
                 var w = v1 * v1 + v2 * v2;
-                if (w > 1)
+                if (w >= 1.0 || TMath.IsZero(w))
                 {
                     continue;
                 }
                 var y = Math.Sqrt(-2.0 * Math.Log(w) / w) * sigma;
                 return generator.NextBoolean() ? v1 * y + mu : v2 * y + mu;
             }
-        }
+        };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of normal distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="NormalDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Normal_distribution">Wikipedia - Normal
-    ///   distribution</a> and the implementation in the
-    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
-    ///   Networks Class Library</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class NormalDistribution : NormalDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        public NormalDistribution() : base(new XorShift128Generator(), DefaultMu, DefaultSigma)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Mu, DefaultMu));
-            Debug.Assert(Equals(Sigma, DefaultSigma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        [CLSCompliant(false)]
-        public NormalDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultMu, DefaultSigma)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Mu, DefaultMu));
-            Debug.Assert(Equals(Sigma, DefaultSigma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public NormalDistribution(IGenerator generator) : base(generator, DefaultMu, DefaultSigma)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Mu, DefaultMu));
-            Debug.Assert(Equals(Sigma, DefaultSigma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <see cref="sigma"/> is less than or equal to zero.
-        /// </exception>
-        public NormalDistribution(double mu, double sigma) : base(new XorShift128Generator(), mu, sigma)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Mu, mu));
-            Debug.Assert(Equals(Sigma, sigma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <see cref="sigma"/> is less than or equal to zero.
-        /// </exception>
-        [CLSCompliant(false)]
-        public NormalDistribution(uint seed, double mu, double sigma) : base(new XorShift128Generator(seed), mu, sigma)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Mu, mu));
-            Debug.Assert(Equals(Sigma, sigma));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="NormalDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <param name="sigma">
-        ///   The parameter sigma which is used for generation of normal distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <see cref="sigma"/> is less than or equal to zero.
-        /// </exception>
-        public NormalDistribution(IGenerator generator, double mu, double sigma) : base(generator, mu, sigma)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Mu, mu));
-            Debug.Assert(Equals(Sigma, sigma));
-        }
-
-        #endregion Construction
     }
 }

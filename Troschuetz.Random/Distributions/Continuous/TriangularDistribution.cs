@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -10,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -43,7 +44,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of triangular distributed random numbers.
@@ -53,13 +53,13 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   presented on <a href="http://en.wikipedia.org/wiki/Triangular_distribution">Wikipedia -
     ///   Triangular distribution</a> and the implementation in the
     ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
-    public class TriangularDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
-                                                       IBetaDistribution<double>, IGammaDistribution<double>
-        where TGen : IGenerator
+    public sealed class TriangularDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>, IGammaDistribution<double>
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Alpha"/> if none is specified.
@@ -76,9 +76,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         public const double DefaultGamma = 0.5;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter alpha which is used for generation of triangular distributed
@@ -161,210 +161,15 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is greater than or equal to <paramref name="beta"/>, or
-        ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
-        ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
-        /// </exception>
-        public TriangularDistribution(TGen generator, double alpha, double beta, double gamma) : base(generator)
-        {
-            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, beta, gamma), ErrorMessages.InvalidParams);
-            _alpha = alpha;
-            _beta = beta;
-            _gamma = gamma;
-        }
-
-        #endregion Construction
-
-        #region Instance Methods
-
-        /// <summary>
-        ///   Determines whether the specified value is valid for parameter <see cref="Alpha"/>.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is less than <see cref="Beta"/>, and less than or
-        ///   equal to <see cref="Gamma"/>; otherwise, <see langword="false"/>.
-        /// </returns>
-        public bool IsValidAlpha(double value)
-        {
-            return AreValidParams(value, _beta, _gamma);
-        }
-
-        /// <summary>
-        ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than <see cref="Alpha"/>, and greater than
-        ///   or equal to <see cref="Gamma"/>; otherwise, <see langword="false"/>.
-        /// </returns>
-        public bool IsValidBeta(double value)
-        {
-            return AreValidParams(_alpha, value, _gamma);
-        }
-
-        /// <summary>
-        ///   Determines whether the specified value is valid for parameter <see cref="Gamma"/>.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>
-        ///   <see langword="true"/> if value is greater than or equal to <see cref="Alpha"/>, and
-        ///   greater than or equal to <see cref="Beta"/>; otherwise, <see langword="false"/>.
-        /// </returns>
-        public bool IsValidGamma(double value)
-        {
-            return AreValidParams(_alpha, _beta, value);
-        }
-
-        #endregion Instance Methods
-
-        #region IContinuousDistribution Members
-
-        public double Minimum
-        {
-            get { return _alpha; }
-        }
-
-        public double Maximum
-        {
-            get { return _beta; }
-        }
-
-        public double Mean
-        {
-            get { return _alpha / 3.0 + _beta / 3.0 + _gamma / 3.0; }
-        }
-
-        public double Median
-        {
-            get
-            {
-                if (_gamma >= (_beta - _alpha) / 2.0)
-                {
-                    return _alpha + (Math.Sqrt((_beta - _alpha) * (_gamma - _alpha)) / Math.Sqrt(2.0));
-                }
-                return _beta - (Math.Sqrt((_beta - _alpha) * (_beta - _gamma)) / Math.Sqrt(2.0));
-            }
-        }
-
-        public double Variance
-        {
-            get
-            {
-                return (Math.Pow(_alpha, 2.0) + Math.Pow(_beta, 2.0) + Math.Pow(_gamma, 2.0) - _alpha * _beta -
-                        _alpha * _gamma - _beta * _gamma) / 18.0;
-            }
-        }
-
-        public double[] Mode
-        {
-            get { return new[] { _gamma }; }
-        }
-
-        public double NextDouble()
-        {
-            return Sample(Gen, _alpha, _beta, _gamma);
-        }
-
-        #endregion IContinuousDistribution Members
-
-        #region TRandom Helpers
-
-        /// <summary>
-        ///   Determines whether triangular distribution is defined under given parameters.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is less than <paramref name="beta"/>, and if
-        ///   <paramref name="alpha"/> is less than or equal to <paramref name="gamma"/>, and if
-        ///   <paramref name="beta"/> is greater than or equal to <paramref name="gamma"/>;
-        ///   otherwise, it returns false.
-        /// </returns>
-        [Pure]
-        public static bool AreValidParams(double alpha, double beta, double gamma)
-        {
-            return alpha < beta && alpha <= gamma && beta >= gamma;
-        }
-
-        /// <summary>
-        ///   Returns a triangular distributed floating point random number.
-        /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="beta">
-        ///   The parameter beta which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <param name="gamma">
-        ///   The parameter gamma which is used for generation of triangular distributed random numbers.
-        /// </param>
-        /// <returns>A triangular distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double alpha, double beta, double gamma)
-        {
-            var helper1 = gamma - alpha;
-            var helper2 = beta - alpha;
-            var helper3 = Math.Sqrt(helper1 * helper2);
-            var helper4 = Math.Sqrt(beta - gamma);
-            var genNum = generator.NextDouble();
-            if (genNum <= helper1 / helper2)
-            {
-                return alpha + Math.Sqrt(genNum) * helper3;
-            }
-            return beta - Math.Sqrt(genNum * helper2 - helper1) * helper4;
-        }
-
-        #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of triangular distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="TriangularDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Triangular_distribution">Wikipedia -
-    ///   Triangular distribution</a> and the implementation in the
-    ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class TriangularDistribution : TriangularDistribution<IGenerator>
-    {
         #region Construction
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TriangularDistribution"/> class, using a
         ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
-        public TriangularDistribution() : base(new XorShift128Generator(), DefaultAlpha, DefaultBeta, DefaultGamma)
+        public TriangularDistribution() : this(new XorShift128Generator(), DefaultAlpha, DefaultBeta, DefaultGamma)
         {
             Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Alpha, DefaultAlpha));
@@ -379,9 +184,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
-        [CLSCompliant(false)]
         public TriangularDistribution(uint seed)
-            : base(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta, DefaultGamma)
+            : this(new XorShift128Generator(seed), DefaultAlpha, DefaultBeta, DefaultGamma)
         {
             Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
@@ -396,7 +200,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public TriangularDistribution(IGenerator generator) : base(generator, DefaultAlpha, DefaultBeta, DefaultGamma)
+        public TriangularDistribution(IGenerator generator) : this(generator, DefaultAlpha, DefaultBeta, DefaultGamma)
         {
             Debug.Assert(ReferenceEquals(Generator, generator));
             Debug.Assert(Equals(Alpha, DefaultAlpha));
@@ -423,7 +227,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
         public TriangularDistribution(double alpha, double beta, double gamma)
-            : base(new XorShift128Generator(), alpha, beta, gamma)
+            : this(new XorShift128Generator(), alpha, beta, gamma)
         {
             Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Equals(Alpha, alpha));
@@ -452,9 +256,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
-        [CLSCompliant(false)]
         public TriangularDistribution(uint seed, double alpha, double beta, double gamma)
-            : base(new XorShift128Generator(seed), alpha, beta, gamma)
+            : this(new XorShift128Generator(seed), alpha, beta, gamma)
         {
             Debug.Assert(Generator is XorShift128Generator);
             Debug.Assert(Generator.Seed == seed);
@@ -483,14 +286,149 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   <paramref name="alpha"/> is greater than <paramref name="gamma"/>, or
         ///   <paramref name="beta"/> is less than <paramref name="gamma"/>.
         /// </exception>
-        public TriangularDistribution(IGenerator generator, double alpha, double beta, double gamma) : base(generator, alpha, beta, gamma)
+        public TriangularDistribution(IGenerator generator, double alpha, double beta, double gamma) : base(generator)
         {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Beta, beta));
-            Debug.Assert(Equals(Gamma, gamma));
+            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, beta, gamma), ErrorMessages.InvalidParams);
+            _alpha = alpha;
+            _beta = beta;
+            _gamma = gamma;
         }
 
         #endregion Construction
+
+        #region Instance Methods
+
+        /// <summary>
+        ///   Determines whether the specified value is valid for parameter <see cref="Alpha"/>.
+        /// </summary>
+        /// <param name="value">The value to check.</param>
+        /// <returns>
+        ///   <see langword="true"/> if value is less than <see cref="Beta"/>, and less than or
+        ///   equal to <see cref="Gamma"/>; otherwise, <see langword="false"/>.
+        /// </returns>
+        public bool IsValidAlpha(double value) => AreValidParams(value, _beta, _gamma);
+
+        /// <summary>
+        ///   Determines whether the specified value is valid for parameter <see cref="Beta"/>.
+        /// </summary>
+        /// <param name="value">The value to check.</param>
+        /// <returns>
+        ///   <see langword="true"/> if value is greater than <see cref="Alpha"/>, and greater than
+        ///   or equal to <see cref="Gamma"/>; otherwise, <see langword="false"/>.
+        /// </returns>
+        public bool IsValidBeta(double value) => AreValidParams(_alpha, value, _gamma);
+
+        /// <summary>
+        ///   Determines whether the specified value is valid for parameter <see cref="Gamma"/>.
+        /// </summary>
+        /// <param name="value">The value to check.</param>
+        /// <returns>
+        ///   <see langword="true"/> if value is greater than or equal to <see cref="Alpha"/>, and
+        ///   greater than or equal to <see cref="Beta"/>; otherwise, <see langword="false"/>.
+        /// </returns>
+        public bool IsValidGamma(double value) => AreValidParams(_alpha, _beta, value);
+
+        #endregion Instance Methods
+
+        #region IContinuousDistribution Members
+
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => _alpha;
+
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => _beta;
+
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Mean => _alpha / 3.0 + _beta / 3.0 + _gamma / 3.0;
+
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Median
+        {
+            get
+            {
+                if (_gamma >= (_beta - _alpha) / 2.0)
+                {
+                    return _alpha + (Math.Sqrt((_beta - _alpha) * (_gamma - _alpha)) / Math.Sqrt(2.0));
+                }
+                return _beta - (Math.Sqrt((_beta - _alpha) * (_beta - _gamma)) / Math.Sqrt(2.0));
+            }
+        }
+
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Variance => (TMath.Square(_alpha) + TMath.Square(_beta) + TMath.Square(_gamma) - _alpha * _beta -
+                        _alpha * _gamma - _beta * _gamma) / 18.0;
+
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
+        public double[] Mode => new[] { _gamma };
+
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(Generator, _alpha, _beta, _gamma);
+
+        #endregion IContinuousDistribution Members
+
+        #region TRandom Helpers
+
+        /// <summary>
+        ///   Determines whether triangular distribution is defined under given parameters. The
+        ///   default definition returns true if alpha is less than beta, and if alpha is less than
+        ///   or equal to gamma, and if beta is greater than or equal to gamma; otherwise, it
+        ///   returns false.
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="TriangularDistribution"/> class.
+        /// </remarks>
+        public static Func<double, double, double, bool> AreValidParams { get; set; } = (alpha, beta, gamma) =>
+        {
+            return alpha < beta && alpha <= gamma && beta >= gamma;
+        };
+
+        /// <summary>
+        ///   Declares a function returning a triangular distributed floating point random number.
+        /// </summary>
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="TriangularDistribution"/> class.
+        /// </remarks>
+        public static Func<IGenerator, double, double, double, double> Sample { get; set; } = (generator, alpha, beta, gamma) =>
+        {
+            var helper1 = gamma - alpha;
+            var helper2 = beta - alpha;
+            var helper3 = Math.Sqrt(helper1 * helper2);
+            var helper4 = Math.Sqrt(beta - gamma);
+            var genNum = generator.NextDouble();
+            if (genNum <= helper1 / helper2)
+            {
+                return alpha + Math.Sqrt(genNum) * helper3;
+            }
+            return beta - Math.Sqrt(genNum * helper2 - helper1) * helper4;
+        };
+
+        #endregion TRandom Helpers
     }
 }

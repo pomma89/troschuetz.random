@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -10,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -78,7 +79,6 @@ namespace Troschuetz.Random.Distributions.Discrete
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of geometric distributed random numbers.
@@ -88,23 +88,24 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   the <see cref="GeometricDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Geometric_distribution">Wikipedia - Geometric
     ///   distribution</a> and the implementation in the
-    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html"> Communication
+    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
     ///   Networks Class Library</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
-    public class GeometricDistribution<TGen> : Distribution<TGen>, IDiscreteDistribution, IAlphaDistribution<double>
-        where TGen : IGenerator
+    public sealed class GeometricDistribution : AbstractDistribution, IDiscreteDistribution, IAlphaDistribution<double>
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Alpha"/> if none is specified.
         /// </summary>
         public const double DefaultAlpha = 0.5;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter beta which is used for generation of uniformly distributed random numbers.
@@ -131,9 +132,81 @@ namespace Troschuetz.Random.Distributions.Discrete
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        public GeometricDistribution() : this(new XorShift128Generator(), DefaultAlpha)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public GeometricDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultAlpha)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public GeometricDistribution(IGenerator generator) : this(generator, DefaultAlpha)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of geometric distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
+        /// </exception>
+        public GeometricDistribution(double alpha) : this(new XorShift128Generator(), alpha)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of geometric distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
+        /// </exception>
+        public GeometricDistribution(uint seed, double alpha) : this(new XorShift128Generator(seed), alpha)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using the
@@ -147,7 +220,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
         /// </exception>
-        public GeometricDistribution(TGen generator, double alpha) : base(generator)
+        public GeometricDistribution(IGenerator generator, double alpha) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(alpha), ErrorMessages.InvalidParams);
             _alpha = alpha;
@@ -165,85 +238,93 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <see langword="true"/> if value is greater than 0.0, and less than or equal to 1.0;
         ///   otherwise, <see langword="false"/>.
         /// </returns>
-        public bool IsValidAlpha(double value)
-        {
-            return IsValidParam(value);
-        }
+        public bool IsValidAlpha(double value) => IsValidParam(value);
 
         #endregion Instance Methods
 
         #region IDiscreteDistribution Members
 
-        public double Minimum
-        {
-            get { return 1.0; }
-        }
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => 1.0;
 
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => double.PositiveInfinity;
 
-        public double Mean
-        {
-            get { return 1.0 / Alpha; }
-        }
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Mean => 1.0 / Alpha;
 
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
         public double Median
         {
             get { throw new NotSupportedException(ErrorMessages.UndefinedMedian); }
         }
 
-        public double Variance
-        {
-            get { return (1.0 - Alpha) / Math.Pow(Alpha, 2.0); }
-        }
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Variance => (1.0 - Alpha) / TMath.Square(Alpha);
 
-        public double[] Mode
-        {
-            get { return new[] { 1.0 }; }
-        }
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
+        public double[] Mode => new[] { 1.0 };
 
-        public int Next()
-        {
-            return Sample(Gen, _alpha);
-        }
+        /// <summary>
+        ///   Returns a distributed random number.
+        /// </summary>
+        /// <returns>A distributed 32-bit signed integer.</returns>
+        public int Next() => Sample(Generator, _alpha);
 
-        public double NextDouble()
-        {
-            return Sample(Gen, _alpha);
-        }
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(Generator, _alpha);
 
         #endregion IDiscreteDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether geometric distribution is defined under given parameter.
+        ///   Determines whether geometric distribution is defined under given parameter. The
+        ///   default definition returns true if alpha is greater than zero and if it is less than
+        ///   or equal to one; otherwise, it returns false.
         /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of geometric distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than zero and if it is less than or equal
-        ///   to one; otherwise, it returns false.
-        /// </returns>
-        [Pure]
-        public static bool IsValidParam(double alpha)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="GeometricDistribution"/> class.
+        /// </remarks>
+        public static Func<double, bool> IsValidParam { get; set; } = alpha =>
         {
-            return alpha > 0 && alpha <= 1;
-        }
+            return alpha > 0.0 && alpha <= 1.0;
+        };
 
         /// <summary>
-        ///   Returns a geometric distributed 32-bit signed integer.
+        ///   Declares a function returning a geometric distributed 32-bit signed integer.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of geometric distributed random numbers.
-        /// </param>
-        /// <returns>A geometric distributed 32-bit signed integer.</returns>
-        [Pure]
-        internal static int Sample(TGen generator, double alpha)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="GeometricDistribution"/> class.
+        /// </remarks>
+        public static Func<IGenerator, double, int> Sample { get; set; } = (generator, alpha) =>
         {
             var samples = 1;
             for (; generator.NextDouble() >= alpha; samples++)
@@ -251,119 +332,8 @@ namespace Troschuetz.Random.Distributions.Discrete
                 // Empty
             }
             return samples;
-        }
+        };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of geometric distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The geometric distribution generates only discrete numbers. <br/> The implementation of
-    ///   the <see cref="GeometricDistribution"/> type bases upon information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Geometric_distribution">Wikipedia - Geometric
-    ///   distribution</a> and the implementation in the
-    ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html"> Communication
-    ///   Networks Class Library</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class GeometricDistribution : GeometricDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        public GeometricDistribution() : base(new XorShift128Generator(), DefaultAlpha)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        [CLSCompliant(false)]
-        public GeometricDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultAlpha)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public GeometricDistribution(IGenerator generator) : base(generator, DefaultAlpha)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of geometric distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
-        /// </exception>
-        public GeometricDistribution(double alpha) : base(new XorShift128Generator(), alpha)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of geometric distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
-        /// </exception>
-        [CLSCompliant(false)]
-        public GeometricDistribution(uint seed, double alpha) : base(new XorShift128Generator(seed), alpha)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="GeometricDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of geometric distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero or it is greater than one.
-        /// </exception>
-        public GeometricDistribution(IGenerator generator, double alpha) : base(generator, alpha)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-        }
-
-        #endregion Construction
     }
 }

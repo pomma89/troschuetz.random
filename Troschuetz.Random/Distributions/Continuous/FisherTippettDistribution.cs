@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -10,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -24,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of Fisher-Tippett distributed random numbers.
@@ -33,13 +33,13 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="FisherTippettDistribution"/> type bases upon
     ///   information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Laplace_distribution">Wikipedia - Fisher-Tippett distribution</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
-    public class FisherTippettDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, IAlphaDistribution<double>,
-                                                   IMuDistribution<double>
-        where TGen : IGenerator
+    public sealed class FisherTippettDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IMuDistribution<double>
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Alpha"/> if none is specified.
@@ -51,9 +51,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         public const double DefaultMu = 0;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter alpha which is used for generation of fisher tippett distributed
@@ -107,9 +107,93 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
+        ///   a <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        public FisherTippettDistribution() : this(new XorShift128Generator(), DefaultAlpha, DefaultMu)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Mu, DefaultMu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
+        ///   a <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public FisherTippettDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultAlpha, DefaultMu)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Mu, DefaultMu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
+        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public FisherTippettDistribution(IGenerator generator) : this(generator, DefaultAlpha, DefaultMu)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Alpha, DefaultAlpha));
+            Debug.Assert(Equals(Mu, DefaultMu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
+        ///   a <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
+        /// </param>
+        /// <param name="mu">
+        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than or equal to zero.
+        /// </exception>
+        public FisherTippettDistribution(double alpha, double mu) : this(new XorShift128Generator(), alpha, mu)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Mu, mu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
+        ///   a <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="alpha">
+        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
+        /// </param>
+        /// <param name="mu">
+        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="alpha"/> is less than or equal to zero.
+        /// </exception>
+        public FisherTippettDistribution(uint seed, double alpha, double mu)
+            : this(new XorShift128Generator(seed), alpha, mu)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Alpha, alpha));
+            Debug.Assert(Equals(Mu, mu));
+        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
@@ -126,7 +210,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
-        public FisherTippettDistribution(TGen generator, double alpha, double mu) : base(generator)
+        public FisherTippettDistribution(IGenerator generator, double alpha, double mu) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
             _alpha = alpha;
@@ -142,227 +226,94 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0.0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidAlpha(double value)
-        {
-            return AreValidParams(value, Mu);
-        }
+        public bool IsValidAlpha(double value) => AreValidParams(value, Mu);
 
         /// <summary>
         ///   Determines whether the specified value is valid for parameter <see cref="Mu"/>.
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/>.</returns>
-        public bool IsValidMu(double value)
-        {
-            return AreValidParams(Alpha, value);
-        }
+        public bool IsValidMu(double value) => AreValidParams(Alpha, value);
 
         #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
-        public double Minimum
-        {
-            get { return double.NegativeInfinity; }
-        }
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => double.NegativeInfinity;
 
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => double.PositiveInfinity;
 
-        public double Mean
-        {
-            get
-            {
-                // 0.577.. is an approximate value for the Euler-Mascheroni constant
-                return Mu + Alpha * 0.577215664901532860606512090082402431042159335;
-            }
-        }
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Mean => Mu + Alpha * 0.577215664901532860606512090082402431042159335;
 
-        public double Median
-        {
-            get { return Mu - Alpha * Math.Log(Math.Log(2)); }
-        }
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Median => Mu - Alpha * Math.Log(Math.Log(2));
 
-        public double Variance
-        {
-            get { return Math.Pow(Math.PI, 2.0) / 6.0 * Math.Pow(Alpha, 2.0); }
-        }
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Variance => TMath.Square(Math.PI) / 6.0 * TMath.Square(Alpha);
 
-        public double[] Mode
-        {
-            get { return new[] { Mu }; }
-        }
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
+        public double[] Mode => new[] { Mu };
 
-        public double NextDouble()
-        {
-            return Sample(Gen, _alpha, _mu);
-        }
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(Generator, _alpha, _mu);
 
         #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether fisher tippett distribution is defined under given parameters.
+        ///   Determines whether fisher tippett distribution is defined under given parameters. The
+        ///   default definition returns true if alpha is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="alpha"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
-        [Pure]
-        public static bool AreValidParams(double alpha, double mu)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="FisherTippettDistribution"/> class.
+        /// </remarks>
+        public static Func<double, double, bool> AreValidParams { get; set; } = (alpha, mu) =>
         {
-            return alpha > 0 && !double.IsNaN(mu);
-        }
+            return alpha > 0.0 && !double.IsNaN(mu);
+        };
 
         /// <summary>
-        ///   Returns a fisher tippett distributed floating point random number.
+        ///   Declares a function returning a fisher tippett distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <returns>A fisher tippett distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, double alpha, double mu)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="FisherTippettDistribution"/> class.
+        /// </remarks>
+        public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, mu) =>
         {
             return mu - alpha * Math.Log(-Math.Log(1.0 - generator.NextDouble()));
-        }
+        };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of Fisher-Tippett distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="FisherTippettDistribution"/> type bases upon
-    ///   information presented on
-    ///   <a href="http://en.wikipedia.org/wiki/Laplace_distribution">Wikipedia - Fisher-Tippett distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class FisherTippettDistribution : FisherTippettDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   a <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        public FisherTippettDistribution() : base(new XorShift128Generator(), DefaultAlpha, DefaultMu)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Mu, DefaultMu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   a <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        [CLSCompliant(false)]
-        public FisherTippettDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultAlpha, DefaultMu)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Mu, DefaultMu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public FisherTippettDistribution(IGenerator generator) : base(generator, DefaultAlpha, DefaultMu)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, DefaultAlpha));
-            Debug.Assert(Equals(Mu, DefaultMu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   a <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public FisherTippettDistribution(double alpha, double mu) : base(new XorShift128Generator(), alpha, mu)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Mu, mu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   a <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        [CLSCompliant(false)]
-        public FisherTippettDistribution(uint seed, double alpha, double mu)
-            : base(new XorShift128Generator(seed), alpha, mu)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Mu, mu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherTippettDistribution"/> class, using
-        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <param name="mu">
-        ///   The parameter mu which is used for generation of fisher tippett distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="alpha"/> is less than or equal to zero.
-        /// </exception>
-        public FisherTippettDistribution(IGenerator generator, double alpha, double mu) : base(generator, alpha, mu)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Alpha, alpha));
-            Debug.Assert(Equals(Mu, mu));
-        }
-
-        #endregion Construction
     }
 }

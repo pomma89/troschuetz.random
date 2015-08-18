@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -10,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -19,11 +20,9 @@
 
 namespace Troschuetz.Random
 {
-    using PommaLabs.Thrower;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
-    using Core;
 
     /// <summary>
     ///   Declares common functionality for all random number distributions.
@@ -31,14 +30,14 @@ namespace Troschuetz.Random
     public interface IDistribution
     {
         /// <summary>
-        ///   Gets a <see cref="IGenerator"/> object that can be used as underlying random number generator.
+        ///   Gets the <see cref="IGenerator"/> object that is used as underlying random number generator.
         /// </summary>
         [Pure]
         IGenerator Generator { get; }
 
         /// <summary>
-        ///   Gets a value indicating whether the random number distribution can be reset,
-        ///   so that it produces the same random number sequence again.
+        ///   Gets a value indicating whether the random number distribution can be reset, so that
+        ///   it produces the same random number sequence again.
         /// </summary>
         [Pure]
         bool CanReset { get; }
@@ -92,7 +91,8 @@ namespace Troschuetz.Random
         double[] Mode { get; }
 
         /// <summary>
-        ///   Resets the random number distribution, so that it produces the same random number sequence again.
+        ///   Resets the random number distribution, so that it produces the same random number
+        ///   sequence again.
         /// </summary>
         /// <returns>
         ///   <see langword="true"/>, if the random number distribution was reset; otherwise, <see langword="false"/>.
@@ -104,58 +104,6 @@ namespace Troschuetz.Random
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
         double NextDouble();
-    }
-
-    /// <summary>
-    ///   Abstract class which implements some features shared across all distributions.
-    /// </summary>
-    /// <typeparam name="TGen">The type of the generator used by the distribution.</typeparam>
-    /// <remarks>
-    ///   Generator type is explictly declared to allow better performances.
-    /// </remarks>
-    [Serializable]
-    public abstract class Distribution<TGen> where TGen : IGenerator
-    {
-        /// <summary>
-        ///   Stores a <see cref="TGen"/> object that can be used as underlying random number generator.
-        /// </summary>
-        protected readonly TGen Gen;
-
-        /// <summary>
-        ///   Builds a distribution using given generator.
-        /// </summary>
-        /// <param name="generator">The generator that will be used by the distribution.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   Given generator is null.
-        /// </exception>
-        protected Distribution(TGen generator)
-        {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            Gen = generator;
-        }
-
-        #region IDistribution Members
-
-        /// <summary>
-        ///   Gets a value indicating whether the random number distribution can be reset,
-        ///   so that it produces the same random number sequence again.
-        /// </summary>
-        public bool CanReset => Gen.CanReset;
-
-        /// <summary>
-        ///   Gets a <see cref="IGenerator"/> object that can be used as underlying random number generator.
-        /// </summary>
-        public IGenerator Generator => Gen;
-
-        /// <summary>
-        ///   Resets the random number distribution, so that it produces the same random number sequence again.
-        /// </summary>
-        /// <returns>
-        ///   <see langword="true"/>, if the random number distribution was reset; otherwise, <see langword="false"/>.
-        /// </returns>
-        public bool Reset() => Gen.Reset();
-
-        #endregion IDistribution Members
     }
 
     /// <summary>
@@ -194,8 +142,7 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is valid for parameter <see cref="Alpha"/>;
-        ///   otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is valid for parameter <see cref="Alpha"/>; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
         bool IsValidAlpha(TNum value);
@@ -218,8 +165,7 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is valid for parameter <see cref="Beta"/>;
-        ///   otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is valid for parameter <see cref="Beta"/>; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
         bool IsValidBeta(TNum value);
@@ -242,8 +188,7 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is valid for parameter <see cref="Gamma"/>;
-        ///   otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is valid for parameter <see cref="Gamma"/>; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
         bool IsValidGamma(TNum value);
@@ -290,8 +235,7 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is valid for parameter <see cref="Mu"/>;
-        ///   otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is valid for parameter <see cref="Mu"/>; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
         bool IsValidMu(TNum value);
@@ -314,8 +258,7 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is valid for parameter <see cref="Nu"/>;
-        ///   otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is valid for parameter <see cref="Nu"/>; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
         bool IsValidNu(TNum value);
@@ -338,8 +281,7 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is valid for parameter <see cref="Sigma"/>;
-        ///   otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is valid for parameter <see cref="Sigma"/>; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
         bool IsValidSigma(TNum value);
@@ -362,8 +304,7 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is valid for parameter <see cref="Theta"/>;
-        ///   otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is valid for parameter <see cref="Theta"/>; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
         bool IsValidTheta(TNum value);

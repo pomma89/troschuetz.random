@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2014 Alessio Parma (alessio.parma@gmail.com)
+ * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -10,8 +10,9 @@
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -24,7 +25,6 @@ namespace Troschuetz.Random.Distributions.Continuous
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Provides generation of t-distributed random numbers.
@@ -34,21 +34,22 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   presented on <a href="http://en.wikipedia.org/wiki/Student%27s_t-distribution">Wikipedia -
     ///   Student's t-distribution</a> and <a href="http://www.xycoon.com/stt_random.htm">Xycoon -
     ///   Student t Distribution</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
-    public class StudentsTDistribution<TGen> : Distribution<TGen>, IContinuousDistribution, INuDistribution<int>
-        where TGen : IGenerator
+    public sealed class StudentsTDistribution : AbstractDistribution, IContinuousDistribution, INuDistribution<int>
     {
-        #region Class Fields
+        #region Constants
 
         /// <summary>
         ///   The default value assigned to <see cref="Nu"/> if none is specified.
         /// </summary>
         public const int DefaultNu = 1;
 
-        #endregion Class Fields
+        #endregion Constants
 
-        #region Instance Fields
+        #region Fields
 
         /// <summary>
         ///   Stores the parameter nu which is used for generation of t-distributed random numbers.
@@ -74,9 +75,81 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        #endregion Instance Fields
+        #endregion Fields
 
         #region Construction
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        public StudentsTDistribution() : this(new XorShift128Generator(), DefaultNu)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Nu, DefaultNu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        public StudentsTDistribution(uint seed) : this(new XorShift128Generator(seed), DefaultNu)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Nu, DefaultNu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using the
+        ///   specified <see cref="IGenerator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
+        public StudentsTDistribution(IGenerator generator) : this(generator, DefaultNu)
+        {
+            Debug.Assert(ReferenceEquals(Generator, generator));
+            Debug.Assert(Equals(Nu, DefaultNu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
+        /// </summary>
+        /// <param name="nu">
+        ///   The parameter nu which is used for generation of student's t distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="nu"/> is less than or equal to zero.
+        /// </exception>
+        public StudentsTDistribution(int nu) : this(new XorShift128Generator(), nu)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Equals(Nu, nu));
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
+        ///   <see cref="XorShift128Generator"/> with the specified seed value.
+        /// </summary>
+        /// <param name="seed">
+        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
+        /// </param>
+        /// <param name="nu">
+        ///   The parameter nu which is used for generation of student's t distributed random numbers.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="nu"/> is less than or equal to zero.
+        /// </exception>
+        public StudentsTDistribution(uint seed, int nu) : this(new XorShift128Generator(seed), nu)
+        {
+            Debug.Assert(Generator is XorShift128Generator);
+            Debug.Assert(Generator.Seed == seed);
+            Debug.Assert(Equals(Nu, nu));
+        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using the
@@ -90,7 +163,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="nu"/> is less than or equal to zero.
         /// </exception>
-        public StudentsTDistribution(TGen generator, int nu) : base(generator)
+        public StudentsTDistribution(IGenerator generator, int nu) : base(generator)
         {
             Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(nu), ErrorMessages.InvalidParams);
             _nu = nu;
@@ -105,25 +178,28 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
-        public bool IsValidNu(int value)
-        {
-            return IsValidParam(value);
-        }
+        public bool IsValidNu(int value) => IsValidParam(value);
 
         #endregion Instance Methods
 
         #region IContinuousDistribution Members
 
-        public double Minimum
-        {
-            get { return double.NegativeInfinity; }
-        }
+        /// <summary>
+        ///   Gets the minimum possible value of distributed random numbers.
+        /// </summary>
+        public double Minimum => double.NegativeInfinity;
 
-        public double Maximum
-        {
-            get { return double.PositiveInfinity; }
-        }
+        /// <summary>
+        ///   Gets the maximum possible value of distributed random numbers.
+        /// </summary>
+        public double Maximum => double.PositiveInfinity;
 
+        /// <summary>
+        ///   Gets the mean of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mean is not defined for given distribution with some parameters.
+        /// </exception>
         public double Mean
         {
             get
@@ -136,11 +212,20 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        public double Median
-        {
-            get { return 0.0; }
-        }
+        /// <summary>
+        ///   Gets the median of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if median is not defined for given distribution with some parameters.
+        /// </exception>
+        public double Median => 0.0;
 
+        /// <summary>
+        ///   Gets the variance of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if variance is not defined for given distribution with some parameters.
+        /// </exception>
         public double Variance
         {
             get
@@ -153,162 +238,51 @@ namespace Troschuetz.Random.Distributions.Continuous
             }
         }
 
-        public double[] Mode
-        {
-            get { return new[] { 0.0 }; }
-        }
+        /// <summary>
+        ///   Gets the mode of distributed random numbers.
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        ///   Thrown if mode is not defined for given distribution with some parameters.
+        /// </exception>
+        public double[] Mode => new[] { 0.0 };
 
-        public double NextDouble()
-        {
-            return Sample(Gen, _nu);
-        }
+        /// <summary>
+        ///   Returns a distributed floating point random number.
+        /// </summary>
+        /// <returns>A distributed double-precision floating point number.</returns>
+        public double NextDouble() => Sample(Generator, _nu);
 
         #endregion IContinuousDistribution Members
 
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether student's t distribution is defined under given parameter.
+        ///   Determines whether student's t distribution is defined under given parameter. The
+        ///   default definition returns true if nu is greater than zero; otherwise, it returns false.
         /// </summary>
-        /// <param name="nu">
-        ///   The parameter nu which is used for generation of student's t distributed random numbers.
-        /// </param>
-        /// <returns>
-        ///   True if <paramref name="nu"/> is greater than zero; otherwise, it returns false.
-        /// </returns>
-        [Pure]
-        public static bool IsValidParam(int nu)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="StudentsTDistribution"/> class.
+        /// </remarks>
+        public static Func<int, bool> IsValidParam { get; set; } = nu =>
         {
             return nu > 0;
-        }
+        };
 
         /// <summary>
-        ///   Returns a student's t distributed floating point random number.
+        ///   Declares a function returning a student's t distributed floating point random number.
         /// </summary>
-        /// <param name="generator">The generator from which random number are drawn.</param>
-        /// <param name="nu">
-        ///   The parameter nu which is used for generation of student's t distributed random numbers.
-        /// </param>
-        /// <returns>A student's t distributed floating point random number.</returns>
-        [Pure]
-        internal static double Sample(TGen generator, int nu)
+        /// <remarks>
+        ///   This is an extensibility point for the <see cref="StudentsTDistribution"/> class.
+        /// </remarks>
+        public static Func<IGenerator, int, double> Sample { get; set; } = (generator, nu) =>
         {
             const double mu = 0.0;
             const double sigma = 1.0;
-            var n = NormalDistribution<TGen>.Sample(generator, mu, sigma);
-            var c = ChiSquareDistribution<TGen>.Sample(generator, nu);
+            var n = NormalDistribution.Sample(generator, mu, sigma);
+            var c = ChiSquareDistribution.Sample(generator, nu);
             return n / Math.Sqrt(c / nu);
-        }
+        };
 
         #endregion TRandom Helpers
-    }
-
-    /// <summary>
-    ///   Provides generation of t-distributed random numbers.
-    /// </summary>
-    /// <remarks>
-    ///   The implementation of the <see cref="StudentsTDistribution"/> type bases upon information
-    ///   presented on <a href="http://en.wikipedia.org/wiki/Student%27s_t-distribution">Wikipedia -
-    ///   Student's t-distribution</a> and <a href="http://www.xycoon.com/stt_random.htm">Xycoon -
-    ///   Student t Distribution</a>.
-    /// </remarks>
-    [Serializable]
-    public sealed class StudentsTDistribution : StudentsTDistribution<IGenerator>
-    {
-        #region Construction
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        public StudentsTDistribution() : base(new XorShift128Generator(), DefaultNu)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Nu, DefaultNu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        [CLSCompliant(false)]
-        public StudentsTDistribution(uint seed) : base(new XorShift128Generator(seed), DefaultNu)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Nu, DefaultNu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        public StudentsTDistribution(IGenerator generator) : base(generator, DefaultNu)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Nu, DefaultNu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="nu">
-        ///   The parameter nu which is used for generation of student's t distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="nu"/> is less than or equal to zero.
-        /// </exception>
-        public StudentsTDistribution(int nu) : base(new XorShift128Generator(), nu)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Equals(Nu, nu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using a
-        ///   <see cref="XorShift128Generator"/> with the specified seed value.
-        /// </summary>
-        /// <param name="seed">
-        ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
-        /// </param>
-        /// <param name="nu">
-        ///   The parameter nu which is used for generation of student's t distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="nu"/> is less than or equal to zero.
-        /// </exception>
-        [CLSCompliant(false)]
-        public StudentsTDistribution(uint seed, int nu) : base(new XorShift128Generator(seed), nu)
-        {
-            Debug.Assert(Generator is XorShift128Generator);
-            Debug.Assert(Generator.Seed == seed);
-            Debug.Assert(Equals(Nu, nu));
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="StudentsTDistribution"/> class, using the
-        ///   specified <see cref="IGenerator"/> as underlying random number generator.
-        /// </summary>
-        /// <param name="generator">An <see cref="IGenerator"/> object.</param>
-        /// <param name="nu">
-        ///   The parameter nu which is used for generation of student's t distributed random numbers.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="nu"/> is less than or equal to zero.
-        /// </exception>
-        public StudentsTDistribution(IGenerator generator, int nu) : base(generator, nu)
-        {
-            Debug.Assert(ReferenceEquals(Generator, generator));
-            Debug.Assert(Equals(Nu, nu));
-        }
-
-        #endregion Construction
     }
 }
