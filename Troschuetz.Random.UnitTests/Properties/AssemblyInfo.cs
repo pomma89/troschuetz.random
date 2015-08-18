@@ -22,11 +22,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following set of attributes.
 // Change these attribute values to modify the information associated with an assembly.
 
-[assembly: AssemblyTitle("Troschuetz.Random.Tests")]
+[assembly: AssemblyTitle("Troschuetz.Random.UnitTests")]
 [assembly: AssemblyDescription("Unit tests for Troschuetz.Random library.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Troschuetz.Random.Tests")]
+[assembly: AssemblyProduct("Troschuetz.Random.UnitTests")]
 [assembly: AssemblyCopyright("Copyright © 2012 Alessio Parma")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

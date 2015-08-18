@@ -7,8 +7,8 @@
     <ProjectGuid>{B748E3AB-68DE-40E9-9BD0-0C113C70D260}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Troschuetz.Random.Tests</RootNamespace>
-    <AssemblyName>Troschuetz.Random.Tests</AssemblyName>
+    <RootNamespace>Troschuetz.Random.UnitTests</RootNamespace>
+    <AssemblyName>Troschuetz.Random.UnitTests</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
