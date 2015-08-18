@@ -33,6 +33,8 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="WeibullDistribution"/> type bases upon information
     ///   presented on <a href="http://en.wikipedia.org/wiki/Weibull_distribution">Wikipedia -
     ///   Weibull distribution</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class WeibullDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, ILambdaDistribution<double>

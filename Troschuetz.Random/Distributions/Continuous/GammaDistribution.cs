@@ -32,6 +32,8 @@ namespace Troschuetz.Random.Distributions.Continuous
     /// <remarks>
     ///   The implementation of the <see cref="GammaDistribution"/> type bases upon information
     ///   presented on <a href="http://en.wikipedia.org/wiki/Gamma_distribution">Wikipedia - Gamma distribution</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class GammaDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>

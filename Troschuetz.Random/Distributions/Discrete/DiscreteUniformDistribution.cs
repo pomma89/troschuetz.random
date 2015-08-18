@@ -35,6 +35,8 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28discrete%29">Wikipedia -
     ///   Uniform distribution (discrete)</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class DiscreteUniformDistribution : AbstractDistribution, IDiscreteDistribution, IAlphaDistribution<int>, IBetaDistribution<int>

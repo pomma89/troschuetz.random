@@ -53,6 +53,8 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   presented on <a href="http://en.wikipedia.org/wiki/Log-normal_distribution">Wikipedia -
     ///   Lognormal Distribution</a> and the implementation in the
     ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class LognormalDistribution : AbstractDistribution, IContinuousDistribution, IMuDistribution<double>, ISigmaDistribution<double>

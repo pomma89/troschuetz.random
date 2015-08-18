@@ -58,6 +58,8 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   The distribution is parameterized by a vector of ratios: in other words, the parameter
     ///   does not have to be normalized and sum to 1. The reason is that some vectors can't be
     ///   exactly normalized to sum to 1 in floating point representation.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class CategoricalDistribution : AbstractDistribution, IDiscreteDistribution, IWeightsDistribution<double>

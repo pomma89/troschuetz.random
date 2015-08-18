@@ -28,7 +28,11 @@ namespace Troschuetz.Random.Generators
     ///   A generator whose original code has been found in a famous book about numerical analysis.
     ///   Inside the book, it is the highest quality recommended generator.
     /// </summary>
-    /// <remarks>This generator has a period of ~ 3.138 * 10^57.</remarks>
+    /// <remarks>
+    ///   This generator has a period of ~ 3.138 * 10^57.
+    /// 
+    ///   This generator is NOT thread safe.
+    /// </remarks>
     [Serializable]
     public sealed class NR3Generator : AbstractGenerator
     {

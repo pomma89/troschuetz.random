@@ -32,6 +32,8 @@ namespace Troschuetz.Random.Distributions.Continuous
     /// <remarks>
     ///   The implementation of the <see cref="FisherSnedecorDistribution"/> type bases upon
     ///   information presented on <a href="http://en.wikipedia.org/wiki/F-distribution">Wikipedia - F-distribution</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class FisherSnedecorDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<int>, IBetaDistribution<int>

@@ -30,6 +30,8 @@ namespace Troschuetz.Random.Generators
     /// <remarks>
     ///   The <see cref="StandardGenerator"/> type internally uses an instance of the
     ///   <see cref="System.Random"/> type to generate pseudo-random numbers.
+    /// 
+    ///   This generator is NOT thread safe.
     /// </remarks>
     [Serializable]
     public sealed class StandardGenerator : AbstractGenerator

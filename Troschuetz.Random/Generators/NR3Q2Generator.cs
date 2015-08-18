@@ -29,7 +29,11 @@ namespace Troschuetz.Random.Generators
     ///   Inside the book, it is a "backup" generator which should be used
     ///   <see cref="NR3Q1Generator"/> has too short a period and <see cref="NR3Generator"/> is too slow.
     /// </summary>
-    /// <remarks>This generator has a period of ~ 8.5 * 10^37.</remarks>
+    /// <remarks>
+    ///   This generator has a period of ~ 8.5 * 10^37.
+    /// 
+    ///   This generator is NOT thread safe.
+    /// </remarks>
     [Serializable]
     public sealed class NR3Q2Generator : AbstractGenerator
     {

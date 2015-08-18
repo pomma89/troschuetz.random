@@ -71,6 +71,8 @@ namespace Troschuetz.Random.Generators
     ///   for System.Random</a>" and the theoretical background on xorshift random number generators
     ///   published by George Marsaglia in this paper "
     ///   <a href="http://www.jstatsoft.org/v08/i14/xorshift.pdf">Xorshift RNGs</a>".
+    /// 
+    ///   This generator is NOT thread safe.
     /// </remarks>
     [Serializable]
     public sealed class XorShift128Generator : AbstractGenerator

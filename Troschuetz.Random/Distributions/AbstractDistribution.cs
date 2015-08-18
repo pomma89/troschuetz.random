@@ -27,6 +27,9 @@ namespace Troschuetz.Random.Distributions
     /// <summary>
     ///   Abstract class which implements some features shared across all distributions.
     /// </summary>
+    /// <remarks>
+    ///   The thread safety of this class depends on the one of the underlying generator.
+    /// </remarks>
     [Serializable]
     public abstract class AbstractDistribution
     {

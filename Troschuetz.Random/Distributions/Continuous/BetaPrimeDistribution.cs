@@ -32,6 +32,8 @@ namespace Troschuetz.Random.Distributions.Continuous
     /// <remarks>
     ///   The implementation of the <see cref="BetaPrimeDistribution"/> type bases upon information
     ///   presented on <a href="http://www.xycoon.com/ibeta.htm">Xycoon - Inverted Beta Distribution</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class BetaPrimeDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>

@@ -39,6 +39,14 @@ namespace Troschuetz.Random.Generators
     /// 
     ///   All generators implemented in this library extend this abstract class.
     /// </summary>
+    /// <remarks>
+    ///   Methods <see cref="NextBoolean()"/> and <see cref="NextBytes(byte[])"/> are NOT thread
+    ///   safe. The thread safety of other methods depends on the one of the extending class, that
+    ///   is, if all abstract methods are implemented in a thread safe manner, then other methods,
+    ///   excluding <see cref="NextBoolean()"/> and <see cref="NextBytes(byte[])"/>, are thread safe too.
+    /// 
+    ///   Please note that all generators implemented in this library are NOT thread safe.
+    /// </remarks>
     [Serializable]
     public abstract class AbstractGenerator : IGenerator
     {
@@ -79,6 +87,8 @@ namespace Troschuetz.Random.Generators
 
         #endregion Constants
 
+        #region Fields
+
         /// <summary>
         ///   Stores an <see cref="uint"/> used to generate up to 32 random <see cref="bool"/> values.
         /// </summary>
@@ -88,6 +98,8 @@ namespace Troschuetz.Random.Generators
         ///   Stores how many random <see cref="bool"/> values still can be generated from <see cref="_bitBuffer"/>.
         /// </summary>
         int _bitCount;
+
+        #endregion
 
         /// <summary>
         ///   Initializes a new instance of the generator, using the specified seed value.
@@ -470,5 +482,50 @@ namespace Troschuetz.Random.Generators
         }
 
         #endregion IGenerator members
+
+        #region Equality members
+
+        /// <summary>
+        ///   Two <see cref="AbstractGenerator"/> instances are equal if they have the same state.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        public override bool Equals(object obj)
+        {
+            var o = obj as AbstractGenerator;
+            return o != null && Seed == o.Seed && _bitCount == o._bitCount && _bitBuffer == o._bitBuffer;
+        }
+
+        /// <summary>
+        ///   Hash code is computed from the state of the generator.
+        /// </summary>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hash = 1777771;
+#pragma warning disable RECS0025 // Non-readonly field referenced in 'GetHashCode()'
+                hash = hash * 31 + (int) Seed;
+                hash = hash * 31 + _bitCount;
+                hash = hash * 31 + (int) _bitBuffer;
+#pragma warning restore RECS0025 // Non-readonly field referenced in 'GetHashCode()'
+                return hash;
+            }
+        }
+
+        /// <summary>
+        ///   A string with the name of the generator and the seed.
+        /// </summary>
+        public override string ToString()
+        {
+            const string generatorSuffix = "Generator";
+            var generatorName = GetType().Name;
+            if (generatorName.EndsWith(generatorSuffix, StringComparison.Ordinal))
+            {
+                generatorName = generatorName.Substring(0, generatorName.Length - generatorSuffix.Length);
+            }
+            return $"Generator: {generatorName}, Seed: {Seed}";
+        }
+
+        #endregion
     }
 }

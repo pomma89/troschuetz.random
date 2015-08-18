@@ -34,6 +34,8 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Uniform_distribution_%28continuous%29">Wikipedia -
     ///   Uniform distribution (continuous)</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class ContinuousUniformDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>

@@ -53,6 +53,8 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   presented on <a href="http://en.wikipedia.org/wiki/Triangular_distribution">Wikipedia -
     ///   Triangular distribution</a> and the implementation in the
     ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class TriangularDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<double>, IBetaDistribution<double>, IGammaDistribution<double>

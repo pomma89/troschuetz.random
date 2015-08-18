@@ -32,6 +32,8 @@ namespace Troschuetz.Random.Distributions.Continuous
     /// <remarks>
     ///   The implementation of the <see cref="ChiDistribution"/> type bases upon information
     ///   presented on <a href="http://en.wikipedia.org/wiki/Chi_distribution">Wikipedia - Chi distribution</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class ChiDistribution : AbstractDistribution, IContinuousDistribution, IAlphaDistribution<int>

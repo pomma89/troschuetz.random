@@ -34,6 +34,9 @@ namespace Troschuetz.Random
     ///   the ones found in <see cref="System.Random"/> and functions returning random numbers
     ///   according to a particular kind of distribution.
     /// </summary>
+    /// <remarks>
+    ///   The thread safety of this class depends on the one of the underlying generator.
+    /// </remarks>
     [Serializable]
     public sealed class TRandom : IGenerator
     {

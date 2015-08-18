@@ -90,6 +90,8 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   distribution</a> and the implementation in the
     ///   <a href="http://www.lkn.ei.tum.de/lehre/scn/cncl/doc/html/cncl_toc.html">Communication
     ///   Networks Class Library</a>.
+    /// 
+    ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
     public sealed class GeometricDistribution : AbstractDistribution, IDiscreteDistribution, IAlphaDistribution<double>

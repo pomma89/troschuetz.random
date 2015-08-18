@@ -57,6 +57,8 @@ namespace Troschuetz.Random.Generators
     ///   Some popular pairs are presented on
     ///   <a href="http://en.wikipedia.org/wiki/Lagged_Fibonacci_generator">Wikipedia - Lagged
     ///   Fibonacci generator</a>.
+    /// 
+    ///   This generator is NOT thread safe.
     /// </remarks>
     [Serializable]
     public sealed class ALFGenerator : AbstractGenerator
