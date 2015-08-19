@@ -26,6 +26,10 @@ namespace Troschuetz.Random.Examples
     {
         static void Main()
         {
+            Console.WriteLine("### Usage examples ###");
+            UsageExamples.Main();
+            Console.WriteLine();
+
             Console.WriteLine("### Extensibility examples ###");
             ExtensibilityExamples.Main();
             Console.WriteLine();
