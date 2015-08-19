@@ -1,5 +1,5 @@
-Troschuetz.Random
-=================
+Troschuetz.Random - Easy random number generation
+=================================================
 
 *Fully managed library providing various random number generators and distributions.*
 
