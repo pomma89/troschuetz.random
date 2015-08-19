@@ -50,6 +50,7 @@
     <Compile Include="ExtensibilityExamples.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsageExamples.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Troschuetz.Random\Troschuetz.Random.csproj">
