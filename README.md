@@ -3,6 +3,11 @@ Troschuetz.Random - Easy random number generation
 
 *Fully managed library providing various random number generators and distributions.*
 
+## Summary ##
+
+* Build status on [AppVeyor](https://ci.appveyor.com): [![Build status](https://ci.appveyor.com/api/projects/status/362eo5bmrbtjp203)](https://ci.appveyor.com/project/pomma89/troschuetz.random)
+* Current release: `v4.0`
+
 ## Introduction ##
 
 All the hard work behind this library was done by Stefan Troschütz, and for which I thank him very much. What I have done with his great project, was simply to refactor and improve his code, while offering a new Python-style random class.
