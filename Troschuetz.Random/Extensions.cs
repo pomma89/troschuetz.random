@@ -399,7 +399,7 @@ namespace System
     /// <summary>
     ///   Fake, this is used only to allow serialization on portable platforms.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true, Inherited = false)]
     public sealed class SerializableAttribute : Attribute
     {
         // This does nothing and should do nothing.
