@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6B947182-CF4B-45FE-A1AE-47A28C514040}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Troschuetz.Random</RootNamespace>
+    <AssemblyName>Troschuetz.Random</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;USETHROWER NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <CodeContractsRedundantTests>True</CodeContractsRedundantTests>
+    <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
+    <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
+    <DocumentationFile>bin\Debug\Troschuetz.Random.xml</DocumentationFile>
+    <CodeContractsAssertsToContractsCheckBox>True</CodeContractsAssertsToContractsCheckBox>
+    <CodeContractsMissingPublicEnsuresAsWarnings>False</CodeContractsMissingPublicEnsuresAsWarnings>
+    <CodeContractsInferEnsuresAutoProperties>True</CodeContractsInferEnsuresAutoProperties>
+    <CodeContractsSuggestAssumptionsForCallees>False</CodeContractsSuggestAssumptionsForCallees>
+    <CodeContractsNecessaryEnsures>True</CodeContractsNecessaryEnsures>
+    <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;USETHROWER NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Troschuetz.Random.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsRuntimeCheckingLevel>ReleaseRequires</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <CodeContractsRedundantTests>True</CodeContractsRedundantTests>
+    <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
+    <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
+    <DebugSymbols>true</DebugSymbols>
+    <CodeContractsAssertsToContractsCheckBox>True</CodeContractsAssertsToContractsCheckBox>
+    <CodeContractsMissingPublicEnsuresAsWarnings>False</CodeContractsMissingPublicEnsuresAsWarnings>
+    <CodeContractsInferEnsuresAutoProperties>True</CodeContractsInferEnsuresAutoProperties>
+    <CodeContractsSuggestAssumptionsForCallees>False</CodeContractsSuggestAssumptionsForCallees>
+    <CodeContractsNecessaryEnsures>True</CodeContractsNecessaryEnsures>
+    <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Troschuetz.Random.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PommaLabs.Thrower, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thrower.1.2\lib\net35\PommaLabs.Thrower.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Troschuetz.Random\Core\ErrorMessages.cs">
+      <Link>Core\ErrorMessages.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\AbstractDistribution.cs">
+      <Link>Distributions\AbstractDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\BetaDistribution.cs">
+      <Link>Distributions\Continuous\BetaDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\BetaPrimeDistribution.cs">
+      <Link>Distributions\Continuous\BetaPrimeDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\CauchyDistribution.cs">
+      <Link>Distributions\Continuous\CauchyDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ChiDistribution.cs">
+      <Link>Distributions\Continuous\ChiDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ChiSquareDistribution.cs">
+      <Link>Distributions\Continuous\ChiSquareDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ContinuousUniformDistribution.cs">
+      <Link>Distributions\Continuous\ContinuousUniformDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ErlangDistribution.cs">
+      <Link>Distributions\Continuous\ErlangDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ExponentialDistribution.cs">
+      <Link>Distributions\Continuous\ExponentialDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\FisherSnedecorDistribution.cs">
+      <Link>Distributions\Continuous\FisherSnedecorDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\FisherTippettDistribution.cs">
+      <Link>Distributions\Continuous\FisherTippettDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\GammaDistribution.cs">
+      <Link>Distributions\Continuous\GammaDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\LaplaceDistribution.cs">
+      <Link>Distributions\Continuous\LaplaceDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\LogisticDistribution.cs">
+      <Link>Distributions\Continuous\LogisticDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\LognormalDistribution.cs">
+      <Link>Distributions\Continuous\LognormalDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\NormalDistribution.cs">
+      <Link>Distributions\Continuous\NormalDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\ParetoDistribution.cs">
+      <Link>Distributions\Continuous\ParetoDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\PowerDistribution.cs">
+      <Link>Distributions\Continuous\PowerDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\RayleighDistribution.cs">
+      <Link>Distributions\Continuous\RayleighDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\StudentsTDistribution.cs">
+      <Link>Distributions\Continuous\StudentsTDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\TriangularDistribution.cs">
+      <Link>Distributions\Continuous\TriangularDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Continuous\WeibullDistribution.cs">
+      <Link>Distributions\Continuous\WeibullDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\BernoulliDistribution.cs">
+      <Link>Distributions\Discrete\BernoulliDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\BinomialDistribution.cs">
+      <Link>Distributions\Discrete\BinomialDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\CategoricalDistribution.cs">
+      <Link>Distributions\Discrete\CategoricalDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\DiscreteUniformDistribution.cs">
+      <Link>Distributions\Discrete\DiscreteUniformDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\GeometricDistribution.cs">
+      <Link>Distributions\Discrete\GeometricDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Distributions\Discrete\PoissonDistribution.cs">
+      <Link>Distributions\Discrete\PoissonDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Extensions.cs">
+      <Link>Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\AbstractGenerator.cs">
+      <Link>Generators\AbstractGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\ALFGenerator.cs">
+      <Link>Generators\ALFGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\MT19937Generator.cs">
+      <Link>Generators\MT19937Generator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\NR3Generator.cs">
+      <Link>Generators\NR3Generator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\NR3Q1Generator.cs">
+      <Link>Generators\NR3Q1Generator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\NR3Q2Generator.cs">
+      <Link>Generators\NR3Q2Generator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\StandardGenerator.cs">
+      <Link>Generators\StandardGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\Generators\XorShift128Generator.cs">
+      <Link>Generators\XorShift128Generator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\IDistribution.cs">
+      <Link>IDistribution.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\IGenerator.cs">
+      <Link>IGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\TMath.cs">
+      <Link>TMath.cs</Link>
+    </Compile>
+    <Compile Include="..\Troschuetz.Random\TRandom.cs">
+      <Link>TRandom.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Troschuetz.Random.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net40-client" mkdir "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net40-client"
+copy "$(TargetDir)Troschuetz.Random.dll" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net40-client"
+copy "$(TargetDir)Troschuetz.Random.pdb" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net40-client"
+copy "$(TargetDir)Troschuetz.Random.xml" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net40-client"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
