@@ -102,7 +102,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Troschuetz.Random.NET45\Troschuetz.Random.NET45.csproj">
+    <ProjectReference Include="..\Platform Specific\Troschuetz.Random.NET45\Troschuetz.Random.NET45.csproj">
       <Project>{da6ad56d-b1db-478b-83a4-7378c77df8cd}</Project>
       <Name>Troschuetz.Random.NET45</Name>
     </ProjectReference>
