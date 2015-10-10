@@ -19,7 +19,6 @@
  */
 
 using System;
-using System.Diagnostics.Contracts;
 
 namespace Troschuetz.Random
 {
@@ -31,14 +30,12 @@ namespace Troschuetz.Random
         /// <summary>
         ///   The seed value used by the generator.
         /// </summary>
-        [Pure]
         uint Seed { get; }
 
         /// <summary>
         ///   Gets a value indicating whether the random number generator can be reset, so that it
         ///   produces the same random number sequence again.
         /// </summary>
-        [Pure]
         bool CanReset { get; }
 
         /// <summary>

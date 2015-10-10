@@ -71,6 +71,7 @@
     <Content Include="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="lib\net35\" />
     <Folder Include="lib\net40\" />
     <Folder Include="lib\net45\" />
     <Folder Include="lib\net46\" />
