@@ -139,65 +139,32 @@
   <PropertyGroup>
     <ApplicationIcon>Troschuetz.Random.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>C:\Keys\pomma89.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PommaLabs.Thrower, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Thrower.1.2\lib\portable-net45+win8+wp8+wpa81\PommaLabs.Thrower.dll</HintPath>
+    <Reference Include="PommaLabs.Thrower, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Thrower.2.0.0\lib\portable-net45+win8+wp8+wpa81\PommaLabs.Thrower.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ErrorMessages.cs" />
-    <Compile Include="Distributions\AbstractDistribution.cs" />
-    <Compile Include="Distributions\Continuous\LogisticDistribution.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Generators\AbstractGenerator.cs" />
-    <Compile Include="Generators\NR3Generator.cs" />
-    <Compile Include="Generators\NR3Q1Generator.cs" />
-    <Compile Include="Generators\NR3Q2Generator.cs" />
-    <Compile Include="Generators\XorShift128Generator.cs" />
-    <Compile Include="IDistribution.cs" />
-    <Compile Include="Distributions\Continuous\BetaDistribution.cs" />
-    <Compile Include="Distributions\Continuous\BetaPrimeDistribution.cs" />
-    <Compile Include="Distributions\Continuous\CauchyDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ChiDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ChiSquareDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ContinuousUniformDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ErlangDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ExponentialDistribution.cs" />
-    <Compile Include="Distributions\Continuous\FisherSnedecorDistribution.cs" />
-    <Compile Include="Distributions\Continuous\FisherTippettDistribution.cs" />
-    <Compile Include="Distributions\Continuous\GammaDistribution.cs" />
-    <Compile Include="Distributions\Continuous\LaplaceDistribution.cs" />
-    <Compile Include="Distributions\Continuous\LognormalDistribution.cs" />
-    <Compile Include="Distributions\Continuous\NormalDistribution.cs" />
-    <Compile Include="Distributions\Continuous\ParetoDistribution.cs" />
-    <Compile Include="Distributions\Continuous\PowerDistribution.cs" />
-    <Compile Include="Distributions\Continuous\RayleighDistribution.cs" />
-    <Compile Include="Distributions\Continuous\StudentsTDistribution.cs" />
-    <Compile Include="Distributions\Continuous\TriangularDistribution.cs" />
-    <Compile Include="Distributions\Continuous\WeibullDistribution.cs" />
-    <Compile Include="Distributions\Discrete\BernoulliDistribution.cs" />
-    <Compile Include="Distributions\Discrete\BinomialDistribution.cs" />
-    <Compile Include="Distributions\Discrete\CategoricalDistribution.cs" />
-    <Compile Include="Distributions\Discrete\DiscreteUniformDistribution.cs" />
-    <Compile Include="Distributions\Discrete\GeometricDistribution.cs" />
-    <Compile Include="Distributions\Discrete\PoissonDistribution.cs" />
-    <Compile Include="IGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Generators\ALFGenerator.cs" />
-    <Compile Include="Generators\MT19937Generator.cs" />
-    <Compile Include="Generators\StandardGenerator.cs" />
-    <Compile Include="TMath.cs" />
-    <Compile Include="TRandom.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="doxyfile.txt" />
     <Content Include="Troschuetz.Random.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="C:\Keys\pomma89.pfx">
+      <Link>pomma89.pfx</Link>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <Import Project="..\..\Troschuetz.Random\Troschuetz.Random.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81" mkdir "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81"

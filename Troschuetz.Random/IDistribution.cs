@@ -22,7 +22,6 @@ namespace Troschuetz.Random
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///   Declares common functionality for all random number distributions.
@@ -32,26 +31,22 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets the <see cref="IGenerator"/> object that is used as underlying random number generator.
         /// </summary>
-        [Pure]
         IGenerator Generator { get; }
 
         /// <summary>
         ///   Gets a value indicating whether the random number distribution can be reset, so that
         ///   it produces the same random number sequence again.
         /// </summary>
-        [Pure]
         bool CanReset { get; }
 
         /// <summary>
         ///   Gets the minimum possible value of distributed random numbers.
         /// </summary>
-        [Pure]
         double Minimum { get; }
 
         /// <summary>
         ///   Gets the maximum possible value of distributed random numbers.
         /// </summary>
-        [Pure]
         double Maximum { get; }
 
         /// <summary>
@@ -60,7 +55,6 @@ namespace Troschuetz.Random
         /// <exception cref="NotSupportedException">
         ///   Thrown if mean is not defined for given distribution with some parameters.
         /// </exception>
-        [Pure]
         double Mean { get; }
 
         /// <summary>
@@ -69,7 +63,6 @@ namespace Troschuetz.Random
         /// <exception cref="NotSupportedException">
         ///   Thrown if median is not defined for given distribution with some parameters.
         /// </exception>
-        [Pure]
         double Median { get; }
 
         /// <summary>
@@ -78,7 +71,6 @@ namespace Troschuetz.Random
         /// <exception cref="NotSupportedException">
         ///   Thrown if variance is not defined for given distribution with some parameters.
         /// </exception>
-        [Pure]
         double Variance { get; }
 
         /// <summary>
@@ -87,7 +79,6 @@ namespace Troschuetz.Random
         /// <exception cref="NotSupportedException">
         ///   Thrown if mode is not defined for given distribution with some parameters.
         /// </exception>
-        [Pure]
         double[] Mode { get; }
 
         /// <summary>
@@ -134,7 +125,6 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets or sets the parameter alpha which is used for generation of distributed random numbers.
         /// </summary>
-        [Pure]
         TNum Alpha { get; set; }
 
         /// <summary>
@@ -144,7 +134,6 @@ namespace Troschuetz.Random
         /// <returns>
         ///   <see langword="true"/> if value is valid for parameter <see cref="Alpha"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         bool IsValidAlpha(TNum value);
     }
 
@@ -157,7 +146,6 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets or sets the parameter beta which is used for generation of distributed random numbers.
         /// </summary>
-        [Pure]
         TNum Beta { get; set; }
 
         /// <summary>
@@ -167,7 +155,6 @@ namespace Troschuetz.Random
         /// <returns>
         ///   <see langword="true"/> if value is valid for parameter <see cref="Beta"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         bool IsValidBeta(TNum value);
     }
 
@@ -180,7 +167,6 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets or sets the parameter gamma which is used for generation of distributed random numbers.
         /// </summary>
-        [Pure]
         TNum Gamma { get; set; }
 
         /// <summary>
@@ -190,7 +176,6 @@ namespace Troschuetz.Random
         /// <returns>
         ///   <see langword="true"/> if value is valid for parameter <see cref="Gamma"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         bool IsValidGamma(TNum value);
     }
 
@@ -203,7 +188,6 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets or sets the parameter lambda which is used for generation of distributed random numbers.
         /// </summary>
-        [Pure]
         TNum Lambda { get; set; }
 
         /// <summary>
@@ -214,7 +198,6 @@ namespace Troschuetz.Random
         ///   <see langword="true"/> if value is valid for parameter <see cref="Lambda"/>;
         ///   otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         bool IsValidLambda(TNum value);
     }
 
@@ -227,7 +210,6 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets or sets the parameter mu which is used for generation of distributed random numbers.
         /// </summary>
-        [Pure]
         TNum Mu { get; set; }
 
         /// <summary>
@@ -237,7 +219,6 @@ namespace Troschuetz.Random
         /// <returns>
         ///   <see langword="true"/> if value is valid for parameter <see cref="Mu"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         bool IsValidMu(TNum value);
     }
 
@@ -250,7 +231,6 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets or sets the parameter nu which is used for generation of distributed random numbers.
         /// </summary>
-        [Pure]
         TNum Nu { get; set; }
 
         /// <summary>
@@ -260,7 +240,6 @@ namespace Troschuetz.Random
         /// <returns>
         ///   <see langword="true"/> if value is valid for parameter <see cref="Nu"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         bool IsValidNu(TNum value);
     }
 
@@ -273,7 +252,6 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets or sets the parameter sigma which is used for generation of distributed random numbers.
         /// </summary>
-        [Pure]
         TNum Sigma { get; set; }
 
         /// <summary>
@@ -283,7 +261,6 @@ namespace Troschuetz.Random
         /// <returns>
         ///   <see langword="true"/> if value is valid for parameter <see cref="Sigma"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         bool IsValidSigma(TNum value);
     }
 
@@ -296,7 +273,6 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets or sets the parameter theta which is used for generation of distributed random numbers.
         /// </summary>
-        [Pure]
         TNum Theta { get; set; }
 
         /// <summary>
@@ -306,7 +282,6 @@ namespace Troschuetz.Random
         /// <returns>
         ///   <see langword="true"/> if value is valid for parameter <see cref="Theta"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         bool IsValidTheta(TNum value);
     }
 
@@ -319,7 +294,6 @@ namespace Troschuetz.Random
         /// <summary>
         ///   Gets or sets the parameter weights which is used for generation of distributed random numbers.
         /// </summary>
-        [Pure]
         ICollection<T> Weights { get; set; }
 
         /// <summary>
@@ -330,7 +304,6 @@ namespace Troschuetz.Random
         ///   <see langword="true"/> if value is valid for parameter <see cref="Weights"/>;
         ///   otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         bool AreValidWeights(IEnumerable<T> values);
     }
 }

@@ -42,7 +42,6 @@ namespace Troschuetz.Random.Generators
     using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
     using System.Runtime.CompilerServices;
 
     /// <summary>
@@ -169,7 +168,6 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns><see langword="true"/> if value is greater than 0; otherwise, <see langword="false"/>.</returns>
-        [Pure]
         public static bool IsValidShortLag(int value) => value > 0;
 
         /// <summary>
@@ -179,7 +177,6 @@ namespace Troschuetz.Random.Generators
         /// <returns>
         ///   <see langword="true"/> if value is greater than <see cref="ShortLag"/>; otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         public bool IsValidLongLag(int value) => value > _shortLag;
 
         /// <summary>

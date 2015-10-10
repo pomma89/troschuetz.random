@@ -4,64 +4,76 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{52A4D144-3BA1-4768-9F3B-90F5DC86746B}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{DA6AD56D-B1DB-478B-83A4-7378C77DF8CD}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Troschuetz.Random.Examples</RootNamespace>
-    <AssemblyName>Troschuetz.Random.Examples</AssemblyName>
+    <RootNamespace>Troschuetz.Random</RootNamespace>
+    <AssemblyName>Troschuetz.Random</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;USETHROWER;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Debug\Troschuetz.Random.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;USETHROWER;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\Troschuetz.Random.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Troschuetz.Random.Examples.Program</StartupObject>
+    <ApplicationIcon>Troschuetz.Random.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>C:\Keys\pomma89.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PommaLabs.Thrower, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Thrower.2.0.0\lib\net45\PommaLabs.Thrower.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtensibilityExamples.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UsageExamples.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Platform Specific\Troschuetz.Random.Portable\Troschuetz.Random.Portable.csproj">
-      <Project>{a1ff7728-605f-401a-a9fc-51fa56852e9e}</Project>
-      <Name>Troschuetz.Random.Portable</Name>
-    </ProjectReference>
+    <Content Include="Troschuetz.Random.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="C:\Keys\pomma89.pfx">
+      <Link>pomma89.pfx</Link>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
+  <Import Project="..\..\Troschuetz.Random\Troschuetz.Random.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net45" mkdir "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net45"
+copy "$(TargetDir)Troschuetz.Random.dll" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net45"
+copy "$(TargetDir)Troschuetz.Random.pdb" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net45"
+copy "$(TargetDir)Troschuetz.Random.xml" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/net45"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
