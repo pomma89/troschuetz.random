@@ -1,6 +1,6 @@
-/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
+ï»¿/*
+ * Copyright Â© 2006 Stefan TroschÃ¼tz (stefan@troschuetz.de)
+ * Copyright Â© 2012-2016 Alessio Parma (alessio.parma@gmail.com)
  *
  * This file is part of Troschuetz.Random Class Library.
  *
@@ -18,28 +18,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-using System;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Security;
 
 // General Information about an assembly is controlled through the following set of attributes.
 // Change these attribute values to modify the information associated with an assembly.
-[assembly: AssemblyTitle("Troschuetz.Random.Tester")]
-[assembly: AssemblyDescription("Test application for Troschuetz.Random library.")]
+[assembly: AssemblyTitle("Troschuetz.Random")]
+[assembly: AssemblyDescription("Fully managed library providing various random number generators and distributions.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Troschuetz.Random")]
-[assembly: AssemblyCopyright("Copyright © Stefan Troschütz")]
+[assembly: AssemblyCopyright("Copyright Â© Stefan TroschÃ¼tz")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
-// Setting ComVisible to false makes the types in this assembly not visible to COM components. If
-// you need to access a type in this assembly from COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0bb0eff0-2fb1-4348-b150-2746b82252b6")]
 
 // Version information for an assembly consists of the following four values:
 // 
