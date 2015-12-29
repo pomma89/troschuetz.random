@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Portable", "Platform Specific\Troschuetz.Random.Portable\Troschuetz.Random.Portable.csproj", "{A1FF7728-605F-401A-A9FC-51FA56852E9E}"
 EndProject
@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NET40", "Platform Specific\Troschuetz.Random.NET40\Troschuetz.Random.NET40.csproj", "{6B947182-CF4B-45FE-A1AE-47A28C514040}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGetPackager", "Troschuetz.Random.NuGetPackager\Troschuetz.Random.NuGetPackager.csproj", "{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGet", "Troschuetz.Random.NuGetPackager\Troschuetz.Random.NuGet.csproj", "{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A1FF7728-605F-401A-A9FC-51FA56852E9E} = {A1FF7728-605F-401A-A9FC-51FA56852E9E}
 		{DA6AD56D-B1DB-478B-83A4-7378C77DF8CD} = {DA6AD56D-B1DB-478B-83A4-7378C77DF8CD}
