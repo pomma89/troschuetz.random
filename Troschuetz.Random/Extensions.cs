@@ -127,7 +127,7 @@ namespace Troschuetz.Random
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentNullException.IfIsNull(list, nameof(list), ErrorMessages.NullList);
-            Raise<ArgumentException>.IfIsEmpty(list, ErrorMessages.EmptyList);
+            RaiseArgumentException.If(list.Count == 0, ErrorMessages.EmptyList);
             var idx = generator.Next(list.Count);
             Debug.Assert(idx >= 0 && idx < list.Count);
             return list[idx];
@@ -147,7 +147,7 @@ namespace Troschuetz.Random
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentNullException.IfIsNull(list, nameof(list), ErrorMessages.NullList);
-            Raise<ArgumentException>.IfIsEmpty(list, ErrorMessages.EmptyList);
+            RaiseArgumentException.If(list.Count == 0, ErrorMessages.EmptyList);
             while (true)
             {
                 var idx = generator.Next(list.Count);
@@ -195,7 +195,7 @@ namespace Troschuetz.Random
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
-            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
+            RaiseArgumentException.If(double.IsPositiveInfinity(maxValue));
 
             while (true)
             {
@@ -226,7 +226,7 @@ namespace Troschuetz.Random
         {
             RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
-            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
+            RaiseArgumentException.If(double.IsPositiveInfinity(maxValue - minValue));
 
             while (true)
             {

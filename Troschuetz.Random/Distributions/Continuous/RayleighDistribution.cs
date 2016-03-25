@@ -70,7 +70,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _sigma; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidSigma(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidSigma(value), ErrorMessages.InvalidParams);
                 _sigma = value;
             }
         }
@@ -166,7 +166,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public RayleighDistribution(IGenerator generator, double sigma)
             : base(generator)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(sigma), ErrorMessages.InvalidParams);
+            RaiseArgumentOutOfRangeException.IfNot(IsValidParam(sigma), ErrorMessages.InvalidParams);
             _sigma = sigma;
         }
 

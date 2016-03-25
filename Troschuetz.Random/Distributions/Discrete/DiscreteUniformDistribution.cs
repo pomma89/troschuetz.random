@@ -82,7 +82,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             get { return _alpha; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -103,7 +103,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             get { return _beta; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidBeta(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidBeta(value), ErrorMessages.InvalidParams);
                 _beta = value;
             }
         }
@@ -219,7 +219,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public DiscreteUniformDistribution(IGenerator generator, int alpha, int beta) : base(generator)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            RaiseArgumentOutOfRangeException.IfNot(AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _beta = beta;
         }

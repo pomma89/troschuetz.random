@@ -52,40 +52,48 @@ namespace Troschuetz.Random.Tests
                 Assert.NotNull(dist.Mode);
                 Assert.False(dist.Mode.Any(double.IsNaN));
             }
+#pragma warning disable CC0004 // Catch block cannot be empty
             catch (NotSupportedException)
             {
                 // Mode may be undefined
             }
+#pragma warning restore CC0004 // Catch block cannot be empty
 
             try
             {
                 var c = ApproxEquals(dist.Mean, mean);
                 Assert.True(c, "Wrong mean! Expected ({0}), found ({1})", dist.Mean, mean);
             }
+#pragma warning disable CC0004 // Catch block cannot be empty
             catch (NotSupportedException)
             {
                 // Mean may be undefined
             }
+#pragma warning restore CC0004 // Catch block cannot be empty
 
             try
             {
                 var c = ApproxEquals(dist.Median, median);
                 Assert.True(c, "Wrong median! Expected ({0}), found ({1})", dist.Median, median);
             }
+#pragma warning disable CC0004 // Catch block cannot be empty
             catch (NotSupportedException)
             {
                 // Median may be undefined
             }
+#pragma warning restore CC0004 // Catch block cannot be empty
 
             try
             {
                 var c = ApproxEquals(dist.Variance, variance);
                 Assert.True(c, "Wrong variance! Expected ({0}), found ({1})", dist.Variance, variance);
             }
+#pragma warning disable CC0004 // Catch block cannot be empty
             catch (NotSupportedException)
             {
                 // Variance may be undefined
             }
+#pragma warning restore CC0004 // Catch block cannot be empty
         }
 
         static IList<double> FilterSeries(double[] series, IDistribution dist)

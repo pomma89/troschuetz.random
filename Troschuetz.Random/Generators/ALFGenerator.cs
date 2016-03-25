@@ -99,7 +99,7 @@ namespace Troschuetz.Random.Generators
             get { return _shortLag; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidShortLag(value));
+                RaiseArgumentOutOfRangeException.IfNot(IsValidShortLag(value));
                 _shortLag = value;
             }
         }
@@ -118,7 +118,7 @@ namespace Troschuetz.Random.Generators
             get { return _longLag; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidShortLag(value));
+                RaiseArgumentOutOfRangeException.IfNot(IsValidShortLag(value));
                 _longLag = value;
                 Reset();
             }

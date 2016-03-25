@@ -78,7 +78,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -179,7 +179,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public ChiDistribution(IGenerator generator, int alpha)
             : base(generator)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(alpha), ErrorMessages.InvalidParams);
+            RaiseArgumentOutOfRangeException.IfNot(IsValidParam(alpha), ErrorMessages.InvalidParams);
             _alpha = alpha;
         }
 
