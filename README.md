@@ -1,5 +1,5 @@
-Troschuetz.Random - Easy random number generation
-=================================================
+Troschuetz.Random - Random number generator
+===========================================
 
 *Fully managed library providing various random number generators and distributions.*
 
@@ -251,3 +251,47 @@ namespace Troschuetz.Random.Examples
     }
 }
 ```
+
+## Benchmarks ##
+
+All benchmarks are implemented with [BenchmarkDotNet](https://github.com/PerfDotNet/BenchmarkDotNet).
+
+### IGenerator.NextDouble ###
+
+```ini
+
+BenchmarkDotNet=v0.9.4.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=AMD A10-7850K Radeon R7, 12 Compute Cores 4C+8G, ProcessorCount=4
+Frequency=14318180 ticks, Resolution=69.8413 ns, Timer=HPET
+HostCLR=MS.NET 4.0.30319.42000, Arch=32-bit RELEASE
+JitModules=clrjit-v4.6.1073.0
+
+Type=NextDoubleComparison  Mode=Throughput  
+
+```
+                 Method | Platform |       Jit |     Median |    StdDev |
+----------------------- |--------- |---------- |----------- |---------- |
+         NextDouble_ALF |      X64 | LegacyJit |  5.5984 ns | 0.1719 ns |
+         NextDouble_ALF |      X64 |    RyuJit |  6.5872 ns | 0.8043 ns |
+         NextDouble_ALF |      X86 | LegacyJit |  6.1549 ns | 0.9234 ns |
+     NextDouble_MT19937 |      X64 | LegacyJit |  8.6159 ns | 0.1740 ns |
+     NextDouble_MT19937 |      X64 |    RyuJit |  9.4312 ns | 0.1711 ns |
+     NextDouble_MT19937 |      X86 | LegacyJit |  9.6557 ns | 0.1818 ns |
+         NextDouble_NR3 |      X64 | LegacyJit |  7.3716 ns | 0.1848 ns |
+         NextDouble_NR3 |      X64 |    RyuJit |  5.3761 ns | 0.1471 ns |
+         NextDouble_NR3 |      X86 | LegacyJit | 18.8395 ns | 0.4251 ns |
+       NextDouble_NR3Q1 |      X64 | LegacyJit |  5.6026 ns | 0.1195 ns |
+       NextDouble_NR3Q1 |      X64 |    RyuJit |  4.9740 ns | 0.1402 ns |
+       NextDouble_NR3Q1 |      X86 | LegacyJit | 15.0855 ns | 0.3839 ns |
+       NextDouble_NR3Q2 |      X64 | LegacyJit |  5.2523 ns | 0.1465 ns |
+       NextDouble_NR3Q2 |      X64 |    RyuJit |  5.0888 ns | 0.1620 ns |
+       NextDouble_NR3Q2 |      X86 | LegacyJit | 10.9995 ns | 0.2604 ns |
+    NextDouble_Standard |      X64 | LegacyJit | 15.1002 ns | 0.5099 ns |
+    NextDouble_Standard |      X64 |    RyuJit | 14.8925 ns | 0.4709 ns |
+    NextDouble_Standard |      X86 | LegacyJit | 14.2089 ns | 0.2473 ns |
+ NextDouble_XorShift128 |      X64 | LegacyJit |  4.1824 ns | 0.1384 ns |
+ NextDouble_XorShift128 |      X64 |    RyuJit |  3.9391 ns | 0.1851 ns |
+ NextDouble_XorShift128 |      X86 | LegacyJit |  8.6706 ns | 0.1574 ns |
+
+### IGenerator.NextBytes ###

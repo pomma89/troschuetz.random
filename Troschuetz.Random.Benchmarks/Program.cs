@@ -28,6 +28,7 @@ namespace Troschuetz.Random.Benchmarks
         {
             var switcher = new BenchmarkSwitcher(new[]
             {
+                typeof(Generators.NextBytesComparison),
                 typeof(Generators.NextDoubleComparison),
             });
             switcher.Run(args);
