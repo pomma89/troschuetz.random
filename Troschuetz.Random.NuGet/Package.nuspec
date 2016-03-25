@@ -3,7 +3,7 @@
 <package>
     <metadata>
         <id>Troschuetz.Random</id>
-        <version>4.0.3</version>
+        <version>4.0.4</version>
         <title>Troschuetz.Random - Easy random number generation</title>
         <authors>Stefan Troschütz &lt;stefan@troschuetz.de&gt;</authors>
         <owners>Alessio Parma &lt;alessio.parma@gmail.com&gt;</owners>
@@ -19,7 +19,7 @@ You can find the modified source code and the available documentation at the pro
         </releaseNotes>
         <summary>Fully managed library providing various random number generators and distributions.</summary>
         <language>en-US</language>
-        <projectUrl>https://bitbucket.org/pomma89/troschuetz.random/overview</projectUrl>
+        <projectUrl>https://github.com/pomma89/Troschuetz.Random</projectUrl>
         <iconUrl>https://googledrive.com/host/0B8v0ikF4z2BiR29YQmxfSlE1Sms/Progetti/Troschuetz.Random/logo-128.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <licenseUrl>http://opensource.org/licenses/lgpl-2.1.php</licenseUrl>
