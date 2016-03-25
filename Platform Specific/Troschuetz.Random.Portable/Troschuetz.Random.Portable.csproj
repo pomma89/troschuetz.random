@@ -167,10 +167,8 @@
   <Import Project="..\..\Troschuetz.Random\Troschuetz.Random.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if not exist "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81" mkdir "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81"
-copy "$(TargetDir)Troschuetz.Random.dll" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81"
-copy "$(TargetDir)Troschuetz.Random.pdb" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81"
-copy "$(TargetDir)Troschuetz.Random.xml" "$(SolutionDir)Troschuetz.Random.NuGetPackager/lib/portable-net45+win8+wp8+wpa81"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
