@@ -39,8 +39,7 @@ namespace Troschuetz.Random.Tester
         IContainer components;
 
         #region Fields
-
-        DataGridViewTextBoxColumn booleans;
+        
         Button buttonClear;
         Button buttonDeselect;
         Button buttonDeselectAll;
@@ -84,12 +83,6 @@ namespace Troschuetz.Random.Tester
         /// </summary>
         SortedList<string, Type> distributions;
 
-        DataGridViewTextBoxColumn doubles;
-        DataGridViewTextBoxColumn doublesMax;
-        DataGridViewTextBoxColumn doublesMinMax;
-
-        DataGridViewTextBoxColumn generator;
-
         /// <summary>
         ///   Stores <see cref="Type"/> objects of inheritors of Generator type.
         /// </summary>
@@ -97,10 +90,7 @@ namespace Troschuetz.Random.Tester
 
         GroupBox groupBoxDistribution1;
         GroupBox groupBoxDistribution2;
-
-        DataGridViewTextBoxColumn integers;
-        DataGridViewTextBoxColumn integersMax;
-        DataGridViewTextBoxColumn integersMinMax;
+        
         Label label1;
         Label label17;
         Label label18;
@@ -112,14 +102,6 @@ namespace Troschuetz.Random.Tester
         Label label7;
         Label label8;
         Label label9;
-        DataGridViewTextBoxColumn next;
-        DataGridViewTextBoxColumn nextBoolean;
-        DataGridViewTextBoxColumn nextBytes;
-        DataGridViewTextBoxColumn nextDouble;
-        DataGridViewTextBoxColumn nextDoubleMax;
-        DataGridViewTextBoxColumn nextDoubleMinMax;
-        DataGridViewTextBoxColumn nextMax;
-        DataGridViewTextBoxColumn nextMinMax;
         NumericUpDown numericUpDownGenSamples;
         NumericUpDown numericUpDownMaximum;
         NumericUpDown numericUpDownMinimum;
@@ -142,8 +124,7 @@ namespace Troschuetz.Random.Tester
         ///   Stores the <see cref="Type"/> object for the Generator type.
         /// </summary>
         Type typeGenerator;
-
-        DataGridViewTextBoxColumn unit;
+        
         private DataGridViewTextBoxColumn Generator;
         private DataGridViewTextBoxColumn Next;
         private DataGridViewTextBoxColumn NextMax;
@@ -289,15 +270,15 @@ namespace Troschuetz.Random.Tester
             this.tabPageGenerators.Controls.Add(this.buttonSelect);
             this.tabPageGenerators.Controls.Add(this.buttonDeselect);
             this.tabPageGenerators.Location = new System.Drawing.Point(4, 22);
-            this.tabPageGenerators.Name = "tabPageGenerators";
+            this.tabPageGenerators.Name = nameof(tabPageGenerators);
             this.tabPageGenerators.Size = new System.Drawing.Size(1244, 710);
             this.tabPageGenerators.TabIndex = 1;
-            this.tabPageGenerators.Text = "Generators";
+            this.tabPageGenerators.Text = nameof(Generators);
             this.tabPageGenerators.UseVisualStyleBackColor = true;
             // checkBoxBooleans
             this.checkBoxBooleans.AutoSize = true;
             this.checkBoxBooleans.Location = new System.Drawing.Point(936, 48);
-            this.checkBoxBooleans.Name = "checkBoxBooleans";
+            this.checkBoxBooleans.Name = nameof(checkBoxBooleans);
             this.checkBoxBooleans.Size = new System.Drawing.Size(76, 17);
             this.checkBoxBooleans.TabIndex = 20;
             this.checkBoxBooleans.Text = "Booleans()";
@@ -306,7 +287,7 @@ namespace Troschuetz.Random.Tester
             // checkBoxDoublesMinMax
             this.checkBoxDoublesMinMax.AutoSize = true;
             this.checkBoxDoublesMinMax.Location = new System.Drawing.Point(779, 72);
-            this.checkBoxDoublesMinMax.Name = "checkBoxDoublesMinMax";
+            this.checkBoxDoublesMinMax.Name = nameof(checkBoxDoublesMinMax);
             this.checkBoxDoublesMinMax.Size = new System.Drawing.Size(151, 17);
             this.checkBoxDoublesMinMax.TabIndex = 19;
             this.checkBoxDoublesMinMax.Text = "DistributedDoubles(-99,99)";
@@ -315,7 +296,7 @@ namespace Troschuetz.Random.Tester
             // checkBoxDoublesMax
             this.checkBoxDoublesMax.AutoSize = true;
             this.checkBoxDoublesMax.Location = new System.Drawing.Point(779, 48);
-            this.checkBoxDoublesMax.Name = "checkBoxDoublesMax";
+            this.checkBoxDoublesMax.Name = nameof(checkBoxDoublesMax);
             this.checkBoxDoublesMax.Size = new System.Drawing.Size(133, 17);
             this.checkBoxDoublesMax.TabIndex = 18;
             this.checkBoxDoublesMax.Text = "DistributedDoubles(99)";
@@ -326,7 +307,7 @@ namespace Troschuetz.Random.Tester
             this.checkBoxDoubles.Checked = true;
             this.checkBoxDoubles.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxDoubles.Location = new System.Drawing.Point(779, 24);
-            this.checkBoxDoubles.Name = "checkBoxDoubles";
+            this.checkBoxDoubles.Name = nameof(checkBoxDoubles);
             this.checkBoxDoubles.Size = new System.Drawing.Size(121, 17);
             this.checkBoxDoubles.TabIndex = 17;
             this.checkBoxDoubles.Text = "DistributedDoubles()";
@@ -335,7 +316,7 @@ namespace Troschuetz.Random.Tester
             // checkBoxIntegersMinMax
             this.checkBoxIntegersMinMax.AutoSize = true;
             this.checkBoxIntegersMinMax.Location = new System.Drawing.Point(625, 72);
-            this.checkBoxIntegersMinMax.Name = "checkBoxIntegersMinMax";
+            this.checkBoxIntegersMinMax.Name = nameof(checkBoxIntegersMinMax);
             this.checkBoxIntegersMinMax.Size = new System.Drawing.Size(150, 17);
             this.checkBoxIntegersMinMax.TabIndex = 16;
             this.checkBoxIntegersMinMax.Text = "DistributedIntegers(-99,99)";
@@ -344,7 +325,7 @@ namespace Troschuetz.Random.Tester
             // checkBoxIntegersMax
             this.checkBoxIntegersMax.AutoSize = true;
             this.checkBoxIntegersMax.Location = new System.Drawing.Point(625, 48);
-            this.checkBoxIntegersMax.Name = "checkBoxIntegersMax";
+            this.checkBoxIntegersMax.Name = nameof(checkBoxIntegersMax);
             this.checkBoxIntegersMax.Size = new System.Drawing.Size(132, 17);
             this.checkBoxIntegersMax.TabIndex = 15;
             this.checkBoxIntegersMax.Text = "DistributedIntegers(99)";
@@ -355,7 +336,7 @@ namespace Troschuetz.Random.Tester
             this.checkBoxIntegers.Checked = true;
             this.checkBoxIntegers.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxIntegers.Location = new System.Drawing.Point(625, 24);
-            this.checkBoxIntegers.Name = "checkBoxIntegers";
+            this.checkBoxIntegers.Name = nameof(checkBoxIntegers);
             this.checkBoxIntegers.Size = new System.Drawing.Size(120, 17);
             this.checkBoxIntegers.TabIndex = 13;
             this.checkBoxIntegers.Text = "DistributedIntegers()";
@@ -364,7 +345,7 @@ namespace Troschuetz.Random.Tester
             // checkBoxNextBytes
             this.checkBoxNextBytes.AutoSize = true;
             this.checkBoxNextBytes.Location = new System.Drawing.Point(936, 71);
-            this.checkBoxNextBytes.Name = "checkBoxNextBytes";
+            this.checkBoxNextBytes.Name = nameof(checkBoxNextBytes);
             this.checkBoxNextBytes.Size = new System.Drawing.Size(118, 17);
             this.checkBoxNextBytes.TabIndex = 12;
             this.checkBoxNextBytes.Text = "NextBytes(byte[64])";
@@ -375,7 +356,7 @@ namespace Troschuetz.Random.Tester
             this.checkBoxNextBoolean.Checked = true;
             this.checkBoxNextBoolean.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxNextBoolean.Location = new System.Drawing.Point(936, 25);
-            this.checkBoxNextBoolean.Name = "checkBoxNextBoolean";
+            this.checkBoxNextBoolean.Name = nameof(checkBoxNextBoolean);
             this.checkBoxNextBoolean.Size = new System.Drawing.Size(93, 17);
             this.checkBoxNextBoolean.TabIndex = 12;
             this.checkBoxNextBoolean.Text = "NextBoolean()";
@@ -384,7 +365,7 @@ namespace Troschuetz.Random.Tester
             // checkBoxNextDoubleMinMax
             this.checkBoxNextDoubleMinMax.AutoSize = true;
             this.checkBoxNextDoubleMinMax.Location = new System.Drawing.Point(500, 72);
-            this.checkBoxNextDoubleMinMax.Name = "checkBoxNextDoubleMinMax";
+            this.checkBoxNextDoubleMinMax.Name = nameof(checkBoxNextDoubleMinMax);
             this.checkBoxNextDoubleMinMax.Size = new System.Drawing.Size(118, 17);
             this.checkBoxNextDoubleMinMax.TabIndex = 12;
             this.checkBoxNextDoubleMinMax.Text = "NextDouble(-99,99)";
@@ -393,7 +374,7 @@ namespace Troschuetz.Random.Tester
             // checkBoxNextDoubleMax
             this.checkBoxNextDoubleMax.AutoSize = true;
             this.checkBoxNextDoubleMax.Location = new System.Drawing.Point(500, 48);
-            this.checkBoxNextDoubleMax.Name = "checkBoxNextDoubleMax";
+            this.checkBoxNextDoubleMax.Name = nameof(checkBoxNextDoubleMax);
             this.checkBoxNextDoubleMax.Size = new System.Drawing.Size(100, 17);
             this.checkBoxNextDoubleMax.TabIndex = 12;
             this.checkBoxNextDoubleMax.Text = "NextDouble(99)";
@@ -402,7 +383,7 @@ namespace Troschuetz.Random.Tester
             // checkBoxNextMinMax
             this.checkBoxNextMinMax.AutoSize = true;
             this.checkBoxNextMinMax.Location = new System.Drawing.Point(408, 72);
-            this.checkBoxNextMinMax.Name = "checkBoxNextMinMax";
+            this.checkBoxNextMinMax.Name = nameof(checkBoxNextMinMax);
             this.checkBoxNextMinMax.Size = new System.Drawing.Size(84, 17);
             this.checkBoxNextMinMax.TabIndex = 12;
             this.checkBoxNextMinMax.Text = "Next(-99,99)";
@@ -413,7 +394,7 @@ namespace Troschuetz.Random.Tester
             this.checkBoxNextDouble.Checked = true;
             this.checkBoxNextDouble.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxNextDouble.Location = new System.Drawing.Point(500, 24);
-            this.checkBoxNextDouble.Name = "checkBoxNextDouble";
+            this.checkBoxNextDouble.Name = nameof(checkBoxNextDouble);
             this.checkBoxNextDouble.Size = new System.Drawing.Size(88, 17);
             this.checkBoxNextDouble.TabIndex = 12;
             this.checkBoxNextDouble.Text = "NextDouble()";
@@ -422,7 +403,7 @@ namespace Troschuetz.Random.Tester
             // checkBoxNextMax
             this.checkBoxNextMax.AutoSize = true;
             this.checkBoxNextMax.Location = new System.Drawing.Point(408, 48);
-            this.checkBoxNextMax.Name = "checkBoxNextMax";
+            this.checkBoxNextMax.Name = nameof(checkBoxNextMax);
             this.checkBoxNextMax.Size = new System.Drawing.Size(66, 17);
             this.checkBoxNextMax.TabIndex = 12;
             this.checkBoxNextMax.Text = "Next(99)";
@@ -433,7 +414,7 @@ namespace Troschuetz.Random.Tester
             this.checkBoxNext.Checked = true;
             this.checkBoxNext.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxNext.Location = new System.Drawing.Point(408, 24);
-            this.checkBoxNext.Name = "checkBoxNext";
+            this.checkBoxNext.Name = nameof(checkBoxNext);
             this.checkBoxNext.Size = new System.Drawing.Size(54, 17);
             this.checkBoxNext.TabIndex = 12;
             this.checkBoxNext.Text = "Next()";
@@ -466,7 +447,7 @@ namespace Troschuetz.Random.Tester
             this.NextBytes,
             this.Unit});
             this.dataGridViewGenerators.Location = new System.Drawing.Point(208, 128);
-            this.dataGridViewGenerators.Name = "dataGridViewGenerators";
+            this.dataGridViewGenerators.Name = nameof(dataGridViewGenerators);
             this.dataGridViewGenerators.ReadOnly = true;
             this.dataGridViewGenerators.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dataGridViewGenerators.ShowEditingIcon = false;
@@ -475,104 +456,104 @@ namespace Troschuetz.Random.Tester
             // Generator
             this.Generator.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.Generator.Frozen = true;
-            this.Generator.HeaderText = "Generator";
-            this.Generator.Name = "Generator";
+            this.Generator.HeaderText = nameof(Generator);
+            this.Generator.Name = nameof(Generator);
             this.Generator.ReadOnly = true;
             this.Generator.Width = 79;
             // Next
             this.Next.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.Next.HeaderText = "Next()";
-            this.Next.Name = "Next";
+            this.Next.Name = nameof(Next);
             this.Next.ReadOnly = true;
             this.Next.Width = 60;
             // NextMax
             this.NextMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.NextMax.HeaderText = "Next(99)";
-            this.NextMax.Name = "NextMax";
+            this.NextMax.Name = nameof(NextMax);
             this.NextMax.ReadOnly = true;
             this.NextMax.Visible = false;
             // NextMinMax
             this.NextMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.NextMinMax.HeaderText = "Next(-99,99)";
-            this.NextMinMax.Name = "NextMinMax";
+            this.NextMinMax.Name = nameof(NextMinMax);
             this.NextMinMax.ReadOnly = true;
             this.NextMinMax.Visible = false;
             // NextDouble
             this.NextDouble.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.NextDouble.HeaderText = "NextDouble()";
-            this.NextDouble.Name = "NextDouble";
+            this.NextDouble.Name = nameof(NextDouble);
             this.NextDouble.ReadOnly = true;
             this.NextDouble.Width = 94;
             // NextDoubleMax
             this.NextDoubleMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.NextDoubleMax.HeaderText = "NextDouble(99)";
-            this.NextDoubleMax.Name = "NextDoubleMax";
+            this.NextDoubleMax.Name = nameof(NextDoubleMax);
             this.NextDoubleMax.ReadOnly = true;
             this.NextDoubleMax.Visible = false;
             // NextDoubleMinMax
             this.NextDoubleMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.NextDoubleMinMax.HeaderText = "NextDouble(-99,99)";
-            this.NextDoubleMinMax.Name = "NextDoubleMinMax";
+            this.NextDoubleMinMax.Name = nameof(NextDoubleMinMax);
             this.NextDoubleMinMax.ReadOnly = true;
             this.NextDoubleMinMax.Visible = false;
             // Integers
             this.Integers.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.Integers.HeaderText = "DistributedIntegers()";
-            this.Integers.Name = "Integers";
+            this.Integers.Name = nameof(Integers);
             this.Integers.ReadOnly = true;
             this.Integers.Width = 126;
             // IntegersMax
             this.IntegersMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.IntegersMax.HeaderText = "DistributedIntegers(99)";
-            this.IntegersMax.Name = "IntegersMax";
+            this.IntegersMax.Name = nameof(IntegersMax);
             this.IntegersMax.ReadOnly = true;
             this.IntegersMax.Visible = false;
             // IntegersMinMax
             this.IntegersMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.IntegersMinMax.HeaderText = "DistributedIntegers(-99,99)";
-            this.IntegersMinMax.Name = "IntegersMinMax";
+            this.IntegersMinMax.Name = nameof(IntegersMinMax);
             this.IntegersMinMax.ReadOnly = true;
             this.IntegersMinMax.Visible = false;
             // Doubles
             this.Doubles.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.Doubles.HeaderText = "DistributedDoubles()";
-            this.Doubles.Name = "Doubles";
+            this.Doubles.Name = nameof(Doubles);
             this.Doubles.ReadOnly = true;
             this.Doubles.Width = 127;
             // DoublesMax
             this.DoublesMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.DoublesMax.HeaderText = "DistributedDoubles(99)";
-            this.DoublesMax.Name = "DoublesMax";
+            this.DoublesMax.Name = nameof(DoublesMax);
             this.DoublesMax.ReadOnly = true;
             this.DoublesMax.Visible = false;
             // DoublesMinMax
             this.DoublesMinMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.DoublesMinMax.HeaderText = "DistributedDoubles(-99,99)";
-            this.DoublesMinMax.Name = "DoublesMinMax";
+            this.DoublesMinMax.Name = nameof(DoublesMinMax);
             this.DoublesMinMax.ReadOnly = true;
             this.DoublesMinMax.Visible = false;
             // NextBoolean
             this.NextBoolean.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.NextBoolean.HeaderText = "NextBoolean()";
-            this.NextBoolean.Name = "NextBoolean";
+            this.NextBoolean.Name = nameof(NextBoolean);
             this.NextBoolean.ReadOnly = true;
             this.NextBoolean.Width = 99;
             // Booleans
             this.Booleans.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.Booleans.HeaderText = "Booleans()";
-            this.Booleans.Name = "Booleans";
+            this.Booleans.Name = nameof(Booleans);
             this.Booleans.ReadOnly = true;
             this.Booleans.Visible = false;
             // NextBytes
             this.NextBytes.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.NextBytes.HeaderText = "NextBytes(byte[64])";
-            this.NextBytes.Name = "NextBytes";
+            this.NextBytes.Name = nameof(NextBytes);
             this.NextBytes.ReadOnly = true;
             this.NextBytes.Visible = false;
             // Unit
             this.Unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.Unit.HeaderText = "";
-            this.Unit.Name = "Unit";
+            this.Unit.Name = nameof(Unit);
             this.Unit.ReadOnly = true;
             this.Unit.Width = 19;
             // numericUpDownGenSamples
@@ -587,7 +568,7 @@ namespace Troschuetz.Random.Tester
             0,
             0,
             0});
-            this.numericUpDownGenSamples.Name = "numericUpDownGenSamples";
+            this.numericUpDownGenSamples.Name = nameof(numericUpDownGenSamples);
             this.numericUpDownGenSamples.Size = new System.Drawing.Size(80, 20);
             this.numericUpDownGenSamples.TabIndex = 9;
             this.numericUpDownGenSamples.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -598,13 +579,13 @@ namespace Troschuetz.Random.Tester
             0});
             // label7
             this.label7.Location = new System.Drawing.Point(208, 64);
-            this.label7.Name = "label7";
+            this.label7.Name = nameof(label7);
             this.label7.Size = new System.Drawing.Size(112, 16);
             this.label7.TabIndex = 8;
             this.label7.Text = "Number of samples:";
             // buttonTestGenerators
             this.buttonTestGenerators.Location = new System.Drawing.Point(208, 88);
-            this.buttonTestGenerators.Name = "buttonTestGenerators";
+            this.buttonTestGenerators.Name = nameof(buttonTestGenerators);
             this.buttonTestGenerators.Size = new System.Drawing.Size(184, 24);
             this.buttonTestGenerators.TabIndex = 6;
             this.buttonTestGenerators.Text = "Test selected generators";
@@ -612,25 +593,25 @@ namespace Troschuetz.Random.Tester
             // checkedListBoxGenerators
             this.checkedListBoxGenerators.CheckOnClick = true;
             this.checkedListBoxGenerators.Location = new System.Drawing.Point(8, 24);
-            this.checkedListBoxGenerators.Name = "checkedListBoxGenerators";
+            this.checkedListBoxGenerators.Name = nameof(checkedListBoxGenerators);
             this.checkedListBoxGenerators.Size = new System.Drawing.Size(184, 649);
             this.checkedListBoxGenerators.TabIndex = 5;
             // label6
             this.label6.Location = new System.Drawing.Point(8, 8);
-            this.label6.Name = "label6";
+            this.label6.Name = nameof(label6);
             this.label6.Size = new System.Drawing.Size(136, 16);
             this.label6.TabIndex = 4;
             this.label6.Text = "Select generators to test:";
             // buttonSelect
             this.buttonSelect.Location = new System.Drawing.Point(208, 24);
-            this.buttonSelect.Name = "buttonSelect";
+            this.buttonSelect.Name = nameof(buttonSelect);
             this.buttonSelect.Size = new System.Drawing.Size(88, 24);
             this.buttonSelect.TabIndex = 6;
             this.buttonSelect.Text = "Select all";
             this.buttonSelect.Click += new System.EventHandler(this.ButtonSelect_Click);
             // buttonDeselect
             this.buttonDeselect.Location = new System.Drawing.Point(304, 24);
-            this.buttonDeselect.Name = "buttonDeselect";
+            this.buttonDeselect.Name = nameof(buttonDeselect);
             this.buttonDeselect.Size = new System.Drawing.Size(88, 24);
             this.buttonDeselect.TabIndex = 6;
             this.buttonDeselect.Text = "Deselect all";
@@ -647,7 +628,7 @@ namespace Troschuetz.Random.Tester
             this.tabPageDistributions2.Controls.Add(this.buttonSelectAll);
             this.tabPageDistributions2.Controls.Add(this.buttonDeselectAll);
             this.tabPageDistributions2.Location = new System.Drawing.Point(4, 22);
-            this.tabPageDistributions2.Name = "tabPageDistributions2";
+            this.tabPageDistributions2.Name = nameof(tabPageDistributions2);
             this.tabPageDistributions2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageDistributions2.Size = new System.Drawing.Size(1244, 710);
             this.tabPageDistributions2.TabIndex = 2;
@@ -656,18 +637,18 @@ namespace Troschuetz.Random.Tester
             // comboBoxGenerator2
             this.comboBoxGenerator2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxGenerator2.Location = new System.Drawing.Point(208, 24);
-            this.comboBoxGenerator2.Name = "comboBoxGenerator2";
+            this.comboBoxGenerator2.Name = nameof(comboBoxGenerator2);
             this.comboBoxGenerator2.Size = new System.Drawing.Size(184, 21);
             this.comboBoxGenerator2.TabIndex = 19;
             // label9
             this.label9.Location = new System.Drawing.Point(208, 8);
-            this.label9.Name = "label9";
+            this.label9.Name = nameof(label9);
             this.label9.Size = new System.Drawing.Size(168, 16);
             this.label9.TabIndex = 20;
             this.label9.Text = "Select an underlying generator :";
             // richTextBoxDistributionTest
             this.richTextBoxDistributionTest.Location = new System.Drawing.Point(208, 88);
-            this.richTextBoxDistributionTest.Name = "richTextBoxDistributionTest";
+            this.richTextBoxDistributionTest.Name = nameof(richTextBoxDistributionTest);
             this.richTextBoxDistributionTest.ReadOnly = true;
             this.richTextBoxDistributionTest.Size = new System.Drawing.Size(1030, 584);
             this.richTextBoxDistributionTest.TabIndex = 18;
@@ -684,7 +665,7 @@ namespace Troschuetz.Random.Tester
             0,
             0,
             0});
-            this.numericUpDownSamples2.Name = "numericUpDownSamples2";
+            this.numericUpDownSamples2.Name = nameof(numericUpDownSamples2);
             this.numericUpDownSamples2.Size = new System.Drawing.Size(80, 20);
             this.numericUpDownSamples2.TabIndex = 17;
             this.numericUpDownSamples2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -695,13 +676,13 @@ namespace Troschuetz.Random.Tester
             0});
             // label17
             this.label17.Location = new System.Drawing.Point(400, 24);
-            this.label17.Name = "label17";
+            this.label17.Name = nameof(label17);
             this.label17.Size = new System.Drawing.Size(112, 16);
             this.label17.TabIndex = 16;
             this.label17.Text = "Number of samples:";
             // buttonTest2
             this.buttonTest2.Location = new System.Drawing.Point(400, 56);
-            this.buttonTest2.Name = "buttonTest2";
+            this.buttonTest2.Name = nameof(buttonTest2);
             this.buttonTest2.Size = new System.Drawing.Size(184, 24);
             this.buttonTest2.TabIndex = 15;
             this.buttonTest2.Text = "Test selected distributions";
@@ -709,25 +690,25 @@ namespace Troschuetz.Random.Tester
             // checkedListBoxDistributions
             this.checkedListBoxDistributions.CheckOnClick = true;
             this.checkedListBoxDistributions.Location = new System.Drawing.Point(8, 23);
-            this.checkedListBoxDistributions.Name = "checkedListBoxDistributions";
+            this.checkedListBoxDistributions.Name = nameof(checkedListBoxDistributions);
             this.checkedListBoxDistributions.Size = new System.Drawing.Size(184, 649);
             this.checkedListBoxDistributions.TabIndex = 12;
             // label18
             this.label18.Location = new System.Drawing.Point(8, 7);
-            this.label18.Name = "label18";
+            this.label18.Name = nameof(label18);
             this.label18.Size = new System.Drawing.Size(136, 16);
             this.label18.TabIndex = 11;
             this.label18.Text = "Select distributions to test:";
             // buttonSelectAll
             this.buttonSelectAll.Location = new System.Drawing.Point(208, 56);
-            this.buttonSelectAll.Name = "buttonSelectAll";
+            this.buttonSelectAll.Name = nameof(buttonSelectAll);
             this.buttonSelectAll.Size = new System.Drawing.Size(88, 24);
             this.buttonSelectAll.TabIndex = 14;
             this.buttonSelectAll.Text = "Select all";
             this.buttonSelectAll.Click += new System.EventHandler(this.ButtonSelectAll_Click);
             // buttonDeselectAll
             this.buttonDeselectAll.Location = new System.Drawing.Point(304, 56);
-            this.buttonDeselectAll.Name = "buttonDeselectAll";
+            this.buttonDeselectAll.Name = nameof(buttonDeselectAll);
             this.buttonDeselectAll.Size = new System.Drawing.Size(88, 24);
             this.buttonDeselectAll.TabIndex = 13;
             this.buttonDeselectAll.Text = "Deselect all";
@@ -754,7 +735,7 @@ namespace Troschuetz.Random.Tester
             this.tabPageDistributions1.Controls.Add(this.richTextBoxTest);
             this.tabPageDistributions1.Controls.Add(this.zedGraphControl);
             this.tabPageDistributions1.Location = new System.Drawing.Point(4, 22);
-            this.tabPageDistributions1.Name = "tabPageDistributions1";
+            this.tabPageDistributions1.Name = nameof(tabPageDistributions1);
             this.tabPageDistributions1.Size = new System.Drawing.Size(1244, 710);
             this.tabPageDistributions1.TabIndex = 0;
             this.tabPageDistributions1.Text = "Distributions I";
@@ -762,63 +743,63 @@ namespace Troschuetz.Random.Tester
             // comboBoxGenerator
             this.comboBoxGenerator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxGenerator.Location = new System.Drawing.Point(464, 8);
-            this.comboBoxGenerator.Name = "comboBoxGenerator";
+            this.comboBoxGenerator.Name = nameof(comboBoxGenerator);
             this.comboBoxGenerator.Size = new System.Drawing.Size(184, 21);
             this.comboBoxGenerator.TabIndex = 11;
             // label1
             this.label1.Location = new System.Drawing.Point(304, 8);
-            this.label1.Name = "label1";
+            this.label1.Name = nameof(label1);
             this.label1.Size = new System.Drawing.Size(168, 16);
             this.label1.TabIndex = 12;
             this.label1.Text = "Select an underlying generator :";
             // comboBoxDistribution
             this.comboBoxDistribution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxDistribution.Location = new System.Drawing.Point(112, 8);
-            this.comboBoxDistribution.Name = "comboBoxDistribution";
+            this.comboBoxDistribution.Name = nameof(comboBoxDistribution);
             this.comboBoxDistribution.Size = new System.Drawing.Size(184, 21);
             this.comboBoxDistribution.TabIndex = 1;
             // label8
             this.label8.Location = new System.Drawing.Point(8, 8);
-            this.label8.Name = "label8";
+            this.label8.Name = nameof(label8);
             this.label8.Size = new System.Drawing.Size(112, 16);
             this.label8.TabIndex = 2;
             this.label8.Text = "Select a distribution:";
             // groupBoxDistribution1
             this.groupBoxDistribution1.Location = new System.Drawing.Point(8, 40);
-            this.groupBoxDistribution1.Name = "groupBoxDistribution1";
+            this.groupBoxDistribution1.Name = nameof(groupBoxDistribution1);
             this.groupBoxDistribution1.Size = new System.Drawing.Size(200, 24);
             this.groupBoxDistribution1.TabIndex = 3;
             this.groupBoxDistribution1.TabStop = false;
             this.groupBoxDistribution1.Text = "Distribution Characteristics";
             // groupBoxDistribution2
             this.groupBoxDistribution2.Location = new System.Drawing.Point(8, 72);
-            this.groupBoxDistribution2.Name = "groupBoxDistribution2";
+            this.groupBoxDistribution2.Name = nameof(groupBoxDistribution2);
             this.groupBoxDistribution2.Size = new System.Drawing.Size(200, 24);
             this.groupBoxDistribution2.TabIndex = 4;
             this.groupBoxDistribution2.TabStop = false;
             this.groupBoxDistribution2.Text = "Distribution Parameters";
             // buttonClear
             this.buttonClear.Location = new System.Drawing.Point(112, 473);
-            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Name = nameof(buttonClear);
             this.buttonClear.Size = new System.Drawing.Size(96, 24);
             this.buttonClear.TabIndex = 6;
             this.buttonClear.Text = "Clear histogram";
             this.buttonClear.Click += new System.EventHandler(this.ButtonClear_Click);
             // label4
             this.label4.Location = new System.Drawing.Point(8, 425);
-            this.label4.Name = "label4";
+            this.label4.Name = nameof(label4);
             this.label4.Size = new System.Drawing.Size(112, 16);
             this.label4.TabIndex = 5;
             this.label4.Text = "Histogram minimum:";
             // label2
             this.label2.Location = new System.Drawing.Point(8, 361);
-            this.label2.Name = "label2";
+            this.label2.Name = nameof(label2);
             this.label2.Size = new System.Drawing.Size(96, 16);
             this.label2.TabIndex = 5;
             this.label2.Text = "Histogram steps:";
             // buttonTest
             this.buttonTest.Location = new System.Drawing.Point(8, 473);
-            this.buttonTest.Name = "buttonTest";
+            this.buttonTest.Name = nameof(buttonTest);
             this.buttonTest.Size = new System.Drawing.Size(96, 24);
             this.buttonTest.TabIndex = 6;
             this.buttonTest.Text = "Test distribution";
@@ -835,7 +816,7 @@ namespace Troschuetz.Random.Tester
             0,
             0,
             0});
-            this.numericUpDownSamples.Name = "numericUpDownSamples";
+            this.numericUpDownSamples.Name = nameof(numericUpDownSamples);
             this.numericUpDownSamples.Size = new System.Drawing.Size(96, 20);
             this.numericUpDownSamples.TabIndex = 7;
             this.numericUpDownSamples.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -856,7 +837,7 @@ namespace Troschuetz.Random.Tester
             0,
             0,
             0});
-            this.numericUpDownSteps.Name = "numericUpDownSteps";
+            this.numericUpDownSteps.Name = nameof(numericUpDownSteps);
             this.numericUpDownSteps.Size = new System.Drawing.Size(96, 20);
             this.numericUpDownSteps.TabIndex = 7;
             this.numericUpDownSteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -869,14 +850,14 @@ namespace Troschuetz.Random.Tester
             this.checkBoxSmooth.Checked = true;
             this.checkBoxSmooth.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxSmooth.Location = new System.Drawing.Point(8, 385);
-            this.checkBoxSmooth.Name = "checkBoxSmooth";
+            this.checkBoxSmooth.Name = nameof(checkBoxSmooth);
             this.checkBoxSmooth.Size = new System.Drawing.Size(200, 16);
             this.checkBoxSmooth.TabIndex = 10;
             this.checkBoxSmooth.Text = "Smooth histogram curves";
             this.checkBoxSmooth.CheckedChanged += new System.EventHandler(this.CheckBoxSmooth_CheckedChanged);
             // checkBoxHistogramBounds
             this.checkBoxHistogramBounds.Location = new System.Drawing.Point(8, 401);
-            this.checkBoxHistogramBounds.Name = "checkBoxHistogramBounds";
+            this.checkBoxHistogramBounds.Name = nameof(checkBoxHistogramBounds);
             this.checkBoxHistogramBounds.Size = new System.Drawing.Size(200, 16);
             this.checkBoxHistogramBounds.TabIndex = 9;
             this.checkBoxHistogramBounds.Text = "Specify fixed histogram bounds";
@@ -894,7 +875,7 @@ namespace Troschuetz.Random.Tester
             -1,
             -1,
             -2147483648});
-            this.numericUpDownMinimum.Name = "numericUpDownMinimum";
+            this.numericUpDownMinimum.Name = nameof(numericUpDownMinimum);
             this.numericUpDownMinimum.Size = new System.Drawing.Size(88, 20);
             this.numericUpDownMinimum.TabIndex = 7;
             this.numericUpDownMinimum.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -907,7 +888,7 @@ namespace Troschuetz.Random.Tester
             this.numericUpDownMinimum.Validated += new System.EventHandler(this.NumericUpDownMinimum_Validated);
             // label3
             this.label3.Location = new System.Drawing.Point(8, 337);
-            this.label3.Name = "label3";
+            this.label3.Name = nameof(label3);
             this.label3.Size = new System.Drawing.Size(112, 16);
             this.label3.TabIndex = 5;
             this.label3.Text = "Number of samples:";
@@ -924,7 +905,7 @@ namespace Troschuetz.Random.Tester
             -1,
             -1,
             -2147483648});
-            this.numericUpDownMaximum.Name = "numericUpDownMaximum";
+            this.numericUpDownMaximum.Name = nameof(numericUpDownMaximum);
             this.numericUpDownMaximum.Size = new System.Drawing.Size(88, 20);
             this.numericUpDownMaximum.TabIndex = 7;
             this.numericUpDownMaximum.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -937,20 +918,20 @@ namespace Troschuetz.Random.Tester
             this.numericUpDownMaximum.Validated += new System.EventHandler(this.NumericUpDownMaximum_Validated);
             // label5
             this.label5.Location = new System.Drawing.Point(8, 449);
-            this.label5.Name = "label5";
+            this.label5.Name = nameof(label5);
             this.label5.Size = new System.Drawing.Size(112, 16);
             this.label5.TabIndex = 5;
             this.label5.Text = "Histogram maximum:";
             // richTextBoxTest
             this.richTextBoxTest.Location = new System.Drawing.Point(8, 505);
-            this.richTextBoxTest.Name = "richTextBoxTest";
+            this.richTextBoxTest.Name = nameof(richTextBoxTest);
             this.richTextBoxTest.ReadOnly = true;
             this.richTextBoxTest.Size = new System.Drawing.Size(200, 165);
             this.richTextBoxTest.TabIndex = 8;
             this.richTextBoxTest.Text = "";
             // zedGraphControl
             this.zedGraphControl.Location = new System.Drawing.Point(216, 40);
-            this.zedGraphControl.Name = "zedGraphControl";
+            this.zedGraphControl.Name = nameof(zedGraphControl);
             this.zedGraphControl.ScrollGrace = 0D;
             this.zedGraphControl.ScrollMaxX = 0D;
             this.zedGraphControl.ScrollMaxY = 0D;
@@ -965,7 +946,7 @@ namespace Troschuetz.Random.Tester
             this.tabControl1.Controls.Add(this.tabPageDistributions2);
             this.tabControl1.Controls.Add(this.tabPageGenerators);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.Name = nameof(tabControl1);
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1252, 736);
             this.tabControl1.TabIndex = 11;
@@ -975,7 +956,7 @@ namespace Troschuetz.Random.Tester
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
-            this.Name = "FormMain";
+            this.Name = nameof(FormMain);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CodeProject Troschuetz.Random Tester";
             this.tabPageGenerators.ResumeLayout(false);
@@ -1010,10 +991,9 @@ namespace Troschuetz.Random.Tester
 
             LoadTroschuetzRandom();
         }
-
-        /// <summary>
-        ///   Clean up any resources being used.
-        /// </summary>
+        
+        /// <summary>Disposes of the resources (other than memory) used by the <see cref="T:System.Windows.Forms.Form" />.</summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources. </param>     
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -2196,7 +2176,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxNext_CheckedChanged(object sender, EventArgs e)
         {
-            next.Visible = checkBoxNext.Checked;
+            Next.Visible = checkBoxNext.Checked;
         }
 
         /// <summary>
@@ -2206,7 +2186,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxNextMax_CheckedChanged(object sender, EventArgs e)
         {
-            nextMax.Visible = checkBoxNextMax.Checked;
+            NextMax.Visible = checkBoxNextMax.Checked;
         }
 
         /// <summary>
@@ -2216,7 +2196,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxNextMinMax_CheckedChanged(object sender, EventArgs e)
         {
-            nextMinMax.Visible = checkBoxNextMinMax.Checked;
+            NextMinMax.Visible = checkBoxNextMinMax.Checked;
         }
 
         /// <summary>
@@ -2226,7 +2206,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxNextDouble_CheckedChanged(object sender, EventArgs e)
         {
-            nextDouble.Visible = checkBoxNextDouble.Checked;
+            NextDouble.Visible = checkBoxNextDouble.Checked;
         }
 
         /// <summary>
@@ -2236,7 +2216,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxNextDoubleMax_CheckedChanged(object sender, EventArgs e)
         {
-            nextDoubleMax.Visible = checkBoxNextDoubleMax.Checked;
+            NextDoubleMax.Visible = checkBoxNextDoubleMax.Checked;
         }
 
         /// <summary>
@@ -2246,7 +2226,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxNextDoubleMinMax_CheckedChanged(object sender, EventArgs e)
         {
-            nextDoubleMinMax.Visible = checkBoxNextDoubleMinMax.Checked;
+            NextDoubleMinMax.Visible = checkBoxNextDoubleMinMax.Checked;
         }
 
         /// <summary>
@@ -2256,7 +2236,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxIntegers_CheckedChanged(object sender, EventArgs e)
         {
-            integers.Visible = checkBoxIntegers.Checked;
+            Integers.Visible = checkBoxIntegers.Checked;
         }
 
         /// <summary>
@@ -2266,7 +2246,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxIntegersMax_CheckedChanged(object sender, EventArgs e)
         {
-            integersMax.Visible = checkBoxIntegersMax.Checked;
+            IntegersMax.Visible = checkBoxIntegersMax.Checked;
         }
 
         /// <summary>
@@ -2276,7 +2256,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxIntegersMinMax_CheckedChanged(object sender, EventArgs e)
         {
-            integersMinMax.Visible = checkBoxIntegersMinMax.Checked;
+            IntegersMinMax.Visible = checkBoxIntegersMinMax.Checked;
         }
 
         /// <summary>
@@ -2286,7 +2266,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxDoubles_CheckedChanged(object sender, EventArgs e)
         {
-            doubles.Visible = checkBoxDoubles.Checked;
+            Doubles.Visible = checkBoxDoubles.Checked;
         }
 
         /// <summary>
@@ -2296,7 +2276,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxDoublesMax_CheckedChanged(object sender, EventArgs e)
         {
-            doublesMax.Visible = checkBoxDoublesMax.Checked;
+            DoublesMax.Visible = checkBoxDoublesMax.Checked;
         }
 
         /// <summary>
@@ -2306,7 +2286,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxDoublesMinMax_CheckedChanged(object sender, EventArgs e)
         {
-            doublesMinMax.Visible = checkBoxDoublesMinMax.Checked;
+            DoublesMinMax.Visible = checkBoxDoublesMinMax.Checked;
         }
 
         /// <summary>
@@ -2316,7 +2296,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxNextBoolean_CheckedChanged(object sender, EventArgs e)
         {
-            nextBoolean.Visible = checkBoxNextBoolean.Checked;
+            NextBoolean.Visible = checkBoxNextBoolean.Checked;
         }
 
         /// <summary>
@@ -2326,7 +2306,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxBooleans_CheckedChanged(object sender, EventArgs e)
         {
-            booleans.Visible = checkBoxBooleans.Checked;
+            Booleans.Visible = checkBoxBooleans.Checked;
         }
 
         /// <summary>
@@ -2336,7 +2316,7 @@ namespace Troschuetz.Random.Tester
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         void CheckBoxNextBytes_CheckedChanged(object sender, EventArgs e)
         {
-            nextBytes.Visible = checkBoxNextBytes.Checked;
+            NextBytes.Visible = checkBoxNextBytes.Checked;
         }
 
         #endregion Methods regarding generators
