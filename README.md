@@ -295,3 +295,39 @@ Type=NextDoubleComparison  Mode=Throughput
  NextDouble_XorShift128 |      X86 | LegacyJit |  8.6706 ns | 0.1574 ns |
 
 ### IGenerator.NextBytes ###
+
+```ini
+
+BenchmarkDotNet=v0.9.4.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=AMD A10-7850K Radeon R7, 12 Compute Cores 4C+8G, ProcessorCount=4
+Frequency=14318180 ticks, Resolution=69.8413 ns, Timer=HPET
+HostCLR=MS.NET 4.0.30319.42000, Arch=32-bit RELEASE
+JitModules=clrjit-v4.6.1073.0
+
+Type=NextBytesComparison  Mode=Throughput  
+
+```
+                  Method | Platform |       Jit |        Median |     StdDev |
+------------------------ |--------- |---------- |-------------- |----------- |
+         NextBytes64_ALF |      X64 | LegacyJit |   229.5264 ns |  3.5215 ns |
+         NextBytes64_ALF |      X64 |    RyuJit |   233.8902 ns |  5.4031 ns |
+         NextBytes64_ALF |      X86 | LegacyJit |   240.4089 ns |  3.3763 ns |
+     NextBytes64_MT19937 |      X64 | LegacyJit |   280.7194 ns |  5.2240 ns |
+     NextBytes64_MT19937 |      X64 |    RyuJit |   304.2042 ns |  8.6313 ns |
+     NextBytes64_MT19937 |      X86 | LegacyJit |   303.0285 ns |  5.1414 ns |
+         NextBytes64_NR3 |      X64 | LegacyJit |   274.9566 ns |  6.4635 ns |
+         NextBytes64_NR3 |      X64 |    RyuJit |   224.1195 ns |  3.5088 ns |
+         NextBytes64_NR3 |      X86 | LegacyJit |   429.7071 ns |  6.2622 ns |
+       NextBytes64_NR3Q1 |      X64 | LegacyJit |   222.8547 ns |  5.5028 ns |
+       NextBytes64_NR3Q1 |      X64 |    RyuJit |   208.6428 ns |  4.6465 ns |
+       NextBytes64_NR3Q1 |      X86 | LegacyJit |   362.6878 ns |  5.0926 ns |
+       NextBytes64_NR3Q2 |      X64 | LegacyJit |   240.6030 ns |  3.9844 ns |
+       NextBytes64_NR3Q2 |      X64 |    RyuJit |   205.4613 ns |  2.9763 ns |
+       NextBytes64_NR3Q2 |      X86 | LegacyJit |   313.9187 ns |  6.2515 ns |
+    NextBytes64_Standard |      X64 | LegacyJit | 1,018.5218 ns | 17.2124 ns |
+    NextBytes64_Standard |      X64 |    RyuJit |   987.5373 ns | 13.4576 ns |
+    NextBytes64_Standard |      X86 | LegacyJit | 1,072.7624 ns | 25.6522 ns |
+ NextBytes64_XorShift128 |      X64 | LegacyJit |   197.8139 ns |  3.6545 ns |
+ NextBytes64_XorShift128 |      X64 |    RyuJit |   193.6924 ns |  4.1886 ns |
+ NextBytes64_XorShift128 |      X86 | LegacyJit |   267.4496 ns |  3.3618 ns |
