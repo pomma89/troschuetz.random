@@ -146,8 +146,8 @@
     <AssemblyOriginatorKeyFile>C:\Keys\pomma89.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PommaLabs.Thrower, Version=2.0.1.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Thrower.2.0.1\lib\portable-net45+win8+wp8+wpa81\PommaLabs.Thrower.dll</HintPath>
+    <Reference Include="PommaLabs.Thrower, Version=2.2.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Thrower.2.2.2\lib\portable-net45+win8+wp8+wpa81\PommaLabs.Thrower.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

@@ -1,13 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Portable", "Platform Specific\Troschuetz.Random.Portable\Troschuetz.Random.Portable.csproj", "{A1FF7728-605F-401A-A9FC-51FA56852E9E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48147844-A87B-45D7-A428-1909094301B2}"
 	ProjectSection(SolutionItems) = preProject
-		.hgignore = .hgignore
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
 		GPL.txt = GPL.txt
 		LGPL.txt = LGPL.txt

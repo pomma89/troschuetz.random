@@ -19,10 +19,11 @@
 namespace Troschuetz.Random.Tests
 {
     using NUnit.Framework;
-    using PommaLabs.KVLite;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
 
     public abstract partial class GeneratorTests : TestBase
     {
@@ -42,7 +43,9 @@ namespace Troschuetz.Random.Tests
         bool _currGen = true;
 
         protected abstract IGenerator GetGenerator();
+
         protected abstract IGenerator GetGenerator(int seed);
+
         protected abstract IGenerator GetGenerator(uint seed);
 
         [Test]
@@ -129,12 +132,18 @@ namespace Troschuetz.Random.Tests
                 otherGen.NextBytes(b2);
                 Assert.AreEqual(b2, b1);
             }
-            PersistentCache.DefaultInstance.AddStaticToDefaultPartition("Generator", _generator);
-            _generator = PersistentCache.DefaultInstance.GetFromDefaultPartition<IGenerator>("Generator").Value;
-            for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext())
+            var bf = new BinaryFormatter();
+            using (var ms = new MemoryStream())
             {
-                otherGen.NextBytes(b2);
-                Assert.AreEqual(b2, b1);
+                bf.Serialize(ms, _generator);
+                ms.Position = 0;
+
+                _generator = bf.Deserialize(ms) as IGenerator;
+                for (var i = 0; i < Iterations; ++i, bytesEn.MoveNext())
+                {
+                    otherGen.NextBytes(b2);
+                    Assert.AreEqual(b2, b1);
+                }
             }
         }
 

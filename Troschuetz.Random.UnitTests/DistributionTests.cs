@@ -19,9 +19,10 @@
 namespace Troschuetz.Random.Tests
 {
     using NUnit.Framework;
-    using PommaLabs.KVLite;
     using Random.Generators;
     using System;
+    using System.IO;
+    using System.Runtime.Serialization.Formatters.Binary;
 
     public abstract class DistributionTests<TDist> : TestBase where TDist : IDistribution
     {
@@ -78,11 +79,15 @@ namespace Troschuetz.Random.Tests
         int _currDist;
 
         protected abstract TDist GetDist(TDist other = default(TDist));
+
         protected abstract TDist GetDist(uint seed, TDist other = default(TDist));
+
         protected abstract TDist GetDist(IGenerator gen, TDist other = default(TDist));
 
         protected abstract TDist GetDistWithParams(TDist other = default(TDist));
+
         protected abstract TDist GetDistWithParams(uint seed, TDist other = default(TDist));
+
         protected abstract TDist GetDistWithParams(IGenerator gen, TDist other = default(TDist));
 
         /*=============================================================================
@@ -228,11 +233,17 @@ namespace Troschuetz.Random.Tests
             {
                 Dist.NextDouble();
             }
-            PersistentCache.DefaultInstance.AddStaticToDefaultPartition("Distribution", Dist);
-            var otherDist = PersistentCache.DefaultInstance.GetFromDefaultPartition<TDist>("Distribution");
-            for (var i = 0; i < Iterations; ++i)
+            var bf = new BinaryFormatter();
+            using (var ms = new MemoryStream())
             {
-                Assert.AreEqual(Dist.NextDouble(), otherDist.Value.NextDouble());
+                bf.Serialize(ms, Dist);
+                ms.Position = 0;
+
+                var otherDist = bf.Deserialize(ms) as TDist;
+                for (var i = 0; i < Iterations; ++i)
+                {
+                    Assert.AreEqual(Dist.NextDouble(), otherDist.NextDouble());
+                }
             }
         }
     }
@@ -380,11 +391,17 @@ namespace Troschuetz.Random.Tests
             {
                 Dist.Next();
             }
-            PersistentCache.DefaultInstance.AddStaticToDefaultPartition("Distribution", Dist);
-            var otherDist = PersistentCache.DefaultInstance.GetFromDefaultPartition<TDist>("Distribution");
-            for (var i = 0; i < Iterations; ++i)
+            var bf = new BinaryFormatter();
+            using (var ms = new MemoryStream())
             {
-                Assert.AreEqual(Dist.Next(), otherDist.Value.Next());
+                bf.Serialize(ms, Dist);
+                ms.Position = 0;
+
+                var otherDist = bf.Deserialize(ms) as TDist;
+                for (var i = 0; i < Iterations; ++i)
+                {
+                    Assert.AreEqual(Dist.NextDouble(), otherDist.NextDouble());
+                }
             }
         }
     }

@@ -24,7 +24,7 @@ namespace Troschuetz.Random.Tests
     using Random.Generators;
     using System;
     using System.Collections.Generic;
-    
+
     public sealed class TRandomTests : GeneratorTests
     {
         #region Setup/Teardown

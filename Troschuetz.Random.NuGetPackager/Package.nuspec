@@ -25,7 +25,7 @@ You can find the modified source code and the available documentation at the pro
         <licenseUrl>http://opensource.org/licenses/lgpl-2.1.php</licenseUrl>
         <copyright>Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)</copyright>
         <dependencies>
-            <dependency id="Thrower" version="[2.0.1, 3.0.0)" />
+            <dependency id="Thrower" version="2.2.2" />
         </dependencies>
         <references></references>
         <tags>random distribution generator normal exponential python alf mt19937 xorshift128</tags>
