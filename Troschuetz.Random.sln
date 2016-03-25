@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NET40", "Platform Specific\Troschuetz.Random.NET40\Troschuetz.Random.NET40.csproj", "{6B947182-CF4B-45FE-A1AE-47A28C514040}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGet", "Troschuetz.Random.NuGetPackager\Troschuetz.Random.NuGet.csproj", "{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGet", "Troschuetz.Random.NuGet\Troschuetz.Random.NuGet.csproj", "{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A1FF7728-605F-401A-A9FC-51FA56852E9E} = {A1FF7728-605F-401A-A9FC-51FA56852E9E}
 		{0CD60663-C8EC-42F3-8E61-E38608FE4F57} = {0CD60663-C8EC-42F3-8E61-E38608FE4F57}
