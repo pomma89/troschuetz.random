@@ -216,7 +216,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         public ErlangDistribution(IGenerator generator, int alpha, double lambda)
             : base(generator)
         {
-            RaiseArgumentOutOfRangeException.IfNot(AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
+            var vp = AreValidParams;
+            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, lambda), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _lambda = lambda;
         }

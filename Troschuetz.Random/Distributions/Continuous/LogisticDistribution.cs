@@ -211,7 +211,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </exception>
         public LogisticDistribution(IGenerator generator, double mu, double sigma) : base(generator)
         {
-            RaiseArgumentOutOfRangeException.IfNot(AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            var vp = AreValidParams;
+            RaiseArgumentOutOfRangeException.IfNot(vp(mu, sigma), ErrorMessages.InvalidParams);
             _mu = mu;
             _sigma = sigma;
         }

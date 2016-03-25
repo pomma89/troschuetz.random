@@ -172,7 +172,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         public ChiSquareDistribution(IGenerator generator, int alpha)
             : base(generator)
         {
-            RaiseArgumentOutOfRangeException.IfNot(IsValidParam(alpha), ErrorMessages.InvalidParams);
+            var vp = IsValidParam;
+            RaiseArgumentOutOfRangeException.IfNot(vp(alpha), ErrorMessages.InvalidParams);
             _alpha = alpha;
         }
 

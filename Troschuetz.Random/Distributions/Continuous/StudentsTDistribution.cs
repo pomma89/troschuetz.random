@@ -165,7 +165,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </exception>
         public StudentsTDistribution(IGenerator generator, int nu) : base(generator)
         {
-            RaiseArgumentOutOfRangeException.IfNot(IsValidParam(nu), ErrorMessages.InvalidParams);
+            var vp = IsValidParam;
+            RaiseArgumentOutOfRangeException.IfNot(vp(nu), ErrorMessages.InvalidParams);
             _nu = nu;
         }
 

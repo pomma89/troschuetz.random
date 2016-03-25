@@ -166,7 +166,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         public RayleighDistribution(IGenerator generator, double sigma)
             : base(generator)
         {
-            RaiseArgumentOutOfRangeException.IfNot(IsValidParam(sigma), ErrorMessages.InvalidParams);
+            var vp = IsValidParam;
+            RaiseArgumentOutOfRangeException.IfNot(vp(sigma), ErrorMessages.InvalidParams);
             _sigma = sigma;
         }
 

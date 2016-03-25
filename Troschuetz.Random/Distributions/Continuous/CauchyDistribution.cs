@@ -215,7 +215,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         public CauchyDistribution(IGenerator generator, double alpha, double gamma)
             : base(generator)
         {
-            RaiseArgumentOutOfRangeException.IfNot(AreValidParams(alpha, gamma), ErrorMessages.InvalidParams);
+            var vp = AreValidParams;
+            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, gamma), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _gamma = gamma;
         }

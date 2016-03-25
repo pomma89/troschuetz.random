@@ -223,7 +223,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         public ContinuousUniformDistribution(IGenerator generator, double alpha, double beta)
             : base(generator)
         {
-            RaiseArgumentOutOfRangeException.IfNot(AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            var vp = AreValidParams;
+            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, beta), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _beta = beta;
         }
