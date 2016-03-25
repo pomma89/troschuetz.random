@@ -103,34 +103,34 @@
 del "$(ProjectDir)*.nupkg.bak"
 
 if not exist "$(ProjectDir)lib\net35" mkdir "$(ProjectDir)lib\net35"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET35\bin\Release\CodeProject.Troschuetz.Random.dll" "$(ProjectDir)lib\net35"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET35\bin\Release\CodeProject.Troschuetz.Random.pdb" "$(ProjectDir)lib\net35"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET35\bin\Release\CodeProject.Troschuetz.Random.xml" "$(ProjectDir)lib\net35"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET35\bin\Release\Troschuetz.Random.dll" "$(ProjectDir)lib\net35"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET35\bin\Release\Troschuetz.Random.pdb" "$(ProjectDir)lib\net35"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET35\bin\Release\Troschuetz.Random.xml" "$(ProjectDir)lib\net35"
 
 if not exist "$(ProjectDir)lib\net40" mkdir "$(ProjectDir)lib\net40"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET40\bin\Release\CodeProject.Troschuetz.Random.dll" "$(ProjectDir)lib\net40"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET40\bin\Release\CodeProject.Troschuetz.Random.pdb" "$(ProjectDir)lib\net40"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET40\bin\Release\CodeProject.Troschuetz.Random.xml" "$(ProjectDir)lib\net40"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET40\bin\Release\Troschuetz.Random.dll" "$(ProjectDir)lib\net40"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET40\bin\Release\Troschuetz.Random.pdb" "$(ProjectDir)lib\net40"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET40\bin\Release\Troschuetz.Random.xml" "$(ProjectDir)lib\net40"
 
 if not exist "$(ProjectDir)lib\net45" mkdir "$(ProjectDir)lib\net45"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET45\bin\Release\CodeProject.Troschuetz.Random.dll" "$(ProjectDir)lib\net45"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET45\bin\Release\CodeProject.Troschuetz.Random.pdb" "$(ProjectDir)lib\net45"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET45\bin\Release\CodeProject.Troschuetz.Random.xml" "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET45\bin\Release\Troschuetz.Random.dll" "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET45\bin\Release\Troschuetz.Random.pdb" "$(ProjectDir)lib\net45"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET45\bin\Release\Troschuetz.Random.xml" "$(ProjectDir)lib\net45"
 
 if not exist "$(ProjectDir)lib\net46" mkdir "$(ProjectDir)lib\net46"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET46\bin\Release\CodeProject.Troschuetz.Random.dll" "$(ProjectDir)lib\net46"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET46\bin\Release\CodeProject.Troschuetz.Random.pdb" "$(ProjectDir)lib\net46"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET46\bin\Release\CodeProject.Troschuetz.Random.xml" "$(ProjectDir)lib\net46"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET46\bin\Release\Troschuetz.Random.dll" "$(ProjectDir)lib\net46"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET46\bin\Release\Troschuetz.Random.pdb" "$(ProjectDir)lib\net46"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NET46\bin\Release\Troschuetz.Random.xml" "$(ProjectDir)lib\net46"
 
 if not exist "$(ProjectDir)lib\portable-net45+win8+wp8+wpa81" mkdir "$(ProjectDir)lib\portable-net45+win8+wp8+wpa81"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\CodeProject.Troschuetz.Random.dll" "$(ProjectDir)lib\portable-net45+win8+wp8+wpa81"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\CodeProject.Troschuetz.Random.pdb" "$(ProjectDir)lib\portable-net45+win8+wp8+wpa81"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\CodeProject.Troschuetz.Random.xml" "$(ProjectDir)lib\portable-net45+win8+wp8+wpa81"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.dll" "$(ProjectDir)lib\portable-net45+win8+wp8+wpa81"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.pdb" "$(ProjectDir)lib\portable-net45+win8+wp8+wpa81"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.xml" "$(ProjectDir)lib\portable-net45+win8+wp8+wpa81"
 
 if not exist "$(ProjectDir)lib\dnxcore50" mkdir "$(ProjectDir)lib\netstandard1.0"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\CodeProject.Troschuetz.Random.dll" "$(ProjectDir)lib\netstandard1.0"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\CodeProject.Troschuetz.Random.pdb" "$(ProjectDir)lib\netstandard1.0"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\CodeProject.Troschuetz.Random.xml" "$(ProjectDir)lib\netstandard1.0"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.dll" "$(ProjectDir)lib\netstandard1.0"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.pdb" "$(ProjectDir)lib\netstandard1.0"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.xml" "$(ProjectDir)lib\netstandard1.0"
 </PreBuildEvent>
   </PropertyGroup>
 </Project>
