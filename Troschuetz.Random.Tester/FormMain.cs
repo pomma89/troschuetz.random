@@ -1397,13 +1397,11 @@ namespace Troschuetz.Random.Tester
                         // Maximum is part of last histogram interval
                         y[y.Length - 2]++;
                     }
-                    else if (double.IsNegativeInfinity(minimum))
-                    {
-                        y[0]++;
-                    }
                     else
                     {
-                        y[(int) Math.Floor((s - minimum) / range * (double) numericUpDownSteps.Value)]++;
+                        var idx = (int) Math.Floor((s - minimum) / range * (double) numericUpDownSteps.Value);
+                        idx = (idx < 0) ? 0 : (idx > y.Length - 2) ? y.Length - 2 : idx;
+                        y[idx]++;
                     }
                 }
 

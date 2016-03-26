@@ -343,10 +343,9 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </remarks>
         public static Func<IGenerator, int, int, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
-            var helper1 = beta / (double) alpha;
             var csa = ChiSquareDistribution.Sample(generator, alpha);
             var csb = ChiSquareDistribution.Sample(generator, beta);
-            return csa / csb * helper1;
+            return (csa * alpha) / (csb * beta);
         };
 
         #endregion TRandom Helpers
