@@ -1,12 +1,14 @@
-Troschuetz.Random - Random number generator
-===========================================
+![](https://googledrive.com/host/0B8v0ikF4z2BiR29YQmxfSlE1Sms/Progetti/Troschuetz.Random/logo-64.png "Troschuetz.Random Logo") Troschuetz.Random
+================================================================================================================================================
 
 *Fully managed library providing various random number generators and distributions.*
 
 ## Summary ##
 
-* Build status on [AppVeyor](https://ci.appveyor.com): [![Build status](https://ci.appveyor.com/api/projects/status/362eo5bmrbtjp203)](https://ci.appveyor.com/project/pomma89/troschuetz.random)
-* Current release: `v4.0`
+* Latest release version: `v4.0.4`
+* Build status on [AppVeyor](https://ci.appveyor.com): [![Build status](https://ci.appveyor.com/api/projects/status/nrswa81ug0rsrpyp?svg=true)](https://ci.appveyor.com/project/pomma89/troschuetz-random)
+* [NuGet](https://www.nuget.org) package(s):
+    + [Troschuetz.Random](https://nuget.org/packages/Troschuetz.Random/)
 
 ## Introduction ##
 
@@ -30,9 +32,7 @@ The tester is now distributed on NuGet, embedded inside the main [Troschuetz.Ran
 
 See example below to understand how you can use the library:
 
-
-```
-#!c#
+```cs
 
 using System;
 using System.Linq;
@@ -90,7 +90,6 @@ namespace Troschuetz.Random.Examples
 }
 ```
 
-
 ## Extensibility ##
 
 After a request from a user, the library has been modified in order to allow it to be easily extended or modified. 
@@ -103,9 +102,7 @@ Starting from version 4.0, these extensibility cases are supported:
 
 For your convenience, below you can find an example of how you can implement all features above (the code is also present in the Examples project):
 
-
-```
-#!c#
+```cs
 
 using System;
 using System.Linq;

@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LGPL.txt = LGPL.txt
 		LICENSE.md = LICENSE.md
 		README.md = README.md
+		VERSION.md = VERSION.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Tester", "Troschuetz.Random.Tester\Troschuetz.Random.Tester.csproj", "{598F64C2-1343-4202-B6A7-A91CF3248D0C}"
