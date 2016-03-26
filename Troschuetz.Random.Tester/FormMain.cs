@@ -1547,15 +1547,23 @@ namespace Troschuetz.Random.Tester
                 }
                 else if (propertyInfo.PropertyType == typeof(double[]))
                 {
-                    var values = (double[]) propertyInfo.GetValue(currentDistribution, null);
-                    label.Text = "";
-                    for (var index2 = 0; index2 < values.Length; index2++)
+                    try
                     {
-                        label.Text += FormatDouble(values[index2]);
-                        if (index2 < values.Length - 1)
+                        var values = (double[]) propertyInfo.GetValue(currentDistribution, null);
+                        label.Text = "";
+                        for (var index2 = 0; index2 < values.Length; index2++)
                         {
-                            label.Text += " | ";
+                            label.Text += FormatDouble(values[index2]);
+                            if (index2 < values.Length - 1)
+                            {
+                                label.Text += " | ";
+                            }
                         }
+                    }
+                    catch
+                    {
+                        // Undefined properties should now throw an exception, rather then returning NaN.
+                        label.Text = "Undefined";
                     }
                 }
             }
