@@ -44,6 +44,12 @@ configuration: Debug
 
 before_build:
   - nuget restore
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+test: off
   
 #---------------------------------#
 #          web settings           #
