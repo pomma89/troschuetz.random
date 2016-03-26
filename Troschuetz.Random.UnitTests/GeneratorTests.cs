@@ -187,7 +187,7 @@ namespace Troschuetz.Random.Tests
         {
             var max = Rand.Next() + 1; // To avoid zero
             var otherGen = GetGenerator(_generator.Seed);
-            Assert.True(_generator.Doubles(max).Take(Iterations).All(x => x == otherGen.NextDouble(max)));
+            Assert.True(_generator.Doubles(max).Take(Iterations).All(x => TMath.AreEqual(x, otherGen.NextDouble(max))));
         }
 
         [Test]
@@ -196,10 +196,10 @@ namespace Troschuetz.Random.Tests
         {
             var max = Rand.Next() + 1; // To avoid zero
             var otherGen = GetGenerator(_generator.Seed);
-            Assert.True(_generator.Doubles(max).Take(Iterations).All(x => x == otherGen.NextDouble(max)));
+            Assert.True(_generator.Doubles(max).Take(Iterations).All(x => TMath.AreEqual(x, otherGen.NextDouble(max))));
             _generator.Reset();
             otherGen.Reset();
-            Assert.True(_generator.Doubles(max).Take(Iterations).All(x => x == otherGen.NextDouble(max)));
+            Assert.True(_generator.Doubles(max).Take(Iterations).All(x => TMath.AreEqual(x, otherGen.NextDouble(max))));
         }
 
         [Test]
@@ -253,7 +253,7 @@ namespace Troschuetz.Random.Tests
             var min = -Rand.Next();
             var max = Rand.Next() + 1; // To avoid zero
             var otherGen = GetGenerator(_generator.Seed);
-            Assert.True(_generator.Doubles(min, max).Take(Iterations).All(x => x == otherGen.NextDouble(min, max)));
+            Assert.True(_generator.Doubles(min, max).Take(Iterations).All(x => TMath.AreEqual(x, otherGen.NextDouble(min, max))));
         }
 
         [Test]
@@ -263,10 +263,10 @@ namespace Troschuetz.Random.Tests
             var min = -Rand.Next();
             var max = Rand.Next() + 1; // To avoid zero
             var otherGen = GetGenerator(_generator.Seed);
-            Assert.True(_generator.Doubles(min, max).Take(Iterations).All(x => x == otherGen.NextDouble(min, max)));
+            Assert.True(_generator.Doubles(min, max).Take(Iterations).All(x => TMath.AreEqual(x, otherGen.NextDouble(min, max))));
             _generator.Reset();
             otherGen.Reset();
-            Assert.True(_generator.Doubles(min, max).Take(Iterations).All(x => x == otherGen.NextDouble(min, max)));
+            Assert.True(_generator.Doubles(min, max).Take(Iterations).All(x => TMath.AreEqual(x, otherGen.NextDouble(min, max))));
         }
 
         [Test]
@@ -274,7 +274,7 @@ namespace Troschuetz.Random.Tests
         public void Doubles_SameOutputAsNextDouble()
         {
             var otherGen = GetGenerator(_generator.Seed);
-            Assert.True(_generator.Doubles().Take(Iterations).All(x => x == otherGen.NextDouble()));
+            Assert.True(_generator.Doubles().Take(Iterations).All(x => TMath.AreEqual(x, otherGen.NextDouble())));
         }
 
         [Test]
@@ -282,10 +282,10 @@ namespace Troschuetz.Random.Tests
         public void Doubles_SameOutputAsNextDouble_AfterReset()
         {
             var otherGen = GetGenerator(_generator.Seed);
-            Assert.True(_generator.Doubles().Take(Iterations).All(x => x == otherGen.NextDouble()));
+            Assert.True(_generator.Doubles().Take(Iterations).All(x => TMath.AreEqual(x, otherGen.NextDouble())));
             _generator.Reset();
             otherGen.Reset();
-            Assert.True(_generator.Doubles().Take(Iterations).All(x => x == otherGen.NextDouble()));
+            Assert.True(_generator.Doubles().Take(Iterations).All(x => TMath.AreEqual(x, otherGen.NextDouble())));
         }
 
         [Test]

@@ -1145,8 +1145,11 @@ namespace Troschuetz.Random.Tester
         }
 
         /// <summary>
-        ///   Clean up any resources being used.
+        ///   Disposes of the resources (other than memory) used by the <see cref="T:System.Windows.Forms.Form" />.
         /// </summary>
+        /// <param name="disposing">
+        ///   true to release both managed and unmanaged resources; false to release only unmanaged resources.
+        /// </param>       
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -1282,7 +1285,7 @@ namespace Troschuetz.Random.Tester
         /// <returns>The formatted value.</returns>
         static string FormatDouble(double value)
         {
-            if (Math.Abs(value) >= 1000000 || (Math.Abs(value) < 0.001 && value != 0))
+            if (Math.Abs(value) >= 1000000 || (Math.Abs(value) < 0.001 && !TMath.IsZero(value)))
             {
                 return value.ToString("0.###e+0");
             }
@@ -1361,7 +1364,7 @@ namespace Troschuetz.Random.Tester
             //Compute the range of histogram and generate the histogram values.
             var range = maximum - minimum;
             double[] x, y;
-            if (range == 0) // cannot occur in case of user defined histogram bounds
+            if (TMath.IsZero(range)) // cannot occur in case of user defined histogram bounds
             {
                 //Samples are all the same, so use a fixed histogram.
                 x = new[] { minimum, minimum + double.Epsilon };
@@ -1389,12 +1392,17 @@ namespace Troschuetz.Random.Tester
                         // If user specified own histogram bounds, ignore samples that lie outside.
                         samplesUsed--;
                     }
-                    else if (s == maximum)
+                    else if (TMath.AreEqual(s, maximum))
                     {
                         // Maximum is part of last histogram interval
                         y[y.Length - 2]++;
                     }
-                    else {
+                    else if (double.IsNegativeInfinity(minimum))
+                    {
+                        y[0]++;
+                    }
+                    else
+                    {
                         y[(int) Math.Floor((s - minimum) / range * (double) numericUpDownSteps.Value)]++;
                     }
                 }
