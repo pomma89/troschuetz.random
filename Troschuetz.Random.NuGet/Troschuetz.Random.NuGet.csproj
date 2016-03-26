@@ -77,6 +77,7 @@
     <Folder Include="lib\net46\" />
     <Folder Include="lib\netstandard1.0\" />
     <Folder Include="lib\portable-net45+win8+wp8+wpa81\" />
+    <Folder Include="tester\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -131,6 +132,12 @@ if not exist "$(ProjectDir)lib\dnxcore50" mkdir "$(ProjectDir)lib\netstandard1.0
 copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.dll" "$(ProjectDir)lib\netstandard1.0"
 copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.pdb" "$(ProjectDir)lib\netstandard1.0"
 copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.xml" "$(ProjectDir)lib\netstandard1.0"
-</PreBuildEvent>
+
+rmdir /s /q "$(ProjectDir)tester"
+mkdir "$(ProjectDir)tester"
+xcopy "$(SolutionDir)Troschuetz.Random.Tester\bin\Release" "$(ProjectDir)tester" /s /e
+del "$(ProjectDir)tester\Troschuetz.Random.Tester.vshost.exe"
+del "$(ProjectDir)tester\Troschuetz.Random.Tester.vshost.exe.config"
+del "$(ProjectDir)tester\Troschuetz.Random.Tester.vshost.exe.manifest"</PreBuildEvent>
   </PropertyGroup>
 </Project>

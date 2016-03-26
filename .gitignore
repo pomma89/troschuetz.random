@@ -135,6 +135,7 @@ publish/
 ## TODO: If you have NuGet Package Restore enabled, uncomment the next line
 packages/
 *NuGet*/lib/
+*NuGet*/tester/
 *NuGet*/*.nupkg
 *NuGet*/*.nupkg.bak
 
