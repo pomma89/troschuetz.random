@@ -80,7 +80,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -100,7 +100,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _gamma; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidGamma(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidGamma(value), ErrorMessages.InvalidParams);
                 _gamma = value;
             }
         }
@@ -215,7 +215,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         public CauchyDistribution(IGenerator generator, double alpha, double gamma)
             : base(generator)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, gamma), ErrorMessages.InvalidParams);
+            var vp = AreValidParams;
+            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, gamma), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _gamma = gamma;
         }

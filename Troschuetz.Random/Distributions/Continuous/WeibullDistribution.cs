@@ -89,7 +89,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -109,7 +109,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _lambda; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidLambda(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidLambda(value), ErrorMessages.InvalidParams);
                 _lambda = value;
             }
         }
@@ -219,7 +219,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </exception>
         public WeibullDistribution(IGenerator generator, double alpha, double lambda) : base(generator)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
+            var vp = AreValidParams;
+            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, lambda), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _lambda = lambda;
         }

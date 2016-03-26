@@ -116,13 +116,14 @@ namespace Troschuetz.Random.Examples
         // You must provide only three generation methods; from these methods, the AbstractGenerator
         // returns all other necessary objects.
         public override int NextInclusiveMaxValue() => (int) (++_state >> 1);
+
         public override double NextDouble() => ++_state * UIntToDoubleMultiplier;
+
         public override uint NextUInt() => ++_state;
     }
 
-    // Super silly continuous distribution which is provided as an example on how one can build a
-    // new distribution. Of course, never use this distribution in production... It is super silly,
-    // after all.
+    // Super silly continuous distribution which is provided as an example on how one can build a new
+    // distribution. Of course, never use this distribution in production... It is super silly, after all.
     class SuperSillyContinuousDistribution : AbstractDistribution, IContinuousDistribution
     {
         // Just a simple constructor which passes the generator to the base constructor.

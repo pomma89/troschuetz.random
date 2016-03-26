@@ -1,12 +1,14 @@
-Troschuetz.Random - Easy random number generation
-=================================================
+![](https://googledrive.com/host/0B8v0ikF4z2BiR29YQmxfSlE1Sms/Progetti/Troschuetz.Random/logo-64.png "Troschuetz.Random Logo") Troschuetz.Random
+================================================================================================================================================
 
 *Fully managed library providing various random number generators and distributions.*
 
 ## Summary ##
 
-* Build status on [AppVeyor](https://ci.appveyor.com): [![Build status](https://ci.appveyor.com/api/projects/status/362eo5bmrbtjp203)](https://ci.appveyor.com/project/pomma89/troschuetz.random)
-* Current release: `v4.0`
+* Latest release version: `v4.0.4`
+* Build status on [AppVeyor](https://ci.appveyor.com): [![Build status](https://ci.appveyor.com/api/projects/status/nrswa81ug0rsrpyp?svg=true)](https://ci.appveyor.com/project/pomma89/troschuetz-random)
+* [NuGet](https://www.nuget.org) package(s):
+    + [Troschuetz.Random](https://nuget.org/packages/Troschuetz.Random/)
 
 ## Introduction ##
 
@@ -24,15 +26,13 @@ I maintain this project during my spare time, so I can offer limited assistance 
 
 A simple, yet effective, WinForms application is available in order to test the Troschuetz.Random library. As for the rest of the code, that application was completely written by Stefan Troschütz and what I did was simply to adapt it to the new refactored code.
 
-The tester is not distributed on NuGet, but it can be [downloaded here](https://drive.google.com/open?id=0B8v0ikF4z2BicWpNRy1WeXJVaE0).
+The tester is now distributed on NuGet, embedded inside the main [Troschuetz.Random NuGet package](https://www.nuget.org/packages/Troschuetz.Random/). Just look for the "tester" folder, it contains everything needed to run and play with the tester.
 
 ## Basic usage ##
 
 See example below to understand how you can use the library:
 
-
-```
-#!c#
+```cs
 
 using System;
 using System.Linq;
@@ -90,7 +90,6 @@ namespace Troschuetz.Random.Examples
 }
 ```
 
-
 ## Extensibility ##
 
 After a request from a user, the library has been modified in order to allow it to be easily extended or modified. 
@@ -103,9 +102,7 @@ Starting from version 4.0, these extensibility cases are supported:
 
 For your convenience, below you can find an example of how you can implement all features above (the code is also present in the Examples project):
 
-
-```
-#!c#
+```cs
 
 using System;
 using System.Linq;
@@ -251,3 +248,83 @@ namespace Troschuetz.Random.Examples
     }
 }
 ```
+
+## Benchmarks ##
+
+All benchmarks are implemented with [BenchmarkDotNet](https://github.com/PerfDotNet/BenchmarkDotNet).
+
+### IGenerator.NextDouble ###
+
+```ini
+
+BenchmarkDotNet=v0.9.4.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=AMD A10-7850K Radeon R7, 12 Compute Cores 4C+8G, ProcessorCount=4
+Frequency=14318180 ticks, Resolution=69.8413 ns, Timer=HPET
+HostCLR=MS.NET 4.0.30319.42000, Arch=32-bit RELEASE
+JitModules=clrjit-v4.6.1073.0
+
+Type=NextDoubleComparison  Mode=Throughput  
+
+```
+                 Method | Platform |       Jit |     Median |    StdDev |
+----------------------- |--------- |---------- |----------- |---------- |
+         NextDouble_ALF |      X64 | LegacyJit |  5.5984 ns | 0.1719 ns |
+         NextDouble_ALF |      X64 |    RyuJit |  6.5872 ns | 0.8043 ns |
+         NextDouble_ALF |      X86 | LegacyJit |  6.1549 ns | 0.9234 ns |
+     NextDouble_MT19937 |      X64 | LegacyJit |  8.6159 ns | 0.1740 ns |
+     NextDouble_MT19937 |      X64 |    RyuJit |  9.4312 ns | 0.1711 ns |
+     NextDouble_MT19937 |      X86 | LegacyJit |  9.6557 ns | 0.1818 ns |
+         NextDouble_NR3 |      X64 | LegacyJit |  7.3716 ns | 0.1848 ns |
+         NextDouble_NR3 |      X64 |    RyuJit |  5.3761 ns | 0.1471 ns |
+         NextDouble_NR3 |      X86 | LegacyJit | 18.8395 ns | 0.4251 ns |
+       NextDouble_NR3Q1 |      X64 | LegacyJit |  5.6026 ns | 0.1195 ns |
+       NextDouble_NR3Q1 |      X64 |    RyuJit |  4.9740 ns | 0.1402 ns |
+       NextDouble_NR3Q1 |      X86 | LegacyJit | 15.0855 ns | 0.3839 ns |
+       NextDouble_NR3Q2 |      X64 | LegacyJit |  5.2523 ns | 0.1465 ns |
+       NextDouble_NR3Q2 |      X64 |    RyuJit |  5.0888 ns | 0.1620 ns |
+       NextDouble_NR3Q2 |      X86 | LegacyJit | 10.9995 ns | 0.2604 ns |
+    NextDouble_Standard |      X64 | LegacyJit | 15.1002 ns | 0.5099 ns |
+    NextDouble_Standard |      X64 |    RyuJit | 14.8925 ns | 0.4709 ns |
+    NextDouble_Standard |      X86 | LegacyJit | 14.2089 ns | 0.2473 ns |
+ NextDouble_XorShift128 |      X64 | LegacyJit |  4.1824 ns | 0.1384 ns |
+ NextDouble_XorShift128 |      X64 |    RyuJit |  3.9391 ns | 0.1851 ns |
+ NextDouble_XorShift128 |      X86 | LegacyJit |  8.6706 ns | 0.1574 ns |
+
+### IGenerator.NextBytes ###
+
+```ini
+
+BenchmarkDotNet=v0.9.4.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=AMD A10-7850K Radeon R7, 12 Compute Cores 4C+8G, ProcessorCount=4
+Frequency=14318180 ticks, Resolution=69.8413 ns, Timer=HPET
+HostCLR=MS.NET 4.0.30319.42000, Arch=32-bit RELEASE
+JitModules=clrjit-v4.6.1073.0
+
+Type=NextBytesComparison  Mode=Throughput  
+
+```
+                  Method | Platform |       Jit |        Median |     StdDev |
+------------------------ |--------- |---------- |-------------- |----------- |
+         NextBytes64_ALF |      X64 | LegacyJit |   229.5264 ns |  3.5215 ns |
+         NextBytes64_ALF |      X64 |    RyuJit |   233.8902 ns |  5.4031 ns |
+         NextBytes64_ALF |      X86 | LegacyJit |   240.4089 ns |  3.3763 ns |
+     NextBytes64_MT19937 |      X64 | LegacyJit |   280.7194 ns |  5.2240 ns |
+     NextBytes64_MT19937 |      X64 |    RyuJit |   304.2042 ns |  8.6313 ns |
+     NextBytes64_MT19937 |      X86 | LegacyJit |   303.0285 ns |  5.1414 ns |
+         NextBytes64_NR3 |      X64 | LegacyJit |   274.9566 ns |  6.4635 ns |
+         NextBytes64_NR3 |      X64 |    RyuJit |   224.1195 ns |  3.5088 ns |
+         NextBytes64_NR3 |      X86 | LegacyJit |   429.7071 ns |  6.2622 ns |
+       NextBytes64_NR3Q1 |      X64 | LegacyJit |   222.8547 ns |  5.5028 ns |
+       NextBytes64_NR3Q1 |      X64 |    RyuJit |   208.6428 ns |  4.6465 ns |
+       NextBytes64_NR3Q1 |      X86 | LegacyJit |   362.6878 ns |  5.0926 ns |
+       NextBytes64_NR3Q2 |      X64 | LegacyJit |   240.6030 ns |  3.9844 ns |
+       NextBytes64_NR3Q2 |      X64 |    RyuJit |   205.4613 ns |  2.9763 ns |
+       NextBytes64_NR3Q2 |      X86 | LegacyJit |   313.9187 ns |  6.2515 ns |
+    NextBytes64_Standard |      X64 | LegacyJit | 1,018.5218 ns | 17.2124 ns |
+    NextBytes64_Standard |      X64 |    RyuJit |   987.5373 ns | 13.4576 ns |
+    NextBytes64_Standard |      X86 | LegacyJit | 1,072.7624 ns | 25.6522 ns |
+ NextBytes64_XorShift128 |      X64 | LegacyJit |   197.8139 ns |  3.6545 ns |
+ NextBytes64_XorShift128 |      X64 |    RyuJit |   193.6924 ns |  4.1886 ns |
+ NextBytes64_XorShift128 |      X86 | LegacyJit |   267.4496 ns |  3.3618 ns |

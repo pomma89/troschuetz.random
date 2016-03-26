@@ -24,7 +24,7 @@ namespace Troschuetz.Random.Tests
     using Random.Generators;
     using System;
     using System.Collections.Generic;
-    
+
     public sealed class TRandomTests : GeneratorTests
     {
         #region Setup/Teardown
@@ -1108,7 +1108,7 @@ namespace Troschuetz.Random.Tests
 
         static void AssertSameDiscreteOutput<T>(Func<T, int> gen, Func<T, IEnumerable<int>> infGen, T arg)
         {
-            var infGenEn = infGen(arg).GetEnumerator();
+            var infGenEn = infGen?.Invoke(arg).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
             {
                 infGenEn.MoveNext();
@@ -1120,7 +1120,7 @@ namespace Troschuetz.Random.Tests
                                                      Func<T1, T2, IEnumerable<int>> infGen,
                                                      T1 arg1, T2 arg2)
         {
-            var infGenEn = infGen(arg1, arg2).GetEnumerator();
+            var infGenEn = infGen?.Invoke(arg1, arg2).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
             {
                 infGenEn.MoveNext();
@@ -1132,8 +1132,8 @@ namespace Troschuetz.Random.Tests
                                                            Func<T, IEnumerable<int>> infGen,
                                                            T a, T b)
         {
-            var aEn = infGen(a).GetEnumerator();
-            var bEn = infGen(b).GetEnumerator();
+            var aEn = infGen?.Invoke(a).GetEnumerator();
+            var bEn = infGen?.Invoke(b).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
             {
                 if (i % 2 == 0)
@@ -1153,8 +1153,8 @@ namespace Troschuetz.Random.Tests
                                                                 Func<T1, T2, IEnumerable<int>> infGen,
                                                                 T1 a1, T2 a2, T1 b1, T2 b2)
         {
-            var aEn = infGen(a1, a2).GetEnumerator();
-            var bEn = infGen(b1, b2).GetEnumerator();
+            var aEn = infGen?.Invoke(a1, a2).GetEnumerator();
+            var bEn = infGen?.Invoke(b1, b2).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
             {
                 if (i % 2 == 0)
@@ -1212,7 +1212,7 @@ namespace Troschuetz.Random.Tests
 
         static void AssertSameContinuousOutput<T>(Func<T, double> gen, Func<T, IEnumerable<double>> infGen, T arg)
         {
-            var infGenEn = infGen(arg).GetEnumerator();
+            var infGenEn = infGen?.Invoke(arg).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
             {
                 infGenEn.MoveNext();
@@ -1224,7 +1224,7 @@ namespace Troschuetz.Random.Tests
                                                        Func<T1, T2, IEnumerable<double>> infGen,
                                                        T1 arg1, T2 arg2)
         {
-            var infGenEn = infGen(arg1, arg2).GetEnumerator();
+            var infGenEn = infGen?.Invoke(arg1, arg2).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
             {
                 infGenEn.MoveNext();
@@ -1236,7 +1236,7 @@ namespace Troschuetz.Random.Tests
                                                            Func<T1, T2, T3, IEnumerable<double>> infGen,
                                                            T1 arg1, T2 arg2, T3 arg3)
         {
-            var infGenEn = infGen(arg1, arg2, arg3).GetEnumerator();
+            var infGenEn = infGen?.Invoke(arg1, arg2, arg3).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
             {
                 infGenEn.MoveNext();
@@ -1248,8 +1248,8 @@ namespace Troschuetz.Random.Tests
                                                              Func<T, IEnumerable<double>> infGen,
                                                              T a, T b)
         {
-            var aEn = infGen(a).GetEnumerator();
-            var bEn = infGen(b).GetEnumerator();
+            var aEn = infGen?.Invoke(a).GetEnumerator();
+            var bEn = infGen?.Invoke(b).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
             {
                 if (i % 2 == 0)
@@ -1269,8 +1269,8 @@ namespace Troschuetz.Random.Tests
                                                                   Func<T1, T2, IEnumerable<double>> infGen,
                                                                   T1 a1, T2 a2, T1 b1, T2 b2)
         {
-            var aEn = infGen(a1, a2).GetEnumerator();
-            var bEn = infGen(b1, b2).GetEnumerator();
+            var aEn = infGen?.Invoke(a1, a2).GetEnumerator();
+            var bEn = infGen?.Invoke(b1, b2).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
             {
                 if (i % 2 == 0)
@@ -1290,8 +1290,8 @@ namespace Troschuetz.Random.Tests
                                                                       Func<T1, T2, T3, IEnumerable<double>> infGen,
                                                                       T1 a1, T2 a2, T3 a3, T1 b1, T2 b2, T3 b3)
         {
-            var aEn = infGen(a1, a2, a3).GetEnumerator();
-            var bEn = infGen(b1, b2, b3).GetEnumerator();
+            var aEn = infGen?.Invoke(a1, a2, a3).GetEnumerator();
+            var bEn = infGen?.Invoke(b1, b2, b3).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
             {
                 if (i % 2 == 0)

@@ -81,7 +81,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _mu; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidMu(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidMu(value), ErrorMessages.InvalidParams);
                 _mu = value;
             }
         }
@@ -101,7 +101,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _sigma; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidSigma(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidSigma(value), ErrorMessages.InvalidParams);
                 _sigma = value;
             }
         }
@@ -211,7 +211,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </exception>
         public LogisticDistribution(IGenerator generator, double mu, double sigma) : base(generator)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            var vp = AreValidParams;
+            RaiseArgumentOutOfRangeException.IfNot(vp(mu, sigma), ErrorMessages.InvalidParams);
             _mu = mu;
             _sigma = sigma;
         }

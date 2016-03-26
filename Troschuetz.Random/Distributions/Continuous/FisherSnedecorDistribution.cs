@@ -78,7 +78,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -95,7 +95,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _beta; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidBeta(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidBeta(value), ErrorMessages.InvalidParams);
                 _beta = value;
             }
         }
@@ -205,7 +205,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </exception>
         public FisherSnedecorDistribution(IGenerator generator, int alpha, int beta) : base(generator)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            var vp = AreValidParams;
+            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, beta), ErrorMessages.InvalidParams);
             _alpha = alpha;
             _beta = beta;
         }
@@ -342,10 +343,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </remarks>
         public static Func<IGenerator, int, int, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
-            var helper1 = beta / (double) alpha;
-            var csa = ChiSquareDistribution.Sample(generator, alpha);
-            var csb = ChiSquareDistribution.Sample(generator, beta);
-            return csa / csb * helper1;
+            var x = BetaDistribution.Sample(generator, alpha / 2.0, beta / 2.0);
+            return (beta * x) / (alpha * (1 - x));
         };
 
         #endregion TRandom Helpers

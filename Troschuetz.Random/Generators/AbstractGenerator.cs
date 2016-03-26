@@ -282,7 +282,7 @@ namespace Troschuetz.Random.Generators
         {
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
-            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue));
+            RaiseArgumentException.If(double.IsPositiveInfinity(maxValue));
 
             var result = NextDouble() * maxValue;
 
@@ -315,7 +315,7 @@ namespace Troschuetz.Random.Generators
         {
             // Preconditions
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
-            Raise<ArgumentException>.If(double.IsPositiveInfinity(maxValue - minValue));
+            RaiseArgumentException.If(double.IsPositiveInfinity(maxValue - minValue));
 
             var result = minValue + NextDouble() * (maxValue - minValue);
 

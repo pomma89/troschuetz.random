@@ -71,7 +71,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             get { return _alpha; }
             set
             {
-                Raise<ArgumentOutOfRangeException>.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                RaiseArgumentOutOfRangeException.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -166,7 +166,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public BernoulliDistribution(IGenerator generator, double alpha) : base(generator)
         {
-            Raise<ArgumentOutOfRangeException>.IfNot(IsValidParam(alpha), ErrorMessages.InvalidParams);
+            var vp = IsValidParam;
+            RaiseArgumentOutOfRangeException.IfNot(vp(alpha), ErrorMessages.InvalidParams);
             _alpha = alpha;
         }
 
