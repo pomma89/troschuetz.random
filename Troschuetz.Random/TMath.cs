@@ -19,7 +19,6 @@
  */
 
 using System;
-using System.Runtime.CompilerServices;
 
 namespace Troschuetz.Random
 {
@@ -67,7 +66,7 @@ namespace Troschuetz.Random
                 var seed = 1777771U;
                 seed = factor * seed + (uint) Environment.TickCount;
 
-#if !PORTABLE
+#if !(PORTABLE || NETSTD11)
                 seed = factor * seed + (uint) System.Threading.Thread.CurrentThread.ManagedThreadId;
 #endif
 
