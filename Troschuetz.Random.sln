@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Portable", "Platform Specific\Troschuetz.Random.Portable\Troschuetz.Random.Portable.csproj", "{A1FF7728-605F-401A-A9FC-51FA56852E9E}"
 EndProject
@@ -26,6 +26,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGet", "Troschuetz.Random.NuGet\Troschuetz.Random.NuGet.csproj", "{5D54B35E-AA1A-4357-B3BE-356DCB4DE956}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A1FF7728-605F-401A-A9FC-51FA56852E9E} = {A1FF7728-605F-401A-A9FC-51FA56852E9E}
+		{D6EE0F30-9F9C-4DAF-9786-7A7525B3FA95} = {D6EE0F30-9F9C-4DAF-9786-7A7525B3FA95}
 		{0CD60663-C8EC-42F3-8E61-E38608FE4F57} = {0CD60663-C8EC-42F3-8E61-E38608FE4F57}
 		{DA6AD56D-B1DB-478B-83A4-7378C77DF8CD} = {DA6AD56D-B1DB-478B-83A4-7378C77DF8CD}
 		{6A27FA7A-4E08-43D5-AC49-5A460ADE00E6} = {6A27FA7A-4E08-43D5-AC49-5A460ADE00E6}
@@ -62,14 +63,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NET35", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Benchmarks", "Troschuetz.Random.Benchmarks\Troschuetz.Random.Benchmarks.csproj", "{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NETSTD11", "Platform Specific\Troschuetz.Random.NETSTD11\Troschuetz.Random.NETSTD11.csproj", "{D6EE0F30-9F9C-4DAF-9786-7A7525B3FA95}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Troschuetz.Random\Troschuetz.Random.projitems*{a1ff7728-605f-401a-a9fc-51fa56852e9e}*SharedItemsImports = 4
-		Troschuetz.Random\Troschuetz.Random.projitems*{b838c2fb-09b8-47c5-b741-0cadfe8e5dfa}*SharedItemsImports = 13
-		Troschuetz.Random\Troschuetz.Random.projitems*{6b947182-cf4b-45fe-a1ae-47a28c514040}*SharedItemsImports = 4
-		Troschuetz.Random\Troschuetz.Random.projitems*{da6ad56d-b1db-478b-83a4-7378c77df8cd}*SharedItemsImports = 4
 		Troschuetz.Random\Troschuetz.Random.projitems*{0cd60663-c8ec-42f3-8e61-e38608fe4f57}*SharedItemsImports = 4
 		Troschuetz.Random\Troschuetz.Random.projitems*{6a27fa7a-4e08-43d5-ac49-5a460ade00e6}*SharedItemsImports = 4
+		Troschuetz.Random\Troschuetz.Random.projitems*{6b947182-cf4b-45fe-a1ae-47a28c514040}*SharedItemsImports = 4
+		Troschuetz.Random\Troschuetz.Random.projitems*{a1ff7728-605f-401a-a9fc-51fa56852e9e}*SharedItemsImports = 4
+		Troschuetz.Random\Troschuetz.Random.projitems*{b838c2fb-09b8-47c5-b741-0cadfe8e5dfa}*SharedItemsImports = 13
+		Troschuetz.Random\Troschuetz.Random.projitems*{d6ee0f30-9f9c-4daf-9786-7a7525b3fa95}*SharedItemsImports = 4
+		Troschuetz.Random\Troschuetz.Random.projitems*{da6ad56d-b1db-478b-83a4-7378c77df8cd}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -132,6 +136,12 @@ Global
 		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}.Publish|Any CPU.ActiveCfg = Release|Any CPU
 		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6EE0F30-9F9C-4DAF-9786-7A7525B3FA95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6EE0F30-9F9C-4DAF-9786-7A7525B3FA95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6EE0F30-9F9C-4DAF-9786-7A7525B3FA95}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{D6EE0F30-9F9C-4DAF-9786-7A7525B3FA95}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{D6EE0F30-9F9C-4DAF-9786-7A7525B3FA95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6EE0F30-9F9C-4DAF-9786-7A7525B3FA95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,5 +152,6 @@ Global
 		{DA6AD56D-B1DB-478B-83A4-7378C77DF8CD} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
 		{6A27FA7A-4E08-43D5-AC49-5A460ADE00E6} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
 		{0CD60663-C8EC-42F3-8E61-E38608FE4F57} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
+		{D6EE0F30-9F9C-4DAF-9786-7A7525B3FA95} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
 	EndGlobalSection
 EndGlobal

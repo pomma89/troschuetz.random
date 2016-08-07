@@ -184,7 +184,7 @@ namespace Troschuetz.Random.Generators
         /// </exception>
         public MT19937Generator(IList<int> seedArray) : base(19650218U)
         {
-            RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
+            Raise.ArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
 
             _seedArray = new uint[seedArray.Count];
             for (var index = 0; index < seedArray.Count; index++)
@@ -209,7 +209,7 @@ namespace Troschuetz.Random.Generators
         /// </exception>
         public MT19937Generator(uint[] seedArray) : base(19650218U)
         {
-            RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
+            Raise.ArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
 
             _seedArray = seedArray;
 
@@ -333,9 +333,6 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public override int NextInclusiveMaxValue()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
@@ -364,9 +361,6 @@ namespace Troschuetz.Random.Generators
         ///   A double-precision floating point number greater than or equal to 0.0, and less than
         ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
         /// </returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public override double NextDouble()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
@@ -395,9 +389,6 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
         ///   less than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public override uint NextUInt()
         {
             if (_mti >= N)

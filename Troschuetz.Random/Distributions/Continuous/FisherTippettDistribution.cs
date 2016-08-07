@@ -82,7 +82,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidAlpha(value), nameof(Alpha), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -102,7 +102,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _mu; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidMu(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidMu(value), nameof(Mu), ErrorMessages.InvalidParams);
                 _mu = value;
             }
         }
@@ -213,7 +213,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public FisherTippettDistribution(IGenerator generator, double alpha, double mu) : base(generator)
         {
             var vp = AreValidParams;
-            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, mu), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(alpha, mu), $"{nameof(alpha)}/{nameof(mu)}", ErrorMessages.InvalidParams);
             _alpha = alpha;
             _mu = mu;
         }

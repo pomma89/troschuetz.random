@@ -131,9 +131,6 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public override int NextInclusiveMaxValue()
         {
             if (_bytesAvailable)
@@ -162,9 +159,6 @@ namespace Troschuetz.Random.Generators
         ///   A double-precision floating point number greater than or equal to 0.0, and less than
         ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
         /// </returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public override double NextDouble()
         {
             if (_bytesAvailable)
@@ -193,9 +187,6 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
         ///   less than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public override uint NextUInt()
         {
             if (_bytesAvailable)
@@ -219,9 +210,6 @@ namespace Troschuetz.Random.Generators
         ///   A 64-bit unsigned integer greater than or equal to <see cref="ulong.MinValue"/> and
         ///   less than or equal to <see cref="ulong.MaxValue"/>.
         /// </returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public ulong NextULong()
         {
             _v ^= _v >> 21;

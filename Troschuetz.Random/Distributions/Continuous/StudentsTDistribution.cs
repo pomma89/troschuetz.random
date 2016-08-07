@@ -70,7 +70,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _nu; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidNu(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidNu(value), nameof(Nu), ErrorMessages.InvalidParams);
                 _nu = value;
             }
         }
@@ -166,7 +166,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public StudentsTDistribution(IGenerator generator, int nu) : base(generator)
         {
             var vp = IsValidParam;
-            RaiseArgumentOutOfRangeException.IfNot(vp(nu), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(nu), nameof(nu), ErrorMessages.InvalidParams);
             _nu = nu;
         }
 

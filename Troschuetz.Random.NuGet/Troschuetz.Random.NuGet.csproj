@@ -75,7 +75,7 @@
     <Folder Include="lib\net40\" />
     <Folder Include="lib\net45\" />
     <Folder Include="lib\net46\" />
-    <Folder Include="lib\netstandard1.0\" />
+    <Folder Include="lib\netstandard1.1\" />
     <Folder Include="lib\portable-net45+win8+wp8+wpa81\" />
     <Folder Include="tester\" />
   </ItemGroup>
@@ -128,10 +128,10 @@ copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Tro
 copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.pdb" "$(ProjectDir)lib\portable-net45+win8+wp8+wpa81"
 copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.xml" "$(ProjectDir)lib\portable-net45+win8+wp8+wpa81"
 
-if not exist "$(ProjectDir)lib\dnxcore50" mkdir "$(ProjectDir)lib\netstandard1.0"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.dll" "$(ProjectDir)lib\netstandard1.0"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.pdb" "$(ProjectDir)lib\netstandard1.0"
-copy "$(SolutionDir)Platform Specific\Troschuetz.Random.Portable\bin\Release\Troschuetz.Random.xml" "$(ProjectDir)lib\netstandard1.0"
+if not exist "$(ProjectDir)lib\netstandard1.1" mkdir "$(ProjectDir)lib\netstandard1.1"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NETSTD11\bin\Release\Troschuetz.Random.dll" "$(ProjectDir)lib\netstandard1.1"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NETSTD11\bin\Release\Troschuetz.Random.pdb" "$(ProjectDir)lib\netstandard1.1"
+copy "$(SolutionDir)Platform Specific\Troschuetz.Random.NETSTD11\bin\Release\Troschuetz.Random.xml" "$(ProjectDir)lib\netstandard1.1"
 
 rmdir /s /q "$(ProjectDir)tester"
 mkdir "$(ProjectDir)tester"

@@ -128,7 +128,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             get { return _lambda; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidLambda(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidLambda(value), nameof(Lambda), ErrorMessages.InvalidParams);
                 _lambda = value;
             }
         }
@@ -224,7 +224,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         public PoissonDistribution(IGenerator generator, double lambda) : base(generator)
         {
             var vp = IsValidParam;
-            RaiseArgumentOutOfRangeException.IfNot(vp(lambda), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(lambda), nameof(lambda), ErrorMessages.InvalidParams);
             _lambda = lambda;
         }
 

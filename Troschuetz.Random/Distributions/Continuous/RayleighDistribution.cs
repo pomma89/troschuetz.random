@@ -70,7 +70,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _sigma; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidSigma(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidSigma(value), nameof(Sigma), ErrorMessages.InvalidParams);
                 _sigma = value;
             }
         }
@@ -167,7 +167,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             : base(generator)
         {
             var vp = IsValidParam;
-            RaiseArgumentOutOfRangeException.IfNot(vp(sigma), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(sigma), nameof(sigma), ErrorMessages.InvalidParams);
             _sigma = sigma;
         }
 

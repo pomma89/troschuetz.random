@@ -101,7 +101,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _mu; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidMu(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidMu(value), nameof(Mu), ErrorMessages.InvalidParams);
                 _mu = value;
             }
         }
@@ -121,7 +121,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _sigma; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidSigma(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidSigma(value), nameof(Sigma), ErrorMessages.InvalidParams);
                 _sigma = value;
             }
         }
@@ -232,7 +232,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public LognormalDistribution(IGenerator generator, double mu, double sigma) : base(generator)
         {
             var vp = AreValidParams;
-            RaiseArgumentOutOfRangeException.IfNot(vp(mu, sigma), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(mu, sigma), $"{nameof(mu)}/{nameof(sigma)}", ErrorMessages.InvalidParams);
             _mu = mu;
             _sigma = sigma;
         }

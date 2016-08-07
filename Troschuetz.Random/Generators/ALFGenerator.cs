@@ -99,7 +99,7 @@ namespace Troschuetz.Random.Generators
             get { return _shortLag; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidShortLag(value));
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidShortLag(value), nameof(ShortLag));
                 _shortLag = value;
             }
         }
@@ -118,7 +118,7 @@ namespace Troschuetz.Random.Generators
             get { return _longLag; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidShortLag(value));
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidShortLag(value), nameof(LongLag));
                 _longLag = value;
                 Reset();
             }
@@ -238,10 +238,6 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
-#if NET45
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public override int NextInclusiveMaxValue()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
@@ -263,10 +259,6 @@ namespace Troschuetz.Random.Generators
         ///   A double-precision floating point number greater than or equal to 0.0, and less than
         ///   1.0; that is, the range of return values includes 0.0 but not 1.0.
         /// </returns>
-#if NET45
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public override double NextDouble()
         {
             // Its faster to explicitly calculate the unsigned random number than simply call NextUInt().
@@ -288,10 +280,6 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
         ///   less than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
-#if NET45
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public override uint NextUInt()
         {
             if (_i >= _longLag)
