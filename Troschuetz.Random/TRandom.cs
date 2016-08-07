@@ -27,16 +27,13 @@ namespace Troschuetz.Random
     using PommaLabs.Thrower;
     using System;
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
 
     /// <summary>
     ///   A random generator class similar to the one Python offers, providing functions similar to
     ///   the ones found in <see cref="System.Random"/> and functions returning random numbers
     ///   according to a particular kind of distribution.
     /// </summary>
-    /// <remarks>
-    ///   The thread safety of this class depends on the one of the underlying generator.
-    /// </remarks>
+    /// <remarks>The thread safety of this class depends on the one of the underlying generator.</remarks>
     [Serializable]
     public sealed class TRandom : IGenerator
     {
@@ -52,16 +49,16 @@ namespace Troschuetz.Random
         #region Construction
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
-        ///   and the default seed (which corresponds to <see cref="TMath.Seed()"/>).
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying
+        ///   generator and the default seed (which corresponds to <see cref="TMath.Seed()"/>).
         /// </summary>
         public TRandom() : this(new XorShift128Generator(TMath.Seed()))
         {
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
-        ///   and the specified seed.
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying
+        ///   generator and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public TRandom(int seed) : this(new XorShift128Generator(seed))
@@ -69,8 +66,8 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
-        ///   and the specified seed.
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying
+        ///   generator and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public TRandom(uint seed) : this(new XorShift128Generator(seed))
@@ -89,21 +86,21 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
-        ///   and the default seed (which corresponds to <see cref="TMath.Seed()"/>).
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying
+        ///   generator and the default seed (which corresponds to <see cref="TMath.Seed()"/>).
         /// </summary>
         public static TRandom New() => new TRandom(new XorShift128Generator(TMath.Seed()));
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
-        ///   and the specified seed.
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying
+        ///   generator and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public static TRandom New(int seed) => new TRandom(new XorShift128Generator(seed));
 
         /// <summary>
-        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying generator
-        ///   and the specified seed.
+        ///   Constructs a new instance with <see cref="XorShift128Generator"/> as underlying
+        ///   generator and the specified seed.
         /// </summary>
         /// <param name="seed">The seed used to initialize the generator.</param>
         public static TRandom New(uint seed) => new TRandom(new XorShift128Generator(seed));
@@ -283,8 +280,8 @@ namespace Troschuetz.Random
         ///   Returns a categorical distributed 32-bit signed integer.
         /// </summary>
         /// <param name="weights">
-        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
-        ///   as this is often impossible using floating point arithmetic.
+        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized as
+        ///   this is often impossible using floating point arithmetic.
         /// </param>
         /// <returns>A categorical distributed 32-bit signed integer.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="weights"/> is null.</exception>
@@ -313,8 +310,8 @@ namespace Troschuetz.Random
         ///   Returns an infinite sequence of categorical distributed 32-bit signed integers.
         /// </summary>
         /// <param name="weights">
-        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
-        ///   as this is often impossible using floating point arithmetic.
+        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized as
+        ///   this is often impossible using floating point arithmetic.
         /// </param>
         /// <returns>An infinite sequence of categorical distributed 32-bit signed integers.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="weights"/> is null.</exception>
@@ -343,8 +340,7 @@ namespace Troschuetz.Random
         ///   Returns a discrete uniform distributed 32-bit signed integer.
         /// </summary>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed
-        ///   random numbers.
+        ///   The parameter alpha which is used for generation of discrete uniform distributed random numbers.
         /// </param>
         /// <param name="beta">
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
@@ -355,8 +351,8 @@ namespace Troschuetz.Random
         ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="DiscreteUniformDistribution.Next"/>,
-        ///   with a prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="DiscreteUniformDistribution.Next"/>, with
+        ///   a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -372,22 +368,19 @@ namespace Troschuetz.Random
         ///   Returns an infinite sequence of discrete uniform distributed 32-bit signed integers.
         /// </summary>
         /// <param name="alpha">
-        ///   The parameter alpha which is used for generation of discrete uniform distributed
-        ///   random numbers.
+        ///   The parameter alpha which is used for generation of discrete uniform distributed random numbers.
         /// </param>
         /// <param name="beta">
         ///   The parameter beta which is used for generation of discrete uniform distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of discrete uniform distributed 32-bit signed integers.
-        /// </returns>
+        /// <returns>An infinite sequence of discrete uniform distributed 32-bit signed integers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="alpha"/> is greater than <paramref name="beta"/>, or
         ///   <paramref name="beta"/> is equal to <see cref="int.MaxValue"/>.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="DiscreteUniformDistribution.Next"/>,
-        ///   with a prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="DiscreteUniformDistribution.Next"/>, with
+        ///   a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -458,8 +451,8 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PoissonDistribution.Next"/>, with a
-        ///   prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PoissonDistribution.Next"/>, with a prior
+        ///   check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -482,8 +475,8 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PoissonDistribution.Next"/>, with a
-        ///   prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PoissonDistribution.Next"/>, with a prior
+        ///   check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -886,8 +879,8 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ExponentialDistribution.Sample"/>, with
-        ///   a prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ExponentialDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -912,8 +905,8 @@ namespace Troschuetz.Random
         ///   <paramref name="lambda"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="ExponentialDistribution.Sample"/>, with
-        ///   a prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="ExponentialDistribution.Sample"/>, with a
+        ///   prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -995,8 +988,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="FisherTippettDistribution.Sample"/>,
-        ///   with a prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="FisherTippettDistribution.Sample"/>, with
+        ///   a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -1024,8 +1017,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="FisherTippettDistribution.Sample"/>,
-        ///   with a prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="FisherTippettDistribution.Sample"/>, with
+        ///   a prior check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -1051,8 +1044,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="GammaDistribution.Sample"/>, with a
-        ///   prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="GammaDistribution.Sample"/>, with a prior
+        ///   check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -1078,8 +1071,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="GammaDistribution.Sample"/>, with a
-        ///   prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="GammaDistribution.Sample"/>, with a prior
+        ///   check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -1181,9 +1174,7 @@ namespace Troschuetz.Random
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of logistic distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of logistic distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of logistic distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
@@ -1379,8 +1370,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PowerDistribution.Sample"/>, with a
-        ///   prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PowerDistribution.Sample"/>, with a prior
+        ///   check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -1406,8 +1397,8 @@ namespace Troschuetz.Random
         ///   <paramref name="alpha"/> or <paramref name="beta"/> are less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   This method simply wraps a call to <see cref="PowerDistribution.Sample"/>, with a
-        ///   prior check of the distribution parameters.
+        ///   This method simply wraps a call to <see cref="PowerDistribution.Sample"/>, with a prior
+        ///   check of the distribution parameters.
         /// </remarks>
         /// <remarks>
         ///   If you absolutely need the best performance, you may consider using an instance of
@@ -1449,9 +1440,7 @@ namespace Troschuetz.Random
         /// <param name="sigma">
         ///   The parameter sigma which is used for generation of rayleigh distributed random numbers.
         /// </param>
-        /// <returns>
-        ///   An infinite sequence of rayleigh distributed floating point random numbers.
-        /// </returns>
+        /// <returns>An infinite sequence of rayleigh distributed floating point random numbers.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="sigma"/> is less than or equal to zero.
         /// </exception>
@@ -1655,9 +1644,9 @@ namespace Troschuetz.Random
         public bool CanReset => Generator.CanReset;
 
         /// <summary>
-        ///   Resets the random number generator using the initial seed, so that it produces the
-        ///   same random number sequence again. To understand whether this generator can be reset,
-        ///   you can query the <see cref="P:Troschuetz.Random.IGenerator.CanReset"/> property.
+        ///   Resets the random number generator using the initial seed, so that it produces the same
+        ///   random number sequence again. To understand whether this generator can be reset, you
+        ///   can query the <see cref="P:Troschuetz.Random.IGenerator.CanReset"/> property.
         /// </summary>
         /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         public bool Reset() => Generator.Reset(Seed);
@@ -1801,8 +1790,8 @@ namespace Troschuetz.Random
         /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <paramref name="minValue"/> and
-        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   A 32-bit unsigned integer greater than or equal to <paramref name="minValue"/> and less
+        ///   than <paramref name="maxValue"/>; that is, the range of return values includes
         ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
@@ -1814,8 +1803,8 @@ namespace Troschuetz.Random
         ///   Returns a random Boolean value.
         /// </summary>
         /// <remarks>
-        ///   Buffers 31 random bits for future calls, so the random number generator is only
-        ///   invoked once in every 31 calls.
+        ///   Buffers 31 random bits for future calls, so the random number generator is only invoked
+        ///   once in every 31 calls.
         /// </remarks>
         /// <returns>A <see cref="T:System.Boolean"/> value.</returns>
         public bool NextBoolean() => Generator.NextBoolean();
@@ -1850,11 +1839,7 @@ namespace Troschuetz.Random
 
         #region Private Members
 
-#if NET45
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        static IEnumerable<TRet> InfiniteLoop<T1, T2, TRet>(Func<T1, T2, TRet> f, T1 a1, T2 a2)
+        private static IEnumerable<TRet> InfiniteLoop<T1, T2, TRet>(Func<T1, T2, TRet> f, T1 a1, T2 a2)
         {
             while (true)
             {
@@ -1862,11 +1847,7 @@ namespace Troschuetz.Random
             }
         }
 
-#if NET45
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, TRet>(Func<T1, T2, T3, TRet> f, T1 a1, T2 a2, T3 a3)
+        private static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, TRet>(Func<T1, T2, T3, TRet> f, T1 a1, T2 a2, T3 a3)
         {
             while (true)
             {
@@ -1874,11 +1855,7 @@ namespace Troschuetz.Random
             }
         }
 
-#if NET45
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, T4, TRet>(Func<T1, T2, T3, T4, TRet> f, T1 a1, T2 a2, T3 a3, T4 a4)
+        private static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, T4, TRet>(Func<T1, T2, T3, T4, TRet> f, T1 a1, T2 a2, T3 a3, T4 a4)
         {
             while (true)
             {

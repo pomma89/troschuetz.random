@@ -22,7 +22,6 @@ using PommaLabs.Thrower;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 using Troschuetz.Random.Core;
 
 namespace Troschuetz.Random.Generators
@@ -31,12 +30,12 @@ namespace Troschuetz.Random.Generators
     ///   An abstract generator which efficiently implements everything required by the
     ///   <see cref="IGenerator"/> interface using only few methods: <see cref="NextUInt()"/>,
     ///   <see cref="NextDouble()"/>, <see cref="NextInclusiveMaxValue()"/>.
-    /// 
+    ///
     ///   Therefore, in order to build a new generator, one must "simply" override the
-    ///   <see cref="Reset(uint)"/>, which is used to automatically initialize the generator, and
-    ///   the generator methods, which, as stated above, are used to generate every kind of random
-    ///   object exposed by the interface.
-    /// 
+    ///   <see cref="Reset(uint)"/>, which is used to automatically initialize the generator, and the
+    ///   generator methods, which, as stated above, are used to generate every kind of random object
+    ///   exposed by the interface.
+    ///
     ///   All generators implemented in this library extend this abstract class.
     /// </summary>
     /// <remarks>
@@ -44,7 +43,7 @@ namespace Troschuetz.Random.Generators
     ///   safe. The thread safety of other methods depends on the one of the extending class, that
     ///   is, if all abstract methods are implemented in a thread safe manner, then other methods,
     ///   excluding <see cref="NextBoolean()"/> and <see cref="NextBytes(byte[])"/>, are thread safe too.
-    /// 
+    ///
     ///   Please note that all generators implemented in this library are NOT thread safe.
     /// </remarks>
     [Serializable]
@@ -59,8 +58,8 @@ namespace Troschuetz.Random.Generators
         protected const byte ULongToIntShift = 33;
 
         /// <summary>
-        ///   The number of left shifts required to transform a 64-bit unsigned integer into a
-        ///   32-bit unsigned integer.
+        ///   The number of left shifts required to transform a 64-bit unsigned integer into a 32-bit
+        ///   unsigned integer.
         /// </summary>
         protected const byte ULongToUIntShift = 32;
 
@@ -92,14 +91,14 @@ namespace Troschuetz.Random.Generators
         /// <summary>
         ///   Stores an <see cref="uint"/> used to generate up to 32 random <see cref="bool"/> values.
         /// </summary>
-        uint _bitBuffer;
+        private uint _bitBuffer;
 
         /// <summary>
         ///   Stores how many random <see cref="bool"/> values still can be generated from <see cref="_bitBuffer"/>.
         /// </summary>
-        int _bitCount;
+        private int _bitCount;
 
-        #endregion
+        #endregion Fields
 
         /// <summary>
         ///   Initializes a new instance of the generator, using the specified seed value.
@@ -132,9 +131,9 @@ namespace Troschuetz.Random.Generators
         public abstract bool CanReset { get; }
 
         /// <summary>
-        ///   Resets the random number generator using the initial seed, so that it produces the
-        ///   same random number sequence again. To understand whether this generator can be reset,
-        ///   you can query the <see cref="CanReset"/> property.
+        ///   Resets the random number generator using the initial seed, so that it produces the same
+        ///   random number sequence again. To understand whether this generator can be reset, you
+        ///   can query the <see cref="CanReset"/> property.
         /// </summary>
         /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         public bool Reset() => Reset(Seed);
@@ -173,9 +172,6 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit signed integer greater than or equal to 0, and less than
         ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
         /// </returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public int Next()
         {
             int result;
@@ -206,9 +202,6 @@ namespace Troschuetz.Random.Generators
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to 0.
         /// </exception>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public int Next(int maxValue)
         {
             // Preconditions
@@ -237,9 +230,6 @@ namespace Troschuetz.Random.Generators
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public int Next(int minValue, int maxValue)
         {
             // Preconditions
@@ -275,9 +265,6 @@ namespace Troschuetz.Random.Generators
         ///   <paramref name="maxValue"/> must be greater than or equal to 0.0.
         /// </exception>
         /// <exception cref="ArgumentException"><paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.</exception>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public double NextDouble(double maxValue)
         {
             // Preconditions
@@ -308,9 +295,6 @@ namespace Troschuetz.Random.Generators
         ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
         ///   cannot be <see cref="double.PositiveInfinity"/>.
         /// </exception>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public double NextDouble(double minValue, double maxValue)
         {
             // Preconditions
@@ -328,8 +312,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
-        ///   less than or equal to <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
         public abstract uint NextUInt();
 
@@ -337,12 +321,9 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number less than <see cref="uint.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
-        ///   less than <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than <see cref="uint.MaxValue"/>.
         /// </returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public uint NextUIntExclusiveMaxValue()
         {
             uint result;
@@ -358,13 +339,10 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
-        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than <paramref name="maxValue"/>; that is, the range of return values includes
         ///   <see cref="uint.MinValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public uint NextUInt(uint maxValue)
         {
             // Preconditions
@@ -383,16 +361,13 @@ namespace Troschuetz.Random.Generators
         /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <paramref name="minValue"/> and
-        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   A 32-bit unsigned integer greater than or equal to <paramref name="minValue"/> and less
+        ///   than <paramref name="maxValue"/>; that is, the range of return values includes
         ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public uint NextUInt(uint minValue, uint maxValue)
         {
             // Preconditions
@@ -409,13 +384,10 @@ namespace Troschuetz.Random.Generators
         ///   Returns a random Boolean value.
         /// </summary>
         /// <remarks>
-        ///   Buffers 31 random bits for future calls, so the random number generator is only
-        ///   invoked once in every 31 calls.
+        ///   Buffers 31 random bits for future calls, so the random number generator is only invoked
+        ///   once in every 31 calls.
         /// </remarks>
         /// <returns>A <see cref="bool"/> value.</returns>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public bool NextBoolean()
         {
             if (_bitCount == 0)
@@ -442,9 +414,6 @@ namespace Troschuetz.Random.Generators
         /// </remarks>
         /// <param name="buffer">An array of bytes to contain random numbers.</param>
         /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public void NextBytes(byte[] buffer)
         {
             // Preconditions
@@ -526,6 +495,6 @@ namespace Troschuetz.Random.Generators
             return $"Generator: {generatorName}, Seed: {Seed}";
         }
 
-        #endregion
+        #endregion Equality members
     }
 }
