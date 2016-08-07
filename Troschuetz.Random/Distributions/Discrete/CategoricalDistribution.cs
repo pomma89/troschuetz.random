@@ -107,9 +107,9 @@ namespace Troschuetz.Random.Distributions.Discrete
             get { return _weights.Select(w => w / _weightsSum).ToList(); }
             set
             {
-                Raise.ArgumentNullException.IfIsNull(value, nameof(value), ErrorMessages.NullWeights);
-                RaiseArgumentException.If(value.Count == 0, ErrorMessages.EmptyList);
-                RaiseArgumentOutOfRangeException.IfNot(AreValidWeights(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentNullException.IfIsNull(value, nameof(Weights), ErrorMessages.NullWeights);
+                Raise.ArgumentException.If(value.Count == 0, nameof(Weights), ErrorMessages.EmptyList);
+                Raise.ArgumentOutOfRangeException.IfNot(AreValidWeights(value), nameof(Weights), ErrorMessages.InvalidParams);
                 _weights = value.ToList();
                 UpdateHelpers();
             }
@@ -254,7 +254,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public CategoricalDistribution(IGenerator generator, int valueCount) : base(generator)
         {
-            RaiseArgumentOutOfRangeException.IfIsEqual(valueCount, 0, ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfIsEqual(valueCount, 0, nameof(valueCount), ErrorMessages.InvalidParams);
             _weights = Ones(valueCount);
             UpdateHelpers();
         }
@@ -278,8 +278,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         public CategoricalDistribution(IGenerator generator, ICollection<double> weights) : base(generator)
         {
             Raise.ArgumentNullException.IfIsNull(weights, nameof(weights), ErrorMessages.NullWeights);
-            RaiseArgumentException.If(weights.Count == 0, ErrorMessages.EmptyList);
-            RaiseArgumentOutOfRangeException.IfNot(AreValidWeights(weights), ErrorMessages.InvalidParams);
+            Raise.ArgumentException.If(weights.Count == 0, nameof(weights), ErrorMessages.EmptyList);
+            Raise.ArgumentOutOfRangeException.IfNot(AreValidWeights(weights), nameof(weights), ErrorMessages.InvalidParams);
             _weights = weights.ToList();
             UpdateHelpers();
         }

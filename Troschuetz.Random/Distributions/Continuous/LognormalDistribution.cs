@@ -101,7 +101,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _mu; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidMu(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidMu(value), nameof(Mu), ErrorMessages.InvalidParams);
                 _mu = value;
             }
         }

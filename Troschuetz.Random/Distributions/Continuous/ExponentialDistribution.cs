@@ -167,7 +167,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public ExponentialDistribution(IGenerator generator, double lambda) : base(generator)
         {
             var vp = IsValidParam;
-            RaiseArgumentOutOfRangeException.IfNot(vp(lambda), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(lambda), nameof(lambda), ErrorMessages.InvalidParams);
             _lambda = lambda;
         }
 

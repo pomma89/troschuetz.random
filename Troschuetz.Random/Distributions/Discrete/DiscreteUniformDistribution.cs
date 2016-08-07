@@ -220,7 +220,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         public DiscreteUniformDistribution(IGenerator generator, int alpha, int beta) : base(generator)
         {
             var vp = AreValidParams;
-            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, beta), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(alpha, beta), $"{nameof(alpha)}/{nameof(beta)}", ErrorMessages.InvalidParams);
             _alpha = alpha;
             _beta = beta;
         }
