@@ -223,7 +223,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         public GeometricDistribution(IGenerator generator, double alpha) : base(generator)
         {
             var vp = IsValidParam;
-            RaiseArgumentOutOfRangeException.IfNot(vp(alpha), nameof(alpha), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(alpha), nameof(alpha), ErrorMessages.InvalidParams);
             _alpha = alpha;
         }
 

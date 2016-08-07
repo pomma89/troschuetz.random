@@ -217,7 +217,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             : base(generator)
         {
             var vp = AreValidParams;
-            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, lambda), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(alpha, lambda), $"{nameof(alpha)}/{nameof(lambda)}", ErrorMessages.InvalidParams);
             _alpha = alpha;
             _lambda = lambda;
         }

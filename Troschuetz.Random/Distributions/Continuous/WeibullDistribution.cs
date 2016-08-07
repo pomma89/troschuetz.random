@@ -220,7 +220,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public WeibullDistribution(IGenerator generator, double alpha, double lambda) : base(generator)
         {
             var vp = AreValidParams;
-            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, lambda), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(alpha, lambda), $"{nameof(alpha)}/{nameof(lambda)}", ErrorMessages.InvalidParams);
             _alpha = alpha;
             _lambda = lambda;
         }

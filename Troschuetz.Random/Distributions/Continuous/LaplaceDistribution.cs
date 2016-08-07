@@ -210,7 +210,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public LaplaceDistribution(IGenerator generator, double alpha, double mu) : base(generator)
         {
             var vp = AreValidParams;
-            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, mu), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(alpha, mu), $"{nameof(alpha)}/{nameof(mu)}", ErrorMessages.InvalidParams);
             _alpha = alpha;
             _mu = mu;
         }

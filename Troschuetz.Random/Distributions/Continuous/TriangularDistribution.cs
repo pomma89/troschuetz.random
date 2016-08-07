@@ -289,7 +289,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public TriangularDistribution(IGenerator generator, double alpha, double beta, double gamma) : base(generator)
         {
             var vp = AreValidParams;
-            RaiseArgumentOutOfRangeException.IfNot(vp(alpha, beta, gamma), ErrorMessages.InvalidParams);
+            Raise.ArgumentOutOfRangeException.IfNot(vp(alpha, beta, gamma), $"{nameof(alpha)}/{nameof(beta)}/{gamma}", ErrorMessages.InvalidParams);
             _alpha = alpha;
             _beta = beta;
             _gamma = gamma;
