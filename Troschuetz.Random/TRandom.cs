@@ -84,7 +84,7 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentNullException"><paramref name="generator"/> is null.</exception>
         public TRandom(IGenerator generator)
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator));
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator));
             Generator = generator;
         }
 

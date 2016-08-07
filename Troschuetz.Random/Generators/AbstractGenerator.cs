@@ -212,7 +212,7 @@ namespace Troschuetz.Random.Generators
         public int Next(int maxValue)
         {
             // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            Raise.ArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
 
             var result = (int) (NextDouble() * maxValue);
 
@@ -243,7 +243,7 @@ namespace Troschuetz.Random.Generators
         public int Next(int minValue, int maxValue)
         {
             // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise.ArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
             // The cast to double enables 64 bit arithmetic, which is needed when the condition
             // ((maxValue - minValue) > int.MaxValue) is true.
@@ -281,8 +281,8 @@ namespace Troschuetz.Random.Generators
         public double NextDouble(double maxValue)
         {
             // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
-            RaiseArgumentException.If(double.IsPositiveInfinity(maxValue));
+            Raise.ArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            Raise.ArgumentException.If(double.IsPositiveInfinity(maxValue), nameof(maxValue));
 
             var result = NextDouble() * maxValue;
 
@@ -314,8 +314,8 @@ namespace Troschuetz.Random.Generators
         public double NextDouble(double minValue, double maxValue)
         {
             // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
-            RaiseArgumentException.If(double.IsPositiveInfinity(maxValue - minValue));
+            Raise.ArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise.ArgumentException.If(double.IsPositiveInfinity(maxValue - minValue), nameof(minValue));
 
             var result = minValue + NextDouble() * (maxValue - minValue);
 
@@ -368,7 +368,7 @@ namespace Troschuetz.Random.Generators
         public uint NextUInt(uint maxValue)
         {
             // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
+            Raise.ArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
 
             var result = (uint) (NextDouble() * maxValue);
 
@@ -396,7 +396,7 @@ namespace Troschuetz.Random.Generators
         public uint NextUInt(uint minValue, uint maxValue)
         {
             // Preconditions
-            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise.ArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
             var result = minValue + (uint) (NextDouble() * (maxValue - minValue));
 
@@ -448,7 +448,7 @@ namespace Troschuetz.Random.Generators
         public void NextBytes(byte[] buffer)
         {
             // Preconditions
-            RaiseArgumentNullException.IfIsNull(buffer, nameof(buffer), ErrorMessages.NullBuffer);
+            Raise.ArgumentNullException.IfIsNull(buffer, nameof(buffer), ErrorMessages.NullBuffer);
 
             // Fill the buffer with 4 bytes (1 uint) at a time.
             var i = 0;

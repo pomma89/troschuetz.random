@@ -71,7 +71,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _lambda; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidLambda(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidLambda(value), nameof(Lambda), ErrorMessages.InvalidParams);
                 _lambda = value;
             }
         }

@@ -80,7 +80,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidAlpha(value), nameof(Alpha), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -100,7 +100,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _gamma; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidGamma(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidGamma(value), nameof(Gamma), ErrorMessages.InvalidParams);
                 _gamma = value;
             }
         }

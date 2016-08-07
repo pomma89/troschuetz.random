@@ -107,7 +107,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             get { return _weights.Select(w => w / _weightsSum).ToList(); }
             set
             {
-                RaiseArgumentNullException.IfIsNull(value, nameof(value), ErrorMessages.NullWeights);
+                Raise.ArgumentNullException.IfIsNull(value, nameof(value), ErrorMessages.NullWeights);
                 RaiseArgumentException.If(value.Count == 0, ErrorMessages.EmptyList);
                 RaiseArgumentOutOfRangeException.IfNot(AreValidWeights(value), ErrorMessages.InvalidParams);
                 _weights = value.ToList();
@@ -277,7 +277,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </exception>
         public CategoricalDistribution(IGenerator generator, ICollection<double> weights) : base(generator)
         {
-            RaiseArgumentNullException.IfIsNull(weights, nameof(weights), ErrorMessages.NullWeights);
+            Raise.ArgumentNullException.IfIsNull(weights, nameof(weights), ErrorMessages.NullWeights);
             RaiseArgumentException.If(weights.Count == 0, ErrorMessages.EmptyList);
             RaiseArgumentOutOfRangeException.IfNot(AreValidWeights(weights), ErrorMessages.InvalidParams);
             _weights = weights.ToList();

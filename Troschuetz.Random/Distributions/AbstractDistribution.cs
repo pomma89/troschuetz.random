@@ -40,7 +40,7 @@ namespace Troschuetz.Random.Distributions
         /// <exception cref="ArgumentNullException">Given generator is null.</exception>
         protected AbstractDistribution(IGenerator generator)
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             Generator = generator;
         }
 

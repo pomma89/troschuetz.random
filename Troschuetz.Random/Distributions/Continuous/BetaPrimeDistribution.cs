@@ -81,7 +81,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidAlpha(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidAlpha(value), nameof(Alpha), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -101,7 +101,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _beta; }
             set
             {
-                RaiseArgumentOutOfRangeException.IfNot(IsValidBeta(value), ErrorMessages.InvalidParams);
+                Raise.ArgumentOutOfRangeException.IfNot(IsValidBeta(value), nameof(Beta), ErrorMessages.InvalidParams);
                 _beta = value;
             }
         }

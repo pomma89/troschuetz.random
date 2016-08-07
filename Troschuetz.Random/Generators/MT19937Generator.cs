@@ -184,7 +184,7 @@ namespace Troschuetz.Random.Generators
         /// </exception>
         public MT19937Generator(IList<int> seedArray) : base(19650218U)
         {
-            RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
+            Raise.ArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
 
             _seedArray = new uint[seedArray.Count];
             for (var index = 0; index < seedArray.Count; index++)
@@ -209,7 +209,7 @@ namespace Troschuetz.Random.Generators
         /// </exception>
         public MT19937Generator(uint[] seedArray) : base(19650218U)
         {
-            RaiseArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
+            Raise.ArgumentNullException.IfIsNull(seedArray, nameof(seedArray));
 
             _seedArray = seedArray;
 

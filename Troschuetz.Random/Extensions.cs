@@ -41,7 +41,7 @@ namespace Troschuetz.Random
         /// <returns>An infinites series of random double numbers, following given distribution.</returns>
         public static IEnumerable<double> DistributedDoubles<T>(this T distribution) where T : IContinuousDistribution
         {
-            RaiseArgumentNullException.IfIsNull(distribution, nameof(distribution), ErrorMessages.NullDistribution);
+            Raise.ArgumentNullException.IfIsNull(distribution, nameof(distribution), ErrorMessages.NullDistribution);
             while (true)
             {
                 yield return distribution.NextDouble();
@@ -60,7 +60,7 @@ namespace Troschuetz.Random
         /// <returns>An infinites series of random numbers, following given distribution.</returns>
         public static IEnumerable<int> DistributedIntegers<T>(this T distribution) where T : IDiscreteDistribution
         {
-            RaiseArgumentNullException.IfIsNull(distribution, nameof(distribution), ErrorMessages.NullDistribution);
+            Raise.ArgumentNullException.IfIsNull(distribution, nameof(distribution), ErrorMessages.NullDistribution);
             while (true)
             {
                 yield return distribution.Next();
@@ -83,7 +83,7 @@ namespace Troschuetz.Random
         /// <returns>An infinite sequence random Boolean values.</returns>
         public static IEnumerable<bool> Booleans<TGen>(this TGen generator) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             while (true)
             {
                 yield return generator.NextBoolean();
@@ -104,8 +104,8 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
         public static IEnumerable<bool> Bytes<TGen>(this TGen generator, byte[] buffer) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            RaiseArgumentNullException.IfIsNull(buffer, nameof(buffer), ErrorMessages.NullBuffer);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(buffer, nameof(buffer), ErrorMessages.NullBuffer);
             while (true)
             {
                 generator.NextBytes(buffer);
@@ -125,9 +125,9 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentException"><paramref name="list"/> is empty.</exception>
         public static TItem Choice<TGen, TItem>(this TGen generator, IList<TItem> list) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            RaiseArgumentNullException.IfIsNull(list, nameof(list), ErrorMessages.NullList);
-            RaiseArgumentException.If(list.Count == 0, ErrorMessages.EmptyList);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(list, nameof(list), ErrorMessages.NullList);
+            Raise.ArgumentException.If(list.Count == 0, nameof(list), ErrorMessages.EmptyList);
             var idx = generator.Next(list.Count);
             Debug.Assert(idx >= 0 && idx < list.Count);
             return list[idx];
@@ -145,9 +145,9 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentException"><paramref name="list"/> is empty.</exception>
         public static IEnumerable<TItem> Choices<TGen, TItem>(this TGen generator, IList<TItem> list) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            RaiseArgumentNullException.IfIsNull(list, nameof(list), ErrorMessages.NullList);
-            RaiseArgumentException.If(list.Count == 0, ErrorMessages.EmptyList);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(list, nameof(list), ErrorMessages.NullList);
+            Raise.ArgumentException.If(list.Count == 0, nameof(list), ErrorMessages.EmptyList);
             while (true)
             {
                 var idx = generator.Next(list.Count);
@@ -167,7 +167,7 @@ namespace Troschuetz.Random
         /// </returns>
         public static IEnumerable<double> Doubles<TGen>(this TGen generator) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
 
             while (true)
             {
@@ -193,9 +193,9 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentException"><paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.</exception>
         public static IEnumerable<double> Doubles<TGen>(this TGen generator, double maxValue) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
-            RaiseArgumentException.If(double.IsPositiveInfinity(maxValue));
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0.0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            Raise.ArgumentException.If(double.IsPositiveInfinity(maxValue), nameof(maxValue));
 
             while (true)
             {
@@ -224,9 +224,9 @@ namespace Troschuetz.Random
         /// </exception>
         public static IEnumerable<double> Doubles<TGen>(this TGen generator, double minValue, double maxValue) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
-            RaiseArgumentException.If(double.IsPositiveInfinity(maxValue - minValue));
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise.ArgumentException.If(double.IsPositiveInfinity(maxValue - minValue), nameof(minValue));
 
             while (true)
             {
@@ -246,7 +246,7 @@ namespace Troschuetz.Random
         /// </returns>
         public static IEnumerable<int> Integers<TGen>(this TGen generator) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
 
             while (true)
             {
@@ -270,8 +270,8 @@ namespace Troschuetz.Random
         /// </exception>
         public static IEnumerable<int> Integers<TGen>(this TGen generator, int maxValue) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            RaiseArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentOutOfRangeException.IfIsLessOrEqual(maxValue, 0, nameof(maxValue), ErrorMessages.NegativeMaxValue);
 
             while (true)
             {
@@ -296,7 +296,7 @@ namespace Troschuetz.Random
         /// </exception>
         public static IEnumerable<int> Integers<TGen>(this TGen generator, int minValue, int maxValue) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
             while (true)
@@ -313,7 +313,7 @@ namespace Troschuetz.Random
         /// <returns>An infinite sequence of 32-bit unsigned integers.</returns>
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
 
             while (true)
             {
@@ -337,7 +337,7 @@ namespace Troschuetz.Random
         /// </exception>
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator, uint maxValue) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentOutOfRangeException.IfIsLess(maxValue, 1U, nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
 
             while (true)
@@ -363,7 +363,7 @@ namespace Troschuetz.Random
         /// </exception>
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator, uint minValue, uint maxValue) where TGen : IGenerator
         {
-            RaiseArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
+            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
             RaiseArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
             while (true)
@@ -375,19 +375,3 @@ namespace Troschuetz.Random
         #endregion IGenerator Extensions
     }
 }
-
-#if PORTABLE
-
-namespace System
-{
-    /// <summary>
-    ///   Fake, this is used only to allow serialization on portable platforms.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true, Inherited = false)]
-    public sealed class SerializableAttribute : Attribute
-    {
-        // This does nothing and should do nothing.
-    }
-}
-
-#endif
