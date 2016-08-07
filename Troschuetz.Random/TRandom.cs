@@ -1843,7 +1843,9 @@ namespace Troschuetz.Random
         {
             while (true)
             {
+#pragma warning disable CC0031 // Check for null before calling a delegate
                 yield return f(a1, a2);
+#pragma warning restore CC0031 // Check for null before calling a delegate
             }
         }
 
@@ -1851,7 +1853,9 @@ namespace Troschuetz.Random
         {
             while (true)
             {
+#pragma warning disable CC0031 // Check for null before calling a delegate
                 yield return f(a1, a2, a3);
+#pragma warning restore CC0031 // Check for null before calling a delegate
             }
         }
 
@@ -1859,7 +1863,9 @@ namespace Troschuetz.Random
         {
             while (true)
             {
+#pragma warning disable CC0031 // Check for null before calling a delegate
                 yield return f(a1, a2, a3, a4);
+#pragma warning restore CC0031 // Check for null before calling a delegate
             }
         }
 
