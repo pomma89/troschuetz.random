@@ -3,7 +3,7 @@
 <package>
     <metadata>
         <id>Troschuetz.Random</id>
-        <version>4.0.5</version>
+        <version>4.0.6</version>
         <title>Troschuetz.Random - Easy random number generation</title>
         <authors>Stefan Troschütz &lt;stefan@troschuetz.de&gt;</authors>
         <owners>Alessio Parma &lt;alessio.parma@gmail.com&gt;</owners>
