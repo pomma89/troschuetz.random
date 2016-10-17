@@ -68,6 +68,7 @@ namespace Troschuetz.Random
 
 #if !(PORTABLE || NETSTD11)
                 seed = factor * seed + (uint) System.Threading.Thread.CurrentThread.ManagedThreadId;
+                seed = factor * seed + (uint) System.Diagnostics.Process.GetCurrentProcess().Id;
 #endif
 
                 return seed;
