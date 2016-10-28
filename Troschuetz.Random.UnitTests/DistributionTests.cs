@@ -95,10 +95,12 @@ namespace Troschuetz.Random.Tests
         =============================================================================*/
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Construction_NullGenerator()
         {
-            GetDist(null);
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                GetDist(null);
+            });
         }
     }
 

@@ -44,7 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PommaLabs.Thrower, Version=3.0.0.0, Culture=neutral, PublicKeyToken=2f204b7110a52060, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Thrower.3.0.1\lib\net35\PommaLabs.Thrower.dll</HintPath>
+      <HintPath>..\..\packages\Thrower.3.0.4\lib\net35\PommaLabs.Thrower.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -62,7 +62,9 @@
     <None Include="..\..\pomma89.snk">
       <Link>pomma89.snk</Link>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />

@@ -62,12 +62,11 @@ namespace Troschuetz.Random.Tests.Discrete
         [TestCase(1 + TinyPos)]
         [TestCase(1 + SmallPos)]
         [TestCase(1 + LargePos)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Alpha_WrongValues(double d)
         {
             Assert.False(GeometricDistribution.IsValidParam(d));
             Assert.False(Dist.IsValidAlpha(d));
-            Dist.Alpha = d;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Alpha = d; });
         }
 
         // alpha > 0 && alpha <= 1

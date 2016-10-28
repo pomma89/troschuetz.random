@@ -58,13 +58,12 @@ namespace Troschuetz.Random.Tests.Continuous
         [TestCase(0)]
         [TestCase(SmallNeg)]
         [TestCase(LargeNeg)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Alpha_WrongValues(double d)
         {
             var i = (int) d;
             Assert.False(ChiDistribution.IsValidParam(i));
             Assert.False(Dist.IsValidAlpha(i));
-            Dist.Alpha = i;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Alpha = i; });
         }
 
         // alpha > 0

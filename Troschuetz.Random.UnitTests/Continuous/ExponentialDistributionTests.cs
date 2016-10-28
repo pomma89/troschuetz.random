@@ -59,12 +59,11 @@ namespace Troschuetz.Random.Tests.Continuous
         [TestCase(TinyNeg)]
         [TestCase(SmallNeg)]
         [TestCase(LargeNeg)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Lambda_WrongValues(double d)
         {
             Assert.False(ExponentialDistribution.IsValidParam(d));
             Assert.False(Dist.IsValidLambda(d));
-            Dist.Lambda = d;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Lambda = d; });
         }
 
         // lambda > 0
