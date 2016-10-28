@@ -62,13 +62,12 @@ namespace Troschuetz.Random.Tests.Discrete
         [TestCase(1, 2, TinyNeg)]
         [TestCase(0, -2, 2)]
         [TestCase(-3, -2, -1)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Weights_WrongValues(double d1, double d2, double d3)
         {
             var w = new List<double> { d1, d2, d3 };
             Assert.False(CategoricalDistribution.IsValidParam(w));
             Assert.False(Dist.AreValidWeights(w));
-            Dist.Weights = w;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Weights = w; });
         }
 
         [Test]

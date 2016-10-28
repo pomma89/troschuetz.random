@@ -68,10 +68,12 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Bytes_NullBuffer()
         {
-            _generator.Bytes(null).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _generator.Bytes(null).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
@@ -167,18 +169,22 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Doubles_MaxValue_LargeNegativeMaxValue()
         {
-            _generator.Doubles(LargeNeg).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Doubles(LargeNeg).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void Doubles_MaxValue_PositiveInfinityMaxValue()
         {
             const double max = double.PositiveInfinity;
-            Assert.True(_generator.Doubles(max).Take(Iterations).All(x => x >= 0 && x < max));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Assert.True(_generator.Doubles(max).Take(Iterations).All(x => x >= 0 && x < max));
+            });
         }
 
         [Test]
@@ -203,10 +209,12 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Doubles_MaxValue_SmallNegativeMaxValue()
         {
-            _generator.Doubles(SmallNeg).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Doubles(SmallNeg).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
@@ -219,31 +227,39 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Doubles_MinMaxValue_DiffNegativeInfinity()
         {
-            _generator.Doubles(Double.PositiveInfinity, Double.NegativeInfinity).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Doubles(Double.PositiveInfinity, Double.NegativeInfinity).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void Doubles_MinMaxValue_DiffPositiveInfinity()
         {
-            _generator.Doubles(Double.NegativeInfinity, Double.PositiveInfinity).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentException>(() =>
+            {
+                _generator.Doubles(Double.NegativeInfinity, Double.PositiveInfinity).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Doubles_MinMaxValue_MaxLessThanMin_LargeDiff()
         {
-            _generator.Doubles(LargePos, LargeNeg).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Doubles(LargePos, LargeNeg).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Doubles_MinMaxValue_MaxLessThanMin_SmallDiff()
         {
-            _generator.Doubles(SmallPos, SmallNeg).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Doubles(SmallPos, SmallNeg).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
@@ -304,10 +320,12 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Integers_MaxValue_LargeNegativeMaxValue()
         {
-            _generator.Integers((int) LargeNeg).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Integers((int)LargeNeg).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
@@ -332,10 +350,12 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Integers_MaxValue_SmallNegativeMaxValue()
         {
-            _generator.Integers((int) SmallNeg).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Integers((int)SmallNeg).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
@@ -348,17 +368,21 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Integers_MinMaxValue_MaxLessThanMin_LargeDiff()
         {
-            _generator.Integers((int) LargePos, (int) LargeNeg).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Integers((int)LargePos, (int)LargeNeg).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Integers_MinMaxValue_MaxLessThanMin_SmallDiff()
         {
-            _generator.Integers((int) SmallPos, (int) SmallNeg).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Integers((int)SmallPos, (int)SmallNeg).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
@@ -449,17 +473,21 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void UnsignedIntegers_MinMaxValue_MaxLessThanMin_LargeDiff()
         {
-            _generator.UnsignedIntegers((uint) LargePos, 0).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.UnsignedIntegers((uint)LargePos, 0).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void UnsignedIntegers_MinMaxValue_MaxLessThanMin_SmallDiff()
         {
-            _generator.UnsignedIntegers((uint) LargePos, (uint) LargePos - 1U).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.UnsignedIntegers((uint)LargePos, (uint)LargePos - 1U).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
@@ -538,17 +566,21 @@ namespace Troschuetz.Random.Tests
         =============================================================================*/
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Next_SmallNegativeMax()
         {
-            _generator.Next((int) SmallNeg);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Next((int)SmallNeg);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Next_LargeNegativeMax()
         {
-            _generator.Next((int) LargeNeg);
+			Assert.Throws<ArgumentOutOfRangeException>(() =>
+			{
+				_generator.Next((int)LargeNeg);
+			});
         }
 
         /*=============================================================================
@@ -556,10 +588,12 @@ namespace Troschuetz.Random.Tests
         =============================================================================*/
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Next_MinSmallerThanMax()
         {
-            _generator.Next((int) LargePos, (int) SmallPos);
+			Assert.Throws<ArgumentOutOfRangeException>(() =>
+			{
+				_generator.Next((int)LargePos, (int)SmallPos);
+			});
         }
 
         /*=============================================================================
@@ -567,17 +601,21 @@ namespace Troschuetz.Random.Tests
         =============================================================================*/
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Choice_NullList()
         {
-            _generator.Choice((IList<string>) null);
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _generator.Choice((IList<string>)null);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void Choice_EmptyList()
         {
-            _generator.Choice(new string[0]);
+            Assert.Throws<ArgumentException>(() =>
+            {
+                _generator.Choice(new string[0]);
+            });
         }
 
         [Test]
@@ -636,17 +674,21 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Choice_IEnumerable_NullList()
         {
-            _generator.Choice((IList<string>) null);
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _generator.Choice((IList<string>)null);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void Choice_IEnumerable_EmptyList()
         {
-            _generator.Choice(new string[0]);
+            Assert.Throws<ArgumentException>(() =>
+            {
+                _generator.Choice(new string[0]);
+            });
         }
 
         [Test]
@@ -692,17 +734,21 @@ namespace Troschuetz.Random.Tests
         =============================================================================*/
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Choices_NullList()
         {
-            _generator.Choices((IList<string>) null).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _generator.Choices((IList<string>)null).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void Choices_EmptyList()
         {
-            _generator.Choices(new string[0]).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentException>(() =>
+            {
+                _generator.Choices(new string[0]).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
@@ -767,17 +813,21 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Choices_IEnumerable_NullList()
         {
-            _generator.Choices((IList<string>) null).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _generator.Choices((IList<string>)null).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void Choices_IEnumerable_EmptyList()
         {
-            _generator.Choices(new string[0]).GetEnumerator().MoveNext();
+            Assert.Throws<ArgumentException>(() =>
+            {
+                _generator.Choices(new string[0]).GetEnumerator().MoveNext();
+            });
         }
 
         [Test]
