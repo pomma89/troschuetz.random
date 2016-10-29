@@ -57,9 +57,8 @@ namespace Troschuetz.Random.Tests.Discrete
         [Test]
         public void InvalidParameters1()
         {
-            Assert.False(DiscreteUniformDistribution.AreValidParams(50, 1));
-            Dist.Beta = 1;
-            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Alpha = 50; });
+            Assert.False(DiscreteUniformDistribution.AreValidParams(50, 1));            
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Beta = 1; Dist.Alpha = 50; });
         }
 
         [Test]

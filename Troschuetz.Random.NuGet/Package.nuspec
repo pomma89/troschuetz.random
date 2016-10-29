@@ -9,8 +9,11 @@
     <owners>Alessio Parma &lt;alessio.parma@gmail.com&gt;</owners>
     <description>
 Fully managed library providing various random number generators and distributions.
+
 More precisely, this library offers 7 generators (ALF, MT19937, Standard, XorShift128, NR3, NR3Q1, NR3Q2), 6 discrete distributions (Bernoulli, Binomial, Categorical, DiscreteUniform, Geometric, Poisson) and 21 continuous distributions (like Normal, Exponential, ChiSquare, Beta, and so on); moreover, it offers a random class similar to the one Python offers (TRandom).
+
 All the hard work behind this library was done by Stefan Troschütz, and for which I thank him very much. What I have done with his great project, was simply to refactor and improve his code, while offering the new random class similar to the one Python offers.
+
 You can find the modified source code and the available documentation at the project URL.
     </description>
     <releaseNotes>
