@@ -23,6 +23,7 @@ namespace Troschuetz.Random.Tests
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public abstract partial class GeneratorTests : TestBase
     {
@@ -151,6 +152,27 @@ namespace Troschuetz.Random.Tests
         }
 
 #endif
+
+        /*=============================================================================
+            Seed generation
+        =============================================================================*/
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void SeedShouldBeUniqueEvenIfGeneratedAtTheSameTimeByMultipleThreads()
+        {
+            const int threadCount = 32;
+            var randomNumbers = new uint[threadCount][];
+
+            Parallel.ForEach(Enumerable.Range(0, threadCount), i =>
+            {
+                var generator = GetGenerator();
+                randomNumbers[i] = generator.UnsignedIntegers().Take(128).ToArray();
+            });
+
+            // No sequence should be equal to other sequences.
+            Assert.That(randomNumbers.All(rno => randomNumbers.Where(rni => rni != rno).All(rni => !rni.SequenceEqual(rno))), Is.True);
+        }
 
         /*=============================================================================
             DistributedDoubles
