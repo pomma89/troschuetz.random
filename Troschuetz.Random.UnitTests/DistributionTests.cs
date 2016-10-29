@@ -22,7 +22,6 @@ namespace Troschuetz.Random.Tests
     using Random.Generators;
     using System;
     using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
 
     public abstract class DistributionTests<TDist> : TestBase where TDist : IDistribution
     {
@@ -227,6 +226,8 @@ namespace Troschuetz.Random.Tests
             Serialization
         =============================================================================*/
 
+#if !PORTABLE
+
         [Test]
         [Repeat(RepetitionCount)]
         public void NextDouble_Serialization_AfterManyRand()
@@ -235,7 +236,7 @@ namespace Troschuetz.Random.Tests
             {
                 Dist.NextDouble();
             }
-            var bf = new BinaryFormatter();
+            var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             using (var ms = new MemoryStream())
             {
                 bf.Serialize(ms, Dist);
@@ -248,6 +249,8 @@ namespace Troschuetz.Random.Tests
                 }
             }
         }
+
+#endif
     }
 
     public abstract class DiscreteDistributionTests<TDist> : DistributionTests<TDist>
@@ -385,6 +388,8 @@ namespace Troschuetz.Random.Tests
             Serialization
         =============================================================================*/
 
+#if !PORTABLE
+
         [Test]
         [Repeat(RepetitionCount)]
         public void Next_Serialization_AfterManyRand()
@@ -393,7 +398,7 @@ namespace Troschuetz.Random.Tests
             {
                 Dist.Next();
             }
-            var bf = new BinaryFormatter();
+            var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             using (var ms = new MemoryStream())
             {
                 bf.Serialize(ms, Dist);
@@ -406,5 +411,7 @@ namespace Troschuetz.Random.Tests
                 }
             }
         }
+
+#endif
     }
 }

@@ -74,6 +74,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests.NET46", "Platform Specific\Troschuetz.Random.UnitTests.NET46\Troschuetz.Random.UnitTests.NET46.csproj", "{A004A488-8BFC-4803-B84E-8222309BCDDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests.Portable", "Platform Specific\Troschuetz.Random.UnitTests.Portable\Troschuetz.Random.UnitTests.Portable.csproj", "{A16745E0-621A-4615-89A9-4EBCF7EEC815}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Troschuetz.Random\Troschuetz.Random.projitems*{0cd60663-c8ec-42f3-8e61-e38608fe4f57}*SharedItemsImports = 4
@@ -83,6 +85,7 @@ Global
 		Troschuetz.Random\Troschuetz.Random.projitems*{6b947182-cf4b-45fe-a1ae-47a28c514040}*SharedItemsImports = 4
 		Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.projitems*{9f1e90a9-06fb-4dbc-88e2-629f7343e357}*SharedItemsImports = 4
 		Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.projitems*{a004a488-8bfc-4803-b84e-8222309bcddb}*SharedItemsImports = 4
+		Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.projitems*{a16745e0-621a-4615-89a9-4ebcf7eec815}*SharedItemsImports = 4
 		Troschuetz.Random\Troschuetz.Random.projitems*{a1ff7728-605f-401a-a9fc-51fa56852e9e}*SharedItemsImports = 4
 		Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.projitems*{b748e3ab-68de-40e9-9bd0-0c113c70d260}*SharedItemsImports = 4
 		Troschuetz.Random\Troschuetz.Random.projitems*{b838c2fb-09b8-47c5-b741-0cadfe8e5dfa}*SharedItemsImports = 13
@@ -174,6 +177,12 @@ Global
 		{A004A488-8BFC-4803-B84E-8222309BCDDB}.Publish|Any CPU.Build.0 = Release|Any CPU
 		{A004A488-8BFC-4803-B84E-8222309BCDDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A004A488-8BFC-4803-B84E-8222309BCDDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A16745E0-621A-4615-89A9-4EBCF7EEC815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A16745E0-621A-4615-89A9-4EBCF7EEC815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A16745E0-621A-4615-89A9-4EBCF7EEC815}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{A16745E0-621A-4615-89A9-4EBCF7EEC815}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{A16745E0-621A-4615-89A9-4EBCF7EEC815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A16745E0-621A-4615-89A9-4EBCF7EEC815}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -189,5 +198,6 @@ Global
 		{2B4EF7D6-E581-4B4C-B6F2-A7B8D4AEB3DE} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
 		{9F1E90A9-06FB-4DBC-88E2-629F7343E357} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
 		{A004A488-8BFC-4803-B84E-8222309BCDDB} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
+		{A16745E0-621A-4615-89A9-4EBCF7EEC815} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
 	EndGlobalSection
 EndGlobal

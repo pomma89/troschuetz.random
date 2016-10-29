@@ -23,7 +23,6 @@ namespace Troschuetz.Random.Tests
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Runtime.Serialization.Formatters.Binary;
 
     public abstract partial class GeneratorTests : TestBase
     {
@@ -120,6 +119,8 @@ namespace Troschuetz.Random.Tests
             Serialization
         =============================================================================*/
 
+#if !PORTABLE
+
         [Test]
         [Repeat(RepetitionCount)]
         public void Bytes_SameOutputAsNextBytes_WithSerialization()
@@ -134,7 +135,7 @@ namespace Troschuetz.Random.Tests
                 otherGen.NextBytes(b2);
                 Assert.AreEqual(b2, b1);
             }
-            var bf = new BinaryFormatter();
+            var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             using (var ms = new MemoryStream())
             {
                 bf.Serialize(ms, _generator);
@@ -148,6 +149,8 @@ namespace Troschuetz.Random.Tests
                 }
             }
         }
+
+#endif
 
         /*=============================================================================
             DistributedDoubles
