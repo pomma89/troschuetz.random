@@ -22,7 +22,7 @@ You can find the modified source code and the available documentation at the pro
     <summary>Fully managed library providing various random number generators and distributions.</summary>
     <language>en-US</language>
     <projectUrl>https://github.com/pomma89/Troschuetz.Random</projectUrl>
-    <iconUrl>https://googledrive.com/host/0B8v0ikF4z2BiR29YQmxfSlE1Sms/Progetti/Troschuetz.Random/logo-128.png</iconUrl>
+    <iconUrl>http://pomma89.altervista.org/troschuetz.random/logo-128.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>http://opensource.org/licenses/lgpl-2.1.php</licenseUrl>
     <copyright>Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)</copyright>

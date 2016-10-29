@@ -1,4 +1,4 @@
-![](https://googledrive.com/host/0B8v0ikF4z2BiR29YQmxfSlE1Sms/Progetti/Troschuetz.Random/logo-64.png "Troschuetz.Random Logo") Troschuetz.Random
+![](http://pomma89.altervista.org/troschuetz.random/logo-64.png "Troschuetz.Random Logo") Troschuetz.Random
 ================================================================================================================================================
 
 *Fully managed library providing various random number generators and distributions.*
