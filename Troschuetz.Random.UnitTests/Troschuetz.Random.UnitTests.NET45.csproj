@@ -53,43 +53,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Continuous\BetaDistributionTests.cs" />
-    <Compile Include="Continuous\BetaPrimeDistributionTests.cs" />
-    <Compile Include="Continuous\CauchyDistributionTests.cs" />
-    <Compile Include="Continuous\ChiDistributionTests.cs" />
-    <Compile Include="Continuous\ChiSquareDistributionTests.cs" />
-    <Compile Include="Continuous\ContinuousUniformDistributionTests.cs" />
-    <Compile Include="Continuous\ErlangDistributionTests.cs" />
-    <Compile Include="Continuous\ExponentialDistributionTests.cs" />
-    <Compile Include="Continuous\FisherSnedecorDistributionTests.cs" />
-    <Compile Include="Continuous\FisherTippettDistributionTests.cs" />
-    <Compile Include="Continuous\GammaDistributionTests.cs" />
-    <Compile Include="Continuous\LaplaceDistributionTests.cs" />
-    <Compile Include="Continuous\LogisticDistributionTests.cs" />
-    <Compile Include="Continuous\LognormalDistributionTests.cs" />
-    <Compile Include="Continuous\NormalDistributionTests.cs" />
-    <Compile Include="Continuous\ParetoDistributionTests.cs" />
-    <Compile Include="Continuous\PowerDistributionTests.cs" />
-    <Compile Include="Continuous\RayleighDistributionTests.cs" />
-    <Compile Include="Continuous\StudentsTDistributionTests.cs" />
-    <Compile Include="Continuous\TriangularDistributionTests.cs" />
-    <Compile Include="Continuous\WeibullDistributionTests.cs" />
-    <Compile Include="DiehardGeneratorTests.cs" />
-    <Compile Include="Discrete\BernoulliDistributionTests.cs" />
-    <Compile Include="Discrete\BinomialDistributionTests.cs" />
-    <Compile Include="Discrete\CategoricalDistributionTests.cs" />
-    <Compile Include="Discrete\DiscreteUniformDistributionTests.cs" />
-    <Compile Include="Discrete\GeometricDistributionTests.cs" />
-    <Compile Include="Discrete\PoissonDistributionTests.cs" />
-    <Compile Include="DistributionTests.cs" />
-    <Compile Include="Generators\NR3GeneratorTests.cs" />
-    <Compile Include="Generators\ALFGeneratorTests.cs" />
-    <Compile Include="Generators\MT19937GeneratorTests.cs" />
-    <Compile Include="Generators\StandardGeneratorTests.cs" />
-    <Compile Include="Generators\XorShift128GeneratorTests.cs" />
-    <Compile Include="GeneratorTests.cs" />
-    <Compile Include="TestBase.cs" />
-    <Compile Include="TRandomTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +70,7 @@
       <Name>Troschuetz.Random.NET45</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="Troschuetz.Random.UnitTests.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
