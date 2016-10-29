@@ -5,6 +5,7 @@
 * Updated Thrower to v3.0.4 (PR#1 by Corniel Nobel).
 * Updated NUnit to v3.5.0 (PR#1 by Corniel Nobel).
 * Default seed now takes into account process ID.
+* Default seed now [uses a GUID](http://stackoverflow.com/a/18267477/1880086) to improve randomness.
 * Updated broken Google-hosted links.
 
 ### v4.0.5 (2016-09-18) ###

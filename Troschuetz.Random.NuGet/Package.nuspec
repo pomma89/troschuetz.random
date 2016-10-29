@@ -17,6 +17,7 @@ You can find the modified source code and the available documentation at the pro
 * Updated Thrower to v3.0.4 (PR#1 by Corniel Nobel).
 * Updated NUnit to v3.5.0 (PR#1 by Corniel Nobel).
 * Default seed now takes into account process ID.
+* Default seed now uses a GUID to improve randomness.
 * Updated broken Google-hosted links.
     </releaseNotes>
     <summary>Fully managed library providing various random number generators and distributions.</summary>
