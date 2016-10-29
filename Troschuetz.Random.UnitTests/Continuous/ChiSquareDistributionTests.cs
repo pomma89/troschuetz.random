@@ -67,7 +67,7 @@ namespace Troschuetz.Random.Tests.Continuous
         }
 
         // alpha > 0
-        int GetAlpha(IAlphaDistribution<int> d)
+        private int GetAlpha(IAlphaDistribution<int> d)
         {
             return d == null ? Rand.Next(1, 10) : d.Alpha;
         }

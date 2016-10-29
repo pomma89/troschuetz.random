@@ -77,13 +77,13 @@ namespace Troschuetz.Random.Tests.Discrete
         }
 
         // alpha <= beta && beta < int.MaxValue
-        int GetAlpha(IAlphaDistribution<int> d)
+        private int GetAlpha(IAlphaDistribution<int> d)
         {
             return d == null ? Rand.Next(10) : d.Alpha;
         }
 
         // alpha <= beta && beta < int.MaxValue
-        int GetBeta(IBetaDistribution<int> d)
+        private int GetBeta(IBetaDistribution<int> d)
         {
             return d == null ? Rand.Next(10, 100) : d.Beta;
         }

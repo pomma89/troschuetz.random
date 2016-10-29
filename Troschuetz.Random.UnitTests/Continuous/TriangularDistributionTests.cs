@@ -53,19 +53,19 @@ namespace Troschuetz.Random.Tests.Continuous
         }
 
         // alpha < beta && alpha <= gamma && beta >= gamma
-        double GetAlpha(IAlphaDistribution<double> d)
+        private double GetAlpha(IAlphaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(-2, 2) : d.Alpha;
         }
 
         // alpha < beta && alpha <= gamma && beta >= gamma
-        double GetBeta(IBetaDistribution<double> d)
+        private double GetBeta(IBetaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(4, 6) : d.Beta;
         }
 
         // alpha < beta && alpha <= gamma && beta >= gamma
-        double GetGamma(IGammaDistribution<double> d)
+        private double GetGamma(IGammaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(2, 4) : d.Gamma;
         }

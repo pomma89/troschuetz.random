@@ -38,9 +38,9 @@ namespace Troschuetz.Random.Tests
 
         #endregion Setup/Teardown
 
-        const int RepetitionCount = 2;
-        IGenerator _generator;
-        bool _currGen = true;
+        private const int RepetitionCount = 2;
+        private IGenerator _generator;
+        private bool _currGen = true;
 
         protected abstract IGenerator GetGenerator();
 
@@ -324,7 +324,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                _generator.Integers((int)LargeNeg).GetEnumerator().MoveNext();
+                _generator.Integers((int) LargeNeg).GetEnumerator().MoveNext();
             });
         }
 
@@ -354,7 +354,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                _generator.Integers((int)SmallNeg).GetEnumerator().MoveNext();
+                _generator.Integers((int) SmallNeg).GetEnumerator().MoveNext();
             });
         }
 
@@ -372,7 +372,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                _generator.Integers((int)LargePos, (int)LargeNeg).GetEnumerator().MoveNext();
+                _generator.Integers((int) LargePos, (int) LargeNeg).GetEnumerator().MoveNext();
             });
         }
 
@@ -381,7 +381,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                _generator.Integers((int)SmallPos, (int)SmallNeg).GetEnumerator().MoveNext();
+                _generator.Integers((int) SmallPos, (int) SmallNeg).GetEnumerator().MoveNext();
             });
         }
 
@@ -477,7 +477,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                _generator.UnsignedIntegers((uint)LargePos, 0).GetEnumerator().MoveNext();
+                _generator.UnsignedIntegers((uint) LargePos, 0).GetEnumerator().MoveNext();
             });
         }
 
@@ -486,7 +486,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                _generator.UnsignedIntegers((uint)LargePos, (uint)LargePos - 1U).GetEnumerator().MoveNext();
+                _generator.UnsignedIntegers((uint) LargePos, (uint) LargePos - 1U).GetEnumerator().MoveNext();
             });
         }
 
@@ -570,17 +570,17 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                _generator.Next((int)SmallNeg);
+                _generator.Next((int) SmallNeg);
             });
         }
 
         [Test]
         public void Next_LargeNegativeMax()
         {
-			Assert.Throws<ArgumentOutOfRangeException>(() =>
-			{
-				_generator.Next((int)LargeNeg);
-			});
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Next((int) LargeNeg);
+            });
         }
 
         /*=============================================================================
@@ -590,10 +590,10 @@ namespace Troschuetz.Random.Tests
         [Test]
         public void Next_MinSmallerThanMax()
         {
-			Assert.Throws<ArgumentOutOfRangeException>(() =>
-			{
-				_generator.Next((int)LargePos, (int)SmallPos);
-			});
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _generator.Next((int) LargePos, (int) SmallPos);
+            });
         }
 
         /*=============================================================================
@@ -605,7 +605,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                _generator.Choice((IList<string>)null);
+                _generator.Choice((IList<string>) null);
             });
         }
 
@@ -678,7 +678,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                _generator.Choice((IList<string>)null);
+                _generator.Choice((IList<string>) null);
             });
         }
 
@@ -738,7 +738,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                _generator.Choices((IList<string>)null).GetEnumerator().MoveNext();
+                _generator.Choices((IList<string>) null).GetEnumerator().MoveNext();
             });
         }
 
@@ -817,7 +817,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                _generator.Choices((IList<string>)null).GetEnumerator().MoveNext();
+                _generator.Choices((IList<string>) null).GetEnumerator().MoveNext();
             });
         }
 

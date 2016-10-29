@@ -76,7 +76,7 @@ namespace Troschuetz.Random.Tests
         protected const int RepetitionCount = 6;
         protected TDist Dist;
         protected TDist OtherDist;
-        int _currDist;
+        private int _currDist;
 
         protected abstract TDist GetDist(TDist other = default(TDist));
 

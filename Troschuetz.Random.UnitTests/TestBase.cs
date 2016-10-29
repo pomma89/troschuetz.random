@@ -26,7 +26,7 @@ namespace Troschuetz.Random.Tests
     [TestFixture]
     public abstract class TestBase
     {
-        const double Epsilon = 0.20; // Relative error: less than 20%
+        private const double Epsilon = 0.20; // Relative error: less than 20%
         protected const int Iterations = 200000;
 
         protected const double TinyNeg = -0.01;
@@ -96,7 +96,7 @@ namespace Troschuetz.Random.Tests
 #pragma warning restore CC0004 // Catch block cannot be empty
         }
 
-        static IList<double> FilterSeries(double[] series, IDistribution dist)
+        private static IList<double> FilterSeries(double[] series, IDistribution dist)
         {
             Assert.True(series.All(x => x >= dist.Minimum && x <= dist.Maximum));
             Func<double, bool> filter = (d => !double.IsPositiveInfinity(d) && !double.IsNegativeInfinity(d));

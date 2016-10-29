@@ -67,7 +67,7 @@ namespace Troschuetz.Random.Tests.Continuous
         }
 
         // nu > 0
-        int GetNu(INuDistribution<int> d)
+        private int GetNu(INuDistribution<int> d)
         {
             return d == null ? Rand.Next(1, 10) : d.Nu;
         }

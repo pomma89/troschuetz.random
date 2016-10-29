@@ -69,7 +69,7 @@ namespace Troschuetz.Random.Tests.Discrete
         }
 
         // alpha >= 0.0 && alpha <= 1.0
-        double GetAlpha(IAlphaDistribution<double> d)
+        private double GetAlpha(IAlphaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(0, 1) : d.Alpha;
         }

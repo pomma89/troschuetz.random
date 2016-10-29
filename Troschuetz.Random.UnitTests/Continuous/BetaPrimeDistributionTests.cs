@@ -75,17 +75,17 @@ namespace Troschuetz.Random.Tests.Continuous
         {
             Assert.False(BetaPrimeDistribution.AreValidParams(2, d));
             Assert.False(Dist.IsValidBeta(d));
-			Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Beta = d; });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Beta = d; });
         }
 
         // alpha > 1
-        double GetAlpha(IAlphaDistribution<double> d)
+        private double GetAlpha(IAlphaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(1.1, 10) : d.Alpha;
         }
 
         // beta > 1
-        double GetBeta(IBetaDistribution<double> d)
+        private double GetBeta(IBetaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(1.1, 10) : d.Beta;
         }

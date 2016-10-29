@@ -47,11 +47,11 @@ namespace Troschuetz.Random.Tests
 
         #endregion Setup/Teardown
 
-        const int GeneratorCount = 5;
-        TRandom _rand;
-        TRandom _otherRand;
-        int _currGen;
-        int _seed;
+        private const int GeneratorCount = 5;
+        private TRandom _rand;
+        private TRandom _otherRand;
+        private int _currGen;
+        private int _seed;
 
         protected override IGenerator GetGenerator()
         {
@@ -68,7 +68,7 @@ namespace Troschuetz.Random.Tests
             return new TRandom(seed);
         }
 
-        IGenerator GetCurrentGenerator()
+        private IGenerator GetCurrentGenerator()
         {
             switch (_currGen)
             {
@@ -1094,19 +1094,19 @@ namespace Troschuetz.Random.Tests
             Asserts for discrete distributions
         =============================================================================*/
 
-        void AssertRightDiscreteOutput<T>(Func<T, int> gen, T arg, IDistribution dist)
+        private void AssertRightDiscreteOutput<T>(Func<T, int> gen, T arg, IDistribution dist)
         {
             for (var i = 0; i < Iterations; ++i) Results[i] = gen(arg);
             AssertDist(dist);
         }
 
-        void AssertRightDiscreteOutput<T1, T2>(Func<T1, T2, int> gen, T1 arg1, T2 arg2, IDistribution dist)
+        private void AssertRightDiscreteOutput<T1, T2>(Func<T1, T2, int> gen, T1 arg1, T2 arg2, IDistribution dist)
         {
             for (var i = 0; i < Iterations; ++i) Results[i] = gen(arg1, arg2);
             AssertDist(dist);
         }
 
-        static void AssertSameDiscreteOutput<T>(Func<T, int> gen, Func<T, IEnumerable<int>> infGen, T arg)
+        private static void AssertSameDiscreteOutput<T>(Func<T, int> gen, Func<T, IEnumerable<int>> infGen, T arg)
         {
             var infGenEn = infGen?.Invoke(arg).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
@@ -1116,7 +1116,7 @@ namespace Troschuetz.Random.Tests
             }
         }
 
-        static void AssertSameDiscreteOutput<T1, T2>(Func<T1, T2, int> gen,
+        private static void AssertSameDiscreteOutput<T1, T2>(Func<T1, T2, int> gen,
                                                      Func<T1, T2, IEnumerable<int>> infGen,
                                                      T1 arg1, T2 arg2)
         {
@@ -1128,7 +1128,7 @@ namespace Troschuetz.Random.Tests
             }
         }
 
-        static void AssertSameInterleavedDiscreteOutput<T>(Func<T, int> gen,
+        private static void AssertSameInterleavedDiscreteOutput<T>(Func<T, int> gen,
                                                            Func<T, IEnumerable<int>> infGen,
                                                            T a, T b)
         {
@@ -1149,7 +1149,7 @@ namespace Troschuetz.Random.Tests
             }
         }
 
-        static void AssertSameInterleavedDiscreteOutput<T1, T2>(Func<T1, T2, int> gen,
+        private static void AssertSameInterleavedDiscreteOutput<T1, T2>(Func<T1, T2, int> gen,
                                                                 Func<T1, T2, IEnumerable<int>> infGen,
                                                                 T1 a1, T2 a2, T1 b1, T2 b2)
         {
@@ -1174,26 +1174,26 @@ namespace Troschuetz.Random.Tests
             Asserts for continuous distributions
         =============================================================================*/
 
-        void AssertRightContinuousOutput<T>(Func<T, double> gen, T arg, IDistribution dist)
+        private void AssertRightContinuousOutput<T>(Func<T, double> gen, T arg, IDistribution dist)
         {
             for (var i = 0; i < Iterations; ++i) Results[i] = gen(arg);
             AssertDist(dist);
         }
 
-        void AssertRightContinuousOutput<T1, T2>(Func<T1, T2, double> gen, T1 arg1, T2 arg2, IDistribution dist)
+        private void AssertRightContinuousOutput<T1, T2>(Func<T1, T2, double> gen, T1 arg1, T2 arg2, IDistribution dist)
         {
             for (var i = 0; i < Iterations; ++i) Results[i] = gen(arg1, arg2);
             AssertDist(dist);
         }
 
-        void AssertRightContinuousOutput<T1, T2, T3>(Func<T1, T2, T3, double> gen, T1 arg1, T2 arg2, T3 arg3,
+        private void AssertRightContinuousOutput<T1, T2, T3>(Func<T1, T2, T3, double> gen, T1 arg1, T2 arg2, T3 arg3,
                                                      IDistribution dist)
         {
             for (var i = 0; i < Iterations; ++i) Results[i] = gen(arg1, arg2, arg3);
             AssertDist(dist);
         }
 
-        static void AssertSameContinuousOutputForDist<T>(Func<T, double> gen, IContinuousDistribution dist, T arg)
+        private static void AssertSameContinuousOutputForDist<T>(Func<T, double> gen, IContinuousDistribution dist, T arg)
         {
             for (var i = 0; i < Iterations; ++i)
             {
@@ -1201,7 +1201,7 @@ namespace Troschuetz.Random.Tests
             }
         }
 
-        static void AssertSameContinuousOutput<T1, T2>(Func<T1, T2, double> gen, IContinuousDistribution dist,
+        private static void AssertSameContinuousOutput<T1, T2>(Func<T1, T2, double> gen, IContinuousDistribution dist,
                                                        T1 arg1, T2 arg2)
         {
             for (var i = 0; i < Iterations; ++i)
@@ -1210,7 +1210,7 @@ namespace Troschuetz.Random.Tests
             }
         }
 
-        static void AssertSameContinuousOutput<T>(Func<T, double> gen, Func<T, IEnumerable<double>> infGen, T arg)
+        private static void AssertSameContinuousOutput<T>(Func<T, double> gen, Func<T, IEnumerable<double>> infGen, T arg)
         {
             var infGenEn = infGen?.Invoke(arg).GetEnumerator();
             for (var i = 0; i < Iterations; ++i)
@@ -1220,7 +1220,7 @@ namespace Troschuetz.Random.Tests
             }
         }
 
-        static void AssertSameContinuousOutput<T1, T2>(Func<T1, T2, double> gen,
+        private static void AssertSameContinuousOutput<T1, T2>(Func<T1, T2, double> gen,
                                                        Func<T1, T2, IEnumerable<double>> infGen,
                                                        T1 arg1, T2 arg2)
         {
@@ -1232,7 +1232,7 @@ namespace Troschuetz.Random.Tests
             }
         }
 
-        static void AssertSameContinuousOutput<T1, T2, T3>(Func<T1, T2, T3, double> gen,
+        private static void AssertSameContinuousOutput<T1, T2, T3>(Func<T1, T2, T3, double> gen,
                                                            Func<T1, T2, T3, IEnumerable<double>> infGen,
                                                            T1 arg1, T2 arg2, T3 arg3)
         {
@@ -1244,7 +1244,7 @@ namespace Troschuetz.Random.Tests
             }
         }
 
-        static void AssertSameInterleavedContinuousOutput<T>(Func<T, double> gen,
+        private static void AssertSameInterleavedContinuousOutput<T>(Func<T, double> gen,
                                                              Func<T, IEnumerable<double>> infGen,
                                                              T a, T b)
         {
@@ -1265,7 +1265,7 @@ namespace Troschuetz.Random.Tests
             }
         }
 
-        static void AssertSameInterleavedContinuousOutput<T1, T2>(Func<T1, T2, double> gen,
+        private static void AssertSameInterleavedContinuousOutput<T1, T2>(Func<T1, T2, double> gen,
                                                                   Func<T1, T2, IEnumerable<double>> infGen,
                                                                   T1 a1, T2 a2, T1 b1, T2 b2)
         {
@@ -1286,7 +1286,7 @@ namespace Troschuetz.Random.Tests
             }
         }
 
-        static void AssertSameInterleavedContinuousOutput<T1, T2, T3>(Func<T1, T2, T3, double> gen,
+        private static void AssertSameInterleavedContinuousOutput<T1, T2, T3>(Func<T1, T2, T3, double> gen,
                                                                       Func<T1, T2, T3, IEnumerable<double>> infGen,
                                                                       T1 a1, T2 a2, T3 a3, T1 b1, T2 b2, T3 b3)
         {
@@ -1393,7 +1393,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                _rand.Binomial(0.5, (int)LargeNeg);
+                _rand.Binomial(0.5, (int) LargeNeg);
             });
         }
 
@@ -1420,7 +1420,7 @@ namespace Troschuetz.Random.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                _rand.Binomial(0.5, (int)SmallNeg);
+                _rand.Binomial(0.5, (int) SmallNeg);
             });
         }
 
