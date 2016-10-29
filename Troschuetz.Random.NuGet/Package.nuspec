@@ -3,7 +3,7 @@
 <package>
   <metadata>
     <id>Troschuetz.Random</id>
-    <version>4.0.6</version>
+    <version>4.0.7</version>
     <title>Troschuetz.Random - Easy random number generation</title>
     <authors>Stefan Troschütz &lt;stefan@troschuetz.de&gt;</authors>
     <owners>Alessio Parma &lt;alessio.parma@gmail.com&gt;</owners>
@@ -14,8 +14,8 @@ All the hard work behind this library was done by Stefan Troschütz, and for whi
 You can find the modified source code and the available documentation at the project URL.
     </description>
     <releaseNotes>
-* Updated Thrower to v3.0.4 (PR#1 from Corniel Nobel).
-* Updated NUnit to v3.5.0 (PR#1 from Corniel Nobel).
+* Updated Thrower to v3.0.4 (PR#1 by Corniel Nobel).
+* Updated NUnit to v3.5.0 (PR#1 by Corniel Nobel).
 * Default seed now takes into account process ID.
 * Updated broken Google-hosted links.
     </releaseNotes>
