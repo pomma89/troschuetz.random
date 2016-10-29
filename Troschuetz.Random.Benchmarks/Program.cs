@@ -22,14 +22,15 @@ using BenchmarkDotNet.Running;
 
 namespace Troschuetz.Random.Benchmarks
 {
-    static class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var switcher = new BenchmarkSwitcher(new[]
             {
-                typeof(Generators.NextBytesComparison),
-                typeof(Generators.NextDoubleComparison),
+                typeof(GeneratorComparison),
+                typeof(DiscreteDistributionComparison),
+                typeof(ContinuousDistributionComparison)
             });
             switcher.Run(args);
         }
