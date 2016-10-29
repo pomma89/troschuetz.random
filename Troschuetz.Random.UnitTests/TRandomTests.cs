@@ -1308,129 +1308,165 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Bernoulli_LargeGreaterThanOneAlpha()
         {
-            _rand.Bernoulli(LargePos + 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Bernoulli(LargePos + 1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Bernoulli_LargeNegativeAlpha()
         {
-            _rand.Bernoulli(LargeNeg);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Bernoulli(LargeNeg);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Bernoulli_NaN_Alpha()
         {
-            _rand.Bernoulli(double.NaN);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Bernoulli(double.NaN);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Bernoulli_SmallGreaterThanOneAlpha()
         {
-            _rand.Bernoulli(SmallPos + 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Bernoulli(SmallPos + 1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Bernoulli_SmallNegativeAlpha()
         {
-            _rand.Bernoulli(SmallNeg);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Bernoulli(SmallNeg);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Bernoulli_TinyGreaterThanOneAlpha()
         {
-            _rand.Bernoulli(TinyPos + 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Bernoulli(TinyPos + 1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Bernoulli_TinyNegativeAlpha()
         {
-            _rand.Bernoulli(TinyNeg);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Bernoulli(TinyNeg);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Binomial_LargeGreaterThanOneAlpha()
         {
-            _rand.Binomial(LargePos + 1, 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Binomial(LargePos + 1, 1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Binomial_LargeNegativeAlpha()
         {
-            _rand.Binomial(LargeNeg, 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Binomial(LargeNeg, 1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Binomial_LargeNegativeBeta()
         {
-            _rand.Binomial(0.5, (int) LargeNeg);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Binomial(0.5, (int)LargeNeg);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Binomial_SmallGreaterThanOneAlpha()
         {
-            _rand.Binomial(SmallPos + 1, 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Binomial(SmallPos + 1, 1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Binomial_SmallNegativeAlpha()
         {
-            _rand.Binomial(SmallNeg, 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Binomial(SmallNeg, 1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Binomial_SmallNegativeBeta()
         {
-            _rand.Binomial(0.5, (int) SmallNeg);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Binomial(0.5, (int)SmallNeg);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Binomial_TinyGreaterThanOneAlpha()
         {
-            _rand.Binomial(TinyPos + 1, 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Binomial(TinyPos + 1, 1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Binomial_TinyNegativeAlpha()
         {
-            _rand.Binomial(TinyNeg, 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Binomial(TinyNeg, 1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Geometric_LargeNegativeAlpha()
         {
-            _rand.Geometric(-100);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Geometric(-100);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Geometric_SmallNegativeAlpha()
         {
-            _rand.Geometric(-1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Geometric(-1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Geometric_TinyNegativeAlpha()
         {
-            _rand.Geometric(-0.01);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.Geometric(-0.01);
+            });
         }
 
         [Test]
@@ -1444,24 +1480,30 @@ namespace Troschuetz.Random.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void StudentsT_LargeNegativeNu()
         {
-            _rand.StudentsT(-100);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.StudentsT(-100);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void StudentsT_SmallNegativeNu()
         {
-            _rand.StudentsT(-1);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.StudentsT(-1);
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void StudentsT_ZeroNu()
         {
-            _rand.StudentsT(0);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                _rand.StudentsT(0);
+            });
         }
     }
 }

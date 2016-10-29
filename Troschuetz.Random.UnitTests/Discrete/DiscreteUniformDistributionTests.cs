@@ -55,28 +55,25 @@ namespace Troschuetz.Random.Tests.Discrete
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void InvalidParameters1()
         {
             Assert.False(DiscreteUniformDistribution.AreValidParams(50, 1));
             Dist.Beta = 1;
-            Dist.Alpha = 50;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Alpha = 50; });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void InvalidParameters2()
         {
             Assert.False(DiscreteUniformDistribution.AreValidParams(Dist.Alpha, Dist.Alpha - 1));
-            Dist.Beta = Dist.Alpha - 1;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Beta = Dist.Alpha - 1; });
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void InvalidParameters3()
         {
             Assert.False(DiscreteUniformDistribution.AreValidParams(50, int.MaxValue));
-            Dist.Beta = int.MaxValue;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Beta = int.MaxValue; });
         }
 
         // alpha <= beta && beta < int.MaxValue

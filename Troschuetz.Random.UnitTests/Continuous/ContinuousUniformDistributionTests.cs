@@ -59,13 +59,12 @@ namespace Troschuetz.Random.Tests.Continuous
         [TestCase(TinyPos, TinyNeg)]
         [TestCase(SmallPos, SmallNeg)]
         [TestCase(LargePos, LargeNeg)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void AlphaBeta_WrongValues(double a, double b)
         {
             Assert.False(ContinuousUniformDistribution.AreValidParams(a, b));
             Dist.Alpha = Dist.Beta = a;
             Assert.False(Dist.IsValidBeta(b));
-            Dist.Beta = b;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Beta = b; });
         }
 
         // alpha <= beta

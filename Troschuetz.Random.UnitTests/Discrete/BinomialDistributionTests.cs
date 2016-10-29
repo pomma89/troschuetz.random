@@ -61,24 +61,22 @@ namespace Troschuetz.Random.Tests.Discrete
         [TestCase(1 + TinyPos)]
         [TestCase(1 + SmallPos)]
         [TestCase(1 + LargePos)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Alpha_WrongValues(double d)
         {
             Assert.False(BinomialDistribution.AreValidParams(d, 1));
             Assert.False(Dist.IsValidAlpha(d));
-            Dist.Alpha = d;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Alpha = d; });
         }
 
         [TestCase(double.NaN)]
         [TestCase(SmallNeg)]
         [TestCase(LargeNeg)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Beta_WrongValues(double d)
         {
             var i = (int) d;
             Assert.False(BinomialDistribution.AreValidParams(0.5, i));
             Assert.False(Dist.IsValidBeta(i));
-            Dist.Beta = i;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Beta = i; });
         }
 
         // alpha >= 0 && alpha <= 1

@@ -59,12 +59,11 @@ namespace Troschuetz.Random.Tests.Continuous
         [TestCase(TinyNeg)]
         [TestCase(SmallNeg)]
         [TestCase(LargeNeg)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Gamma_WrongValues(double d)
         {
             Assert.False(CauchyDistribution.AreValidParams(1, d));
             Assert.False(Dist.IsValidGamma(d));
-            Dist.Gamma = d;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Gamma = d; });
         }
 
         // any value

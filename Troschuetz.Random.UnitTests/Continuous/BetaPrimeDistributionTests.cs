@@ -59,12 +59,11 @@ namespace Troschuetz.Random.Tests.Continuous
         [TestCase(0)]
         [TestCase(SmallNeg)]
         [TestCase(LargeNeg)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Alpha_WrongValues(double d)
         {
             Assert.False(BetaPrimeDistribution.AreValidParams(d, 2));
             Assert.False(Dist.IsValidAlpha(d));
-            Dist.Alpha = d;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Alpha = d; });
         }
 
         [TestCase(double.NaN)]
@@ -72,12 +71,11 @@ namespace Troschuetz.Random.Tests.Continuous
         [TestCase(0)]
         [TestCase(SmallNeg)]
         [TestCase(LargeNeg)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Beta_WrongValues(double d)
         {
             Assert.False(BetaPrimeDistribution.AreValidParams(2, d));
             Assert.False(Dist.IsValidBeta(d));
-            Dist.Beta = d;
+			Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Beta = d; });
         }
 
         // alpha > 1

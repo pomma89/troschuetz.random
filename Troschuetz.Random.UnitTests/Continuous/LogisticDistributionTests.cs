@@ -59,12 +59,11 @@ namespace Troschuetz.Random.Tests.Continuous
         [TestCase(SmallNeg)]
         [TestCase(LargeNeg)]
         [TestCase(0.0)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Sigma_WrongValues(double d)
         {
             Assert.False(LogisticDistribution.AreValidParams(1, d));
             Assert.False(Dist.IsValidSigma(d));
-            Dist.Sigma = d;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Sigma = d; });
         }
 
         // any value

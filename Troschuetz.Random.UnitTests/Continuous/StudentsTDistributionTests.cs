@@ -58,13 +58,12 @@ namespace Troschuetz.Random.Tests.Continuous
         [TestCase(0)]
         [TestCase(SmallNeg)]
         [TestCase(LargeNeg)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Nu_WrongValues(double d)
         {
             var i = (int) d;
             Assert.False(StudentsTDistribution.IsValidParam(i));
             Assert.False(Dist.IsValidNu(i));
-            Dist.Nu = i;
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Nu = i; });
         }
 
         // nu > 0
