@@ -151,6 +151,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractComparison.cs" />
     <Compile Include="ContinuousDistributionComparison.cs" />
     <Compile Include="DiscreteDistributionComparison.cs" />
     <Compile Include="GeneratorComparison.cs" />

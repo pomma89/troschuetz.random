@@ -24,14 +24,12 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnostics.Windows;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
-using System.Collections.Generic;
 using System.Linq;
-using Troschuetz.Random.Generators;
 
 namespace Troschuetz.Random.Benchmarks
 {
     [Config(typeof(Config))]
-    public class GeneratorComparison
+    public class GeneratorComparison : AbstractComparison
     {
         private class Config : ManualConfig
         {
@@ -45,22 +43,8 @@ namespace Troschuetz.Random.Benchmarks
             }
         }
 
-        private readonly Dictionary<string, IGenerator> Generators = new Dictionary<string, IGenerator>
-        {
-            [nameof(XorShift128Generator)] = new XorShift128Generator(),
-            [nameof(MT19937Generator)] = new MT19937Generator(),
-            [nameof(NR3Generator)] = new NR3Generator(),
-            [nameof(NR3Q1Generator)] = new NR3Q1Generator(),
-            [nameof(NR3Q2Generator)] = new NR3Q2Generator(),
-            [nameof(ALFGenerator)] = new ALFGenerator(),
-            [nameof(StandardGenerator)] = new StandardGenerator()
-        };
-
         private readonly byte[] Bytes64 = new byte[64];
         private readonly byte[] Bytes128 = new byte[128];
-
-        [Params(nameof(XorShift128Generator), nameof(MT19937Generator), nameof(NR3Generator), nameof(NR3Q1Generator), nameof(NR3Q2Generator), nameof(ALFGenerator), nameof(StandardGenerator))]
-        public string Generator { get; set; }
 
         [Benchmark]
         public void NextBytes64() => Generators[Generator].NextBytes(Bytes64);

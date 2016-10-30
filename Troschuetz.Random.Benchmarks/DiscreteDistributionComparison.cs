@@ -27,12 +27,11 @@ using BenchmarkDotNet.Jobs;
 using System.Collections.Generic;
 using System.Linq;
 using Troschuetz.Random.Distributions.Discrete;
-using Troschuetz.Random.Generators;
 
 namespace Troschuetz.Random.Benchmarks
 {
     [Config(typeof(Config))]
-    public class DiscreteDistributionComparison
+    public class DiscreteDistributionComparison : AbstractComparison
     {
         private class Config : ManualConfig
         {
@@ -46,31 +45,17 @@ namespace Troschuetz.Random.Benchmarks
             }
         }
 
-        private static readonly Dictionary<string, IGenerator> Generators = new Dictionary<string, IGenerator>
-        {
-            [nameof(XorShift128Generator)] = new XorShift128Generator(),
-            [nameof(MT19937Generator)] = new MT19937Generator(),
-            [nameof(NR3Generator)] = new NR3Generator(),
-            [nameof(NR3Q1Generator)] = new NR3Q1Generator(),
-            [nameof(NR3Q2Generator)] = new NR3Q2Generator(),
-            [nameof(ALFGenerator)] = new ALFGenerator(),
-            [nameof(StandardGenerator)] = new StandardGenerator()
-        };
-
         private readonly Dictionary<string, Dictionary<string, IDiscreteDistribution>> Distributions = new Dictionary<string, Dictionary<string, IDiscreteDistribution>>
         {
-            [nameof(BernoulliDistribution)] = Generators.ToDictionary(x => x.Key, x => new BernoulliDistribution(x.Value) as IDiscreteDistribution),
-            [nameof(BinomialDistribution)] = Generators.ToDictionary(x => x.Key, x => new BinomialDistribution(x.Value) as IDiscreteDistribution),
-            [nameof(CategoricalDistribution)] = Generators.ToDictionary(x => x.Key, x => new CategoricalDistribution(x.Value) as IDiscreteDistribution),
-            [nameof(DiscreteUniformDistribution)] = Generators.ToDictionary(x => x.Key, x => new DiscreteUniformDistribution(x.Value) as IDiscreteDistribution),
-            [nameof(GeometricDistribution)] = Generators.ToDictionary(x => x.Key, x => new GeometricDistribution(x.Value) as IDiscreteDistribution),
-            [nameof(PoissonDistribution)] = Generators.ToDictionary(x => x.Key, x => new PoissonDistribution(x.Value) as IDiscreteDistribution),
+            [N<BernoulliDistribution>()] = Generators.ToDictionary(x => x.Key, x => new BernoulliDistribution(x.Value) as IDiscreteDistribution),
+            [N<BinomialDistribution>()] = Generators.ToDictionary(x => x.Key, x => new BinomialDistribution(x.Value) as IDiscreteDistribution),
+            [N<CategoricalDistribution>()] = Generators.ToDictionary(x => x.Key, x => new CategoricalDistribution(x.Value) as IDiscreteDistribution),
+            [N<DiscreteUniformDistribution>()] = Generators.ToDictionary(x => x.Key, x => new DiscreteUniformDistribution(x.Value) as IDiscreteDistribution),
+            [N<GeometricDistribution>()] = Generators.ToDictionary(x => x.Key, x => new GeometricDistribution(x.Value) as IDiscreteDistribution),
+            [N<PoissonDistribution>()] = Generators.ToDictionary(x => x.Key, x => new PoissonDistribution(x.Value) as IDiscreteDistribution),
         };
 
-        [Params(nameof(XorShift128Generator), nameof(MT19937Generator), nameof(NR3Generator), nameof(NR3Q1Generator), nameof(NR3Q2Generator), nameof(ALFGenerator), nameof(StandardGenerator))]
-        public string Generator { get; set; }
-
-        [Params(nameof(BernoulliDistribution), nameof(BinomialDistribution), nameof(CategoricalDistribution), nameof(DiscreteUniformDistribution), nameof(GeometricDistribution), nameof(PoissonDistribution))]
+        [Params("Bernoulli", "Binomial", "Categorical", "DiscreteUniform", "Geometric", "Poisson")]
         public string Distribution { get; set; }
 
         [Benchmark]
