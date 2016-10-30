@@ -66,13 +66,13 @@ namespace Troschuetz.Random.Tests.Continuous
         }
 
         // any value
-        double GetMu(IMuDistribution<double> d)
+        private double GetMu(IMuDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(-10, 10) : d.Mu;
         }
 
         // sigma >= 0, better keep it low
-        double GetSigma(ISigmaDistribution<double> d)
+        private double GetSigma(ISigmaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble() : d.Sigma;
         }

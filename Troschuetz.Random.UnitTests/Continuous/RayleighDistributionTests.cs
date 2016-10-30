@@ -67,7 +67,7 @@ namespace Troschuetz.Random.Tests.Continuous
         }
 
         // sigma > 0
-        double GetSigma(ISigmaDistribution<double> d)
+        private double GetSigma(ISigmaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(0.1, 10) : d.Sigma;
         }

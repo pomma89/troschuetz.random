@@ -61,20 +61,23 @@ namespace Troschuetz.Random.Tests.Continuous
         [TestCase(LargePos, LargeNeg)]
         public void AlphaBeta_WrongValues(double a, double b)
         {
-            Assert.False(ContinuousUniformDistribution.AreValidParams(a, b));
-            Dist.Alpha = Dist.Beta = a;
-            Assert.False(Dist.IsValidBeta(b));
-            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Beta = b; });
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                Assert.False(ContinuousUniformDistribution.AreValidParams(a, b));
+                Dist.Alpha = Dist.Beta = a;
+                Assert.False(Dist.IsValidBeta(b));
+                Dist.Beta = b;
+            });
         }
 
         // alpha <= beta
-        double GetAlpha(IAlphaDistribution<double> d)
+        private double GetAlpha(IAlphaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(5) : d.Alpha;
         }
 
         // alpha <= beta
-        double GetBeta(IBetaDistribution<double> d)
+        private double GetBeta(IBetaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(5.1, 10) : d.Beta;
         }

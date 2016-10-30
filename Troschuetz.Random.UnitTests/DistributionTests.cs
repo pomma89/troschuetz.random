@@ -20,9 +20,9 @@ namespace Troschuetz.Random.Tests
 {
     using NUnit.Framework;
     using Random.Generators;
+    using Shouldly;
     using System;
     using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
 
     public abstract class DistributionTests<TDist> : TestBase where TDist : IDistribution
     {
@@ -76,7 +76,7 @@ namespace Troschuetz.Random.Tests
         protected const int RepetitionCount = 6;
         protected TDist Dist;
         protected TDist OtherDist;
-        int _currDist;
+        private int _currDist;
 
         protected abstract TDist GetDist(TDist other = default(TDist));
 
@@ -227,6 +227,8 @@ namespace Troschuetz.Random.Tests
             Serialization
         =============================================================================*/
 
+#if !PORTABLE
+
         [Test]
         [Repeat(RepetitionCount)]
         public void NextDouble_Serialization_AfterManyRand()
@@ -235,7 +237,7 @@ namespace Troschuetz.Random.Tests
             {
                 Dist.NextDouble();
             }
-            var bf = new BinaryFormatter();
+            var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             using (var ms = new MemoryStream())
             {
                 bf.Serialize(ms, Dist);
@@ -248,6 +250,8 @@ namespace Troschuetz.Random.Tests
                 }
             }
         }
+
+#endif
     }
 
     public abstract class DiscreteDistributionTests<TDist> : DistributionTests<TDist>
@@ -290,11 +294,11 @@ namespace Troschuetz.Random.Tests
         [Repeat(RepetitionCount)]
         public void Integers_SameOutput()
         {
-            var doubles = Dist.DistributedIntegers().GetEnumerator();
-            doubles.MoveNext();
-            for (var i = 0; i < Iterations; ++i, doubles.MoveNext())
+            var integers = Dist.DistributedIntegers().GetEnumerator();
+            integers.MoveNext();
+            for (var i = 0; i < Iterations; ++i, integers.MoveNext())
             {
-                Assert.AreEqual(OtherDist.Next(), doubles.Current);
+                OtherDist.Next().ShouldBe(integers.Current);
             }
         }
 
@@ -385,6 +389,8 @@ namespace Troschuetz.Random.Tests
             Serialization
         =============================================================================*/
 
+#if !PORTABLE
+
         [Test]
         [Repeat(RepetitionCount)]
         public void Next_Serialization_AfterManyRand()
@@ -393,7 +399,7 @@ namespace Troschuetz.Random.Tests
             {
                 Dist.Next();
             }
-            var bf = new BinaryFormatter();
+            var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             using (var ms = new MemoryStream())
             {
                 bf.Serialize(ms, Dist);
@@ -406,5 +412,7 @@ namespace Troschuetz.Random.Tests
                 }
             }
         }
+
+#endif
     }
 }

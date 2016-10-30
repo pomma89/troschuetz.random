@@ -55,10 +55,10 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   distribution</a>. This distribution is sometimes called the Discrete distribution.
     /// </summary>
     /// <remarks>
-    ///   The distribution is parameterized by a vector of ratios: in other words, the parameter
-    ///   does not have to be normalized and sum to 1. The reason is that some vectors can't be
-    ///   exactly normalized to sum to 1 in floating point representation.
-    /// 
+    ///   The distribution is parameterized by a vector of ratios: in other words, the parameter does
+    ///   not have to be normalized and sum to 1. The reason is that some vectors can't be exactly
+    ///   normalized to sum to 1 in floating point representation.
+    ///
     ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
@@ -76,19 +76,14 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Fields
 
         /// <summary>
-        ///   Stores the cumulative distribution of current weights.
+        ///   Stores the cumulative distribution of current normalized weights.
         /// </summary>
-        double[] _cdf;
+        private double[] _cdf;
 
         /// <summary>
         ///   Stores the unnormalized categorical weights.
         /// </summary>
-        List<double> _weights;
-
-        /// <summary>
-        ///   Stores the sum of all weights currently available.
-        /// </summary>
-        double _weightsSum;
+        private List<double> _weights;
 
         /// <summary>
         ///   Gets or sets the normalized probability vector of the categorical distribution.
@@ -99,12 +94,12 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Any of the weights in <paramref name="value"/> are negative or they sum to zero.
         /// </exception>
         /// <remarks>
-        ///   Sometimes the normalized probability vector cannot be represented exactly in a
-        ///   floating point representation.
+        ///   Sometimes the normalized probability vector cannot be represented exactly in a floating
+        ///   point representation.
         /// </remarks>
         public ICollection<double> Weights
         {
-            get { return _weights.Select(w => w / _weightsSum).ToList(); }
+            get { return _weights.ToList(); }
             set
             {
                 Raise.ArgumentNullException.IfIsNull(value, nameof(Weights), ErrorMessages.NullWeights);
@@ -203,8 +198,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="weights">
-        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
-        ///   as this is often impossible using floating point arithmetic.
+        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized as
+        ///   this is often impossible using floating point arithmetic.
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="weights"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="weights"/> is empty.</exception>
@@ -224,8 +219,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
         /// </param>
         /// <param name="weights">
-        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
-        ///   as this is often impossible using floating point arithmetic.
+        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized as
+        ///   this is often impossible using floating point arithmetic.
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="weights"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="weights"/> is empty.</exception>
@@ -265,8 +260,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="weights">
-        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized
-        ///   as this is often impossible using floating point arithmetic.
+        ///   An enumerable of nonnegative weights: this enumerable does not need to be normalized as
+        ///   this is often impossible using floating point arithmetic.
         /// </param>
         /// <exception cref="ArgumentNullException">
         ///   <paramref name="generator"/> or <paramref name="weights"/> are null.
@@ -293,7 +288,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         /// <param name="valueCount">The number of ones list will have.</param>
         /// <returns>A list containing only ones.</returns>
-        static List<double> Ones(int valueCount)
+        private static List<double> Ones(int valueCount)
         {
             Debug.Assert(valueCount > 0);
             var ones = new List<double>(valueCount);
@@ -322,16 +317,32 @@ namespace Troschuetz.Random.Distributions.Discrete
         public bool AreValidWeights(IEnumerable<double> weights) => IsValidParam(weights);
 
         /// <summary>
-        ///   Computes the unnormalized cumulative distribution function and other attributes for
-        ///   the distribution (like mean, variance, and so on).
+        ///   Computes the unnormalized cumulative distribution function and other attributes for the
+        ///   distribution (like mean, variance, and so on).
         /// </summary>
-        void UpdateHelpers()
+        /// <remarks>
+        ///   Also remember to change <see cref="SetUp(int, IEnumerable{double}, out double[])"/>
+        ///   when changing this method.
+        /// </remarks>
+        private void UpdateHelpers()
         {
-            var weightsSum = 0.0; // It will store the sum of all weights.
-            var cdf = new double[_weights.Count]; // It will store UNNORMALIZED cdf.
+            var weightsSum = _weights.Sum(); // It will store the sum of all UNNORMALIZED weights.
+            var cdf = new double[_weights.Count]; // It will store NORMALIZED cdf.
             var tmpMean = 0.0;
             var maxW = 0.0; // It will store max weight (all weights are positive).
             var maxI = 0; // It will store max weight index.
+
+            // Let's normalize all weights, if necessary.
+            if (!TMath.AreEqual(weightsSum, 1.0))
+            {
+                for (var i = 0; i < _weights.Count; ++i)
+                {
+                    _weights[i] /= weightsSum;
+                }
+                Debug.Assert(TMath.AreEqual(_weights.Sum(), 1.0));
+            }            
+
+            weightsSum = 0.0; // Reset weight sum to use it for cdf.
 
             // One big loop to compute all helpers needed by this distribution.
             for (var i = 0; i < _weights.Count; ++i)
@@ -339,27 +350,24 @@ namespace Troschuetz.Random.Distributions.Discrete
                 var w = _weights[i];
                 weightsSum += w;
                 cdf[i] = weightsSum;
-                tmpMean += w * (i + 1); // Plus one because it is zero-based.
-                if (w <= maxW)
+                tmpMean += w * (i + 1.0); // Plus one because it is zero-based.
+                if (w > maxW)
                 {
-                    continue;
+                    maxW = w;
+                    maxI = i;
                 }
-                maxW = w;
-                maxI = i;
             }
 
             // Finalize some results...
-            _weightsSum = weightsSum;
             _cdf = cdf;
-            Mean = (tmpMean / weightsSum) - 1; // Minus one to make it zero-based.
+            Mean = tmpMean - 1.0; // Minus one to make it zero-based.
             Mode = new double[] { maxI };
 
-            var halfWeightsSum = weightsSum / 2;
+            var halfWeightsSum = weightsSum / 2.0;
             var tmpMedian = double.NaN;
             var tmpVar = 0.0;
 
-            // We still need another loop to compute variance; as for the mean, the plus/minus one
-            // is needed.
+            // We still need another loop to compute variance; as for the mean, the plus/minus one is needed.
             for (var i = 0; i < _weights.Count; ++i)
             {
                 if (double.IsNaN(tmpMedian) && _cdf[i] >= halfWeightsSum)
@@ -371,7 +379,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
             // Finalize last results...
             Median = tmpMedian;
-            Variance = (tmpVar / weightsSum) - 1;
+            Variance = tmpVar - 1.0;
         }
 
         #endregion Instance Methods
@@ -424,13 +432,13 @@ namespace Troschuetz.Random.Distributions.Discrete
         ///   Returns a distributed random number.
         /// </summary>
         /// <returns>A distributed 32-bit signed integer.</returns>
-        public int Next() => Sample(Generator, _weights.Count, _cdf, _weightsSum);
+        public int Next() => Sample(Generator, _cdf);
 
         /// <summary>
         ///   Returns a distributed floating point random number.
         /// </summary>
         /// <returns>A distributed double-precision floating point number.</returns>
-        public double NextDouble() => Sample(Generator, _weights.Count, _cdf, _weightsSum);
+        public double NextDouble() => Sample(Generator, _cdf);
 
         #endregion IDiscreteDistribution Members
 
@@ -447,10 +455,10 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether categorical distribution is defined under given weights. The
-        ///   default definition returns false if any of the weights is negative or if the sum of
-        ///   parameters is 0.0; otherwise, it returns true.
-        /// 
+        ///   Determines whether categorical distribution is defined under given weights. The default
+        ///   definition returns false if any of the weights is negative or if the sum of parameters
+        ///   is 0.0; otherwise, it returns true.
+        ///
         ///   Weights do not need to be normalized as this is often impossible using floating point arithmetic.
         /// </summary>
         /// <remarks>
@@ -476,11 +484,11 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// <remarks>
         ///   This is an extensibility point for the <see cref="CategoricalDistribution"/> class.
         /// </remarks>
-        public static Func<IGenerator, int, double[], double, int> Sample { get; set; } = (generator, weightsCount, cdf, weightsSum) =>
+        public static Func<IGenerator, double[], int> Sample { get; set; } = (generator, cdf) =>
         {
-            var u = generator.NextDouble(weightsSum);
+            var u = generator.NextDouble();
             var minIdx = 0;
-            var maxIdx = weightsCount - 1;
+            var maxIdx = cdf.Length - 1;
             while (minIdx < maxIdx)
             {
                 var idx = (maxIdx - minIdx) / 2 + minIdx;
@@ -502,23 +510,44 @@ namespace Troschuetz.Random.Distributions.Discrete
             return minIdx;
         };
 
-        internal static void SetUp(int weightsCount, IEnumerable<double> weights, out double[] cdf, out double weightsSum)
+        /// <summary>
+        ///   Prepares parameters for <see cref="TRandom"/>.
+        /// </summary>
+        /// <param name="weightsCount">The number of weights.</param>
+        /// <param name="weights">Weights, or null.</param>
+        /// <param name="cdf">The output cdf.</param>
+        /// <remarks>
+        ///   Also remember to change <see cref="UpdateHelpers"/> when changing this method.
+        /// </remarks>
+        internal static void SetUp(int weightsCount, IEnumerable<double> weights, out double[] cdf)
         {
             var weightsList = (weights == null) ? Ones(weightsCount) : weights.ToList();
-            weightsSum = 0.0; // It will store the sum of all weights.
-            cdf = new double[weightsCount]; // It will store UNNORMALIZED cdf.
+            var weightsSum = weightsList.Sum(); // It will store the sum of all UNNORMALIZED weights.
+            cdf = new double[weightsList.Count]; // It will store NORMALIZED cdf.
             var maxW = 0.0; // It will store max weight (all weights are positive).
 
-            for (var i = 0; i < weightsCount; ++i)
+            // Let's normalize all weights, if necessary.
+            if (!TMath.AreEqual(weightsSum, 1.0))
+            {
+                for (var i = 0; i < weightsList.Count; ++i)
+                {
+                    weightsList[i] /= weightsSum;
+                }
+                Debug.Assert(TMath.AreEqual(weightsList.Sum(), 1.0));
+            }
+
+            weightsSum = 0.0; // Reset weight sum to use it for cdf.
+
+            // One big loop to compute all helpers needed by this distribution.
+            for (var i = 0; i < weightsList.Count; ++i)
             {
                 var w = weightsList[i];
                 weightsSum += w;
                 cdf[i] = weightsSum;
-                if (w <= maxW)
+                if (w > maxW)
                 {
-                    continue;
+                    maxW = w;
                 }
-                maxW = w;
             }
         }
 

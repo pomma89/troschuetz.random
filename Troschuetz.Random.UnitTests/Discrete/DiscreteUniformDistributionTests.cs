@@ -57,9 +57,8 @@ namespace Troschuetz.Random.Tests.Discrete
         [Test]
         public void InvalidParameters1()
         {
-            Assert.False(DiscreteUniformDistribution.AreValidParams(50, 1));
-            Dist.Beta = 1;
-            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Alpha = 50; });
+            Assert.False(DiscreteUniformDistribution.AreValidParams(50, 1));            
+            Assert.Throws<ArgumentOutOfRangeException>(() => { Dist.Beta = 1; Dist.Alpha = 50; });
         }
 
         [Test]
@@ -77,13 +76,13 @@ namespace Troschuetz.Random.Tests.Discrete
         }
 
         // alpha <= beta && beta < int.MaxValue
-        int GetAlpha(IAlphaDistribution<int> d)
+        private int GetAlpha(IAlphaDistribution<int> d)
         {
             return d == null ? Rand.Next(10) : d.Alpha;
         }
 
         // alpha <= beta && beta < int.MaxValue
-        int GetBeta(IBetaDistribution<int> d)
+        private int GetBeta(IBetaDistribution<int> d)
         {
             return d == null ? Rand.Next(10, 100) : d.Beta;
         }

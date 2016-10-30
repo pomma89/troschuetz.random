@@ -64,10 +64,16 @@ namespace Troschuetz.Random
             {
                 const uint factor = 19U;
                 var seed = 1777771U;
+
                 seed = factor * seed + (uint) Environment.TickCount;
+
+                var guid = Guid.NewGuid().ToByteArray();
+                seed = factor * seed + BitConverter.ToUInt32(guid, 0);
+                seed = factor * seed + BitConverter.ToUInt32(guid, 8);
 
 #if !(PORTABLE || NETSTD11)
                 seed = factor * seed + (uint) System.Threading.Thread.CurrentThread.ManagedThreadId;
+                seed = factor * seed + (uint) System.Diagnostics.Process.GetCurrentProcess().Id;
 #endif
 
                 return seed;

@@ -67,7 +67,7 @@ namespace Troschuetz.Random.Tests.Discrete
         }
 
         // lambda > 0
-        double GetLambda(ILambdaDistribution<double> d)
+        private double GetLambda(ILambdaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(1, 10) : d.Lambda;
         }

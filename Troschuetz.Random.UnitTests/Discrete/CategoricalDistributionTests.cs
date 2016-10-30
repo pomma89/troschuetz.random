@@ -89,13 +89,13 @@ namespace Troschuetz.Random.Tests.Discrete
         }
 
         // value count > 0
-        int GetValueCount(IWeightsDistribution<double> d)
+        private int GetValueCount(IWeightsDistribution<double> d)
         {
             return d == null ? Rand.Next(1, 10) : d.Weights.Count();
         }
 
         // all weights > 0
-        ICollection<double> GetWeights(IWeightsDistribution<double> d)
+        private ICollection<double> GetWeights(IWeightsDistribution<double> d)
         {
             Func<double> r = () => Rand.NextDouble(0.1, 10);
             return d == null ? new List<double> { r(), r(), r(), r(), r() } : d.Weights;

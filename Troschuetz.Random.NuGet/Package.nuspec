@@ -1,37 +1,46 @@
 <?xml version="1.0"?>
 
 <package>
-    <metadata>
-        <id>Troschuetz.Random</id>
-        <version>4.0.5</version>
-        <title>Troschuetz.Random - Easy random number generation</title>
-        <authors>Stefan Troschütz &lt;stefan@troschuetz.de&gt;</authors>
-        <owners>Alessio Parma &lt;alessio.parma@gmail.com&gt;</owners>
-        <description>
+  <metadata>
+    <id>Troschuetz.Random</id>
+    <version>4.0.7</version>
+    <title>Troschuetz.Random - Easy random number generation</title>
+    <authors>Stefan Troschütz &lt;stefan@troschuetz.de&gt;</authors>
+    <owners>Alessio Parma &lt;alessio.parma@gmail.com&gt;</owners>
+    <description>
 Fully managed library providing various random number generators and distributions.
+
 More precisely, this library offers 7 generators (ALF, MT19937, Standard, XorShift128, NR3, NR3Q1, NR3Q2), 6 discrete distributions (Bernoulli, Binomial, Categorical, DiscreteUniform, Geometric, Poisson) and 21 continuous distributions (like Normal, Exponential, ChiSquare, Beta, and so on); moreover, it offers a random class similar to the one Python offers (TRandom).
+
 All the hard work behind this library was done by Stefan Troschütz, and for which I thank him very much. What I have done with his great project, was simply to refactor and improve his code, while offering the new random class similar to the one Python offers.
+
 You can find the modified source code and the available documentation at the project URL.
-        </description>
-        <releaseNotes>
-* Added new .NET Standard 1.1 library.
-        </releaseNotes>
-        <summary>Fully managed library providing various random number generators and distributions.</summary>
-        <language>en-US</language>
-        <projectUrl>https://github.com/pomma89/Troschuetz.Random</projectUrl>
-        <iconUrl>https://googledrive.com/host/0B8v0ikF4z2BiR29YQmxfSlE1Sms/Progetti/Troschuetz.Random/logo-128.png</iconUrl>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <licenseUrl>http://opensource.org/licenses/lgpl-2.1.php</licenseUrl>
-        <copyright>Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)</copyright>
-        <dependencies>
-            <dependency id="Thrower" version="3.0.1" />
-        </dependencies>
-        <references></references>
-        <tags>random distribution generator normal exponential python alf mt19937 xorshift128 portable netstandard</tags>
-    </metadata>
-    <files>
-        <file src="lib\" target="lib" />
-        <file src="tester\" target="tester" />
-        <file src="LICENSE.txt" target="LICENSE.txt" />
-    </files>
+    </description>
+    <releaseNotes>
+* Updated Thrower to v3.0.4 (PR#1 by Corniel Nobel).
+* Updated NUnit to v3.5.0 (PR#1 by Corniel Nobel).
+* Default seed now takes into account process ID.
+* Default seed now uses a GUID to improve randomness.
+* Updated broken Google-hosted links.
+* Fixed a bug in CategoricalDistribution. Weights were not normalized correctly.
+* Changed how ParetoDistribution is computed. Now a transformation based on exponential is used.
+    </releaseNotes>
+    <summary>Fully managed library providing various random number generators and distributions.</summary>
+    <language>en-US</language>
+    <projectUrl>https://github.com/pomma89/Troschuetz.Random</projectUrl>
+    <iconUrl>http://pomma89.altervista.org/troschuetz.random/logo-128.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://opensource.org/licenses/lgpl-2.1.php</licenseUrl>
+    <copyright>Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)</copyright>
+    <dependencies>
+      <dependency id="Thrower" version="3.0.4" />
+    </dependencies>
+    <references></references>
+    <tags>random distribution generator normal exponential python alf mt19937 xorshift128 portable netstandard</tags>
+  </metadata>
+  <files>
+    <file src="lib\" target="lib" />
+    <file src="tester\" target="tester" />
+    <file src="LICENSE.txt" target="LICENSE.txt" />
+  </files>
 </package>

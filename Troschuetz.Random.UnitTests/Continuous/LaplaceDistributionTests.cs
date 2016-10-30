@@ -67,13 +67,13 @@ namespace Troschuetz.Random.Tests.Continuous
         }
 
         // alpha > 0
-        double GetAlpha(IAlphaDistribution<double> d)
+        private double GetAlpha(IAlphaDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(0.1, 10) : d.Alpha;
         }
 
         // any value
-        double GetMu(IMuDistribution<double> d)
+        private double GetMu(IMuDistribution<double> d)
         {
             return d == null ? Rand.NextDouble(-10, 10) : d.Mu;
         }
