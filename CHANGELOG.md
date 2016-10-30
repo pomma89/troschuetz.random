@@ -8,6 +8,7 @@
 * Default seed now [uses a GUID](http://stackoverflow.com/a/18267477/1880086) to improve randomness.
 * Updated broken Google-hosted links.
 * Fixed a bug in CategoricalDistribution. Weights were not normalized correctly.
+* Changed how ParetoDistribution is computed. Now a transformation based on exponential is used.
 
 ### v4.0.5 (2016-09-18) ###
 

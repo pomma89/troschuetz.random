@@ -332,13 +332,15 @@ namespace Troschuetz.Random.Distributions.Discrete
             var maxW = 0.0; // It will store max weight (all weights are positive).
             var maxI = 0; // It will store max weight index.
 
-            // Let's normalize all weights.
-            for (var i = 0; i < _weights.Count; ++i)
+            // Let's normalize all weights, if necessary.
+            if (!TMath.AreEqual(weightsSum, 1.0))
             {
-                _weights[i] /= weightsSum;
-            }
-            _weights[0] += (1.0 - _weights.Sum()); // Now the sum will be exactly 1.
-            Debug.Assert(TMath.AreEqual(_weights.Sum(), 1.0));
+                for (var i = 0; i < _weights.Count; ++i)
+                {
+                    _weights[i] /= weightsSum;
+                }
+                Debug.Assert(TMath.AreEqual(_weights.Sum(), 1.0));
+            }            
 
             weightsSum = 0.0; // Reset weight sum to use it for cdf.
 
@@ -348,7 +350,7 @@ namespace Troschuetz.Random.Distributions.Discrete
                 var w = _weights[i];
                 weightsSum += w;
                 cdf[i] = weightsSum;
-                tmpMean += w * (i + 1); // Plus one because it is zero-based.
+                tmpMean += w * (i + 1.0); // Plus one because it is zero-based.
                 if (w > maxW)
                 {
                     maxW = w;
@@ -358,10 +360,10 @@ namespace Troschuetz.Random.Distributions.Discrete
 
             // Finalize some results...
             _cdf = cdf;
-            Mean = tmpMean - 1; // Minus one to make it zero-based.
+            Mean = tmpMean - 1.0; // Minus one to make it zero-based.
             Mode = new double[] { maxI };
 
-            const double halfWeightsSum = 0.5;
+            var halfWeightsSum = weightsSum / 2.0;
             var tmpMedian = double.NaN;
             var tmpVar = 0.0;
 
@@ -377,7 +379,7 @@ namespace Troschuetz.Random.Distributions.Discrete
 
             // Finalize last results...
             Median = tmpMedian;
-            Variance = tmpVar - 1;
+            Variance = tmpVar - 1.0;
         }
 
         #endregion Instance Methods
@@ -524,13 +526,15 @@ namespace Troschuetz.Random.Distributions.Discrete
             cdf = new double[weightsList.Count]; // It will store NORMALIZED cdf.
             var maxW = 0.0; // It will store max weight (all weights are positive).
 
-            // Let's normalize all weights.
-            for (var i = 0; i < weightsList.Count; ++i)
+            // Let's normalize all weights, if necessary.
+            if (!TMath.AreEqual(weightsSum, 1.0))
             {
-                weightsList[i] /= weightsSum;
+                for (var i = 0; i < weightsList.Count; ++i)
+                {
+                    weightsList[i] /= weightsSum;
+                }
+                Debug.Assert(TMath.AreEqual(weightsList.Sum(), 1.0));
             }
-            weightsList[0] += (1.0 - weightsList.Sum()); // Now the sum will be exactly 1.
-            Debug.Assert(TMath.AreEqual(weightsList.Sum(), 1.0));
 
             weightsSum = 0.0; // Reset weight sum to use it for cdf.
 

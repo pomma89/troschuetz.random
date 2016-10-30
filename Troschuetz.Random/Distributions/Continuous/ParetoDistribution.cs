@@ -330,8 +330,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// </remarks>
         public static Func<IGenerator, double, double, double> Sample { get; set; } = (generator, alpha, beta) =>
         {
-            var helper1 = 1.0 / beta;
-            return alpha / Math.Pow(1.0 - generator.NextDouble(), helper1);
+            return alpha * Math.Pow(Math.E, ExponentialDistribution.Sample(generator, beta));
         };
 
         #endregion TRandom Helpers

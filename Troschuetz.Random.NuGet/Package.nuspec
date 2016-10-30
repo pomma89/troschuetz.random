@@ -23,6 +23,7 @@ You can find the modified source code and the available documentation at the pro
 * Default seed now uses a GUID to improve randomness.
 * Updated broken Google-hosted links.
 * Fixed a bug in CategoricalDistribution. Weights were not normalized correctly.
+* Changed how ParetoDistribution is computed. Now a transformation based on exponential is used.
     </releaseNotes>
     <summary>Fully managed library providing various random number generators and distributions.</summary>
     <language>en-US</language>
