@@ -323,7 +323,7 @@ JitModules=clrjit-v4.6.1586.0
 Type=ContinuousDistributionComparison  Mode=Throughput  
 
 ```
-     Method |             |                  Distribution |      Median |     StdDev | Gen 0 | Gen 1 | Gen 2 | Bytes Allocated/Op |
+     Method |           Generator |                  Distribution |      Median |     StdDev | Gen 0 | Gen 1 | Gen 2 | Bytes Allocated/Op |
 ----------- |--------------------- |------------------------------ |------------ |----------- |------ |------ |------ |------------------- |
  **NextDouble** |         **ALF** |              **Beta** | **564.7818 ns** | **45.2765 ns** |     **-** |     **-** |     **-** |               **0,03** |
  **NextDouble** |         **ALF** |         **BetaPrime** | **544.4464 ns** | **22.4608 ns** |     **-** |     **-** |     **-** |               **0,04** |
@@ -401,86 +401,86 @@ Type=DiscreteDistributionComparison  Mode=Throughput
      Method |            Generator |                Distribution |      Median |     StdDev | Gen 0 | Gen 1 | Gen 2 | Bytes Allocated/Op |
 ----------- |--------------------- |---------------------------- |------------ |----------- |------ |------ |------ |------------------- |
  **NextDouble** |         **ALF** |       **Bernoulli** | **119.2830 ns** |  **5.8111 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALFGenerator |       BernoulliDistribution | 119.4595 ns |  4.0621 ns |     - |     - |     - |               0,01 |
+       Next |         ALF |       BernoulliDistribution | 119.4595 ns |  4.0621 ns |     - |     - |     - |               0,01 |
  **NextDouble** |         **ALF** |        **Binomial** | **118.1262 ns** |  **5.2042 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALFGenerator |        BinomialDistribution | 116.0250 ns |  6.0589 ns |     - |     - |     - |               0,01 |
+       Next |         ALF |        BinomialDistribution | 116.0250 ns |  6.0589 ns |     - |     - |     - |               0,01 |
  **NextDouble** |         **ALF** |     **Categorical** | **162.3266 ns** |  **5.9275 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALFGenerator |     CategoricalDistribution | 157.5542 ns |  6.6664 ns |     - |     - |     - |               0,01 |
+       Next |         ALF |     CategoricalDistribution | 157.5542 ns |  6.6664 ns |     - |     - |     - |               0,01 |
  **NextDouble** |         **ALF** | **DiscreteUniform** | **130.1418 ns** |  **4.3669 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALFGenerator | DiscreteUniformDistribution | 126.8054 ns |  6.0544 ns |     - |     - |     - |               0,01 |
+       Next |         ALF | DiscreteUniformDistribution | 126.8054 ns |  6.0544 ns |     - |     - |     - |               0,01 |
  **NextDouble** |         **ALF** |       **Geometric** | **138.3377 ns** |  **6.8605 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALFGenerator |       GeometricDistribution | 130.1346 ns |  5.3675 ns |     - |     - |     - |               0,01 |
+       Next |         ALF |       GeometricDistribution | 130.1346 ns |  5.3675 ns |     - |     - |     - |               0,01 |
  **NextDouble** |         **ALF** |         **Poisson** | **189.3246 ns** | **10.3094 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALFGenerator |         PoissonDistribution | 184.1934 ns | 12.3198 ns |     - |     - |     - |               0,01 |
+       Next |         ALF |         PoissonDistribution | 184.1934 ns | 12.3198 ns |     - |     - |     - |               0,01 |
  **NextDouble** |     **MT19937** |       **Bernoulli** | **166.3347 ns** |  **8.1093 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |     MT19937Generator |       BernoulliDistribution | 125.4137 ns |  8.8573 ns |     - |     - |     - |               0,02 |
+       Next |     MT19937 |       BernoulliDistribution | 125.4137 ns |  8.8573 ns |     - |     - |     - |               0,02 |
  **NextDouble** |     **MT19937** |        **Binomial** | **127.1335 ns** |  **6.9697 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |     MT19937Generator |        BinomialDistribution | 127.5652 ns |  8.3479 ns |     - |     - |     - |               0,02 |
+       Next |     MT19937 |        BinomialDistribution | 127.5652 ns |  8.3479 ns |     - |     - |     - |               0,02 |
  **NextDouble** |     **MT19937** |     **Categorical** | **179.0222 ns** | **11.2939 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |     MT19937Generator |     CategoricalDistribution | 169.9243 ns |  6.7980 ns |     - |     - |     - |               0,02 |
+       Next |     MT19937 |     CategoricalDistribution | 169.9243 ns |  6.7980 ns |     - |     - |     - |               0,02 |
  **NextDouble** |     **MT19937** | **DiscreteUniform** | **137.5204 ns** |  **5.6537 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |     MT19937Generator | DiscreteUniformDistribution | 148.2287 ns | 12.8818 ns |     - |     - |     - |               0,02 |
+       Next |     MT19937 | DiscreteUniformDistribution | 148.2287 ns | 12.8818 ns |     - |     - |     - |               0,02 |
  **NextDouble** |     **MT19937** |       **Geometric** | **148.5860 ns** |  **7.3860 ns** |     **-** |     **-** |     **-** |               **0,03** |
-       Next |     MT19937Generator |       GeometricDistribution | 145.4794 ns | 10.8896 ns |     - |     - |     - |               0,03 |
+       Next |     MT19937 |       GeometricDistribution | 145.4794 ns | 10.8896 ns |     - |     - |     - |               0,03 |
  **NextDouble** |     **MT19937** |         **Poisson** | **194.4949 ns** |  **6.7210 ns** |     **-** |     **-** |     **-** |               **0,05** |
-       Next |     MT19937Generator |         PoissonDistribution | 190.8595 ns | 11.3811 ns |     - |     - |     - |               0,03 |
+       Next |     MT19937 |         PoissonDistribution | 190.8595 ns | 11.3811 ns |     - |     - |     - |               0,03 |
  **NextDouble** |         **NR3** |       **Bernoulli** | **129.0464 ns** |  **4.8193 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         NR3Generator |       BernoulliDistribution | 128.9043 ns |  5.1086 ns |     - |     - |     - |               0,01 |
+       Next |         NR3 |       BernoulliDistribution | 128.9043 ns |  5.1086 ns |     - |     - |     - |               0,01 |
  **NextDouble** |         **NR3** |        **Binomial** | **127.4425 ns** |  **4.4049 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         NR3Generator |        BinomialDistribution | 128.1422 ns |  5.9819 ns |     - |     - |     - |               0,01 |
+       Next |         NR3 |        BinomialDistribution | 128.1422 ns |  5.9819 ns |     - |     - |     - |               0,01 |
  **NextDouble** |         **NR3** |     **Categorical** | **178.6449 ns** |  **5.5638 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         NR3Generator |     CategoricalDistribution | 173.8394 ns |  6.5011 ns |     - |     - |     - |               0,01 |
+       Next |         NR3 |     CategoricalDistribution | 173.8394 ns |  6.5011 ns |     - |     - |     - |               0,01 |
  **NextDouble** |         **NR3** | **DiscreteUniform** | **143.6357 ns** |  **4.7112 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         NR3Generator | DiscreteUniformDistribution | 139.1345 ns |  7.7602 ns |     - |     - |     - |               0,01 |
+       Next |         NR3 | DiscreteUniformDistribution | 139.1345 ns |  7.7602 ns |     - |     - |     - |               0,01 |
  **NextDouble** |         **NR3** |       **Geometric** | **154.8823 ns** |  **9.9655 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         NR3Generator |       GeometricDistribution | 153.4500 ns |  4.4693 ns |     - |     - |     - |               0,01 |
+       Next |         NR3 |       GeometricDistribution | 153.4500 ns |  4.4693 ns |     - |     - |     - |               0,01 |
  **NextDouble** |         **NR3** |         **Poisson** | **205.8942 ns** |  **7.4231 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |         NR3Generator |         PoissonDistribution | 211.3698 ns |  7.4695 ns |     - |     - |     - |               0,02 |
+       Next |         NR3 |         PoissonDistribution | 211.3698 ns |  7.4695 ns |     - |     - |     - |               0,02 |
  **NextDouble** |       **NR3Q1** |       **Bernoulli** | **124.2010 ns** | **10.5891 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q1Generator |       BernoulliDistribution | 122.2264 ns |  3.1275 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q1 |       BernoulliDistribution | 122.2264 ns |  3.1275 ns |     - |     - |     - |               0,01 |
  **NextDouble** |       **NR3Q1** |        **Binomial** | **123.5844 ns** |  **6.8370 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q1Generator |        BinomialDistribution | 121.8930 ns |  3.2296 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q1 |        BinomialDistribution | 121.8930 ns |  3.2296 ns |     - |     - |     - |               0,01 |
  **NextDouble** |       **NR3Q1** |     **Categorical** | **169.1586 ns** |  **4.9083 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q1Generator |     CategoricalDistribution | 168.3734 ns |  6.5751 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q1 |     CategoricalDistribution | 168.3734 ns |  6.5751 ns |     - |     - |     - |               0,01 |
  **NextDouble** |       **NR3Q1** | **DiscreteUniform** | **138.4093 ns** |  **5.8611 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q1Generator | DiscreteUniformDistribution | 134.0003 ns |  6.0810 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q1 | DiscreteUniformDistribution | 134.0003 ns |  6.0810 ns |     - |     - |     - |               0,01 |
  **NextDouble** |       **NR3Q1** |       **Geometric** | **149.3405 ns** |  **7.5240 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q1Generator |       GeometricDistribution | 145.4122 ns |  3.9322 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q1 |       GeometricDistribution | 145.4122 ns |  3.9322 ns |     - |     - |     - |               0,01 |
  **NextDouble** |       **NR3Q1** |         **Poisson** | **199.9778 ns** | **16.4269 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |       NR3Q1Generator |         PoissonDistribution | 199.1589 ns | 12.8700 ns |     - |     - |     - |               0,02 |
+       Next |       NR3Q1 |         PoissonDistribution | 199.1589 ns | 12.8700 ns |     - |     - |     - |               0,02 |
  **NextDouble** |       **NR3Q2** |       **Bernoulli** | **121.8425 ns** |  **3.5704 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q2Generator |       BernoulliDistribution | 122.3650 ns |  3.9288 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q2 |       BernoulliDistribution | 122.3650 ns |  3.9288 ns |     - |     - |     - |               0,01 |
  **NextDouble** |       **NR3Q2** |        **Binomial** | **120.6262 ns** |  **3.4427 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q2Generator |        BinomialDistribution | 120.6807 ns |  3.9826 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q2 |        BinomialDistribution | 120.6807 ns |  3.9826 ns |     - |     - |     - |               0,01 |
  **NextDouble** |       **NR3Q2** |     **Categorical** | **167.6676 ns** | **10.4181 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q2Generator |     CategoricalDistribution | 164.8703 ns | 10.5710 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q2 |     CategoricalDistribution | 164.8703 ns | 10.5710 ns |     - |     - |     - |               0,01 |
  **NextDouble** |       **NR3Q2** | **DiscreteUniform** | **135.6440 ns** |  **6.6638 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q2Generator | DiscreteUniformDistribution | 130.1909 ns |  5.8340 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q2 | DiscreteUniformDistribution | 130.1909 ns |  5.8340 ns |     - |     - |     - |               0,01 |
  **NextDouble** |       **NR3Q2** |       **Geometric** | **141.1170 ns** |  **3.8857 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q2Generator |       GeometricDistribution | 141.7685 ns |  4.9574 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q2 |       GeometricDistribution | 141.7685 ns |  4.9574 ns |     - |     - |     - |               0,01 |
  **NextDouble** |       **NR3Q2** |         **Poisson** | **196.0464 ns** |  **9.1919 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |       NR3Q2Generator |         PoissonDistribution | 191.8061 ns |  6.7616 ns |     - |     - |     - |               0,01 |
+       Next |       NR3Q2 |         PoissonDistribution | 191.8061 ns |  6.7616 ns |     - |     - |     - |               0,01 |
  **NextDouble** |    **Standard** |       **Bernoulli** | **132.4460 ns** |  **8.1172 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |    StandardGenerator |       BernoulliDistribution | 123.6537 ns |  3.6683 ns |     - |     - |     - |               0,01 |
+       Next |    Standard |       BernoulliDistribution | 123.6537 ns |  3.6683 ns |     - |     - |     - |               0,01 |
  **NextDouble** |    **Standard** |        **Binomial** | **123.3657 ns** |  **6.8106 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |    StandardGenerator |        BinomialDistribution | 123.6060 ns |  6.3782 ns |     - |     - |     - |               0,01 |
+       Next |    Standard |        BinomialDistribution | 123.6060 ns |  6.3782 ns |     - |     - |     - |               0,01 |
  **NextDouble** |    **Standard** |     **Categorical** | **174.3826 ns** | **10.4026 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |    StandardGenerator |     CategoricalDistribution | 168.1125 ns |  3.6631 ns |     - |     - |     - |               0,01 |
+       Next |    Standard |     CategoricalDistribution | 168.1125 ns |  3.6631 ns |     - |     - |     - |               0,01 |
  **NextDouble** |    **Standard** | **DiscreteUniform** | **141.2165 ns** |  **5.0143 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |    StandardGenerator | DiscreteUniformDistribution | 138.0848 ns |  4.3336 ns |     - |     - |     - |               0,01 |
+       Next |    Standard | DiscreteUniformDistribution | 138.0848 ns |  4.3336 ns |     - |     - |     - |               0,01 |
  **NextDouble** |    **Standard** |       **Geometric** | **147.0533 ns** |  **2.2836 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |    StandardGenerator |       GeometricDistribution | 146.8081 ns |  4.4159 ns |     - |     - |     - |               0,01 |
+       Next |    Standard |       GeometricDistribution | 146.8081 ns |  4.4159 ns |     - |     - |     - |               0,01 |
  **NextDouble** |    **Standard** |         **Poisson** | **205.9187 ns** |  **7.2529 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |    StandardGenerator |         PoissonDistribution | 202.9169 ns | 10.2237 ns |     - |     - |     - |               0,01 |
+       Next |    Standard |         PoissonDistribution | 202.9169 ns | 10.2237 ns |     - |     - |     - |               0,01 |
  **NextDouble** | **XorShift128** |       **Bernoulli** | **125.3874 ns** |  **3.0229 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next | XorShift128Generator |       BernoulliDistribution | 127.1274 ns |  7.4002 ns |     - |     - |     - |               0,01 |
+       Next | XorShift128 |       BernoulliDistribution | 127.1274 ns |  7.4002 ns |     - |     - |     - |               0,01 |
  **NextDouble** | **XorShift128** |        **Binomial** | **125.1437 ns** |  **4.1121 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next | XorShift128Generator |        BinomialDistribution | 125.7723 ns |  2.9257 ns |     - |     - |     - |               0,01 |
+       Next | XorShift128 |        BinomialDistribution | 125.7723 ns |  2.9257 ns |     - |     - |     - |               0,01 |
  **NextDouble** | **XorShift128** |     **Categorical** | **171.7676 ns** |  **4.2417 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next | XorShift128Generator |     CategoricalDistribution | 168.1748 ns |  6.9556 ns |     - |     - |     - |               0,01 |
+       Next | XorShift128 |     CategoricalDistribution | 168.1748 ns |  6.9556 ns |     - |     - |     - |               0,01 |
  **NextDouble** | **XorShift128** | **DiscreteUniform** | **140.7030 ns** |  **6.5082 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next | XorShift128Generator | DiscreteUniformDistribution | 138.7947 ns |  6.0298 ns |     - |     - |     - |               0,01 |
+       Next | XorShift128 | DiscreteUniformDistribution | 138.7947 ns |  6.0298 ns |     - |     - |     - |               0,01 |
  **NextDouble** | **XorShift128** |       **Geometric** | **141.7219 ns** |  **3.6250 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next | XorShift128Generator |       GeometricDistribution | 142.1299 ns |  7.2412 ns |     - |     - |     - |               0,01 |
+       Next | XorShift128 |       GeometricDistribution | 142.1299 ns |  7.2412 ns |     - |     - |     - |               0,01 |
  **NextDouble** | **XorShift128** |         **Poisson** | **194.8024 ns** |  **6.0905 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next | XorShift128Generator |         PoissonDistribution | 195.3065 ns |  9.0045 ns |     - |     - |     - |               0,01 |
+       Next | XorShift128 |         PoissonDistribution | 195.3065 ns |  9.0045 ns |     - |     - |     - |               0,01 |
