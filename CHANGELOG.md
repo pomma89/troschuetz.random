@@ -7,6 +7,7 @@
 * Default seed now takes into account process ID.
 * Default seed now [uses a GUID](http://stackoverflow.com/a/18267477/1880086) to improve randomness.
 * Updated broken Google-hosted links.
+* Fixed a bug in CategoricalDistribution. Weights were not normalized correctly.
 
 ### v4.0.5 (2016-09-18) ###
 

@@ -243,9 +243,8 @@ namespace Troschuetz.Random
         {
             Raise.ArgumentOutOfRangeException.IfNot(valueCount > 0, ErrorMessages.InvalidParams);
             double[] cdf;
-            double weightsSum;
-            CategoricalDistribution.SetUp(valueCount, null, out cdf, out weightsSum);
-            return CategoricalDistribution.Sample(Generator, valueCount, cdf, weightsSum);
+            CategoricalDistribution.SetUp(valueCount, null, out cdf);
+            return CategoricalDistribution.Sample(Generator, cdf);
         }
 
         /// <summary>
@@ -271,9 +270,8 @@ namespace Troschuetz.Random
         {
             Raise.ArgumentOutOfRangeException.IfNot(valueCount > 0, ErrorMessages.InvalidParams);
             double[] cdf;
-            double weightsSum;
-            CategoricalDistribution.SetUp(valueCount, null, out cdf, out weightsSum);
-            return InfiniteLoop(CategoricalDistribution.Sample, Generator, valueCount, cdf, weightsSum);
+            CategoricalDistribution.SetUp(valueCount, null, out cdf);
+            return InfiniteLoop(CategoricalDistribution.Sample, Generator, cdf);
         }
 
         /// <summary>
@@ -301,9 +299,8 @@ namespace Troschuetz.Random
         {
             Raise.ArgumentOutOfRangeException.IfNot(CategoricalDistribution.IsValidParam(weights), ErrorMessages.InvalidParams);
             double[] cdf;
-            double weightsSum;
-            CategoricalDistribution.SetUp(weights.Count, weights, out cdf, out weightsSum);
-            return CategoricalDistribution.Sample(Generator, weights.Count, cdf, weightsSum);
+            CategoricalDistribution.SetUp(weights.Count, weights, out cdf);
+            return CategoricalDistribution.Sample(Generator, cdf);
         }
 
         /// <summary>
@@ -331,9 +328,8 @@ namespace Troschuetz.Random
         {
             Raise.ArgumentOutOfRangeException.IfNot(CategoricalDistribution.IsValidParam(weights), ErrorMessages.InvalidParams);
             double[] cdf;
-            double weightsSum;
-            CategoricalDistribution.SetUp(weights.Count, weights, out cdf, out weightsSum);
-            return InfiniteLoop(CategoricalDistribution.Sample, Generator, weights.Count, cdf, weightsSum);
+            CategoricalDistribution.SetUp(weights.Count, weights, out cdf);
+            return InfiniteLoop(CategoricalDistribution.Sample, Generator, cdf);
         }
 
         /// <summary>
@@ -1839,7 +1835,9 @@ namespace Troschuetz.Random
 
         #region Private Members
 
+#pragma warning disable RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
         private static IEnumerable<TRet> InfiniteLoop<T1, T2, TRet>(Func<T1, T2, TRet> f, T1 a1, T2 a2)
+#pragma warning restore RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
         {
             while (true)
             {
@@ -1849,7 +1847,9 @@ namespace Troschuetz.Random
             }
         }
 
+#pragma warning disable RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
         private static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, TRet>(Func<T1, T2, T3, TRet> f, T1 a1, T2 a2, T3 a3)
+#pragma warning restore RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
         {
             while (true)
             {
@@ -1859,7 +1859,9 @@ namespace Troschuetz.Random
             }
         }
 
+#pragma warning disable RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
         private static IEnumerable<TRet> InfiniteLoop<T1, T2, T3, T4, TRet>(Func<T1, T2, T3, T4, TRet> f, T1 a1, T2 a2, T3 a3, T4 a4)
+#pragma warning restore RECS0135 // Function does not reach its end or a 'return' statement by any of possible execution paths
         {
             while (true)
             {
