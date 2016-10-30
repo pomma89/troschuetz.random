@@ -20,6 +20,7 @@ namespace Troschuetz.Random.Tests
 {
     using NUnit.Framework;
     using Random.Generators;
+    using Shouldly;
     using System;
     using System.IO;
 
@@ -293,11 +294,11 @@ namespace Troschuetz.Random.Tests
         [Repeat(RepetitionCount)]
         public void Integers_SameOutput()
         {
-            var doubles = Dist.DistributedIntegers().GetEnumerator();
-            doubles.MoveNext();
-            for (var i = 0; i < Iterations; ++i, doubles.MoveNext())
+            var integers = Dist.DistributedIntegers().GetEnumerator();
+            integers.MoveNext();
+            for (var i = 0; i < Iterations; ++i, integers.MoveNext())
             {
-                Assert.AreEqual(OtherDist.Next(), doubles.Current);
+                OtherDist.Next().ShouldBe(integers.Current);
             }
         }
 
