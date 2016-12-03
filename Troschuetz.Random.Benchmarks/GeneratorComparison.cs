@@ -23,8 +23,8 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnostics.Windows;
 using BenchmarkDotNet.Exporters;
+using BenchmarkDotNet.Exporters.Csv;
 using BenchmarkDotNet.Jobs;
-using System.Linq;
 
 namespace Troschuetz.Random.Benchmarks
 {
@@ -35,8 +35,7 @@ namespace Troschuetz.Random.Benchmarks
         {
             public Config()
             {
-                Add(Job.Default);
-                Add(GetColumns().ToArray());
+                Add(Job.LegacyJitX86);
                 Add(CsvExporter.Default, HtmlExporter.Default, MarkdownExporter.GitHub, PlainExporter.Default);
                 Add(new MemoryDiagnoser());
                 Add(EnvironmentAnalyser.Default);
