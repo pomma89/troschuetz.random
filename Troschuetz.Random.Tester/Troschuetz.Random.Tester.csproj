@@ -80,12 +80,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\LGPL.txt">
-      <Link>LGPL.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="FodyWeavers.xml" />
-    <Content Include="License-LGPL.txt" />
     <Content Include="Resources\Logo.ico" />
   </ItemGroup>
   <ItemGroup>

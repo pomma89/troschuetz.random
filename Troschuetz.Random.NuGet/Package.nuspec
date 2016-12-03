@@ -30,7 +30,7 @@
     <projectUrl>https://github.com/pomma89/Troschuetz.Random</projectUrl>
     <iconUrl>http://pomma89.altervista.org/troschuetz.random/logo-128.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>http://opensource.org/licenses/lgpl-2.1.php</licenseUrl>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <copyright>Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)</copyright>
     <dependencies>
       <group targetFramework="net35">
@@ -78,6 +78,6 @@
   <files>
     <file src="lib\" target="lib" />
     <file src="tester\" target="tester" />
-    <file src="LICENSE.txt" target="LICENSE.txt" />
+    <file src="LICENSE.md" target="LICENSE.md" />
   </files>
 </package>

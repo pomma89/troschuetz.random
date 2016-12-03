@@ -1,22 +1,23 @@
-﻿/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
- *
- * This file is part of Troschuetz.Random Class Library.
- *
- * Troschuetz.Random is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+﻿// The MIT License (MIT)
+//
+// Copyright (c) 2006-2007 Stefan Troschütz <stefan@troschuetz.de>
+//
+// Copyright (c) 2013-2017 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+// OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace Troschuetz.Random
 {
@@ -34,8 +35,8 @@ namespace Troschuetz.Random
         #region IContinuousDistribution Extensions
 
         /// <summary>
-        ///   Returns an infinites series of random double numbers, by repeating calls to
-        ///   NextDouble. Therefore, the series obtained will follow given distribution.
+        ///   Returns an infinites series of random double numbers, by repeating calls to NextDouble.
+        ///   Therefore, the series obtained will follow given distribution.
         /// </summary>
         /// <param name="distribution">The distribution.</param>
         /// <returns>An infinites series of random double numbers, following given distribution.</returns>
@@ -75,8 +76,8 @@ namespace Troschuetz.Random
         ///   Returns an infinite sequence random Boolean values.
         /// </summary>
         /// <remarks>
-        ///   Buffers 31 random bits for future calls, so the random number generator is only
-        ///   invoked once in every 31 calls.
+        ///   Buffers 31 random bits for future calls, so the random number generator is only invoked
+        ///   once in every 31 calls.
         /// </remarks>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
@@ -176,8 +177,8 @@ namespace Troschuetz.Random
         }
 
         /// <summary>
-        ///   Returns an infinite sequence of nonnegative floating point random numbers less than
-        ///   the specified maximum.
+        ///   Returns an infinite sequence of nonnegative floating point random numbers less than the
+        ///   specified maximum.
         /// </summary>
         /// <typeparam name="TGen">The type of the random numbers generator.</typeparam>
         /// <param name="generator">The generator from which random numbers are drawn.</param>
@@ -211,9 +212,9 @@ namespace Troschuetz.Random
         /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   Returns an infinite sequence of double-precision floating point numbers greater than
-        ///   or equal to <paramref name="minValue"/>, and less than <paramref name="maxValue"/>;
-        ///   that is, the range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        ///   Returns an infinite sequence of double-precision floating point numbers greater than or
+        ///   equal to <paramref name="minValue"/>, and less than <paramref name="maxValue"/>; that
+        ///   is, the range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
@@ -241,8 +242,7 @@ namespace Troschuetz.Random
         /// <param name="generator">The generator from which random numbers are drawn.</param>
         /// <returns>
         ///   An infinite sequence of 32-bit signed integers greater than or equal to 0, and less
-        ///   than <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but
-        ///   not <see cref="int.MaxValue"/>.
+        ///   than <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
         /// </returns>
         public static IEnumerable<int> Integers<TGen>(this TGen generator) where TGen : IGenerator
         {
