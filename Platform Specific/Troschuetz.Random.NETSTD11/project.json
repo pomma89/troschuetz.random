@@ -2,7 +2,6 @@
   "supports": {},
   "dependencies": {
     "Fody": "1.30.0-beta01",
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
     "System.Collections": "4.3.0",
     "System.Diagnostics.Debug": "4.3.0",
     "System.Diagnostics.Tools": "4.3.0",
