@@ -1,22 +1,23 @@
-/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
- *
- * This file is part of Troschuetz.Random Class Library.
- *
- * Troschuetz.Random is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+// The MIT License (MIT)
+//
+// Copyright (c) 2006-2007 Stefan Troschütz <stefan@troschuetz.de>
+//
+// Copyright (c) 2012-2017 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+// OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #region Original Copyright
 
@@ -52,11 +53,11 @@ namespace Troschuetz.Random.Generators
     ///   <a href="http://www.boost.org/libs/random/index.html">Boost Random Number Library</a>. It
     ///   uses the modulus 2 <sup>32</sup> and by default the "lags" 418 and 1279, which can be
     ///   adjusted through the associated <see cref="ShortLag"/> and <see cref="LongLag"/> properties.
-    /// 
+    ///
     ///   Some popular pairs are presented on
     ///   <a href="http://en.wikipedia.org/wiki/Lagged_Fibonacci_generator">Wikipedia - Lagged
     ///   Fibonacci generator</a>.
-    /// 
+    ///
     ///   This generator is NOT thread safe.
     /// </remarks>
     [Serializable]
@@ -67,22 +68,22 @@ namespace Troschuetz.Random.Generators
         /// <summary>
         ///   Stores an index for the random number array element that will be accessed next.
         /// </summary>
-        int _i;
+        private int _i;
 
         /// <summary>
         ///   Stores the long lag of the Lagged Fibonacci pseudo-random number generator.
         /// </summary>
-        int _longLag = 1279;
+        private int _longLag = 1279;
 
         /// <summary>
         ///   Stores the short lag of the Lagged Fibonacci pseudo-random number generator.
         /// </summary>
-        int _shortLag = 418;
+        private int _shortLag = 418;
 
         /// <summary>
         ///   Stores an array of <see cref="_longLag"/> random numbers
         /// </summary>
-        uint[] _x;
+        private uint[] _x;
 
         /// <summary>
         ///   Gets or sets the short lag of the Lagged Fibonacci pseudo-random number generator.
@@ -91,8 +92,7 @@ namespace Troschuetz.Random.Generators
         ///   <paramref name="value"/> is less than or equal to zero.
         /// </exception>
         /// <remarks>
-        ///   Calls <see cref="IsValidShortLag"/> to determine whether a value is valid and
-        ///   therefore assignable.
+        ///   Calls <see cref="IsValidShortLag"/> to determine whether a value is valid and therefore assignable.
         /// </remarks>
         public int ShortLag
         {
@@ -137,12 +137,12 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ALFGenerator"/> class, using the
-        ///   specified seed value.
+        ///   Initializes a new instance of the <see cref="ALFGenerator"/> class, using the specified
+        ///   seed value.
         /// </summary>
         /// <param name="seed">
-        ///   A number used to calculate a starting value for the pseudo-random number sequence. If
-        ///   a negative number is specified, the absolute value of the number is used.
+        ///   A number used to calculate a starting value for the pseudo-random number sequence. If a
+        ///   negative number is specified, the absolute value of the number is used.
         /// </param>
         public ALFGenerator(int seed) : base((uint) Math.Abs(seed))
         {
@@ -186,7 +186,7 @@ namespace Troschuetz.Random.Generators
         ///   Generated random numbers are 32-bit unsigned integers greater than or equal to
         ///   <see cref="uint.MinValue"/> and less than or equal to <see cref="uint.MaxValue"/>.
         /// </remarks>
-        void Fill()
+        private void Fill()
         {
             // Two loops to avoid costly modulo operations
             for (var j = 0; j < _shortLag; ++j)
@@ -277,8 +277,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
-        ///   less than or equal to <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
         public override uint NextUInt()
         {

@@ -1,22 +1,23 @@
-/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
- *
- * This file is part of Troschuetz.Random Class Library.
- *
- * Troschuetz.Random is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+// The MIT License (MIT)
+//
+// Copyright (c) 2006-2007 Stefan Troschütz <stefan@troschuetz.de>
+//
+// Copyright (c) 2012-2017 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+// OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
@@ -32,7 +33,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     /// <remarks>
     ///   The implementation of the <see cref="FisherSnedecorDistribution"/> type bases upon
     ///   information presented on <a href="http://en.wikipedia.org/wiki/F-distribution">Wikipedia - F-distribution</a>.
-    /// 
+    ///
     ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
@@ -58,13 +59,13 @@ namespace Troschuetz.Random.Distributions.Continuous
         ///   Stores the parameter alpha which is used for generation of Fisher-Snedecor distributed
         ///   random numbers.
         /// </summary>
-        int _alpha;
+        private int _alpha;
 
         /// <summary>
         ///   Stores the parameter beta which is used for generation of Fisher-Snedecor distributed
         ///   random numbers.
         /// </summary>
-        int _beta;
+        private int _beta;
 
         /// <summary>
         ///   Gets or sets the parameter alpha which is used for generation of Fisher-Snedecor
@@ -105,8 +106,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         #region Construction
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class, using
+        ///   a <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         public FisherSnedecorDistribution() : this(new XorShift128Generator(), DefaultAlpha, DefaultBeta)
         {
@@ -116,8 +117,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class, using
+        ///   a <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -131,8 +132,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class, using
+        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <exception cref="ArgumentNullException"><paramref name="generator"/> is <see langword="null"/>.</exception>
@@ -144,8 +145,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class, using
+        ///   a <see cref="XorShift128Generator"/> as underlying random number generator.
         /// </summary>
         /// <param name="alpha">
         ///   The parameter alpha which is used for generation of fisher snedecor distributed random numbers.
@@ -164,8 +165,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using a <see cref="XorShift128Generator"/> with the specified seed value.
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class, using
+        ///   a <see cref="XorShift128Generator"/> with the specified seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -189,8 +190,8 @@ namespace Troschuetz.Random.Distributions.Continuous
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class,
-        ///   using the specified <see cref="IGenerator"/> as underlying random number generator.
+        ///   Initializes a new instance of the <see cref="FisherSnedecorDistribution"/> class, using
+        ///   the specified <see cref="IGenerator"/> as underlying random number generator.
         /// </summary>
         /// <param name="generator">An <see cref="IGenerator"/> object.</param>
         /// <param name="alpha">

@@ -1,22 +1,23 @@
-/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
- *
- * This file is part of Troschuetz.Random Class Library.
- *
- * Troschuetz.Random is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+// The MIT License (MIT)
+//
+// Copyright (c) 2006-2007 Stefan Troschütz <stefan@troschuetz.de>
+//
+// Copyright (c) 2012-2017 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+// OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace Troschuetz.Random.Distributions.Continuous
 {
@@ -33,7 +34,7 @@ namespace Troschuetz.Random.Distributions.Continuous
     ///   The implementation of the <see cref="WeibullDistribution"/> type bases upon information
     ///   presented on <a href="http://en.wikipedia.org/wiki/Weibull_distribution">Wikipedia -
     ///   Weibull distribution</a>.
-    /// 
+    ///
     ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
@@ -54,7 +55,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Represents coefficients for the Lanczos approximation of the Gamma function.
         /// </summary>
-        static readonly double[] LanczosCoefficients = {
+        private static readonly double[] LanczosCoefficients = {
             1.000000000190015, 76.18009172947146, -86.50532032941677,
             24.01409824083091, -1.231739572450155, 1.208650973866179e-3,
             -5.395239384953e-6
@@ -67,12 +68,12 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <summary>
         ///   Stores the parameter alpha which is used for generation of weibull distributed random numbers.
         /// </summary>
-        double _alpha;
+        private double _alpha;
 
         /// <summary>
         ///   Stores the parameter lambda which is used for generation of weibull distributed random numbers.
         /// </summary>
-        double _lambda;
+        private double _lambda;
 
         /// <summary>
         ///   Gets or sets the parameter alpha which is used for generation of weibull distributed
@@ -250,7 +251,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         /// <returns>
         ///   A double-precision floating point number representing an approximation of Gamma( <paramref name="x"/>).
         /// </returns>
-        static double Gamma(double x)
+        private static double Gamma(double x)
         {
             var sum = LanczosCoefficients[0];
             for (var index = 1; index <= 6; index++)

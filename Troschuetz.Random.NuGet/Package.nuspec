@@ -31,7 +31,7 @@
     <iconUrl>http://pomma89.altervista.org/troschuetz.random/logo-128.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
-    <copyright>Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)</copyright>
+    <copyright>Copyright © 2006-2007 Stefan Troschütz (stefan@troschuetz.de)</copyright>
     <dependencies>
       <group targetFramework="net35">
         <dependency id="Thrower" version="3.0.4" />
