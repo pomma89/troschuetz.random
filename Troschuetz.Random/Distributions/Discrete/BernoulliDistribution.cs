@@ -1,22 +1,23 @@
-/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
- *
- * This file is part of Troschuetz.Random Class Library.
- *
- * Troschuetz.Random is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+// The MIT License (MIT)
+//
+// Copyright (c) 2006-2007 Stefan Troschütz <stefan@troschuetz.de>
+//
+// Copyright (c) 2012-2017 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+// OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace Troschuetz.Random.Distributions.Discrete
 {
@@ -30,10 +31,10 @@ namespace Troschuetz.Random.Distributions.Discrete
     ///   Provides generation of bernoulli distributed random numbers.
     /// </summary>
     /// <remarks>
-    ///   The bernoulli distribution generates only discrete numbers. <br/> The implementation of
-    ///   the <see cref="BernoulliDistribution"/> type bases upon information presented on
+    ///   The bernoulli distribution generates only discrete numbers. <br/> The implementation of the
+    ///   <see cref="BernoulliDistribution"/> type bases upon information presented on
     ///   <a href="http://en.wikipedia.org/wiki/Bernoulli_distribution">Wikipedia - Bernoulli distribution</a>.
-    /// 
+    ///
     ///   The thread safety of this class depends on the one of the underlying generator.
     /// </remarks>
     [Serializable]
@@ -51,10 +52,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region Fields
 
         /// <summary>
-        ///   Stores the parameter alpha which is used for generation of bernoulli distributed
-        ///   random numbers.
+        ///   Stores the parameter alpha which is used for generation of bernoulli distributed random numbers.
         /// </summary>
-        double _alpha;
+        private double _alpha;
 
         /// <summary>
         ///   Gets or sets the parameter alpha which is used for generation of bernoulli distributed
@@ -180,8 +180,8 @@ namespace Troschuetz.Random.Distributions.Discrete
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>
-        ///   <see langword="true"/> if value is greater than or equal to 0.0, and less than or
-        ///   equal to 1.0; otherwise, <see langword="false"/>.
+        ///   <see langword="true"/> if value is greater than or equal to 0.0, and less than or equal
+        ///   to 1.0; otherwise, <see langword="false"/>.
         /// </returns>
         public bool IsValidAlpha(double value) => IsValidParam(value);
 
@@ -261,9 +261,9 @@ namespace Troschuetz.Random.Distributions.Discrete
         #region TRandom Helpers
 
         /// <summary>
-        ///   Determines whether bernoulli distribution is defined under given parameter. The
-        ///   default definition returns true if alpha is greater than or equal to zero and less
-        ///   than or equal to one; otherwise, it returns false.
+        ///   Determines whether bernoulli distribution is defined under given parameter. The default
+        ///   definition returns true if alpha is greater than or equal to zero and less than or
+        ///   equal to one; otherwise, it returns false.
         /// </summary>
         /// <remarks>
         ///   This is an extensibility point for the <see cref="BernoulliDistribution"/> class.

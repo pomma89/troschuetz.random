@@ -1,45 +1,46 @@
-/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
- *
- * This file is part of Troschuetz.Random Class Library.
- *
- * Troschuetz.Random is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+// The MIT License (MIT)
+//
+// Copyright (c) 2006-2007 Stefan Troschütz <stefan@troschuetz.de>
+//
+// Copyright (c) 2012-2017 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+// OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #region Original Summary
 
 /*
 /// <summary>
 ///   A fast random number generator for .NET Colin Green, January 2005
-/// 
+///
 ///   September 4th 2005 Added NextBytesUnsafe() - commented out by default. Fixed bug in
 ///   Reinitialise() - y,z and w variables were not being reset.
-/// 
+///
 ///   Key points:
 ///   1) Based on a simple and fast xor-shift pseudo random number generator (RNG) specified in:
 ///      Marsaglia, George. (2003). Xorshift RNGs. http://www.jstatsoft.org/v08/i14/xorshift.pdf
-/// 
+///
 ///   This particular implementation of xorshift has a period of 2^128-1. See the above paper to see
-///   how this can be easily extened if you need a longer period. At the time of writing I could
-///   find no information on the period of System.Random for comparison.
-/// 
+///   how this can be easily extened if you need a longer period. At the time of writing I could find
+///   no information on the period of System.Random for comparison.
+///
 ///   2) Faster than System.Random. Up to 15x faster, depending on which methods are called.
-/// 
+///
 ///   3) Direct replacement for System.Random. This class implements all of the methods that
 ///      System.Random does plus some additional methods. The like named methods are functionally equivalent.
-/// 
+///
 ///   4) Allows fast re-initialisation with a seed, unlike System.Random which accepts a seed at
 ///      construction time which then executes a relatively expensive initialisation routine. This
 ///      provides a vast speed improvement if you need to reset the pseudo-random number sequence
@@ -47,7 +48,7 @@
 ///      might be to cache random numbers in an array, but that approach is limited by memory
 ///      capacity and the fact that you may also want a large number of different sequences cached.
 ///      Each sequence can each be represented by a single seed value (int) when using FastRandom.
-/// 
+///
 ///   Notes. A further performance improvement can be obtained by declaring local variables as
 ///   static, thus avoiding re-allocation of variables on each call. However care should be taken if
 ///   multiple instances of FastRandom are in use or if being used in a multi-threaded environment.
@@ -71,7 +72,7 @@ namespace Troschuetz.Random.Generators
     ///   for System.Random</a>" and the theoretical background on xorshift random number generators
     ///   published by George Marsaglia in this paper "
     ///   <a href="http://www.jstatsoft.org/v08/i14/xorshift.pdf">Xorshift RNGs</a>".
-    /// 
+    ///
     ///   This generator is NOT thread safe.
     /// </remarks>
     [Serializable]
@@ -102,13 +103,13 @@ namespace Troschuetz.Random.Generators
         ///   The first part of the generator state. It is important that <see cref="_x"/> and
         ///   <see cref="_y"/> are not zero at the same time.
         /// </summary>
-        ulong _x;
+        private ulong _x;
 
         /// <summary>
         ///   The second part of the generator state. It is important that <see cref="_x"/> and
         ///   <see cref="_y"/> are not zero at the same time.
         /// </summary>
-        ulong _y;
+        private ulong _y;
 
         /// <summary>
         ///   Generators like <see cref="NextDouble"/> and <see cref="NextInclusiveMaxValue"/> use
@@ -117,7 +118,7 @@ namespace Troschuetz.Random.Generators
         ///   every time those methods are called, we use this flag to signal that there 32 bits
         ///   still available and ready to be used.
         /// </summary>
-        bool _bytesAvailable;
+        private bool _bytesAvailable;
 
         #endregion Fields
 
@@ -136,8 +137,8 @@ namespace Troschuetz.Random.Generators
         ///   specified seed value.
         /// </summary>
         /// <param name="seed">
-        ///   A number used to calculate a starting value for the pseudo-random number sequence. If
-        ///   a negative number is specified, the absolute value of the number is used.
+        ///   A number used to calculate a starting value for the pseudo-random number sequence. If a
+        ///   negative number is specified, the absolute value of the number is used.
         /// </param>
         public XorShift128Generator(int seed) : base((uint) Math.Abs(seed))
         {
@@ -251,8 +252,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
-        ///   less than or equal to <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
         public override uint NextUInt()
         {

@@ -68,7 +68,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LICENSE.txt" />
+    <None Include="LICENSE.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lib\net35\" />

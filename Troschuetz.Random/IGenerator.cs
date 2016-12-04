@@ -1,22 +1,23 @@
-/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
- *
- * This file is part of Troschuetz.Random Class Library.
- *
- * Troschuetz.Random is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+// The MIT License (MIT)
+//
+// Copyright (c) 2006-2007 Stefan Troschütz <stefan@troschuetz.de>
+//
+// Copyright (c) 2012-2017 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+// OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 
@@ -39,9 +40,9 @@ namespace Troschuetz.Random
         bool CanReset { get; }
 
         /// <summary>
-        ///   Resets the random number generator using the initial seed, so that it produces the
-        ///   same random number sequence again. To understand whether this generator can be reset,
-        ///   you can query the <see cref="CanReset"/> property.
+        ///   Resets the random number generator using the initial seed, so that it produces the same
+        ///   random number sequence again. To understand whether this generator can be reset, you
+        ///   can query the <see cref="CanReset"/> property.
         /// </summary>
         /// <returns>True if the random number generator was reset; otherwise, false.</returns>
         bool Reset();
@@ -150,8 +151,8 @@ namespace Troschuetz.Random
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
-        ///   less than or equal to <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
         uint NextUInt();
 
@@ -159,8 +160,8 @@ namespace Troschuetz.Random
         ///   Returns an unsigned random number less than <see cref="uint.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
-        ///   less than <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than <see cref="uint.MaxValue"/>.
         /// </returns>
         uint NextUIntExclusiveMaxValue();
 
@@ -169,8 +170,8 @@ namespace Troschuetz.Random
         /// </summary>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
-        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than <paramref name="maxValue"/>; that is, the range of return values includes
         ///   <see cref="uint.MinValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         uint NextUInt(uint maxValue);
@@ -181,8 +182,8 @@ namespace Troschuetz.Random
         /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <paramref name="minValue"/> and
-        ///   less than <paramref name="maxValue"/>; that is, the range of return values includes
+        ///   A 32-bit unsigned integer greater than or equal to <paramref name="minValue"/> and less
+        ///   than <paramref name="maxValue"/>; that is, the range of return values includes
         ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
@@ -194,8 +195,8 @@ namespace Troschuetz.Random
         ///   Returns a random Boolean value.
         /// </summary>
         /// <remarks>
-        ///   Buffers 31 random bits for future calls, so the random number generator is only
-        ///   invoked once in every 31 calls.
+        ///   Buffers 31 random bits for future calls, so the random number generator is only invoked
+        ///   once in every 31 calls.
         /// </remarks>
         /// <returns>A <see cref="bool"/> value.</returns>
         bool NextBoolean();

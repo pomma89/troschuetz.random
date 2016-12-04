@@ -1,22 +1,23 @@
-/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
- *
- * This file is part of Troschuetz.Random Class Library.
- *
- * Troschuetz.Random is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+// The MIT License (MIT)
+//
+// Copyright (c) 2006-2007 Stefan Troschütz <stefan@troschuetz.de>
+//
+// Copyright (c) 2012-2017 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+// OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #region Original Copyright
 
@@ -79,7 +80,7 @@ namespace Troschuetz.Random.Generators
     ///   The <see cref="MT19937Generator"/> type bases upon information and the implementation
     ///   presented on the
     ///   <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">Mersenne Twister Home Page</a>.
-    /// 
+    ///
     ///   This generator is NOT thread safe.
     /// </remarks>
     [Serializable]
@@ -91,31 +92,31 @@ namespace Troschuetz.Random.Generators
         ///   Represents the number of unsigned random numbers generated at one time. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 624.</remarks>
-        const int N = 624;
+        private const int N = 624;
 
         /// <summary>
         ///   Represents a constant used for generation of unsigned random numbers. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 397.</remarks>
-        const int M = 397;
+        private const int M = 397;
 
         /// <summary>
         ///   Represents the constant vector a. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 0x9908b0dfU.</remarks>
-        const uint VectorA = 0x9908b0dfU;
+        private const uint VectorA = 0x9908b0dfU;
 
         /// <summary>
         ///   Represents the most significant w-r bits. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 0x80000000.</remarks>
-        const uint UpperMask = 0x80000000U;
+        private const uint UpperMask = 0x80000000U;
 
         /// <summary>
         ///   Represents the least significant r bits. This field is constant.
         /// </summary>
         /// <remarks>The value of this constant is 0x7fffffff.</remarks>
-        const uint LowerMask = 0x7fffffffU;
+        private const uint LowerMask = 0x7fffffffU;
 
         #endregion Constants
 
@@ -124,17 +125,17 @@ namespace Troschuetz.Random.Generators
         /// <summary>
         ///   Stores the state vector array.
         /// </summary>
-        readonly uint[] _mt = new uint[N];
+        private readonly uint[] _mt = new uint[N];
 
         /// <summary>
         ///   Stores the used seed array.
         /// </summary>
-        readonly uint[] _seedArray;
+        private readonly uint[] _seedArray;
 
         /// <summary>
         ///   Stores an index for the state vector array element that will be accessed next.
         /// </summary>
-        uint _mti;
+        private uint _mti;
 
         #endregion Fields
 
@@ -153,8 +154,8 @@ namespace Troschuetz.Random.Generators
         ///   specified seed value.
         /// </summary>
         /// <param name="seed">
-        ///   A number used to calculate a starting value for the pseudo-random number sequence. If
-        ///   a negative number is specified, the absolute value of the number is used.
+        ///   A number used to calculate a starting value for the pseudo-random number sequence. If a
+        ///   negative number is specified, the absolute value of the number is used.
         /// </param>
         public MT19937Generator(int seed) : base((uint) Math.Abs(seed))
         {
@@ -224,7 +225,7 @@ namespace Troschuetz.Random.Generators
         /// <summary>
         ///   Extends resetting of the <see cref="MT19937Generator"/> using the <see cref="_seedArray"/>.
         /// </summary>
-        void ResetBySeedArray()
+        private void ResetBySeedArray()
         {
             uint i = 1;
             uint j = 0;
@@ -266,7 +267,7 @@ namespace Troschuetz.Random.Generators
         ///   Generated random numbers are 32-bit unsigned integers greater than or equal to
         ///   <see cref="uint.MinValue"/> and less than or equal to <see cref="uint.MaxValue"/>.
         /// </remarks>
-        void GenerateNUInts()
+        private void GenerateNUInts()
         {
             int kk;
             uint y;
@@ -313,9 +314,8 @@ namespace Troschuetz.Random.Generators
             for (_mti = 1; _mti < N; _mti++)
             {
                 _mt[_mti] = (1812433253U * (_mt[_mti - 1] ^ (_mt[_mti - 1] >> 30)) + _mti);
-                // See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. In the previous versions,
-                // MSBs of the seed affect only MSBs of the array mt[]. 2002/01/09 modified by
-                // Makoto Matsumoto
+                // See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. In the previous versions, MSBs
+                // of the seed affect only MSBs of the array mt[]. 2002/01/09 modified by Makoto Matsumoto
             }
 
             // If the object was instanciated with a seed array do some further (re)initialisation.
@@ -386,8 +386,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
-        ///   less than or equal to <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
         public override uint NextUInt()
         {

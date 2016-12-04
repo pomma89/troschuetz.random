@@ -1,5 +1,10 @@
 # Changelog for Troschuetz.Random #
 
+### v4.0.8 (2016-11-04) ###
+
+* Updated dependencies and reduced .NET Standard 1.1 references.
+* Relicensed source code under MIT license (ISSUE#2 by Corniel Nobel).
+
 ### v4.0.7 (2016-10-30) ###
 
 * Updated Thrower to v3.0.4 (PR#1 by Corniel Nobel).

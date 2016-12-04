@@ -1,22 +1,23 @@
-﻿/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
- *
- * This file is part of Troschuetz.Random Class Library.
- *
- * Troschuetz.Random is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+﻿// The MIT License (MIT)
+//
+// Copyright (c) 2006-2007 Stefan Troschütz <stefan@troschuetz.de>
+//
+// Copyright (c) 2012-2017 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+// OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 using System.Diagnostics;
@@ -30,7 +31,7 @@ namespace Troschuetz.Random.Generators
     /// </summary>
     /// <remarks>
     ///   This generator has a period of ~ 3.138 * 10^57.
-    /// 
+    ///
     ///   This generator is NOT thread safe.
     /// </remarks>
     [Serializable]
@@ -72,10 +73,10 @@ namespace Troschuetz.Random.Generators
 
         #region Fields
 
-        ulong _u;
-        ulong _v;
-        ulong _w;
-        ulong _x;
+        private ulong _u;
+        private ulong _v;
+        private ulong _w;
+        private ulong _x;
 
         /// <summary>
         ///   Generators like <see cref="NextDouble"/> and <see cref="NextInclusiveMaxValue"/> use
@@ -84,7 +85,7 @@ namespace Troschuetz.Random.Generators
         ///   every time those methods are called, we use this flag to signal that there 32 bits
         ///   still available and ready to be used.
         /// </summary>
-        bool _bytesAvailable;
+        private bool _bytesAvailable;
 
         #endregion Fields
 
@@ -99,20 +100,20 @@ namespace Troschuetz.Random.Generators
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NR3Generator"/> class, using the
-        ///   specified seed value.
+        ///   Initializes a new instance of the <see cref="NR3Generator"/> class, using the specified
+        ///   seed value.
         /// </summary>
         /// <param name="seed">
-        ///   A number used to calculate a starting value for the pseudo-random number sequence. If
-        ///   a negative number is specified, the absolute value of the number is used.
+        ///   A number used to calculate a starting value for the pseudo-random number sequence. If a
+        ///   negative number is specified, the absolute value of the number is used.
         /// </param>
         public NR3Generator(int seed) : base((uint) Math.Abs(seed))
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NR3Generator"/> class, using the
-        ///   specified seed value.
+        ///   Initializes a new instance of the <see cref="NR3Generator"/> class, using the specified
+        ///   seed value.
         /// </summary>
         /// <param name="seed">
         ///   An unsigned number used to calculate a starting value for the pseudo-random number sequence.
@@ -224,8 +225,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and
-        ///   less than or equal to <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than or equal to <see cref="uint.MaxValue"/>.
         /// </returns>
         public override uint NextUInt()
         {

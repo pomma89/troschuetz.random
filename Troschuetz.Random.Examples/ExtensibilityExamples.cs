@@ -1,22 +1,23 @@
-﻿/*
- * Copyright © 2006 Stefan Troschütz (stefan@troschuetz.de)
- * Copyright © 2012-2016 Alessio Parma (alessio.parma@gmail.com)
- *
- * This file is part of Troschuetz.Random Class Library.
- *
- * Troschuetz.Random is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+﻿// The MIT License (MIT)
+//
+// Copyright (c) 2006-2007 Stefan Troschütz <stefan@troschuetz.de>
+//
+// Copyright (c) 2012-2017 Alessio Parma <alessio.parma@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+// OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace Troschuetz.Random.Examples
     /// <summary>
     ///   Examples on how the library can be extended or modified.
     /// </summary>
-    static class ExtensibilityExamples
+    internal static class ExtensibilityExamples
     {
         public static void Main()
         {
@@ -90,11 +91,11 @@ namespace Troschuetz.Random.Examples
 
     // Super silly generator, which is provided as an example on how one can build a new generator.
     // Of course, never use this generator in production... It is super silly, after all.
-    class SuperSillyGenerator : AbstractGenerator
+    internal class SuperSillyGenerator : AbstractGenerator
     {
         // The state of the generaror, which usually consists of one or more variables. The initial
         // state, maybe depending on the seed, should be set by overriding the Reset method.
-        uint _state;
+        private uint _state;
 
         // Just a simple constructor which passes the seed to the base constructor.
         public SuperSillyGenerator(uint seed) : base(seed)
@@ -124,7 +125,7 @@ namespace Troschuetz.Random.Examples
 
     // Super silly continuous distribution which is provided as an example on how one can build a new
     // distribution. Of course, never use this distribution in production... It is super silly, after all.
-    class SuperSillyContinuousDistribution : AbstractDistribution, IContinuousDistribution
+    internal class SuperSillyContinuousDistribution : AbstractDistribution, IContinuousDistribution
     {
         // Just a simple constructor which passes the generator to the base constructor.
         public SuperSillyContinuousDistribution(IGenerator generator) : base(generator)
@@ -155,7 +156,7 @@ namespace Troschuetz.Random.Examples
     }
 
     // An example of how to enrich the TRandom class with your custom distribution.
-    static class TRandomExtensions
+    internal static class TRandomExtensions
     {
         // Simply call the static Sample you defined above. In the Main function, you can see that
         // this method can be used as other methods defined in TRandom.

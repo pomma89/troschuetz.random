@@ -2,8 +2,11 @@
   "supports": {},
   "dependencies": {
     "Fody": "1.30.0-beta01",
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
-    "NETStandard.Library": "1.6.0",
+    "System.Collections": "4.3.0",
+    "System.Diagnostics.Debug": "4.3.0",
+    "System.Diagnostics.Tools": "4.3.0",
+    "System.Linq": "4.3.0",
+    "System.Runtime.Extensions": "4.3.0",
     "Stamp.Fody": "1.2.5",
     "Thrower": "3.0.4"
   },
