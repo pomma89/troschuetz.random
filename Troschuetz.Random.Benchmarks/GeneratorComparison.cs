@@ -22,7 +22,7 @@
 using BenchmarkDotNet.Analysers;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Diagnostics.Windows;
+using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Exporters.Csv;
 using BenchmarkDotNet.Jobs;
