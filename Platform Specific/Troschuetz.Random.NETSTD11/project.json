@@ -8,7 +8,7 @@
     "System.Diagnostics.Tools": "4.3.0",
     "System.Linq": "4.3.0",
     "System.Runtime.Extensions": "4.3.0",
-    "Thrower": "4.0.1"
+    "Thrower": "4.0.2"
   },
   "frameworks": {
     "netstandard1.1": {}
