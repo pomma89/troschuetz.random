@@ -5,7 +5,7 @@
 
 ## Summary ##
 
-* Latest release version: `v4.0.8`
+* Latest release version: `v4.1.1`
 * Build status on [AppVeyor](https://ci.appveyor.com): [![Build status](https://ci.appveyor.com/api/projects/status/nrswa81ug0rsrpyp?svg=true)](https://ci.appveyor.com/project/pomma89/troschuetz-random)
 * [NuGet](https://www.nuget.org) package(s):
     + [Troschuetz.Random](https://nuget.org/packages/Troschuetz.Random/)
