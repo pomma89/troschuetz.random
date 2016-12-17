@@ -29,10 +29,10 @@
     <copyright>Copyright © 2006-2007 Stefan Troschütz (stefan@troschuetz.de)</copyright>
     <dependencies>
       <group targetFramework="net35">
-        <dependency id="Thrower" version="3.0.4" />
+        <dependency id="Thrower" version="4.0.3" />
       </group>
       <group targetFramework="net40">
-        <dependency id="Thrower" version="3.0.4" />
+        <dependency id="Thrower" version="4.0.3" />
       </group>
       <group targetFramework="net45">
         <dependency id="System.Collections" version="4.3.0" />
@@ -40,7 +40,7 @@
         <dependency id="System.Diagnostics.Tools" version="4.3.0" />
         <dependency id="System.Linq" version="4.3.0" />
         <dependency id="System.Runtime.Extensions" version="4.3.0" />
-        <dependency id="Thrower" version="3.0.4" />
+        <dependency id="Thrower" version="4.0.3" />
       </group>
       <group targetFramework="net46">
         <dependency id="System.Collections" version="4.3.0" />
@@ -48,7 +48,7 @@
         <dependency id="System.Diagnostics.Tools" version="4.3.0" />
         <dependency id="System.Linq" version="4.3.0" />
         <dependency id="System.Runtime.Extensions" version="4.3.0" />
-        <dependency id="Thrower" version="3.0.4" />
+        <dependency id="Thrower" version="4.0.3" />
       </group>
       <group targetFramework="netstandard1.1">
         <dependency id="System.Collections" version="4.3.0" />
@@ -56,7 +56,7 @@
         <dependency id="System.Diagnostics.Tools" version="4.3.0" />
         <dependency id="System.Linq" version="4.3.0" />
         <dependency id="System.Runtime.Extensions" version="4.3.0" />
-        <dependency id="Thrower" version="3.0.4" />
+        <dependency id="Thrower" version="4.0.3" />
       </group>
       <group targetFramework="portable-net45+win8+wp8+wpa81">
         <dependency id="System.Collections" version="4.3.0" />
@@ -64,7 +64,7 @@
         <dependency id="System.Diagnostics.Tools" version="4.3.0" />
         <dependency id="System.Linq" version="4.3.0" />
         <dependency id="System.Runtime.Extensions" version="4.3.0" />
-        <dependency id="Thrower" version="3.0.4" />
+        <dependency id="Thrower" version="4.0.3" />
       </group>
     </dependencies>
     <references></references>
