@@ -19,33 +19,16 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
 // OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using BenchmarkDotNet.Analysers;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Diagnosers;
-using BenchmarkDotNet.Exporters;
-using BenchmarkDotNet.Exporters.Csv;
-using BenchmarkDotNet.Jobs;
 using System.Collections.Generic;
 using System.Linq;
 using Troschuetz.Random.Distributions.Continuous;
 
 namespace Troschuetz.Random.Benchmarks
 {
-    [Config(typeof(Config))]
+    [Config(typeof(Program.Config))]
     public class ContinuousDistributionComparison : AbstractComparison
     {
-        private class Config : ManualConfig
-        {
-            public Config()
-            {
-                Add(Job.LegacyJitX86);
-                Add(CsvExporter.Default, CsvMeasurementsExporter.Default, HtmlExporter.Default, MarkdownExporter.GitHub, PlainExporter.Default, RPlotExporter.Default);
-                Add(new MemoryDiagnoser());
-                Add(EnvironmentAnalyser.Default);
-            }
-        }
-
         private readonly Dictionary<string, Dictionary<string, IContinuousDistribution>> Distributions = new Dictionary<string, Dictionary<string, IContinuousDistribution>>
         {
             [N<BetaDistribution>()] = Generators.ToDictionary(x => x.Key, x => new BetaDistribution(x.Value) as IContinuousDistribution),

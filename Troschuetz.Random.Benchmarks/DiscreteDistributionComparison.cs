@@ -19,33 +19,16 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
 // OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using BenchmarkDotNet.Analysers;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Diagnosers;
-using BenchmarkDotNet.Exporters;
-using BenchmarkDotNet.Exporters.Csv;
-using BenchmarkDotNet.Jobs;
 using System.Collections.Generic;
 using System.Linq;
 using Troschuetz.Random.Distributions.Discrete;
 
 namespace Troschuetz.Random.Benchmarks
 {
-    [Config(typeof(Config))]
+    [Config(typeof(Program.Config))]
     public class DiscreteDistributionComparison : AbstractComparison
     {
-        private class Config : ManualConfig
-        {
-            public Config()
-            {
-                Add(Job.LegacyJitX86);
-                Add(CsvExporter.Default, CsvMeasurementsExporter.Default, HtmlExporter.Default, MarkdownExporter.GitHub, PlainExporter.Default, RPlotExporter.Default);
-                Add(new MemoryDiagnoser());
-                Add(EnvironmentAnalyser.Default);
-            }
-        }
-
         private readonly Dictionary<string, Dictionary<string, IDiscreteDistribution>> Distributions = new Dictionary<string, Dictionary<string, IDiscreteDistribution>>
         {
             [N<BernoulliDistribution>()] = Generators.ToDictionary(x => x.Key, x => new BernoulliDistribution(x.Value) as IDiscreteDistribution),
