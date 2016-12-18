@@ -72,6 +72,6 @@
   <files>
     <file src="lib\" target="lib" />
     <file src="tester\" target="tester" />
-    <file src="LICENSE.md" target="LICENSE.md" />
+    <file src="..\LICENSE.md" target="LICENSE.md" />
   </files>
 </package>

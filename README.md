@@ -16,12 +16,6 @@ All the hard work behind this library was done by Stefan Troschütz, and for whi
 
 Please visit the [page of the original project](http://goo.gl/rN7my) in order to get an overview of the contents of this library. Unluckily, linked article also contains the only documentation available.
 
-## About this repository and the maintainer ##
-
-Everything done on this repository is freely offered on the terms of the project license. You are free to do everything you want with the code and its related files, as long as you respect the license and use common sense while doing it :-)
-
-I maintain this project during my spare time, so I can offer limited assistance and I can offer **no kind of warranty**.
-
 ## Tester ##
 
 A simple, yet effective, WinForms application is available in order to test the Troschuetz.Random library. As for the rest of the code, that application was completely written by Stefan Troschütz and what I did was simply to adapt it to the new refactored code.
@@ -484,3 +478,11 @@ Type=DiscreteDistributionComparison  Mode=Throughput
        Next | XorShift128 |       Geometric | 142.1299 ns |  7.2412 ns |     - |     - |     - |               0,01 |
  **NextDouble** | **XorShift128** |         **Poisson** | **194.8024 ns** |  **6.0905 ns** |     **-** |     **-** |     **-** |               **0,02** |
        Next | XorShift128 |         Poisson | 195.3065 ns |  9.0045 ns |     - |     - |     - |               0,01 |
+
+## About this repository and its maintainer ##
+
+Everything done on this repository is freely offered on the terms of the project license. You are free to do everything you want with the code and its related files, as long as you respect the license and use common sense while doing it :-)
+
+I maintain this project during my spare time, so I can offer limited assistance and I can offer **no kind of warranty**.
+
+Development of this project is sponsored by [Finsa SpA](https://www.finsa.it), my current employer.
