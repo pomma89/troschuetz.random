@@ -1,5 +1,11 @@
 # Changelog for Troschuetz.Random #
 
+### v4.1.2 (2016-12-25) ###
+
+* The behavior of TRandom.Next(int, int) was different from the built-in's (ISSUE#4 by Zhouxing-Su).
+* Changed behavior of NextDouble, NextUInt, Doubles, Integers, UnsignedIntegers according to issue #4.
+* Updated Thrower to v4.0.5.
+
 ### v4.1.1 (2016-12-17) ###
 
 * Updated Thrower to v4.

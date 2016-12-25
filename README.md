@@ -5,7 +5,7 @@
 
 ## Summary ##
 
-* Latest release version: `v4.1.1`
+* Latest release version: `v4.1.2`
 * Build status on [AppVeyor](https://ci.appveyor.com): [![Build status](https://ci.appveyor.com/api/projects/status/nrswa81ug0rsrpyp?svg=true)](https://ci.appveyor.com/project/pomma89/troschuetz-random)
 * [NuGet](https://www.nuget.org) package(s):
     + [Troschuetz.Random](https://nuget.org/packages/Troschuetz.Random/)
@@ -15,12 +15,6 @@
 All the hard work behind this library was done by Stefan Troschütz, and for which I thank him very much. What I have done with his great project, was simply to refactor and improve his code, while offering a new Python-style random class.
 
 Please visit the [page of the original project](http://goo.gl/rN7my) in order to get an overview of the contents of this library. Unluckily, linked article also contains the only documentation available.
-
-## About this repository and the maintainer ##
-
-Everything done on this repository is freely offered on the terms of the project license. You are free to do everything you want with the code and its related files, as long as you respect the license and use common sense while doing it :-)
-
-I maintain this project during my spare time, so I can offer limited assistance and I can offer **no kind of warranty**.
 
 ## Tester ##
 
@@ -484,3 +478,11 @@ Type=DiscreteDistributionComparison  Mode=Throughput
        Next | XorShift128 |       Geometric | 142.1299 ns |  7.2412 ns |     - |     - |     - |               0,01 |
  **NextDouble** | **XorShift128** |         **Poisson** | **194.8024 ns** |  **6.0905 ns** |     **-** |     **-** |     **-** |               **0,02** |
        Next | XorShift128 |         Poisson | 195.3065 ns |  9.0045 ns |     - |     - |     - |               0,01 |
+
+## About this repository and its maintainer ##
+
+Everything done on this repository is freely offered on the terms of the project license. You are free to do everything you want with the code and its related files, as long as you respect the license and use common sense while doing it :-)
+
+I maintain this project during my spare time, so I can offer limited assistance and I can offer **no kind of warranty**.
+
+Development of this project is sponsored by [Finsa SpA](https://www.finsa.it), my current employer.

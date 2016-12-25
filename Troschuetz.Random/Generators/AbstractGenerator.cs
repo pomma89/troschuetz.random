@@ -229,19 +229,19 @@ namespace Troschuetz.Random.Generators
         ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
         /// </exception>
         public int Next(int minValue, int maxValue)
         {
             // Preconditions
-            Raise.ArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise.ArgumentOutOfRangeException.IfIsGreater(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
             // The cast to double enables 64 bit arithmetic, which is needed when the condition
             // ((maxValue - minValue) > int.MaxValue) is true.
             var result = minValue + (int) (NextDouble() * (maxValue - (double) minValue));
 
             // Postconditions
-            Debug.Assert(result >= minValue && result < maxValue);
+            Debug.Assert((result == minValue && minValue == maxValue) || (result >= minValue && result < maxValue));
             return result;
         }
 
@@ -290,7 +290,7 @@ namespace Troschuetz.Random.Generators
         ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
         /// </exception>
         /// <exception cref="ArgumentException">
         ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
@@ -299,13 +299,13 @@ namespace Troschuetz.Random.Generators
         public double NextDouble(double minValue, double maxValue)
         {
             // Preconditions
-            Raise.ArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise.ArgumentOutOfRangeException.IfIsGreater(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
             Raise.ArgumentException.If(double.IsPositiveInfinity(maxValue - minValue), nameof(minValue));
 
             var result = minValue + NextDouble() * (maxValue - minValue);
 
             // Postconditions
-            Debug.Assert(result >= minValue && result < maxValue);
+            Debug.Assert((TMath.AreEqual(result, minValue) && TMath.AreEqual(minValue, maxValue)) || (result >= minValue && result < maxValue));
             return result;
         }
 
@@ -367,17 +367,17 @@ namespace Troschuetz.Random.Generators
         ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
         /// </exception>
         public uint NextUInt(uint minValue, uint maxValue)
         {
             // Preconditions
-            Raise.ArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise.ArgumentOutOfRangeException.IfIsGreater(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
             var result = minValue + (uint) (NextDouble() * (maxValue - minValue));
 
             // Postconditions
-            Debug.Assert(result >= minValue && result < maxValue);
+            Debug.Assert((result == minValue && minValue == maxValue) || (result >= minValue && result < maxValue));
             return result;
         }
 

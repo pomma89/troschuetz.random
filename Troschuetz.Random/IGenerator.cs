@@ -101,7 +101,7 @@ namespace Troschuetz.Random
         ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
         /// </exception>
         int Next(int minValue, int maxValue);
 
@@ -139,7 +139,7 @@ namespace Troschuetz.Random
         ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
         /// </exception>
         /// <exception cref="ArgumentException">
         ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
@@ -187,7 +187,7 @@ namespace Troschuetz.Random
         ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
         /// </exception>
         uint NextUInt(uint minValue, uint maxValue);
 
