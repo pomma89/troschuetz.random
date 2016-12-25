@@ -217,7 +217,7 @@ namespace Troschuetz.Random
         ///   is, the range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
         /// </exception>
         /// <exception cref="ArgumentException">
         ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
@@ -226,7 +226,7 @@ namespace Troschuetz.Random
         public static IEnumerable<double> Doubles<TGen>(this TGen generator, double minValue, double maxValue) where TGen : IGenerator
         {
             Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            Raise.ArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise.ArgumentOutOfRangeException.IfIsGreater(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
             Raise.ArgumentException.If(double.IsPositiveInfinity(maxValue - minValue), nameof(minValue));
 
             while (true)
@@ -297,7 +297,7 @@ namespace Troschuetz.Random
         public static IEnumerable<int> Integers<TGen>(this TGen generator, int minValue, int maxValue) where TGen : IGenerator
         {
             Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            Raise.ArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise.ArgumentOutOfRangeException.IfIsGreater(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
             while (true)
             {
@@ -364,7 +364,7 @@ namespace Troschuetz.Random
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator, uint minValue, uint maxValue) where TGen : IGenerator
         {
             Raise.ArgumentNullException.IfIsNull(generator, nameof(generator), ErrorMessages.NullGenerator);
-            Raise.ArgumentOutOfRangeException.IfIsGreaterOrEqual(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            Raise.ArgumentOutOfRangeException.IfIsGreater(minValue, maxValue, nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
 
             while (true)
             {

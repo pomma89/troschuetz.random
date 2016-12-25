@@ -22,6 +22,7 @@
 namespace Troschuetz.Random.Tests
 {
     using NUnit.Framework;
+    using Shouldly;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -616,12 +617,71 @@ namespace Troschuetz.Random.Tests
         =============================================================================*/
 
         [Test]
-        public void Next_MinSmallerThanMax()
+        [Repeat(RepetitionCount)]
+        public void Integers_MinEqualToMax()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-            {
-                _generator.Next((int) LargePos, (int) SmallPos);
-            });
+            _generator.Integers((int) SmallPos, (int) SmallPos).First().ShouldBe((int) SmallPos);
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void Next_MinEqualToMax()
+        {
+            _generator.Next((int) SmallPos, (int) SmallPos).ShouldBe((int) SmallPos);
+        }
+
+        [Test]
+        public void Next_MinGreaterThanMax()
+        {
+            Should.Throw<ArgumentOutOfRangeException>(() => _generator.Next((int) LargePos, (int) SmallPos));
+        }
+
+        /*=============================================================================
+            NextDouble(min, max)
+        =============================================================================*/
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void Doubles_MinEqualToMax()
+        {
+            _generator.Doubles(SmallPos, SmallPos).First().ShouldBe(SmallPos);
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void NextDouble_MinEqualToMax()
+        {
+            _generator.NextDouble(SmallPos, SmallPos).ShouldBe(SmallPos);
+        }
+
+        [Test]
+        public void NextDouble_MinGreaterThanMax()
+        {
+            Should.Throw<ArgumentOutOfRangeException>(() => _generator.NextDouble(LargePos, SmallPos));
+        }
+
+        /*=============================================================================
+            NextUInt(min, max)
+        =============================================================================*/
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void UnsignedIntegers_MinEqualToMax()
+        {
+            _generator.UnsignedIntegers((uint) SmallPos, (uint) SmallPos).First().ShouldBe((uint) SmallPos);
+        }
+
+        [Test]
+        [Repeat(RepetitionCount)]
+        public void NextUInt_MinEqualToMax()
+        {
+            _generator.NextUInt((uint) SmallPos, (uint) SmallPos).ShouldBe((uint) SmallPos);
+        }
+
+        [Test]
+        public void NextUInt_MinGreaterThanMax()
+        {
+            Should.Throw<ArgumentOutOfRangeException>(() => _generator.NextUInt((uint) LargePos, (uint) SmallPos));
         }
 
         /*=============================================================================
