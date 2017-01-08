@@ -40,7 +40,8 @@ using System.Security;
 // You can specify all the values or you can default the Build and Revision Numbers by using the '*'
 // as shown below: [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("4.0.3")]
-[assembly: AssemblyFileVersion("4.1.2")]
+[assembly: AssemblyFileVersion("4.1.3")]
 
-// Specifies that an assembly cannot cause an elevation of privilege.
-[assembly: SecurityTransparent]
+// Allows an assembly to be called by partially trusted code. Without this declaration, only fully
+// trusted callers are able to use the assembly.
+[assembly: AllowPartiallyTrustedCallers]

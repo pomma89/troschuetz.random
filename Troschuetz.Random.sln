@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
+		build.fsx = build.fsx
 		CHANGELOG.md = CHANGELOG.md
 		LICENSE.md = LICENSE.md
 		README.md = README.md
@@ -71,11 +72,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGet", "
 		{6B947182-CF4B-45FE-A1AE-47A28C514040} = {6B947182-CF4B-45FE-A1AE-47A28C514040}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests.NETSTD11", "Platform Specific\Troschuetz.Random.UnitTests.NETSTD11\Troschuetz.Random.UnitTests.NETSTD11.csproj", "{50A591BA-D976-43D9-BE1B-E39356A88BE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests.Portable", "Platform Specific\Troschuetz.Random.UnitTests.Portable\Troschuetz.Random.UnitTests.Portable.csproj", "{03E97ECF-36AF-468F-A871-61EA43485329}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.projitems*{03e97ecf-36af-468f-a871-61ea43485329}*SharedItemsImports = 4
 		Troschuetz.Random\Troschuetz.Random.projitems*{0cd60663-c8ec-42f3-8e61-e38608fe4f57}*SharedItemsImports = 4
 		Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.projitems*{25572fc2-3307-4d29-b3ef-b44713cb371f}*SharedItemsImports = 13
 		Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.projitems*{2b4ef7d6-e581-4b4c-b6f2-a7b8d4aeb3de}*SharedItemsImports = 4
+		Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.projitems*{50a591ba-d976-43d9-be1b-e39356a88be3}*SharedItemsImports = 4
 		Troschuetz.Random\Troschuetz.Random.projitems*{6a27fa7a-4e08-43d5-ac49-5a460ade00e6}*SharedItemsImports = 4
 		Troschuetz.Random\Troschuetz.Random.projitems*{6b947182-cf4b-45fe-a1ae-47a28c514040}*SharedItemsImports = 4
 		Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.projitems*{9f1e90a9-06fb-4dbc-88e2-629f7343e357}*SharedItemsImports = 4
@@ -146,6 +153,14 @@ Global
 		{82121F42-5846-49B3-AD47-B65CBE31DE20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82121F42-5846-49B3-AD47-B65CBE31DE20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82121F42-5846-49B3-AD47-B65CBE31DE20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A591BA-D976-43D9-BE1B-E39356A88BE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A591BA-D976-43D9-BE1B-E39356A88BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A591BA-D976-43D9-BE1B-E39356A88BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A591BA-D976-43D9-BE1B-E39356A88BE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03E97ECF-36AF-468F-A871-61EA43485329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03E97ECF-36AF-468F-A871-61EA43485329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03E97ECF-36AF-468F-A871-61EA43485329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03E97ECF-36AF-468F-A871-61EA43485329}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -161,5 +176,7 @@ Global
 		{2B4EF7D6-E581-4B4C-B6F2-A7B8D4AEB3DE} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
 		{9F1E90A9-06FB-4DBC-88E2-629F7343E357} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
 		{A004A488-8BFC-4803-B84E-8222309BCDDB} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
+		{50A591BA-D976-43D9-BE1B-E39356A88BE3} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
+		{03E97ECF-36AF-468F-A871-61EA43485329} = {7FB581BB-1ADD-4A23-9236-E488F792CF4F}
 	EndGlobalSection
 EndGlobal
