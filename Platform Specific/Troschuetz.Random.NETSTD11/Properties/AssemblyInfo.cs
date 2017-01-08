@@ -42,5 +42,6 @@ using System.Security;
 [assembly: AssemblyVersion("4.0.3")]
 [assembly: AssemblyFileVersion("4.1.2")]
 
-// Specifies that an assembly cannot cause an elevation of privilege.
-[assembly: SecurityTransparent]
+// Allows an assembly to be called by partially trusted code. Without this declaration, only fully
+// trusted callers are able to use the assembly.
+[assembly: AllowPartiallyTrustedCallers]
