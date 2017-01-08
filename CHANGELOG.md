@@ -1,5 +1,10 @@
 # Changelog for Troschuetz.Random #
 
+### v4.1.3 (2017-01-08) ###
+
+* Updated Thrower to v4.0.6.
+* Added unit tests for Portable and .NET Standard 1.1.
+
 ### v4.1.2 (2016-12-25) ###
 
 * The behavior of TRandom.Next(int, int) was different from the built-in's (ISSUE#4 by Zhouxing-Su).
