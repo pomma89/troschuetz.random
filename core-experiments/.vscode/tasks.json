@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\test\\Troschuetz.Random.UnitTests\\tmp\\tmp.csproj"
+                "${workspaceRoot}\\test\\Troschuetz.Random.UnitTests\\Troschuetz.Random.UnitTests.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
