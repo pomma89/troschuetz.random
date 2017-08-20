@@ -35,7 +35,7 @@ namespace Troschuetz.Random.Benchmarks
         {
             public Config()
             {
-                Add(Job.LegacyJitX86);
+                Add(Job.RyuJitX64);
                 Add(CsvExporter.Default, HtmlExporter.Default, MarkdownExporter.GitHub, PlainExporter.Default, CsvMeasurementsExporter.Default, RPlotExporter.Default);
                 Add(new MemoryDiagnoser());
                 Add(EnvironmentAnalyser.Default);

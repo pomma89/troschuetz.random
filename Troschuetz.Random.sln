@@ -33,8 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logo", "logo", "{07EA9A7E-4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Examples", "test\Troschuetz.Random.Examples\Troschuetz.Random.Examples.csproj", "{52A4D144-3BA1-4768-9F3B-90F5DC86746B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Benchmarks", "test\Troschuetz.Random.Benchmarks\Troschuetz.Random.Benchmarks.csproj", "{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{31B8643F-2BBD-4221-8928-62B6B4B221D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Troschuetz.Random", "src\Troschuetz.Random\Troschuetz.Random.csproj", "{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE}"
@@ -47,6 +45,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{66410BEC
 	ProjectSection(SolutionItems) = preProject
 		tools\packages.config = tools\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Benchmarks", "test\Troschuetz.Random.Benchmarks\Troschuetz.Random.Benchmarks.csproj", "{B9201484-F681-48CE-9331-CC64A48B75E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,10 +62,6 @@ Global
 		{52A4D144-3BA1-4768-9F3B-90F5DC86746B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52A4D144-3BA1-4768-9F3B-90F5DC86746B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52A4D144-3BA1-4768-9F3B-90F5DC86746B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -74,6 +70,10 @@ Global
 		{3305B6F6-FE17-4DAD-909B-EE59D27DF269}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3305B6F6-FE17-4DAD-909B-EE59D27DF269}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3305B6F6-FE17-4DAD-909B-EE59D27DF269}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9201484-F681-48CE-9331-CC64A48B75E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9201484-F681-48CE-9331-CC64A48B75E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9201484-F681-48CE-9331-CC64A48B75E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9201484-F681-48CE-9331-CC64A48B75E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,10 +81,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{598F64C2-1343-4202-B6A7-A91CF3248D0C} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
 		{52A4D144-3BA1-4768-9F3B-90F5DC86746B} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
-		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
 		{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE} = {31B8643F-2BBD-4221-8928-62B6B4B221D5}
 		{3305B6F6-FE17-4DAD-909B-EE59D27DF269} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
 		{66410BEC-6F4E-401D-B4CA-2E17B985D16D} = {48147844-A87B-45D7-A428-1909094301B2}
+		{B9201484-F681-48CE-9331-CC64A48B75E8} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6F2AE4A2-7006-424E-8238-8FECD449D5D6}
