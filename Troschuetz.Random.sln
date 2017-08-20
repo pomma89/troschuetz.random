@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{48147844-A
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Tester", "Troschuetz.Random.Tester\Troschuetz.Random.Tester.csproj", "{598F64C2-1343-4202-B6A7-A91CF3248D0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Tester", "test\Troschuetz.Random.Tester\Troschuetz.Random.Tester.csproj", "{598F64C2-1343-4202-B6A7-A91CF3248D0C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logo", "logo", "{07EA9A7E-47F0-4173-855E-4A5B6B517A66}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,25 +25,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logo", "logo", "{07EA9A7E-4
 		logo\logo-original.png = logo\logo-original.png
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Original Sources", "Original Sources", "{FDBA8F2C-3F3C-4320-BB07-BC7F7AEC7263}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "orig", "orig", "{FDBA8F2C-3F3C-4320-BB07-BC7F7AEC7263}"
 	ProjectSection(SolutionItems) = preProject
-		Original Sources\Random_src.zip = Original Sources\Random_src.zip
-		Original Sources\RandomTester_src.zip = Original Sources\RandomTester_src.zip
+		orig\Random_src.zip = orig\Random_src.zip
+		orig\RandomTester_src.zip = orig\RandomTester_src.zip
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Examples", "Troschuetz.Random.Examples\Troschuetz.Random.Examples.csproj", "{52A4D144-3BA1-4768-9F3B-90F5DC86746B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Examples", "test\Troschuetz.Random.Examples\Troschuetz.Random.Examples.csproj", "{52A4D144-3BA1-4768-9F3B-90F5DC86746B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Benchmarks", "Troschuetz.Random.Benchmarks\Troschuetz.Random.Benchmarks.csproj", "{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Benchmarks", "test\Troschuetz.Random.Benchmarks\Troschuetz.Random.Benchmarks.csproj", "{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGet", "Troschuetz.Random.NuGet\Troschuetz.Random.NuGet.csproj", "{82121F42-5846-49B3-AD47-B65CBE31DE20}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{31B8643F-2BBD-4221-8928-62B6B4B221D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random", "src\Troschuetz.Random\Troschuetz.Random.csproj", "{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Troschuetz.Random", "src\Troschuetz.Random\Troschuetz.Random.csproj", "{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.UnitTests", "test\Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.csproj", "{3305B6F6-FE17-4DAD-909B-EE59D27DF269}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Troschuetz.Random.UnitTests", "test\Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.csproj", "{3305B6F6-FE17-4DAD-909B-EE59D27DF269}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +79,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{598F64C2-1343-4202-B6A7-A91CF3248D0C} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
+		{52A4D144-3BA1-4768-9F3B-90F5DC86746B} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
+		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
 		{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE} = {31B8643F-2BBD-4221-8928-62B6B4B221D5}
 		{3305B6F6-FE17-4DAD-909B-EE59D27DF269} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
 	EndGlobalSection
