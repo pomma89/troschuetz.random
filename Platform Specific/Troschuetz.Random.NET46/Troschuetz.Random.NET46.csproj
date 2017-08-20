@@ -99,7 +99,6 @@
     <None Include="FodyWeavers.xml" />
     <Content Include="Troschuetz.Random.ico" />
   </ItemGroup>
-  <Import Project="..\..\Troschuetz.Random\Troschuetz.Random.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

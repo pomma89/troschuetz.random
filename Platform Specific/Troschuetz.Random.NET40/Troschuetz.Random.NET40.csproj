@@ -167,7 +167,6 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\..\Troschuetz.Random\Troschuetz.Random.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
