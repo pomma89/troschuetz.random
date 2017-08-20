@@ -3,7 +3,6 @@
 ### v4.2.0 (2017-08-20)
 
 * Added support for .NET Standard 2.0.
-* Dropped support for .NET 3.5.
 * Removed graphical tester from NuGet package.
 
 ### v4.1.3 (2017-01-08)
