@@ -53,12 +53,6 @@
     <Compile Include="UsageExamples.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Platform Specific\Troschuetz.Random.Portable\Troschuetz.Random.Portable.csproj">
-      <Project>{a1ff7728-605f-401a-a9fc-51fa56852e9e}</Project>
-      <Name>Troschuetz.Random.Portable</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

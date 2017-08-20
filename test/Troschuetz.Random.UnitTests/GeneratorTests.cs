@@ -124,7 +124,7 @@ namespace Troschuetz.Random.Tests
             Serialization
         =============================================================================*/
 
-#if !PORTABLE
+#if !NETSTD16
 
         [Test]
         [Repeat(RepetitionCount)]
