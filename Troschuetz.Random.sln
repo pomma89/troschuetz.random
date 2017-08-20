@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{48147844-A
 		appveyor.yml = appveyor.yml
 		CHANGELOG.md = CHANGELOG.md
 		LICENSE.md = LICENSE.md
+		pomma89.snk = pomma89.snk
 		README.md = README.md
 	EndProjectSection
 EndProject
