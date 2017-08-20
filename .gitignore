@@ -177,8 +177,9 @@ UpgradeLog*.htm
 App_Data/*.mdf
 App_Data/*.ldf
 
-# FAKE
-.fake
+# CAKE
+artifacts
+tools
 
 #############
 ## Windows detritus

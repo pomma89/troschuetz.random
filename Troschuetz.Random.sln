@@ -9,9 +9,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{48147844-A
 		.gitignore = .gitignore
 		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
+		build.cake = build.cake
+		build.ps1 = build.ps1
+		build.sh = build.sh
 		CHANGELOG.md = CHANGELOG.md
 		LICENSE.md = LICENSE.md
 		pomma89.snk = pomma89.snk
+		Random_src.zip = Random_src.zip
+		RandomTester_src.zip = RandomTester_src.zip
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -26,17 +31,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logo", "logo", "{07EA9A7E-4
 		logo\logo-original.png = logo\logo-original.png
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "orig", "orig", "{FDBA8F2C-3F3C-4320-BB07-BC7F7AEC7263}"
-	ProjectSection(SolutionItems) = preProject
-		orig\Random_src.zip = orig\Random_src.zip
-		orig\RandomTester_src.zip = orig\RandomTester_src.zip
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Examples", "test\Troschuetz.Random.Examples\Troschuetz.Random.Examples.csproj", "{52A4D144-3BA1-4768-9F3B-90F5DC86746B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Benchmarks", "test\Troschuetz.Random.Benchmarks\Troschuetz.Random.Benchmarks.csproj", "{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.NuGet", "Troschuetz.Random.NuGet\Troschuetz.Random.NuGet.csproj", "{82121F42-5846-49B3-AD47-B65CBE31DE20}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{31B8643F-2BBD-4221-8928-62B6B4B221D5}"
 EndProject
@@ -45,6 +42,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Troschuetz.Random.UnitTests", "test\Troschuetz.Random.UnitTests\Troschuetz.Random.UnitTests.csproj", "{3305B6F6-FE17-4DAD-909B-EE59D27DF269}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{66410BEC-6F4E-401D-B4CA-2E17B985D16D}"
+	ProjectSection(SolutionItems) = preProject
+		tools\packages.config = tools\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,9 +66,6 @@ Global
 		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82121F42-5846-49B3-AD47-B65CBE31DE20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82121F42-5846-49B3-AD47-B65CBE31DE20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82121F42-5846-49B3-AD47-B65CBE31DE20}.Release|Any CPU.Build.0 = Release|Any CPU
 		{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -85,6 +84,7 @@ Global
 		{1BBA5B5E-AD15-4D06-9731-D9D7A0ACB2E6} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
 		{938B9A4C-7CD4-4DEC-8219-9EA1E6116EDE} = {31B8643F-2BBD-4221-8928-62B6B4B221D5}
 		{3305B6F6-FE17-4DAD-909B-EE59D27DF269} = {8A09F61A-61A7-4409-B58B-BFC5B16A1EAE}
+		{66410BEC-6F4E-401D-B4CA-2E17B985D16D} = {48147844-A87B-45D7-A428-1909094301B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6F2AE4A2-7006-424E-8238-8FECD449D5D6}
