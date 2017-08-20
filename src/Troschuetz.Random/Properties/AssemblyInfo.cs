@@ -19,19 +19,8 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
 // OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using NUnitLite;
+using System.Security;
 
-namespace Troschuetz.Random.UnitTests
-{
-    internal static class Program
-    {
-        public static int Main(string[] args)
-        {
-#if (NETSTD16 || NETSTD20)
-            return new AutoRun(System.Reflection.Assembly.GetEntryAssembly()).Execute(args, new NUnit.Common.ColorConsoleWriter(), System.Console.In);
-#else
-            return new AutoRun().Execute(args);
-#endif
-        }
-    }
-}
+// Allows an assembly to be called by partially trusted code. Without this declaration, only fully
+// trusted callers are able to use the assembly.
+[assembly: AllowPartiallyTrustedCallers]

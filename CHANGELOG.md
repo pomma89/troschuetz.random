@@ -1,6 +1,6 @@
 # Changelog for Troschuetz.Random #
 
-### v4.2.0 (2017-08-??)
+### v4.2.0 (2017-08-20)
 
 * Added support for .NET Standard 2.0.
 * Dropped support for .NET 3.5.
