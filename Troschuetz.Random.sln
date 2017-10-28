@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{48147844-A
 		CHANGELOG.md = CHANGELOG.md
 		config.wyam = config.wyam
 		LICENSE.md = LICENSE.md
+		NuGet.Config = NuGet.Config
 		pomma89.snk = pomma89.snk
 		Random_src.zip = Random_src.zip
 		RandomTester_src.zip = RandomTester_src.zip
