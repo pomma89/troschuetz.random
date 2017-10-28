@@ -320,181 +320,175 @@ Job=RyuJitX64  Jit=RyuJit  Platform=X64
 
 ### Continuous distribution comparison
 
-```ini
+``` ini
 
-Host Process Environment Information:
-BenchmarkDotNet.Core=v0.9.9.0
-OS=Microsoft Windows NT 6.2.9200.0
-Processor=AMD A10 Extreme Edition Radeon R8, 4C+8G, ProcessorCount=4
-Frequency=1949469 ticks, Resolution=512.9602 ns, Timer=TSC
-CLR=MS.NET 4.0.30319.42000, Arch=32-bit RELEASE
-GC=Concurrent Workstation
-JitModules=clrjit-v4.6.1586.0
+BenchmarkDotNet=v0.10.9, OS=Windows 7 SP1 (6.1.7601)
+Processor=Intel Xeon CPU E5-2640 0 2.50GHzIntel Xeon CPU E5-2640 0 2.50GHz, ProcessorCount=4
+Frequency=14318180 Hz, Resolution=69.8413 ns, Timer=HPET
+  [Host]    : .NET Framework 4.6.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.2114.0
+  RyuJitX64 : .NET Framework 4.6.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.2114.0
 
-Type=ContinuousDistributionComparison  Mode=Throughput  
+Job=RyuJitX64  Jit=RyuJit  Platform=X64  
 
 ```
-     Method |           Generator |                  Distribution |      Median |     StdDev | Gen 0 | Gen 1 | Gen 2 | Bytes Allocated/Op |
------------ |--------------------- |------------------------------ |------------ |----------- |------ |------ |------ |------------------- |
- **NextDouble** |         **ALF** |              **Beta** | **564.7818 ns** | **45.2765 ns** |     **-** |     **-** |     **-** |               **0,03** |
- **NextDouble** |         **ALF** |         **BetaPrime** | **544.4464 ns** | **22.4608 ns** |     **-** |     **-** |     **-** |               **0,04** |
- **NextDouble** |         **ALF** |            **Cauchy** | **201.4533 ns** | **13.2333 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |         **ALF** |               **Chi** | **253.0308 ns** | **12.1230 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |         **ALF** |         **ChiSquare** | **242.1054 ns** | **13.7031 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |         **ALF** | **ContinuousUniform** | **139.9917 ns** | **13.9336 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |         **ALF** |       **Exponential** | **161.1631 ns** |  **6.5344 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |         **ALF** |            **Normal** | **211.8438 ns** |  **6.0067 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |     **MT19937** |              **Beta** | **585.9670 ns** | **18.4013 ns** |     **-** |     **-** |     **-** |               **0,13** |
- **NextDouble** |     **MT19937** |         **BetaPrime** | **583.3253 ns** | **21.1971 ns** |     **-** |     **-** |     **-** |               **0,13** |
- **NextDouble** |     **MT19937** |            **Cauchy** | **208.2277 ns** |  **7.0745 ns** |     **-** |     **-** |     **-** |               **0,03** |
- **NextDouble** |     **MT19937** |               **Chi** | **260.3910 ns** | **10.3120 ns** |     **-** |     **-** |     **-** |               **0,05** |
- **NextDouble** |     **MT19937** |         **ChiSquare** | **262.8935 ns** | **25.8162 ns** |     **-** |     **-** |     **-** |               **0,05** |
- **NextDouble** |     **MT19937** | **ContinuousUniform** | **140.7257 ns** |  **3.4135 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |     **MT19937** |       **Exponential** | **171.3253 ns** |  **8.6901 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |     **MT19937** |            **Normal** | **221.5486 ns** |  **8.5723 ns** |     **-** |     **-** |     **-** |               **0,05** |
- **NextDouble** |         **NR3** |              **Beta** | **682.5746 ns** | **24.9644 ns** |     **-** |     **-** |     **-** |               **0,03** |
- **NextDouble** |         **NR3** |         **BetaPrime** | **665.3213 ns** | **25.2054 ns** |     **-** |     **-** |     **-** |               **0,03** |
- **NextDouble** |         **NR3** |            **Cauchy** | **202.7514 ns** |  **6.5672 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |         **NR3** |               **Chi** | **271.3742 ns** | **12.6290 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |         **NR3** |         **ChiSquare** | **269.0114 ns** | **13.5559 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |         **NR3** | **ContinuousUniform** | **143.7341 ns** |  **4.4296 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |         **NR3** |       **Exponential** | **167.1895 ns** |  **8.1451 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |         **NR3** |            **Normal** | **235.4710 ns** |  **8.9343 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |       **NR3Q1** |              **Beta** | **607.9451 ns** | **17.0967 ns** |     **-** |     **-** |     **-** |               **0,03** |
- **NextDouble** |       **NR3Q1** |         **BetaPrime** | **617.5248 ns** | **15.8400 ns** |     **-** |     **-** |     **-** |               **0,04** |
- **NextDouble** |       **NR3Q1** |            **Cauchy** | **205.6989 ns** |  **7.3714 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |       **NR3Q1** |               **Chi** | **261.1984 ns** | **12.8840 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |       **NR3Q1** |         **ChiSquare** | **253.0269 ns** | **14.7162 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |       **NR3Q1** | **ContinuousUniform** | **138.6705 ns** |  **8.0530 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |       **NR3Q1** |       **Exponential** | **160.6003 ns** |  **5.0955 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |       **NR3Q1** |            **Normal** | **221.5319 ns** |  **9.3278 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |       **NR3Q2** |              **Beta** | **601.1913 ns** | **37.4823 ns** |     **-** |     **-** |     **-** |               **0,03** |
- **NextDouble** |       **NR3Q2** |         **BetaPrime** | **589.3537 ns** | **27.0709 ns** |     **-** |     **-** |     **-** |               **0,04** |
- **NextDouble** |       **NR3Q2** |            **Cauchy** | **194.0564 ns** |  **5.7606 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |       **NR3Q2** |               **Chi** | **254.3404 ns** |  **9.1691 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |       **NR3Q2** |         **ChiSquare** | **251.3655 ns** | **10.6823 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |       **NR3Q2** | **ContinuousUniform** | **136.5725 ns** |  **6.8590 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |       **NR3Q2** |       **Exponential** | **158.4307 ns** |  **3.9975 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |       **NR3Q2** |            **Normal** | **223.3736 ns** |  **6.7194 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |    **Standard** |              **Beta** | **602.8002 ns** | **27.7162 ns** |     **-** |     **-** |     **-** |               **0,03** |
- **NextDouble** |    **Standard** |         **BetaPrime** | **621.6925 ns** | **18.3455 ns** |     **-** |     **-** |     **-** |               **0,04** |
- **NextDouble** |    **Standard** |            **Cauchy** | **201.4281 ns** |  **5.0959 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |    **Standard** |               **Chi** | **268.0968 ns** | **11.7280 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |    **Standard** |         **ChiSquare** | **258.6477 ns** |  **7.7946 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** |    **Standard** | **ContinuousUniform** | **143.1884 ns** |  **4.5356 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |    **Standard** |       **Exponential** | **170.6359 ns** |  **7.2669 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** |    **Standard** |            **Normal** | **225.8471 ns** |  **7.2494 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** | **XorShift128** |              **Beta** | **580.0863 ns** | **17.8966 ns** |     **-** |     **-** |     **-** |               **0,04** |
- **NextDouble** | **XorShift128** |         **BetaPrime** | **583.0347 ns** | **18.2748 ns** |     **-** |     **-** |     **-** |               **0,03** |
- **NextDouble** | **XorShift128** |            **Cauchy** | **202.8847 ns** |  **6.1327 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** | **XorShift128** |               **Chi** | **253.6144 ns** | **13.0590 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** | **XorShift128** |         **ChiSquare** | **243.8094 ns** |  **7.4287 ns** |     **-** |     **-** |     **-** |               **0,02** |
- **NextDouble** | **XorShift128** | **ContinuousUniform** | **144.7021 ns** |  **5.6169 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** | **XorShift128** |       **Exponential** | **164.0857 ns** |  **6.2893 ns** |     **-** |     **-** |     **-** |               **0,01** |
- **NextDouble** | **XorShift128** |            **Normal** | **217.5251 ns** | **15.5689 ns** |     **-** |     **-** |     **-** |               **0,02** |
+ |     Method |      Distribution |   Generator |     Mean |      Error |      StdDev |   Median | Allocated |
+ |----------- |------------------ |------------ |---------:|-----------:|------------:|---------:|----------:|
+ | **NextDouble** |              **Beta** |         **ALF** | **338.8 ns** |  **6.8819 ns** |  **17.1383 ns** | **334.1 ns** |       **0 B** |
+ | **NextDouble** |              **Beta** |     **MT19937** | **375.0 ns** |  **7.4529 ns** |   **7.6535 ns** | **372.5 ns** |       **0 B** |
+ | **NextDouble** |              **Beta** |         **NR3** | **385.9 ns** | **29.4146 ns** |  **84.8678 ns** | **331.7 ns** |       **0 B** |
+ | **NextDouble** |              **Beta** |       **NR3Q1** | **381.7 ns** | **31.7568 ns** |  **92.6361 ns** | **320.7 ns** |       **0 B** |
+ | **NextDouble** |              **Beta** |       **NR3Q2** | **324.3 ns** |  **8.4574 ns** |  **10.6959 ns** | **321.6 ns** |       **0 B** |
+ | **NextDouble** |              **Beta** |    **Standard** | **676.8 ns** | **72.1428 ns** | **212.7146 ns** | **740.6 ns** |       **0 B** |
+ | **NextDouble** |              **Beta** | **XorShift128** | **525.4 ns** | **61.5321 ns** | **181.4288 ns** | **550.6 ns** |       **0 B** |
+ | **NextDouble** |         **BetaPrime** |         **ALF** | **590.4 ns** | **63.1414 ns** | **186.1738 ns** | **611.7 ns** |       **0 B** |
+ | **NextDouble** |         **BetaPrime** |     **MT19937** | **631.2 ns** | **69.2676 ns** | **204.2371 ns** | **654.7 ns** |       **0 B** |
+ | **NextDouble** |         **BetaPrime** |         **NR3** | **574.2 ns** | **67.0142 ns** | **197.5929 ns** | **593.5 ns** |       **0 B** |
+ | **NextDouble** |         **BetaPrime** |       **NR3Q1** | **529.6 ns** | **65.0692 ns** | **191.8580 ns** | **578.1 ns** |       **0 B** |
+ | **NextDouble** |         **BetaPrime** |       **NR3Q2** | **568.9 ns** | **49.2187 ns** | **145.1224 ns** | **566.5 ns** |       **0 B** |
+ | **NextDouble** |         **BetaPrime** |    **Standard** | **930.8 ns** | **14.6964 ns** |  **15.0921 ns** | **934.3 ns** |       **0 B** |
+ | **NextDouble** |         **BetaPrime** | **XorShift128** | **619.9 ns** | **64.4471 ns** | **190.0238 ns** | **698.5 ns** |       **0 B** |
+ | **NextDouble** |            **Cauchy** |         **ALF** | **284.1 ns** | **28.4789 ns** |  **83.9707 ns** | **322.2 ns** |       **0 B** |
+ | **NextDouble** |            **Cauchy** |     **MT19937** | **305.8 ns** | **31.4928 ns** |  **92.8573 ns** | **340.4 ns** |       **0 B** |
+ | **NextDouble** |            **Cauchy** |         **NR3** | **250.0 ns** | **25.2609 ns** |  **74.4824 ns** | **240.8 ns** |       **0 B** |
+ | **NextDouble** |            **Cauchy** |       **NR3Q1** | **281.4 ns** | **26.9234 ns** |  **79.3843 ns** | **316.6 ns** |       **0 B** |
+ | **NextDouble** |            **Cauchy** |       **NR3Q2** | **261.6 ns** | **23.9230 ns** |  **70.5375 ns** | **260.7 ns** |       **0 B** |
+ | **NextDouble** |            **Cauchy** |    **Standard** | **292.1 ns** | **31.0940 ns** |  **91.6812 ns** | **321.7 ns** |       **0 B** |
+ | **NextDouble** |            **Cauchy** | **XorShift128** | **314.6 ns** | **30.0235 ns** |  **88.5249 ns** | **359.6 ns** |       **0 B** |
+ | **NextDouble** |               **Chi** |         **ALF** | **290.5 ns** | **24.4455 ns** |  **72.0782 ns** | **291.2 ns** |       **0 B** |
+ | **NextDouble** |               **Chi** |     **MT19937** | **229.4 ns** | **20.0623 ns** |  **57.5624 ns** | **188.7 ns** |       **0 B** |
+ | **NextDouble** |               **Chi** |         **NR3** | **315.2 ns** | **30.1669 ns** |  **88.9478 ns** | **341.8 ns** |       **0 B** |
+ | **NextDouble** |               **Chi** |       **NR3Q1** | **312.2 ns** | **30.9188 ns** |  **91.1648 ns** | **353.1 ns** |       **0 B** |
+ | **NextDouble** |               **Chi** |       **NR3Q2** | **370.4 ns** | **13.3744 ns** |  **35.6990 ns** | **386.5 ns** |       **0 B** |
+ | **NextDouble** |               **Chi** |    **Standard** | **371.1 ns** | **36.5695 ns** | **107.8259 ns** | **428.8 ns** |       **0 B** |
+ | **NextDouble** |               **Chi** | **XorShift128** | **336.5 ns** | **33.9692 ns** | **100.1589 ns** | **392.2 ns** |       **0 B** |
+ | **NextDouble** |         **ChiSquare** |         **ALF** | **308.4 ns** | **34.0179 ns** | **100.3025 ns** | **343.7 ns** |       **0 B** |
+ | **NextDouble** |         **ChiSquare** |     **MT19937** | **357.7 ns** | **37.1976 ns** | **109.6781 ns** | **408.7 ns** |       **0 B** |
+ | **NextDouble** |         **ChiSquare** |         **NR3** | **320.5 ns** | **35.3093 ns** | **104.1104 ns** | **364.8 ns** |       **0 B** |
+ | **NextDouble** |         **ChiSquare** |       **NR3Q1** | **320.2 ns** | **32.0234 ns** |  **94.4218 ns** | **355.5 ns** |       **0 B** |
+ | **NextDouble** |         **ChiSquare** |       **NR3Q2** | **314.0 ns** | **32.9729 ns** |  **97.2214 ns** | **327.7 ns** |       **0 B** |
+ | **NextDouble** |         **ChiSquare** |    **Standard** | **389.2 ns** | **38.0037 ns** | **112.0548 ns** | **447.8 ns** |       **0 B** |
+ | **NextDouble** |         **ChiSquare** | **XorShift128** | **321.3 ns** | **37.5629 ns** | **110.7552 ns** | **340.6 ns** |       **0 B** |
+ | **NextDouble** | **ContinuousUniform** |         **ALF** | **199.9 ns** | **22.7095 ns** |  **66.9595 ns** | **231.3 ns** |       **0 B** |
+ | **NextDouble** | **ContinuousUniform** |     **MT19937** | **180.4 ns** | **24.7217 ns** |  **72.8926 ns** | **125.0 ns** |       **0 B** |
+ | **NextDouble** | **ContinuousUniform** |         **NR3** | **251.1 ns** | **10.2896 ns** |  **27.9937 ns** | **266.0 ns** |       **0 B** |
+ | **NextDouble** | **ContinuousUniform** |       **NR3Q1** | **254.6 ns** |  **5.0959 ns** |   **9.5713 ns** | **259.3 ns** |       **0 B** |
+ | **NextDouble** | **ContinuousUniform** |       **NR3Q2** | **194.1 ns** | **19.3062 ns** |  **56.9249 ns** | **201.2 ns** |       **0 B** |
+ | **NextDouble** | **ContinuousUniform** |    **Standard** | **238.8 ns** | **24.1279 ns** |  **71.1418 ns** | **271.1 ns** |       **0 B** |
+ | **NextDouble** | **ContinuousUniform** | **XorShift128** | **191.6 ns** | **22.9668 ns** |  **67.7182 ns** | **187.2 ns** |       **0 B** |
+ | **NextDouble** |       **Exponential** |         **ALF** | **284.6 ns** |  **5.6958 ns** |   **6.3309 ns** | **286.7 ns** |       **0 B** |
+ | **NextDouble** |       **Exponential** |     **MT19937** | **307.3 ns** | **11.7584 ns** |  **32.1885 ns** | **323.7 ns** |       **0 B** |
+ | **NextDouble** |       **Exponential** |         **NR3** | **206.6 ns** | **22.0528 ns** |  **65.0232 ns** | **195.7 ns** |       **0 B** |
+ | **NextDouble** |       **Exponential** |       **NR3Q1** | **228.9 ns** | **24.6797 ns** |  **72.7686 ns** | **263.5 ns** |       **0 B** |
+ | **NextDouble** |       **Exponential** |       **NR3Q2** | **214.4 ns** | **24.5962 ns** |  **72.5225 ns** | **241.8 ns** |       **0 B** |
+ | **NextDouble** |       **Exponential** |    **Standard** | **229.5 ns** | **21.5897 ns** |  **63.6576 ns** | **214.6 ns** |       **0 B** |
+ | **NextDouble** |       **Exponential** | **XorShift128** | **223.2 ns** | **27.7926 ns** |  **81.9471 ns** | **226.4 ns** |       **0 B** |
+ | **NextDouble** |            **Normal** |         **ALF** | **278.4 ns** | **29.4686 ns** |  **86.8889 ns** | **321.5 ns** |       **0 B** |
+ | **NextDouble** |            **Normal** |     **MT19937** | **273.2 ns** | **31.4820 ns** |  **92.8255 ns** | **272.5 ns** |       **0 B** |
+ | **NextDouble** |            **Normal** |         **NR3** | **264.9 ns** | **30.8614 ns** |  **90.9954 ns** | **284.1 ns** |       **0 B** |
+ | **NextDouble** |            **Normal** |       **NR3Q1** | **244.4 ns** | **24.4235 ns** |  **72.0134 ns** | **247.0 ns** |       **0 B** |
+ | **NextDouble** |            **Normal** |       **NR3Q2** | **243.7 ns** | **23.5501 ns** |  **69.4379 ns** | **243.1 ns** |       **0 B** |
+ | **NextDouble** |            **Normal** |    **Standard** | **187.3 ns** |  **0.3546 ns** |   **0.2769 ns** | **187.3 ns** |       **0 B** |
+ | **NextDouble** |            **Normal** | **XorShift128** | **169.1 ns** |  **4.9066 ns** |   **6.2053 ns** | **167.4 ns** |       **0 B** |
 
 ### Discrete distribution comparison
 
-```ini
+``` ini
 
-Host Process Environment Information:
-BenchmarkDotNet.Core=v0.9.9.0
-OS=Microsoft Windows NT 6.2.9200.0
-Processor=AMD A10 Extreme Edition Radeon R8, 4C+8G, ProcessorCount=4
-Frequency=1949469 ticks, Resolution=512.9602 ns, Timer=TSC
-CLR=MS.NET 4.0.30319.42000, Arch=32-bit RELEASE
-GC=Concurrent Workstation
-JitModules=clrjit-v4.6.1586.0
+BenchmarkDotNet=v0.10.9, OS=Windows 7 SP1 (6.1.7601)
+Processor=Intel Xeon CPU E5-2640 0 2.50GHzIntel Xeon CPU E5-2640 0 2.50GHz, ProcessorCount=4
+Frequency=14318180 Hz, Resolution=69.8413 ns, Timer=HPET
+  [Host]    : .NET Framework 4.6.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.2114.0
+  RyuJitX64 : .NET Framework 4.6.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.2114.0
 
-Type=DiscreteDistributionComparison  Mode=Throughput  
+Job=RyuJitX64  Jit=RyuJit  Platform=X64  
 
 ```
-     Method |            Generator |                Distribution |      Median |     StdDev | Gen 0 | Gen 1 | Gen 2 | Bytes Allocated/Op |
------------ |--------------------- |---------------------------- |------------ |----------- |------ |------ |------ |------------------- |
- **NextDouble** |         **ALF** |       **Bernoulli** | **119.2830 ns** |  **5.8111 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALF |       Bernoulli | 119.4595 ns |  4.0621 ns |     - |     - |     - |               0,01 |
- **NextDouble** |         **ALF** |        **Binomial** | **118.1262 ns** |  **5.2042 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALF |        Binomial | 116.0250 ns |  6.0589 ns |     - |     - |     - |               0,01 |
- **NextDouble** |         **ALF** |     **Categorical** | **162.3266 ns** |  **5.9275 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALF |     Categorical | 157.5542 ns |  6.6664 ns |     - |     - |     - |               0,01 |
- **NextDouble** |         **ALF** | **DiscreteUniform** | **130.1418 ns** |  **4.3669 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALF | DiscreteUniform | 126.8054 ns |  6.0544 ns |     - |     - |     - |               0,01 |
- **NextDouble** |         **ALF** |       **Geometric** | **138.3377 ns** |  **6.8605 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALF |       Geometric | 130.1346 ns |  5.3675 ns |     - |     - |     - |               0,01 |
- **NextDouble** |         **ALF** |         **Poisson** | **189.3246 ns** | **10.3094 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         ALF |         Poisson | 184.1934 ns | 12.3198 ns |     - |     - |     - |               0,01 |
- **NextDouble** |     **MT19937** |       **Bernoulli** | **166.3347 ns** |  **8.1093 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |     MT19937 |       Bernoulli | 125.4137 ns |  8.8573 ns |     - |     - |     - |               0,02 |
- **NextDouble** |     **MT19937** |        **Binomial** | **127.1335 ns** |  **6.9697 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |     MT19937 |        Binomial | 127.5652 ns |  8.3479 ns |     - |     - |     - |               0,02 |
- **NextDouble** |     **MT19937** |     **Categorical** | **179.0222 ns** | **11.2939 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |     MT19937 |     Categorical | 169.9243 ns |  6.7980 ns |     - |     - |     - |               0,02 |
- **NextDouble** |     **MT19937** | **DiscreteUniform** | **137.5204 ns** |  **5.6537 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |     MT19937 | DiscreteUniform | 148.2287 ns | 12.8818 ns |     - |     - |     - |               0,02 |
- **NextDouble** |     **MT19937** |       **Geometric** | **148.5860 ns** |  **7.3860 ns** |     **-** |     **-** |     **-** |               **0,03** |
-       Next |     MT19937 |       Geometric | 145.4794 ns | 10.8896 ns |     - |     - |     - |               0,03 |
- **NextDouble** |     **MT19937** |         **Poisson** | **194.4949 ns** |  **6.7210 ns** |     **-** |     **-** |     **-** |               **0,05** |
-       Next |     MT19937 |         Poisson | 190.8595 ns | 11.3811 ns |     - |     - |     - |               0,03 |
- **NextDouble** |         **NR3** |       **Bernoulli** | **129.0464 ns** |  **4.8193 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         NR3 |       Bernoulli | 128.9043 ns |  5.1086 ns |     - |     - |     - |               0,01 |
- **NextDouble** |         **NR3** |        **Binomial** | **127.4425 ns** |  **4.4049 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         NR3 |        Binomial | 128.1422 ns |  5.9819 ns |     - |     - |     - |               0,01 |
- **NextDouble** |         **NR3** |     **Categorical** | **178.6449 ns** |  **5.5638 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         NR3 |     Categorical | 173.8394 ns |  6.5011 ns |     - |     - |     - |               0,01 |
- **NextDouble** |         **NR3** | **DiscreteUniform** | **143.6357 ns** |  **4.7112 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         NR3 | DiscreteUniform | 139.1345 ns |  7.7602 ns |     - |     - |     - |               0,01 |
- **NextDouble** |         **NR3** |       **Geometric** | **154.8823 ns** |  **9.9655 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |         NR3 |       Geometric | 153.4500 ns |  4.4693 ns |     - |     - |     - |               0,01 |
- **NextDouble** |         **NR3** |         **Poisson** | **205.8942 ns** |  **7.4231 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |         NR3 |         Poisson | 211.3698 ns |  7.4695 ns |     - |     - |     - |               0,02 |
- **NextDouble** |       **NR3Q1** |       **Bernoulli** | **124.2010 ns** | **10.5891 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q1 |       Bernoulli | 122.2264 ns |  3.1275 ns |     - |     - |     - |               0,01 |
- **NextDouble** |       **NR3Q1** |        **Binomial** | **123.5844 ns** |  **6.8370 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q1 |        Binomial | 121.8930 ns |  3.2296 ns |     - |     - |     - |               0,01 |
- **NextDouble** |       **NR3Q1** |     **Categorical** | **169.1586 ns** |  **4.9083 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q1 |     Categorical | 168.3734 ns |  6.5751 ns |     - |     - |     - |               0,01 |
- **NextDouble** |       **NR3Q1** | **DiscreteUniform** | **138.4093 ns** |  **5.8611 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q1 | DiscreteUniform | 134.0003 ns |  6.0810 ns |     - |     - |     - |               0,01 |
- **NextDouble** |       **NR3Q1** |       **Geometric** | **149.3405 ns** |  **7.5240 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q1 |       Geometric | 145.4122 ns |  3.9322 ns |     - |     - |     - |               0,01 |
- **NextDouble** |       **NR3Q1** |         **Poisson** | **199.9778 ns** | **16.4269 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |       NR3Q1 |         Poisson | 199.1589 ns | 12.8700 ns |     - |     - |     - |               0,02 |
- **NextDouble** |       **NR3Q2** |       **Bernoulli** | **121.8425 ns** |  **3.5704 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q2 |       Bernoulli | 122.3650 ns |  3.9288 ns |     - |     - |     - |               0,01 |
- **NextDouble** |       **NR3Q2** |        **Binomial** | **120.6262 ns** |  **3.4427 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q2 |        Binomial | 120.6807 ns |  3.9826 ns |     - |     - |     - |               0,01 |
- **NextDouble** |       **NR3Q2** |     **Categorical** | **167.6676 ns** | **10.4181 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q2 |     Categorical | 164.8703 ns | 10.5710 ns |     - |     - |     - |               0,01 |
- **NextDouble** |       **NR3Q2** | **DiscreteUniform** | **135.6440 ns** |  **6.6638 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q2 | DiscreteUniform | 130.1909 ns |  5.8340 ns |     - |     - |     - |               0,01 |
- **NextDouble** |       **NR3Q2** |       **Geometric** | **141.1170 ns** |  **3.8857 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |       NR3Q2 |       Geometric | 141.7685 ns |  4.9574 ns |     - |     - |     - |               0,01 |
- **NextDouble** |       **NR3Q2** |         **Poisson** | **196.0464 ns** |  **9.1919 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |       NR3Q2 |         Poisson | 191.8061 ns |  6.7616 ns |     - |     - |     - |               0,01 |
- **NextDouble** |    **Standard** |       **Bernoulli** | **132.4460 ns** |  **8.1172 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |    Standard |       Bernoulli | 123.6537 ns |  3.6683 ns |     - |     - |     - |               0,01 |
- **NextDouble** |    **Standard** |        **Binomial** | **123.3657 ns** |  **6.8106 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |    Standard |        Binomial | 123.6060 ns |  6.3782 ns |     - |     - |     - |               0,01 |
- **NextDouble** |    **Standard** |     **Categorical** | **174.3826 ns** | **10.4026 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |    Standard |     Categorical | 168.1125 ns |  3.6631 ns |     - |     - |     - |               0,01 |
- **NextDouble** |    **Standard** | **DiscreteUniform** | **141.2165 ns** |  **5.0143 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |    Standard | DiscreteUniform | 138.0848 ns |  4.3336 ns |     - |     - |     - |               0,01 |
- **NextDouble** |    **Standard** |       **Geometric** | **147.0533 ns** |  **2.2836 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next |    Standard |       Geometric | 146.8081 ns |  4.4159 ns |     - |     - |     - |               0,01 |
- **NextDouble** |    **Standard** |         **Poisson** | **205.9187 ns** |  **7.2529 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next |    Standard |         Poisson | 202.9169 ns | 10.2237 ns |     - |     - |     - |               0,01 |
- **NextDouble** | **XorShift128** |       **Bernoulli** | **125.3874 ns** |  **3.0229 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next | XorShift128 |       Bernoulli | 127.1274 ns |  7.4002 ns |     - |     - |     - |               0,01 |
- **NextDouble** | **XorShift128** |        **Binomial** | **125.1437 ns** |  **4.1121 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next | XorShift128 |        Binomial | 125.7723 ns |  2.9257 ns |     - |     - |     - |               0,01 |
- **NextDouble** | **XorShift128** |     **Categorical** | **171.7676 ns** |  **4.2417 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next | XorShift128 |     Categorical | 168.1748 ns |  6.9556 ns |     - |     - |     - |               0,01 |
- **NextDouble** | **XorShift128** | **DiscreteUniform** | **140.7030 ns** |  **6.5082 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next | XorShift128 | DiscreteUniform | 138.7947 ns |  6.0298 ns |     - |     - |     - |               0,01 |
- **NextDouble** | **XorShift128** |       **Geometric** | **141.7219 ns** |  **3.6250 ns** |     **-** |     **-** |     **-** |               **0,01** |
-       Next | XorShift128 |       Geometric | 142.1299 ns |  7.2412 ns |     - |     - |     - |               0,01 |
- **NextDouble** | **XorShift128** |         **Poisson** | **194.8024 ns** |  **6.0905 ns** |     **-** |     **-** |     **-** |               **0,02** |
-       Next | XorShift128 |         Poisson | 195.3065 ns |  9.0045 ns |     - |     - |     - |               0,01 |
+ |     Method |    Distribution |   Generator |     Mean |      Error |     StdDev |   Median | Allocated |
+ |----------- |---------------- |------------ |---------:|-----------:|-----------:|---------:|----------:|
+ | **NextDouble** |       **Bernoulli** |         **ALF** | **160.4 ns** | **14.4213 ns** | **42.5215 ns** | **159.9 ns** |       **0 B** |
+ |       Next |       Bernoulli |         ALF | 197.2 ns | 19.8672 ns | 58.5790 ns | 218.1 ns |       0 B |
+ | **NextDouble** |       **Bernoulli** |     **MT19937** | **122.9 ns** |  **7.8789 ns** | **17.2943 ns** | **117.9 ns** |       **0 B** |
+ |       Next |       Bernoulli |     MT19937 | 123.5 ns |  4.2766 ns |  4.9250 ns | 122.2 ns |       0 B |
+ | **NextDouble** |       **Bernoulli** |         **NR3** | **111.6 ns** |  **4.2093 ns** |  **3.7315 ns** | **110.6 ns** |       **0 B** |
+ |       Next |       Bernoulli |         NR3 | 201.8 ns | 21.8658 ns | 64.4719 ns | 235.6 ns |       0 B |
+ | **NextDouble** |       **Bernoulli** |       **NR3Q1** | **180.2 ns** | **21.2046 ns** | **62.5223 ns** | **198.5 ns** |       **0 B** |
+ |       Next |       Bernoulli |       NR3Q1 | 201.1 ns | 18.6531 ns | 54.9990 ns | 229.9 ns |       0 B |
+ | **NextDouble** |       **Bernoulli** |       **NR3Q2** | **245.0 ns** |  **8.0769 ns** | **21.9739 ns** | **257.2 ns** |       **0 B** |
+ |       Next |       Bernoulli |       NR3Q2 | 216.1 ns | 19.1118 ns | 56.3514 ns | 246.2 ns |       0 B |
+ | **NextDouble** |       **Bernoulli** |    **Standard** | **200.3 ns** | **24.5942 ns** | **72.5165 ns** | **203.9 ns** |       **0 B** |
+ |       Next |       Bernoulli |    Standard | 231.8 ns | 21.4910 ns | 63.3668 ns | 261.8 ns |       0 B |
+ | **NextDouble** |       **Bernoulli** | **XorShift128** | **228.5 ns** | **22.2808 ns** | **65.6955 ns** | **248.7 ns** |       **0 B** |
+ |       Next |       Bernoulli | XorShift128 | 212.7 ns | 20.9942 ns | 61.9017 ns | 208.3 ns |       0 B |
+ | **NextDouble** |        **Binomial** |         **ALF** | **136.5 ns** | **13.5852 ns** | **40.0562 ns** | **107.3 ns** |       **0 B** |
+ |       Next |        Binomial |         ALF | 204.5 ns | 17.6937 ns | 52.1703 ns | 231.6 ns |       0 B |
+ | **NextDouble** |        **Binomial** |     **MT19937** | **196.5 ns** | **20.8854 ns** | **61.5810 ns** | **196.3 ns** |       **0 B** |
+ |       Next |        Binomial |     MT19937 | 209.9 ns | 22.7067 ns | 66.9513 ns | 242.0 ns |       0 B |
+ | **NextDouble** |        **Binomial** |         **NR3** | **210.2 ns** | **19.4362 ns** | **57.3080 ns** | **239.8 ns** |       **0 B** |
+ |       Next |        Binomial |         NR3 | 203.3 ns | 20.3067 ns | 59.8747 ns | 237.6 ns |       0 B |
+ | **NextDouble** |        **Binomial** |       **NR3Q1** | **251.8 ns** |  **0.9306 ns** |  **0.6729 ns** | **251.7 ns** |       **0 B** |
+ |       Next |        Binomial |       NR3Q1 | 203.8 ns | 20.4505 ns | 60.2987 ns | 236.1 ns |       0 B |
+ | **NextDouble** |        **Binomial** |       **NR3Q2** | **192.4 ns** | **21.5017 ns** | **63.3983 ns** | **228.4 ns** |       **0 B** |
+ |       Next |        Binomial |       NR3Q2 | 165.7 ns | 15.5334 ns | 45.8007 ns | 166.7 ns |       0 B |
+ | **NextDouble** |        **Binomial** |    **Standard** | **163.8 ns** | **22.7104 ns** | **66.9623 ns** | **113.2 ns** |       **0 B** |
+ |       Next |        Binomial |    Standard | 202.4 ns | 22.6595 ns | 66.8120 ns | 228.1 ns |       0 B |
+ | **NextDouble** |        **Binomial** | **XorShift128** | **207.7 ns** | **25.3699 ns** | **74.8038 ns** | **231.4 ns** |       **0 B** |
+ |       Next |        Binomial | XorShift128 | 216.8 ns | 20.1394 ns | 59.3815 ns | 233.6 ns |       0 B |
+ | **NextDouble** |     **Categorical** |         **ALF** | **270.5 ns** | **21.5656 ns** | **63.5867 ns** | **311.0 ns** |       **0 B** |
+ |       Next |     Categorical |         ALF | 221.6 ns | 28.3732 ns | 83.6589 ns | 246.6 ns |       0 B |
+ | **NextDouble** |     **Categorical** |     **MT19937** | **258.9 ns** | **27.7546 ns** | **81.8351 ns** | **292.4 ns** |       **0 B** |
+ |       Next |     Categorical |     MT19937 | 273.2 ns | 25.3398 ns | 74.7149 ns | 311.0 ns |       0 B |
+ | **NextDouble** |     **Categorical** |         **NR3** | **210.9 ns** | **27.4160 ns** | **80.8366 ns** | **206.7 ns** |       **0 B** |
+ |       Next |     Categorical |         NR3 | 221.3 ns | 21.3502 ns | 62.9516 ns | 222.7 ns |       0 B |
+ | **NextDouble** |     **Categorical** |       **NR3Q1** | **225.5 ns** | **25.6885 ns** | **75.7432 ns** | **257.5 ns** |       **0 B** |
+ |       Next |     Categorical |       NR3Q1 | 219.8 ns | 26.3636 ns | 77.7335 ns | 233.2 ns |       0 B |
+ | **NextDouble** |     **Categorical** |       **NR3Q2** | **221.3 ns** | **21.2556 ns** | **62.6725 ns** | **224.7 ns** |       **0 B** |
+ |       Next |     Categorical |       NR3Q2 | 217.9 ns | 25.3020 ns | 74.6035 ns | 214.6 ns |       0 B |
+ | **NextDouble** |     **Categorical** |    **Standard** | **258.7 ns** | **28.0689 ns** | **82.7619 ns** | **302.6 ns** |       **0 B** |
+ |       Next |     Categorical |    Standard | 223.5 ns | 28.6035 ns | 84.3382 ns | 224.6 ns |       0 B |
+ | **NextDouble** |     **Categorical** | **XorShift128** | **251.4 ns** | **26.8065 ns** | **79.0395 ns** | **273.6 ns** |       **0 B** |
+ |       Next |     Categorical | XorShift128 | 257.2 ns | 27.1336 ns | 80.0041 ns | 280.5 ns |       0 B |
+ | **NextDouble** | **DiscreteUniform** |         **ALF** | **150.4 ns** | **15.2359 ns** | **44.9233 ns** | **141.2 ns** |       **0 B** |
+ |       Next | DiscreteUniform |         ALF | 215.8 ns | 20.1608 ns | 59.4445 ns | 247.6 ns |       0 B |
+ | **NextDouble** | **DiscreteUniform** |     **MT19937** | **215.5 ns** | **25.1271 ns** | **74.0877 ns** | **243.9 ns** |       **0 B** |
+ |       Next | DiscreteUniform |     MT19937 | 228.2 ns | 22.6271 ns | 66.7164 ns | 256.9 ns |       0 B |
+ | **NextDouble** | **DiscreteUniform** |         **NR3** | **201.1 ns** | **19.5358 ns** | **57.6019 ns** | **209.7 ns** |       **0 B** |
+ |       Next | DiscreteUniform |         NR3 | 206.3 ns | 22.2678 ns | 65.6570 ns | 241.6 ns |       0 B |
+ | **NextDouble** | **DiscreteUniform** |       **NR3Q1** | **199.5 ns** | **22.1306 ns** | **65.2527 ns** | **226.3 ns** |       **0 B** |
+ |       Next | DiscreteUniform |       NR3Q1 | 188.5 ns | 20.7400 ns | 61.1524 ns | 184.1 ns |       0 B |
+ | **NextDouble** | **DiscreteUniform** |       **NR3Q2** | **174.7 ns** | **16.0187 ns** | **47.2315 ns** | **174.7 ns** |       **0 B** |
+ |       Next | DiscreteUniform |       NR3Q2 | 176.7 ns | 23.4391 ns | 69.1108 ns | 151.1 ns |       0 B |
+ | **NextDouble** | **DiscreteUniform** |    **Standard** | **227.7 ns** | **23.7944 ns** | **70.1582 ns** | **262.2 ns** |       **0 B** |
+ |       Next | DiscreteUniform |    Standard | 209.3 ns | 26.5376 ns | 78.2467 ns | 198.8 ns |       0 B |
+ | **NextDouble** | **DiscreteUniform** | **XorShift128** | **216.1 ns** | **25.4030 ns** | **74.9014 ns** | **243.1 ns** |       **0 B** |
+ |       Next | DiscreteUniform | XorShift128 | 164.7 ns | 18.3713 ns | 54.1682 ns | 126.4 ns |       0 B |
+ | **NextDouble** |       **Geometric** |         **ALF** | **276.2 ns** |  **7.8966 ns** | **21.6168 ns** | **287.8 ns** |       **0 B** |
+ |       Next |       Geometric |         ALF | 232.5 ns | 23.4024 ns | 69.0024 ns | 271.3 ns |       0 B |
+ | **NextDouble** |       **Geometric** |     **MT19937** | **262.1 ns** | **27.7712 ns** | **81.8840 ns** | **310.9 ns** |       **0 B** |
+ |       Next |       Geometric |     MT19937 | 266.8 ns | 26.1382 ns | 77.0690 ns | 301.6 ns |       0 B |
+ | **NextDouble** |       **Geometric** |         **NR3** | **240.3 ns** | **23.0080 ns** | **67.8395 ns** | **276.8 ns** |       **0 B** |
+ |       Next |       Geometric |         NR3 | 212.5 ns | 25.0057 ns | 73.7298 ns | 233.6 ns |       0 B |
+ | **NextDouble** |       **Geometric** |       **NR3Q1** | **209.8 ns** | **20.9796 ns** | **61.8590 ns** | **216.2 ns** |       **0 B** |
+ |       Next |       Geometric |       NR3Q1 | 208.8 ns | 22.0906 ns | 65.1345 ns | 218.9 ns |       0 B |
+ | **NextDouble** |       **Geometric** |       **NR3Q2** | **203.2 ns** | **20.7195 ns** | **61.0919 ns** | **202.0 ns** |       **0 B** |
+ |       Next |       Geometric |       NR3Q2 | 120.4 ns |  3.7409 ns |  8.0527 ns | 117.9 ns |       0 B |
+ | **NextDouble** |       **Geometric** |    **Standard** | **138.1 ns** |  **0.3606 ns** |  **0.3011 ns** | **138.1 ns** |       **0 B** |
+ |       Next |       Geometric |    Standard | 140.4 ns |  6.9079 ns | 17.8316 ns | 134.7 ns |       0 B |
+ | **NextDouble** |       **Geometric** | **XorShift128** | **133.2 ns** | **10.3824 ns** | **10.6620 ns** | **130.3 ns** |       **0 B** |
+ |       Next |       Geometric | XorShift128 | 251.7 ns | 26.4673 ns | 78.0394 ns | 295.4 ns |       0 B |
+ | **NextDouble** |         **Poisson** |         **ALF** | **276.0 ns** | **26.6990 ns** | **78.7225 ns** | **320.4 ns** |       **0 B** |
+ |       Next |         Poisson |         ALF | 141.8 ns |  1.4151 ns |  1.1817 ns | 141.4 ns |       0 B |
+ | **NextDouble** |         **Poisson** |     **MT19937** | **160.6 ns** |  **0.2389 ns** |  **0.2235 ns** | **160.6 ns** |       **0 B** |
+ |       Next |         Poisson |     MT19937 | 182.0 ns | 14.8377 ns | 42.5722 ns | 157.9 ns |       0 B |
+ | **NextDouble** |         **Poisson** |         **NR3** | **189.9 ns** | **24.5821 ns** | **72.4807 ns** | **142.0 ns** |       **0 B** |
+ |       Next |         Poisson |         NR3 | 139.8 ns |  1.3770 ns |  1.0751 ns | 139.5 ns |       0 B |
+ | **NextDouble** |         **Poisson** |       **NR3Q1** | **178.7 ns** | **71.5763 ns** | **73.5036 ns** | **139.5 ns** |       **0 B** |
+ |       Next |         Poisson |       NR3Q1 | 140.7 ns |  2.9420 ns |  3.9275 ns | 139.5 ns |       0 B |
+ | **NextDouble** |         **Poisson** |       **NR3Q2** | **274.8 ns** | **27.1575 ns** | **80.0746 ns** | **302.3 ns** |       **0 B** |
+ |       Next |         Poisson |       NR3Q2 | 265.4 ns | 26.8771 ns | 79.2477 ns | 312.5 ns |       0 B |
+ | **NextDouble** |         **Poisson** |    **Standard** | **286.9 ns** | **32.0805 ns** | **94.5900 ns** | **323.0 ns** |       **0 B** |
+ |       Next |         Poisson |    Standard | 288.9 ns | 30.4191 ns | 89.6915 ns | 316.8 ns |       0 B |
+ | **NextDouble** |         **Poisson** | **XorShift128** | **273.9 ns** | **30.1290 ns** | **88.8361 ns** | **298.3 ns** |       **0 B** |
+ |       Next |         Poisson | XorShift128 | 277.5 ns | 29.6678 ns | 87.4762 ns | 312.3 ns |       0 B |
 
 ## About this repository and its maintainer
 
