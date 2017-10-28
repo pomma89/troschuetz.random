@@ -2,6 +2,8 @@
 
 *Fully managed library providing various random number generators and distributions.*
 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ELJWKEYS9QGKA)
+
 ## Summary
 
 * Latest release version: `v4.2.0`
@@ -267,57 +269,54 @@ All benchmarks are implemented with [BenchmarkDotNet](https://github.com/PerfDot
 
 ### Generator comparison
 
-```ini
+``` ini
 
-Host Process Environment Information:
-BenchmarkDotNet.Core=v0.9.9.0
-OS=Microsoft Windows NT 6.2.9200.0
-Processor=AMD A10 Extreme Edition Radeon R8, 4C+8G, ProcessorCount=4
-Frequency=1949469 ticks, Resolution=512.9602 ns, Timer=TSC
-CLR=MS.NET 4.0.30319.42000, Arch=32-bit RELEASE
-GC=Concurrent Workstation
-JitModules=clrjit-v4.6.1586.0
+BenchmarkDotNet=v0.10.9, OS=Windows 7 SP1 (6.1.7601)
+Processor=Intel Xeon CPU E5-2640 0 2.50GHzIntel Xeon CPU E5-2640 0 2.50GHz, ProcessorCount=4
+Frequency=14318180 Hz, Resolution=69.8413 ns, Timer=HPET
+  [Host]    : .NET Framework 4.6.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.2114.0
+  RyuJitX64 : .NET Framework 4.6.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.2114.0
 
-Type=GeneratorComparison  Mode=Throughput  
+Job=RyuJitX64  Jit=RyuJit  Platform=X64  
 
 ```
-       Method |            Generator |        Median |     StdDev | Gen 0 | Gen 1 | Gen 2 | Bytes Allocated/Op |
-------------- |--------------------- |-------------- |----------- |------ |------ |------ |------------------- |
-  **NextBytes64** |         **ALF** |   **401.3753 ns** | **12.6876 ns** |     **-** |     **-** |     **-** |               **0,04** |
- NextBytes128 |         ALF |   536.9896 ns | 13.6032 ns |     - |     - |     - |               0,03 |
-   NextDouble |         ALF |    64.4221 ns |  3.6562 ns |     - |     - |     - |               0,00 |
-     NextUInt |         ALF |    58.9418 ns |  3.2873 ns |     - |     - |     - |               0,00 |
-  NextBoolean |         ALF |    55.6178 ns |  2.7219 ns |     - |     - |     - |               0,00 |
-  **NextBytes64** |     **MT19937** |   **461.2521 ns** | **21.3807 ns** |     **-** |     **-** |     **-** |               **0,23** |
- NextBytes128 |     MT19937 |   648.9628 ns | 31.2974 ns |  4.10 |     - |     - |               0,39 |
-   NextDouble |     MT19937 |    70.0887 ns |  3.7549 ns |     - |     - |     - |               0,02 |
-     NextUInt |     MT19937 |    63.8670 ns |  4.2052 ns |     - |     - |     - |               0,02 |
-  NextBoolean |     MT19937 |    59.8829 ns |  3.4424 ns |     - |     - |     - |               0,00 |
-  **NextBytes64** |         **NR3** |   **581.3656 ns** | **17.8818 ns** |     **-** |     **-** |     **-** |               **0,04** |
- NextBytes128 |         NR3 |   897.1520 ns | 44.5458 ns |     - |     - |     - |               0,07 |
-   NextDouble |         NR3 |    75.0910 ns |  3.6353 ns |     - |     - |     - |               0,00 |
-     NextUInt |         NR3 |    67.1369 ns |  3.0800 ns |     - |     - |     - |               0,00 |
-  NextBoolean |         NR3 |    55.1278 ns |  2.6357 ns |     - |     - |     - |               0,00 |
-  **NextBytes64** |       **NR3Q1** |   **518.8682 ns** | **21.9741 ns** |     **-** |     **-** |     **-** |               **0,03** |
- NextBytes128 |       NR3Q1 |   780.3807 ns | 30.1026 ns |     - |     - |     - |               0,07 |
-   NextDouble |       NR3Q1 |    71.0899 ns |  3.0172 ns |     - |     - |     - |               0,00 |
-     NextUInt |       NR3Q1 |    64.7113 ns |  3.3801 ns |     - |     - |     - |               0,00 |
-  NextBoolean |       NR3Q1 |    55.1773 ns |  1.9266 ns |     - |     - |     - |               0,00 |
-  **NextBytes64** |       **NR3Q2** |   **471.3648 ns** | **13.5829 ns** |     **-** |     **-** |     **-** |               **0,03** |
- NextBytes128 |       NR3Q2 |   692.3409 ns | 16.4802 ns |     - |     - |     - |               0,04 |
-   NextDouble |       NR3Q2 |    68.0224 ns |  3.1411 ns |     - |     - |     - |               0,00 |
-     NextUInt |       NR3Q2 |    60.6154 ns |  2.3698 ns |     - |     - |     - |               0,00 |
-  NextBoolean |       NR3Q2 |    55.1637 ns |  2.3313 ns |     - |     - |     - |               0,00 |
-  **NextBytes64** |    **Standard** | **1,469.9635 ns** | **40.9723 ns** |     **-** |     **-** |     **-** |               **0,08** |
- NextBytes128 |    Standard | 2,706.4343 ns | 75.6779 ns |     - |     - |     - |               0,15 |
-   NextDouble |    Standard |    80.0627 ns |  5.5169 ns |     - |     - |     - |               0,00 |
-     NextUInt |    Standard |   130.6997 ns |  5.3495 ns |     - |     - |     - |               0,01 |
-  NextBoolean |    Standard |    62.2924 ns |  3.2914 ns |     - |     - |     - |               0,00 |
-  **NextBytes64** | **XorShift128** |   **422.0735 ns** | **18.0436 ns** |     **-** |     **-** |     **-** |               **0,03** |
- NextBytes128 | XorShift128 |   605.3578 ns | 24.9150 ns |     - |     - |     - |               0,04 |
-   NextDouble | XorShift128 |    75.9253 ns |  4.5045 ns |     - |     - |     - |               0,00 |
-     NextUInt | XorShift128 |    70.4676 ns |  4.9054 ns |     - |     - |     - |               0,00 |
-  NextBoolean | XorShift128 |    65.5909 ns |  3.0118 ns |     - |     - |     - |               0,00 |
+ |       Method |   Generator |        Mean |       Error |        StdDev |      Median | Allocated |
+ |------------- |------------ |------------:|------------:|--------------:|------------:|----------:|
+ |  **NextBytes64** |         **ALF** |   **204.40 ns** |  **15.1778 ns** |    **43.7913 ns** |   **175.67 ns** |       **0 B** |
+ | NextBytes128 |         ALF |   698.23 ns |  24.8372 ns |    70.0537 ns |   725.99 ns |       0 B |
+ |   NextDouble |         ALF |    73.48 ns |   8.8984 ns |    26.2371 ns |    73.96 ns |       0 B |
+ |     NextUInt |         ALF |    84.17 ns |   8.5350 ns |    25.1658 ns |    93.41 ns |       0 B |
+ |  NextBoolean |         ALF |    83.22 ns |   8.8154 ns |    25.9925 ns |    97.18 ns |       0 B |
+ |  **NextBytes64** |     **MT19937** |   **390.19 ns** |  **42.1964 ns** |   **124.4171 ns** |   **385.31 ns** |       **1 B** |
+ | NextBytes128 |     MT19937 |   572.99 ns |  60.9795 ns |   176.9126 ns |   466.00 ns |       2 B |
+ |   NextDouble |     MT19937 |   106.78 ns |   9.9708 ns |    29.3992 ns |   116.91 ns |       0 B |
+ |     NextUInt |     MT19937 |    89.92 ns |  12.0589 ns |    35.5558 ns |    80.62 ns |       0 B |
+ |  NextBoolean |     MT19937 |   123.84 ns |   1.3634 ns |     1.1385 ns |   123.83 ns |       0 B |
+ |  **NextBytes64** |         **NR3** |   **332.23 ns** |  **30.9759 ns** |    **91.3330 ns** |   **367.56 ns** |       **0 B** |
+ | NextBytes128 |         NR3 |   516.73 ns |  43.8408 ns |   129.2655 ns |   518.97 ns |       0 B |
+ |   NextDouble |         NR3 |    47.71 ns |   0.9843 ns |     1.1335 ns |    47.39 ns |       0 B |
+ |     NextUInt |         NR3 |    46.58 ns |   0.1341 ns |     0.1254 ns |    46.55 ns |       0 B |
+ |  NextBoolean |         NR3 |    81.48 ns |   9.3388 ns |    27.5358 ns |    88.94 ns |       0 B |
+ |  **NextBytes64** |       **NR3Q1** |   **293.89 ns** |  **28.4659 ns** |    **83.9323 ns** |   **341.38 ns** |       **0 B** |
+ | NextBytes128 |       NR3Q1 |   525.39 ns |  48.5404 ns |   143.1226 ns |   597.57 ns |       0 B |
+ |   NextDouble |       NR3Q1 |    80.49 ns |   8.6479 ns |    25.4984 ns |    92.60 ns |       0 B |
+ |     NextUInt |       NR3Q1 |    69.00 ns |   9.0288 ns |    26.6217 ns |    67.20 ns |       0 B |
+ |  NextBoolean |       NR3Q1 |    76.92 ns |   9.0602 ns |    26.7143 ns |    80.57 ns |       0 B |
+ |  **NextBytes64** |       **NR3Q2** |   **268.61 ns** |  **30.4143 ns** |    **89.6772 ns** |   **287.60 ns** |       **0 B** |
+ | NextBytes128 |       NR3Q2 |   501.28 ns |  42.7137 ns |   125.9424 ns |   531.24 ns |       0 B |
+ |   NextDouble |       NR3Q2 |    88.23 ns |   8.2374 ns |    24.2883 ns |    99.62 ns |       0 B |
+ |     NextUInt |       NR3Q2 |    80.96 ns |   8.7471 ns |    25.7910 ns |    90.41 ns |       0 B |
+ |  NextBoolean |       NR3Q2 |    82.56 ns |   8.9897 ns |    26.5062 ns |    86.25 ns |       0 B |
+ |  **NextBytes64** |    **Standard** | **2,024.02 ns** | **209.0748 ns** |   **616.4617 ns** | **2,400.90 ns** |       **0 B** |
+ | NextBytes128 |    Standard | 3,918.49 ns | 366.4296 ns | 1,080.4260 ns | 4,520.70 ns |       0 B |
+ |   NextDouble |    Standard |    63.75 ns |   0.1743 ns |     0.1361 ns |    63.72 ns |       0 B |
+ |     NextUInt |    Standard |   215.26 ns |  20.9545 ns |    61.7849 ns |   249.28 ns |       0 B |
+ |  NextBoolean |    Standard |    94.98 ns |   8.8891 ns |    26.2098 ns |   101.87 ns |       0 B |
+ |  **NextBytes64** | **XorShift128** |   **272.72 ns** |  **30.7428 ns** |    **90.6458 ns** |   **296.95 ns** |       **0 B** |
+ | NextBytes128 | XorShift128 |   484.33 ns |  55.2191 ns |   162.8147 ns |   550.33 ns |       0 B |
+ |   NextDouble | XorShift128 |   101.53 ns |  11.2477 ns |    33.1640 ns |   103.34 ns |       0 B |
+ |     NextUInt | XorShift128 |    61.39 ns |  12.1388 ns |    10.7607 ns |    58.20 ns |       0 B |
+ |  NextBoolean | XorShift128 |   103.31 ns |  10.6770 ns |    31.4813 ns |   102.86 ns |       0 B |
 
 ### Continuous distribution comparison
 
