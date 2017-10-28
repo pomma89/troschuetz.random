@@ -5,6 +5,7 @@
 ## Summary
 
 * Latest release version: `v4.2.0`
+* Build status on [Travis CI](https://travis-ci.org): [![Build Status](https://travis-ci.org/pomma89/Troschuetz.Random.svg?branch=dev-pomma89)](https://travis-ci.org/pomma89/Troschuetz.Random)
 * Build status on [AppVeyor](https://ci.appveyor.com): [![Build status](https://ci.appveyor.com/api/projects/status/nrswa81ug0rsrpyp?svg=true)](https://ci.appveyor.com/project/pomma89/troschuetz-random)
 * [Wyam](https://wyam.io/) generated API documentation: [https://pomma89.github.io/Troschuetz.Random/api/](https://pomma89.github.io/Troschuetz.Random/api/)
 * [NuGet](https://www.nuget.org) package(s):
