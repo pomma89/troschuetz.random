@@ -1,8 +1,8 @@
 # Changelog for Troschuetz.Random #
 
-### v4.2.0 (2017-08-20)
+### v4.2.0 (2017-10-28)
 
-* Added support for .NET Standard 2.0.
+* Added support for .NET Standard 2.0 and .NET Framework 4.7.1.
 * Removed graphical tester from NuGet package.
 
 ### v4.1.3 (2017-01-08)
