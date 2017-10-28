@@ -1,4 +1,6 @@
-#tool nuget:?package=NUnit.ConsoleRunner&version=3.7.0
+#addin "nuget:?package=Cake.Wyam"
+#tool "nuget:?package=NUnit.ConsoleRunner"
+#tool "nuget:?package=Wyam"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -52,12 +54,19 @@ Task("Pack-Release")
     Pack("Release");
 });
 
+Task("Docs")
+    .IsDependentOn("Pack-Release")
+    .Does(() =>
+{
+    Docs();
+});
+
 //////////////////////////////////////////////////////////////////////
 // TASK TARGETS
 //////////////////////////////////////////////////////////////////////
 
 Task("Default")
-    .IsDependentOn("Pack-Release");
+    .IsDependentOn("Docs");
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
@@ -138,4 +147,16 @@ private void Pack(string cfg)
         var packDir = project.GetDirectory().Combine("bin").Combine(cfg);
         MoveFiles(GetFiles(packDir + "/*.nupkg"), ArtifactsDir());
     });
+}
+
+private void Docs()
+{
+    if (IsRunningOnWindows())
+    {
+		Wyam(new WyamSettings()
+		{
+			InputPaths = new DirectoryPath[] { Directory("./pages") },
+			OutputPath = Directory("./docs")
+		});
+    }
 }

@@ -1,28 +1,45 @@
-![](http://pomma89.altervista.org/troschuetz.random/logo-64.png "Troschuetz.Random Logo") Troschuetz.Random
-================================================================================================================================================
+# ![](http://pomma89.altervista.org/troschuetz.random/logo-64.png "Troschuetz.Random Logo") Troschuetz.Random
 
 *Fully managed library providing various random number generators and distributions.*
 
-## Summary ##
+## Summary
 
 * Latest release version: `v4.2.0`
 * Build status on [AppVeyor](https://ci.appveyor.com): [![Build status](https://ci.appveyor.com/api/projects/status/nrswa81ug0rsrpyp?svg=true)](https://ci.appveyor.com/project/pomma89/troschuetz-random)
+* [Wyam](https://wyam.io/) generated API documentation: [https://pomma89.github.io/Troschuetz.Random/api/](https://pomma89.github.io/Troschuetz.Random/api/)
 * [NuGet](https://www.nuget.org) package(s):
     + [Troschuetz.Random](https://nuget.org/packages/Troschuetz.Random/)
 
-## Introduction ##
+### How to build
+
+#### Windows
+
+Clone the project, go to the root and run PowerShell script `build.ps1`. In order for it to work, you need:
+
+* At least Windows 10 Fall Creators Update
+* At least Visual Studio 2017 Update 4
+* .NET Framework 4.7.1 Developer Pack
+* .NET Core 2.0 SDK
+
+#### Linux
+
+Clone the project, go to the root and run Bash script `build.sh`. In order for it to work, you need:
+
+* TODO, still need to make it building reliably.
+
+## Introduction
 
 All the hard work behind this library was done by Stefan Troschütz, and for which I thank him very much. What I have done with his great project, was simply to refactor and improve his code, while offering a new Python-style random class.
 
 Please visit the [page of the original project](http://goo.gl/rN7my) in order to get an overview of the contents of this library. Unluckily, linked article also contains the only documentation available.
 
-## Tester ##
+## Tester
 
 A simple, yet effective, WinForms application is available in order to test the Troschuetz.Random library. As for the rest of the code, that application was completely written by Stefan Troschütz and what I did was simply to adapt it to the new refactored code.
 
 The tester is now distributed on NuGet, embedded inside the main [Troschuetz.Random NuGet package](https://www.nuget.org/packages/Troschuetz.Random/). Just look for the "tester" folder, it contains everything needed to run and play with the tester.
 
-## Basic usage ##
+## Basic usage
 
 See example below to understand how you can use the library:
 
@@ -84,7 +101,7 @@ namespace Troschuetz.Random.Examples
 }
 ```
 
-## Extensibility ##
+## Extensibility
 
 After a request from a user, the library has been modified in order to allow it to be easily extended or modified. 
 
@@ -243,11 +260,11 @@ namespace Troschuetz.Random.Examples
 }
 ```
 
-## Benchmarks ##
+## Benchmarks
 
 All benchmarks are implemented with [BenchmarkDotNet](https://github.com/PerfDotNet/BenchmarkDotNet).
 
-### Generator comparison ###
+### Generator comparison
 
 ```ini
 
@@ -301,7 +318,7 @@ Type=GeneratorComparison  Mode=Throughput
      NextUInt | XorShift128 |    70.4676 ns |  4.9054 ns |     - |     - |     - |               0,00 |
   NextBoolean | XorShift128 |    65.5909 ns |  3.0118 ns |     - |     - |     - |               0,00 |
 
-### Continuous distribution comparison ###
+### Continuous distribution comparison
 
 ```ini
 
@@ -376,7 +393,7 @@ Type=ContinuousDistributionComparison  Mode=Throughput
  **NextDouble** | **XorShift128** |       **Exponential** | **164.0857 ns** |  **6.2893 ns** |     **-** |     **-** |     **-** |               **0,01** |
  **NextDouble** | **XorShift128** |            **Normal** | **217.5251 ns** | **15.5689 ns** |     **-** |     **-** |     **-** |               **0,02** |
 
-### Discrete distribution comparison ###
+### Discrete distribution comparison
 
 ```ini
 
@@ -479,10 +496,12 @@ Type=DiscreteDistributionComparison  Mode=Throughput
  **NextDouble** | **XorShift128** |         **Poisson** | **194.8024 ns** |  **6.0905 ns** |     **-** |     **-** |     **-** |               **0,02** |
        Next | XorShift128 |         Poisson | 195.3065 ns |  9.0045 ns |     - |     - |     - |               0,01 |
 
-## About this repository and its maintainer ##
+## About this repository and its maintainer
 
 Everything done on this repository is freely offered on the terms of the project license. You are free to do everything you want with the code and its related files, as long as you respect the license and use common sense while doing it :-)
 
 I maintain this project during my spare time, so I can offer limited assistance and I can offer **no kind of warranty**.
 
-Development of this project is sponsored by [Finsa SpA](https://www.finsa.it), my current employer.
+However, if this project helps you, then you might offer me an hot cup of coffee:
+
+[![Donate](http://pomma89.altervista.org/buy-me-a-coffee.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ELJWKEYS9QGKA)

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.3
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{48147844-A87B-45D7-A428-1909094301B2}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{48147844-A
 		build.ps1 = build.ps1
 		build.sh = build.sh
 		CHANGELOG.md = CHANGELOG.md
+		config.wyam = config.wyam
 		LICENSE.md = LICENSE.md
 		pomma89.snk = pomma89.snk
 		Random_src.zip = Random_src.zip
@@ -46,7 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{66410BEC
 		tools\packages.config = tools\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Troschuetz.Random.Benchmarks", "test\Troschuetz.Random.Benchmarks\Troschuetz.Random.Benchmarks.csproj", "{B9201484-F681-48CE-9331-CC64A48B75E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Troschuetz.Random.Benchmarks", "test\Troschuetz.Random.Benchmarks\Troschuetz.Random.Benchmarks.csproj", "{B9201484-F681-48CE-9331-CC64A48B75E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

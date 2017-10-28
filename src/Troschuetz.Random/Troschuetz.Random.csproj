@@ -3,11 +3,10 @@
     <AssemblyTitle>Troschuetz.Random - Easy random number generation</AssemblyTitle>
     <VersionPrefix>4.2.0</VersionPrefix>
     <AssemblyVersion>4.0.0</AssemblyVersion>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;net35;net40;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0;netstandard2.0;net35;net40;net45;net461;net471</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>../../pomma89.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet">
@@ -27,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Thrower" Version="4.2.0" />
+    <PackageReference Include="Thrower" Version="4.3.0" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
@@ -48,5 +47,13 @@
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <DefineConstants>$(DefineConstants);NET45;HAS_SERIALIZABLE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <DefineConstants>$(DefineConstants);NET46;HAS_SERIALIZABLE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net471' ">
+    <DefineConstants>$(DefineConstants);NET47;HAS_SERIALIZABLE</DefineConstants>
   </PropertyGroup>
 </Project>
