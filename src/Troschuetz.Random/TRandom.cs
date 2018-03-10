@@ -25,7 +25,6 @@ namespace Troschuetz.Random
     using Distributions.Continuous;
     using Distributions.Discrete;
     using Generators;
-    using PommaLabs.Thrower;
     using System;
     using System.Collections.Generic;
 
@@ -82,8 +81,7 @@ namespace Troschuetz.Random
         /// <exception cref="ArgumentNullException"><paramref name="generator"/> is null.</exception>
         public TRandom(IGenerator generator)
         {
-            Raise.ArgumentNullException.IfIsNull(generator, nameof(generator));
-            Generator = generator;
+            Generator = generator ?? throw new ArgumentNullException(nameof(generator));
         }
 
         /// <summary>
@@ -137,7 +135,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Bernoulli(double alpha)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(BernoulliDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
+            if (BernoulliDistribution.IsValidParam(alpha)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return BernoulliDistribution.Sample(Generator, alpha);
         }
 
@@ -161,7 +159,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> BernoulliSamples(double alpha)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(BernoulliDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
+            if (BernoulliDistribution.IsValidParam(alpha)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(BernoulliDistribution.Sample, Generator, alpha);
         }
 
@@ -189,7 +187,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Binomial(double alpha, int beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(BinomialDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (BinomialDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return BinomialDistribution.Sample(Generator, alpha, beta);
         }
 
@@ -217,7 +215,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> BinomialSamples(double alpha, int beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(BinomialDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (BinomialDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(BinomialDistribution.Sample, Generator, alpha, beta);
         }
 
@@ -242,9 +240,8 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Categorical(int valueCount)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(valueCount > 0, ErrorMessages.InvalidParams);
-            double[] cdf;
-            CategoricalDistribution.SetUp(valueCount, null, out cdf);
+            if (valueCount > 0) throw new ArgumentException(ErrorMessages.InvalidParams);
+            CategoricalDistribution.SetUp(valueCount, null, out double[] cdf);
             return CategoricalDistribution.Sample(Generator, cdf);
         }
 
@@ -269,9 +266,8 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> CategoricalSamples(int valueCount)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(valueCount > 0, ErrorMessages.InvalidParams);
-            double[] cdf;
-            CategoricalDistribution.SetUp(valueCount, null, out cdf);
+            if (valueCount > 0) throw new ArgumentException(ErrorMessages.InvalidParams);
+            CategoricalDistribution.SetUp(valueCount, null, out double[] cdf);
             return InfiniteLoop(CategoricalDistribution.Sample, Generator, cdf);
         }
 
@@ -298,9 +294,8 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Categorical(ICollection<double> weights)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(CategoricalDistribution.IsValidParam(weights), ErrorMessages.InvalidParams);
-            double[] cdf;
-            CategoricalDistribution.SetUp(weights.Count, weights, out cdf);
+            if (CategoricalDistribution.IsValidParam(weights)) throw new ArgumentException(ErrorMessages.InvalidParams);
+            CategoricalDistribution.SetUp(weights.Count, weights, out double[] cdf);
             return CategoricalDistribution.Sample(Generator, cdf);
         }
 
@@ -327,9 +322,8 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> CategoricalSamples(ICollection<double> weights)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(CategoricalDistribution.IsValidParam(weights), ErrorMessages.InvalidParams);
-            double[] cdf;
-            CategoricalDistribution.SetUp(weights.Count, weights, out cdf);
+            if (CategoricalDistribution.IsValidParam(weights)) throw new ArgumentException(ErrorMessages.InvalidParams);
+            CategoricalDistribution.SetUp(weights.Count, weights, out double[] cdf);
             return InfiniteLoop(CategoricalDistribution.Sample, Generator, cdf);
         }
 
@@ -357,7 +351,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int DiscreteUniform(int alpha, int beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(DiscreteUniformDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (DiscreteUniformDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return DiscreteUniformDistribution.Sample(Generator, alpha, beta);
         }
 
@@ -385,7 +379,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> DiscreteUniformSamples(int alpha, int beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(DiscreteUniformDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (DiscreteUniformDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(DiscreteUniformDistribution.Sample, Generator, alpha, beta);
         }
 
@@ -409,7 +403,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Geometric(double alpha)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(GeometricDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
+            if (GeometricDistribution.IsValidParam(alpha)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return GeometricDistribution.Sample(Generator, alpha);
         }
 
@@ -433,7 +427,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> GeometricSamples(double alpha)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(GeometricDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
+            if (GeometricDistribution.IsValidParam(alpha)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(GeometricDistribution.Sample, Generator, alpha);
         }
 
@@ -457,7 +451,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Poisson(double lambda)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(PoissonDistribution.IsValidParam(lambda), ErrorMessages.InvalidParams);
+            if (PoissonDistribution.IsValidParam(lambda)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return PoissonDistribution.Sample(Generator, lambda);
         }
 
@@ -481,7 +475,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> PoissonSamples(double lambda)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(PoissonDistribution.IsValidParam(lambda), ErrorMessages.InvalidParams);
+            if (PoissonDistribution.IsValidParam(lambda)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(PoissonDistribution.Sample, Generator, lambda);
         }
 
@@ -512,7 +506,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Beta(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(BetaDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (BetaDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return BetaDistribution.Sample(Generator, alpha, beta);
         }
 
@@ -539,7 +533,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> BetaSamples(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(BetaDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (BetaDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(BetaDistribution.Sample, Generator, alpha, beta);
         }
 
@@ -566,7 +560,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double BetaPrime(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(BetaPrimeDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (BetaPrimeDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return BetaPrimeDistribution.Sample(Generator, alpha, beta);
         }
 
@@ -595,7 +589,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> BetaPrimeSamples(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(BetaPrimeDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (BetaPrimeDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(BetaPrimeDistribution.Sample, Generator, alpha, beta);
         }
 
@@ -622,7 +616,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Cauchy(double alpha, double gamma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(CauchyDistribution.AreValidParams(alpha, gamma), ErrorMessages.InvalidParams);
+            if (CauchyDistribution.AreValidParams(alpha, gamma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return CauchyDistribution.Sample(Generator, alpha, gamma);
         }
 
@@ -649,7 +643,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> CauchySamples(double alpha, double gamma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(CauchyDistribution.AreValidParams(alpha, gamma), ErrorMessages.InvalidParams);
+            if (CauchyDistribution.AreValidParams(alpha, gamma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(CauchyDistribution.Sample, Generator, alpha, gamma);
         }
 
@@ -673,7 +667,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Chi(int alpha)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ChiDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
+            if (ChiDistribution.IsValidParam(alpha)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return ChiDistribution.Sample(Generator, alpha);
         }
 
@@ -697,7 +691,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ChiSamples(int alpha)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ChiDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
+            if (ChiDistribution.IsValidParam(alpha)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(ChiDistribution.Sample, Generator, alpha);
         }
 
@@ -721,7 +715,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double ChiSquare(int alpha)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ChiSquareDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
+            if (ChiSquareDistribution.IsValidParam(alpha)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return ChiSquareDistribution.Sample(Generator, alpha);
         }
 
@@ -747,7 +741,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ChiSquareSamples(int alpha)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ChiSquareDistribution.IsValidParam(alpha), ErrorMessages.InvalidParams);
+            if (ChiSquareDistribution.IsValidParam(alpha)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(ChiSquareDistribution.Sample, Generator, alpha);
         }
 
@@ -776,7 +770,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double ContinuousUniform(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ContinuousUniformDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (ContinuousUniformDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return ContinuousUniformDistribution.Sample(Generator, alpha, beta);
         }
 
@@ -807,7 +801,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ContinuousUniformSamples(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ContinuousUniformDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (ContinuousUniformDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(ContinuousUniformDistribution.Sample, Generator, alpha, beta);
         }
 
@@ -834,7 +828,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Erlang(int alpha, double lambda)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ErlangDistribution.AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
+            if (ErlangDistribution.AreValidParams(alpha, lambda)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return ErlangDistribution.Sample(Generator, alpha, lambda);
         }
 
@@ -861,7 +855,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ErlangSamples(int alpha, double lambda)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ErlangDistribution.AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
+            if (ErlangDistribution.AreValidParams(alpha, lambda)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(ErlangDistribution.Sample, Generator, alpha, lambda);
         }
 
@@ -885,7 +879,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Exponential(double lambda)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ExponentialDistribution.IsValidParam(lambda), ErrorMessages.InvalidParams);
+            if (ExponentialDistribution.IsValidParam(lambda)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return ExponentialDistribution.Sample(Generator, lambda);
         }
 
@@ -911,7 +905,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ExponentialSamples(double lambda)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ExponentialDistribution.IsValidParam(lambda), ErrorMessages.InvalidParams);
+            if (ExponentialDistribution.IsValidParam(lambda)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(ExponentialDistribution.Sample, Generator, lambda);
         }
 
@@ -938,7 +932,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double FisherSnedecor(int alpha, int beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(FisherSnedecorDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (FisherSnedecorDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return FisherSnedecorDistribution.Sample(Generator, alpha, beta);
         }
 
@@ -967,7 +961,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> FisherSnedecorSamples(int alpha, int beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(FisherSnedecorDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (FisherSnedecorDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(FisherSnedecorDistribution.Sample, Generator, alpha, beta);
         }
 
@@ -994,7 +988,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double FisherTippett(double alpha, double mu)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(FisherTippettDistribution.AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
+            if (FisherTippettDistribution.AreValidParams(alpha, mu)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return FisherTippettDistribution.Sample(Generator, alpha, mu);
         }
 
@@ -1023,7 +1017,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> FisherTippettSamples(double alpha, double mu)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(FisherTippettDistribution.AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
+            if (FisherTippettDistribution.AreValidParams(alpha, mu)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(FisherTippettDistribution.Sample, Generator, alpha, mu);
         }
 
@@ -1050,7 +1044,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Gamma(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(GammaDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (GammaDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return GammaDistribution.Sample(Generator, alpha, beta);
         }
 
@@ -1077,7 +1071,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> GammaSamples(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(GammaDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (GammaDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(GammaDistribution.Sample, Generator, alpha, beta);
         }
 
@@ -1104,7 +1098,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Laplace(double alpha, double mu)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(LaplaceDistribution.AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
+            if (LaplaceDistribution.AreValidParams(alpha, mu)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return LaplaceDistribution.Sample(Generator, alpha, mu);
         }
 
@@ -1131,7 +1125,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> LaplaceSamples(double alpha, double mu)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(LaplaceDistribution.AreValidParams(alpha, mu), ErrorMessages.InvalidParams);
+            if (LaplaceDistribution.AreValidParams(alpha, mu)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(LaplaceDistribution.Sample, Generator, alpha, mu);
         }
 
@@ -1158,7 +1152,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Logistic(double mu, double sigma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(LogisticDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            if (LogisticDistribution.AreValidParams(mu, sigma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return LogisticDistribution.Sample(Generator, mu, sigma);
         }
 
@@ -1185,7 +1179,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> LogisticSamples(double mu, double sigma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(LogisticDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            if (LogisticDistribution.AreValidParams(mu, sigma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(LogisticDistribution.Sample, Generator, mu, sigma);
         }
 
@@ -1212,7 +1206,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Lognormal(double mu, double sigma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(LognormalDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            if (LognormalDistribution.AreValidParams(mu, sigma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return LognormalDistribution.Sample(Generator, mu, sigma);
         }
 
@@ -1241,7 +1235,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> LognormalSamples(double mu, double sigma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(LognormalDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            if (LognormalDistribution.AreValidParams(mu, sigma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(LognormalDistribution.Sample, Generator, mu, sigma);
         }
 
@@ -1268,7 +1262,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Normal(double mu, double sigma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(NormalDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            if (NormalDistribution.AreValidParams(mu, sigma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return NormalDistribution.Sample(Generator, mu, sigma);
         }
 
@@ -1295,7 +1289,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> NormalSamples(double mu, double sigma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(NormalDistribution.AreValidParams(mu, sigma), ErrorMessages.InvalidParams);
+            if (NormalDistribution.AreValidParams(mu, sigma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(NormalDistribution.Sample, Generator, mu, sigma);
         }
 
@@ -1322,7 +1316,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Pareto(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ParetoDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (ParetoDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return ParetoDistribution.Sample(Generator, alpha, beta);
         }
 
@@ -1349,7 +1343,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> ParetoSamples(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(ParetoDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (ParetoDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(ParetoDistribution.Sample, Generator, alpha, beta);
         }
 
@@ -1376,7 +1370,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Power(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(PowerDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (PowerDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return PowerDistribution.Sample(Generator, alpha, beta);
         }
 
@@ -1403,7 +1397,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> PowerSamples(double alpha, double beta)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(PowerDistribution.AreValidParams(alpha, beta), ErrorMessages.InvalidParams);
+            if (PowerDistribution.AreValidParams(alpha, beta)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(PowerDistribution.Sample, Generator, alpha, beta);
         }
 
@@ -1427,7 +1421,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Rayleigh(double sigma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(RayleighDistribution.IsValidParam(sigma), ErrorMessages.InvalidParams);
+            if (RayleighDistribution.IsValidParam(sigma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return RayleighDistribution.Sample(Generator, sigma);
         }
 
@@ -1451,7 +1445,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> RayleighSamples(double sigma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(RayleighDistribution.IsValidParam(sigma), ErrorMessages.InvalidParams);
+            if (RayleighDistribution.IsValidParam(sigma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(RayleighDistribution.Sample, Generator, sigma);
         }
 
@@ -1475,7 +1469,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double StudentsT(int nu)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(StudentsTDistribution.IsValidParam(nu), ErrorMessages.InvalidParams);
+            if (StudentsTDistribution.IsValidParam(nu)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return StudentsTDistribution.Sample(Generator, nu);
         }
 
@@ -1501,7 +1495,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> StudentsTSamples(int nu)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(StudentsTDistribution.IsValidParam(nu), ErrorMessages.InvalidParams);
+            if (StudentsTDistribution.IsValidParam(nu)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(StudentsTDistribution.Sample, Generator, nu);
         }
 
@@ -1533,7 +1527,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Triangular(double alpha, double beta, double gamma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(TriangularDistribution.AreValidParams(alpha, beta, gamma), ErrorMessages.InvalidParams);
+            if (TriangularDistribution.AreValidParams(alpha, beta, gamma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return TriangularDistribution.Sample(Generator, alpha, beta, gamma);
         }
 
@@ -1567,7 +1561,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> TriangularSamples(double alpha, double beta, double gamma)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(TriangularDistribution.AreValidParams(alpha, beta, gamma), ErrorMessages.InvalidParams);
+            if (TriangularDistribution.AreValidParams(alpha, beta, gamma)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(TriangularDistribution.Sample, Generator, alpha, beta, gamma);
         }
 
@@ -1594,7 +1588,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public double Weibull(double alpha, double lambda)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(WeibullDistribution.AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
+            if (WeibullDistribution.AreValidParams(alpha, lambda)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return WeibullDistribution.Sample(Generator, alpha, lambda);
         }
 
@@ -1621,7 +1615,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<double> WeibullSamples(double alpha, double lambda)
         {
-            Raise.ArgumentOutOfRangeException.IfNot(WeibullDistribution.AreValidParams(alpha, lambda), ErrorMessages.InvalidParams);
+            if (WeibullDistribution.AreValidParams(alpha, lambda)) throw new ArgumentException(ErrorMessages.InvalidParams);
             return InfiniteLoop(WeibullDistribution.Sample, Generator, alpha, lambda);
         }
 
