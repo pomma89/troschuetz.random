@@ -128,7 +128,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             get { return _alpha; }
             set
             {
-                Raise.ArgumentOutOfRangeException.IfNot(IsValidAlpha(value), nameof(Alpha), ErrorMessages.InvalidParams);
+                if (IsValidAlpha(value)) throw new ArgumentOutOfRangeException(nameof(Alpha), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -224,7 +224,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         public GeometricDistribution(IGenerator generator, double alpha) : base(generator)
         {
             var vp = IsValidParam;
-            Raise.ArgumentOutOfRangeException.IfNot(vp(alpha), nameof(alpha), ErrorMessages.InvalidParams);
+            if (vp(alpha)) throw new ArgumentOutOfRangeException(nameof(alpha), ErrorMessages.InvalidParams);
             _alpha = alpha;
         }
 

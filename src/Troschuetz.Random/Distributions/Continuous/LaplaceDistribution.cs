@@ -81,7 +81,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                Raise.ArgumentOutOfRangeException.IfNot(IsValidAlpha(value), nameof(Alpha), ErrorMessages.InvalidParams);
+                if (IsValidAlpha(value)) throw new ArgumentOutOfRangeException(nameof(Alpha), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -101,7 +101,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _mu; }
             set
             {
-                Raise.ArgumentOutOfRangeException.IfNot(IsValidMu(value), nameof(Mu), ErrorMessages.InvalidParams);
+                if (IsValidMu(value)) throw new ArgumentOutOfRangeException(nameof(Mu), ErrorMessages.InvalidParams);
                 _mu = value;
             }
         }
@@ -211,7 +211,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public LaplaceDistribution(IGenerator generator, double alpha, double mu) : base(generator)
         {
             var vp = AreValidParams;
-            Raise.ArgumentOutOfRangeException.IfNot(vp(alpha, mu), $"{nameof(alpha)}/{nameof(mu)}", ErrorMessages.InvalidParams);
+            if (vp(alpha, mu)) throw new ArgumentOutOfRangeException($"{nameof(alpha)}/{nameof(mu)}", ErrorMessages.InvalidParams);
             _alpha = alpha;
             _mu = mu;
         }
