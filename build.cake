@@ -1,6 +1,6 @@
-#addin "nuget:?package=Cake.Wyam"
-#tool "nuget:?package=NUnit.ConsoleRunner"
-#tool "nuget:?package=Wyam"
+#addin "nuget:?package=Cake.Wyam&version=1.3.0"
+#tool "nuget:?package=GitVersion.CommandLine&version=3.6.5"
+#tool "nuget:?package=Wyam&version=1.3.0"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -33,8 +33,15 @@ Task("Restore")
     Restore();
 });
 
-Task("Build-Debug")
+Task("Version")
     .IsDependentOn("Restore")
+    .Does(() =>
+{
+    Version();
+});
+
+Task("Build-Debug")
+    .IsDependentOn("Version")
     .Does(() => 
 {
     Build("Debug");
@@ -95,6 +102,35 @@ private void Restore()
     });
 }
 
+private void Version()
+{
+    var versionInfo = GitVersion();
+    var buildVersion = EnvironmentVariable("APPVEYOR_BUILD_NUMBER") ?? "0";
+    var nuGetVersion = versionInfo.NuGetVersion;
+    var assemblyVersion =  versionInfo.Major + ".0.0.0";
+    var fileVersion = versionInfo.MajorMinorPatch + "." + buildVersion;
+    var informationalVersion = versionInfo.FullSemVer;
+
+    Information("BuildVersion: " + buildVersion);
+    Information("Version: " + nuGetVersion);
+    Information("AssemblyVersion: " + assemblyVersion);
+    Information("FileVersion: " + fileVersion);
+    Information("InformationalVersion: " + informationalVersion);
+
+    if (AppVeyor.IsRunningOnAppVeyor)
+    {
+        AppVeyor.UpdateBuildVersion(informationalVersion + ".build." + buildVersion);
+    }
+
+    Information("Updating Directory.Build.props...");
+
+    var dbp = File("./src/Directory.Build.props");
+    XmlPoke(dbp, "/Project/PropertyGroup/Version", nuGetVersion);
+    XmlPoke(dbp, "/Project/PropertyGroup/AssemblyVersion", assemblyVersion);
+    XmlPoke(dbp, "/Project/PropertyGroup/FileVersion", fileVersion);
+    XmlPoke(dbp, "/Project/PropertyGroup/InformationalVersion", informationalVersion);
+}
+
 private void Build(string cfg)
 {
     //DotNetCoreBuild(SolutionFile(), new DotNetCoreBuildSettings
@@ -108,6 +144,9 @@ private void Build(string cfg)
         settings.SetConfiguration(cfg);
         settings.SetMaxCpuCount(0);
         settings.SetVerbosity(Verbosity.Quiet);
+        settings.WithTarget("rebuild");
+        settings.WithProperty("SourceLinkCreate", new[] { "true" });
+        settings.WithProperty("SourceLinkTest", new[] { "true" });
         if (!IsRunningOnWindows())
         { 
             // Hack for Linux bug - Missing MSBuild path.
@@ -135,8 +174,6 @@ private void Pack(string cfg)
             settings.SetMaxCpuCount(0);
             settings.SetVerbosity(Verbosity.Quiet);
             settings.WithTarget("pack");
-            settings.WithProperty("IncludeSource", new[] { "true" });
-            settings.WithProperty("IncludeSymbols", new[] { "true" });
             if (!IsRunningOnWindows())
             { 
                 // Hack for Linux bug - Missing MSBuild path.
@@ -153,10 +190,11 @@ private void Docs()
 {
     if (IsRunningOnWindows())
     {
-		Wyam(new WyamSettings()
-		{
-			InputPaths = new DirectoryPath[] { Directory("./pages") },
-			OutputPath = Directory("./docs")
-		});
+        Wyam(new WyamSettings()
+        {
+            InputPaths = new DirectoryPath[] { Directory("./pages") },
+            OutputPath = Directory("./docs"),
+            UpdatePackages = true
+        });
     }
 }
