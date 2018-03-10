@@ -1,5 +1,10 @@
 # Changelog for Troschuetz.Random #
 
+### v4.3.0 (2018-03-11)
+
+* Removed DLL compiled for .NET 4.7.1, it is not necessary.
+* Removed dependency on Thrower.
+
 ### v4.2.0 (2017-10-28)
 
 * Added support for .NET Standard 2.0 and .NET Framework 4.7.1.

@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/test/Troschuetz.Random.Benchmarks/Troschuetz.Random.Benchmarks.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
