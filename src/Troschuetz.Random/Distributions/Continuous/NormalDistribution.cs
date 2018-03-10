@@ -77,7 +77,6 @@ namespace Troschuetz.Random.Distributions.Continuous
 {
     using Core;
     using Generators;
-    using PommaLabs.Thrower;
     using System;
     using System.Diagnostics;
 

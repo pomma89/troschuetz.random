@@ -1865,4 +1865,16 @@ namespace Troschuetz.Random
 
         #endregion Private Members
     }
+
+#if NETSTD10
+
+    /// <summary>
+    ///   Stub.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public sealed class SerializableAttribute : Attribute
+    {
+    }
+
+#endif
 }

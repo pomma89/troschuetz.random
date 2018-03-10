@@ -44,7 +44,6 @@ namespace Troschuetz.Random.Distributions.Discrete
 {
     using Core;
     using Generators;
-    using PommaLabs.Thrower;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;

@@ -25,10 +25,6 @@
     <RepositoryUrl>https://github.com/pomma89/Troschuetz.Random</RepositoryUrl>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Thrower" Version="4.3.0" />
-  </ItemGroup>
-
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
     <DefineConstants>$(DefineConstants);NETSTD10</DefineConstants>
   </PropertyGroup>
