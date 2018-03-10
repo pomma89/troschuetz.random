@@ -2,10 +2,10 @@
 
 <Project>
   <PropertyGroup>
-    <Version>4.2.0</Version>
+    <Version>4.3.0</Version>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <FileVersion>4.2.0.0</FileVersion>
-    <InformationalVersion>4.2.0+0</InformationalVersion>
+    <FileVersion>4.3.0.0</FileVersion>
+    <InformationalVersion>4.3.0+0</InformationalVersion>
     <DebugType>embedded</DebugType>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
