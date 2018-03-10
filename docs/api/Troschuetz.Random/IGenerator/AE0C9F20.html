@@ -80,7 +80,8 @@
 </div>
 
                 </section>
-                <section class="sidebar">                    
+                <section class="sidebar">    
+                                     
                     	
 	    <script src="/Troschuetz.Random/assets/js/lunr.min.js"></script>
     <script src="/Troschuetz.Random/assets/js/searchIndex.js"></script>
@@ -155,11 +156,13 @@
 				<li><a href="/Troschuetz.Random/api/Troschuetz.Random/IGenerator/F8FC47A5">NextUInt<wbr>(uint)<wbr></a></li>
 				<li><a href="/Troschuetz.Random/api/Troschuetz.Random/IGenerator/BBEABCE3">NextUInt<wbr>(uint, <wbr>uint)<wbr></a></li>
 				<li><a href="/Troschuetz.Random/api/Troschuetz.Random/IGenerator/06F9B088">Next<wbr>U<wbr>Int<wbr>Exclusive<wbr>Max<wbr>Value<wbr>()<wbr></a></li>
+				<li><a href="/Troschuetz.Random/api/Troschuetz.Random/IGenerator/2DC61EA8">Next<wbr>U<wbr>Int<wbr>Inclusive<wbr>Max<wbr>Value<wbr>()<wbr></a></li>
 				<li><a href="/Troschuetz.Random/api/Troschuetz.Random/IGenerator/CB55B3B7">Reset<wbr>()<wbr></a></li>
 				<li><a href="/Troschuetz.Random/api/Troschuetz.Random/IGenerator/D0AA206C">Reset<wbr>(uint)<wbr></a></li>
 
 
                     </ul>
+                            
                 </section>                
             </aside>
             
@@ -216,8 +219,8 @@
 				<tbody><tr>
 					<td>uint</td>
 					<td>
-      A 32-bit unsigned integer greater than or equal to <code class="cs">System.UInt32.MinValue</code> and less
-      than or equal to <code class="cs">System.UInt32.MaxValue</code>.
+      A 32-bit unsigned integer greater than or equal to 0, and less than or equal to
+      <code class="cs">System.UInt32.MaxValue</code>; that is, the range of return values includes 0 and <code class="cs">System.UInt32.MaxValue</code>.
     </td>
 				</tr>
 			</tbody></table>

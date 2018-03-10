@@ -34,134 +34,6 @@ var searchModule = function() {
 
     a({
         id:0,
-        title:"IGammaDistribution",
-        content:"IGammaDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:1,
-        title:"StudentsTDistribution",
-        content:"StudentsTDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:2,
-        title:"IContinuousDistribution",
-        content:"IContinuousDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:3,
-        title:"MT Generator",
-        content:"MT Generator",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:4,
-        title:"BetaPrimeDistribution",
-        content:"BetaPrimeDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:5,
-        title:"ErlangDistribution",
-        content:"ErlangDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:6,
-        title:"FisherSnedecorDistribution",
-        content:"FisherSnedecorDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:7,
-        title:"IMuDistribution",
-        content:"IMuDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:8,
-        title:"ISigmaDistribution",
-        content:"ISigmaDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:9,
-        title:"ILambdaDistribution",
-        content:"ILambdaDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:10,
-        title:"ALFGenerator",
-        content:"ALFGenerator",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:11,
-        title:"AbstractDistribution",
-        content:"AbstractDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:12,
-        title:"CauchyDistribution",
-        content:"CauchyDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:13,
-        title:"AbstractGenerator",
-        content:"AbstractGenerator",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:14,
-        title:"BetaDistribution",
-        content:"BetaDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:15,
-        title:"IThetaDistribution",
-        content:"IThetaDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:16,
         title:"CategoricalDistribution",
         content:"CategoricalDistribution",
         description:'',
@@ -169,15 +41,47 @@ var searchModule = function() {
     });
 
     a({
-        id:17,
-        title:"DiscreteUniformDistribution",
-        content:"DiscreteUniformDistribution",
+        id:1,
+        title:"AbstractGenerator",
+        content:"AbstractGenerator",
         description:'',
         tags:''
     });
 
     a({
-        id:18,
+        id:2,
+        title:"WeibullDistribution",
+        content:"WeibullDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:3,
+        title:"PowerDistribution",
+        content:"PowerDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:4,
+        title:"PoissonDistribution",
+        content:"PoissonDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:5,
+        title:"GammaDistribution",
+        content:"GammaDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:6,
         title:"IDistribution",
         content:"IDistribution",
         description:'',
@@ -185,23 +89,95 @@ var searchModule = function() {
     });
 
     a({
-        id:19,
-        title:"ParetoDistribution",
-        content:"ParetoDistribution",
+        id:7,
+        title:"ExponentialDistribution",
+        content:"ExponentialDistribution",
         description:'',
         tags:''
     });
 
     a({
-        id:20,
-        title:"NormalDistribution",
-        content:"NormalDistribution",
+        id:8,
+        title:"NR Generator",
+        content:"NR Generator",
         description:'',
         tags:''
     });
 
     a({
-        id:21,
+        id:9,
+        title:"IAlphaDistribution",
+        content:"IAlphaDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:10,
+        title:"BetaDistribution",
+        content:"BetaDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:11,
+        title:"RayleighDistribution",
+        content:"RayleighDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:12,
+        title:"NR Generator",
+        content:"NR Generator",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:13,
+        title:"LognormalDistribution",
+        content:"LognormalDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:14,
+        title:"IContinuousDistribution",
+        content:"IContinuousDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:15,
+        title:"XorShift Generator",
+        content:"XorShift Generator",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:16,
+        title:"ChiDistribution",
+        content:"ChiDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:17,
+        title:"IDiscreteDistribution",
+        content:"IDiscreteDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:18,
         title:"INuDistribution",
         content:"INuDistribution",
         description:'',
@@ -209,9 +185,33 @@ var searchModule = function() {
     });
 
     a({
+        id:19,
+        title:"Extensions",
+        content:"Extensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:20,
+        title:"IGenerator",
+        content:"IGenerator",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:21,
+        title:"BinomialDistribution",
+        content:"BinomialDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
         id:22,
-        title:"LogisticDistribution",
-        content:"LogisticDistribution",
+        title:"IGammaDistribution",
+        content:"IGammaDistribution",
         description:'',
         tags:''
     });
@@ -226,14 +226,30 @@ var searchModule = function() {
 
     a({
         id:24,
-        title:"XorShift Generator",
-        content:"XorShift Generator",
+        title:"ParetoDistribution",
+        content:"ParetoDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:25,
+        title:"AbstractDistribution",
+        content:"AbstractDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:26,
+        title:"StudentsTDistribution",
+        content:"StudentsTDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:27,
         title:"LaplaceDistribution",
         content:"LaplaceDistribution",
         description:'',
@@ -241,113 +257,97 @@ var searchModule = function() {
     });
 
     a({
-        id:26,
-        title:"ExponentialDistribution",
-        content:"ExponentialDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:27,
-        title:"BinomialDistribution",
-        content:"BinomialDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
         id:28,
-        title:"TRandom",
-        content:"TRandom",
+        title:"NormalDistribution",
+        content:"NormalDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:29,
-        title:"IDiscreteDistribution",
-        content:"IDiscreteDistribution",
+        title:"ChiSquareDistribution",
+        content:"ChiSquareDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:30,
-        title:"NR Generator",
-        content:"NR Generator",
+        title:"ILambdaDistribution",
+        content:"ILambdaDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:31,
-        title:"PowerDistribution",
-        content:"PowerDistribution",
+        title:"CauchyDistribution",
+        content:"CauchyDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:32,
-        title:"BernoulliDistribution",
-        content:"BernoulliDistribution",
+        title:"StandardGenerator",
+        content:"StandardGenerator",
         description:'',
         tags:''
     });
 
     a({
         id:33,
-        title:"IAlphaDistribution",
-        content:"IAlphaDistribution",
+        title:"IThetaDistribution",
+        content:"IThetaDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:34,
-        title:"WeibullDistribution",
-        content:"WeibullDistribution",
+        title:"BetaPrimeDistribution",
+        content:"BetaPrimeDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:35,
-        title:"NR Generator",
-        content:"NR Generator",
+        title:"TMath",
+        content:"TMath",
         description:'',
         tags:''
     });
 
     a({
         id:36,
-        title:"GammaDistribution",
-        content:"GammaDistribution",
+        title:"LogisticDistribution",
+        content:"LogisticDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:37,
-        title:"GeometricDistribution",
-        content:"GeometricDistribution",
+        title:"DiscreteUniformDistribution",
+        content:"DiscreteUniformDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:38,
-        title:"IGenerator",
-        content:"IGenerator",
+        title:"ALFGenerator",
+        content:"ALFGenerator",
         description:'',
         tags:''
     });
 
     a({
         id:39,
-        title:"Extensions",
-        content:"Extensions",
+        title:"IMuDistribution",
+        content:"IMuDistribution",
         description:'',
         tags:''
     });
@@ -362,46 +362,30 @@ var searchModule = function() {
 
     a({
         id:41,
-        title:"StandardGenerator",
-        content:"StandardGenerator",
+        title:"FisherTippettDistribution",
+        content:"FisherTippettDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:42,
-        title:"TriangularDistribution",
-        content:"TriangularDistribution",
+        title:"GeometricDistribution",
+        content:"GeometricDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:43,
-        title:"TMath",
-        content:"TMath",
+        title:"MT Generator",
+        content:"MT Generator",
         description:'',
         tags:''
     });
 
     a({
         id:44,
-        title:"RayleighDistribution",
-        content:"RayleighDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:45,
-        title:"PoissonDistribution",
-        content:"PoissonDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:46,
         title:"ContinuousUniformDistribution",
         content:"ContinuousUniformDistribution",
         description:'',
@@ -409,23 +393,47 @@ var searchModule = function() {
     });
 
     a({
+        id:45,
+        title:"FisherSnedecorDistribution",
+        content:"FisherSnedecorDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:46,
+        title:"TriangularDistribution",
+        content:"TriangularDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
         id:47,
-        title:"ChiDistribution",
-        content:"ChiDistribution",
+        title:"ISigmaDistribution",
+        content:"ISigmaDistribution",
         description:'',
         tags:''
     });
 
     a({
         id:48,
-        title:"ChiSquareDistribution",
-        content:"ChiSquareDistribution",
+        title:"TRandom",
+        content:"TRandom",
         description:'',
         tags:''
     });
 
     a({
         id:49,
+        title:"ErlangDistribution",
+        content:"ErlangDistribution",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:50,
         title:"NR Generator",
         content:"NR Generator",
         description:'',
@@ -433,96 +441,16 @@ var searchModule = function() {
     });
 
     a({
-        id:50,
-        title:"LognormalDistribution",
-        content:"LognormalDistribution",
-        description:'',
-        tags:''
-    });
-
-    a({
         id:51,
-        title:"FisherTippettDistribution",
-        content:"FisherTippettDistribution",
+        title:"BernoulliDistribution",
+        content:"BernoulliDistribution",
         description:'',
         tags:''
     });
 
     y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/IGammaDistribution_1',
-        title:"IGammaDistribution<TNum>",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/StudentsTDistribution',
-        title:"StudentsTDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/IContinuousDistribution',
-        title:"IContinuousDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/MT19937Generator',
-        title:"MT19937Generator",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/BetaPrimeDistribution',
-        title:"BetaPrimeDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ErlangDistribution',
-        title:"ErlangDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/FisherSnedecorDistribution',
-        title:"FisherSnedecorDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/IMuDistribution_1',
-        title:"IMuDistribution<TNum>",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/ISigmaDistribution_1',
-        title:"ISigmaDistribution<TNum>",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/ILambdaDistribution_1',
-        title:"ILambdaDistribution<TNum>",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/ALFGenerator',
-        title:"ALFGenerator",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions/AbstractDistribution',
-        title:"AbstractDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/CauchyDistribution',
-        title:"CauchyDistribution",
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/CategoricalDistribution',
+        title:"CategoricalDistribution",
         description:""
     });
 
@@ -533,104 +461,8 @@ var searchModule = function() {
     });
 
     y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/BetaDistribution',
-        title:"BetaDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/IThetaDistribution_1',
-        title:"IThetaDistribution<TNum>",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/CategoricalDistribution',
-        title:"CategoricalDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/DiscreteUniformDistribution',
-        title:"DiscreteUniformDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/IDistribution',
-        title:"IDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ParetoDistribution',
-        title:"ParetoDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/NormalDistribution',
-        title:"NormalDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/INuDistribution_1',
-        title:"INuDistribution<TNum>",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/LogisticDistribution',
-        title:"LogisticDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/IWeightsDistribution_1',
-        title:"IWeightsDistribution<T>",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/XorShift128Generator',
-        title:"XorShift128Generator",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/LaplaceDistribution',
-        title:"LaplaceDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ExponentialDistribution',
-        title:"ExponentialDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/BinomialDistribution',
-        title:"BinomialDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/TRandom',
-        title:"TRandom",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/IDiscreteDistribution',
-        title:"IDiscreteDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/NR3Q2Generator',
-        title:"NR3Q2Generator",
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/WeibullDistribution',
+        title:"WeibullDistribution",
         description:""
     });
 
@@ -641,26 +473,8 @@ var searchModule = function() {
     });
 
     y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/BernoulliDistribution',
-        title:"BernoulliDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/IAlphaDistribution_1',
-        title:"IAlphaDistribution<TNum>",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/WeibullDistribution',
-        title:"WeibullDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/NR3Q1Generator',
-        title:"NR3Q1Generator",
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/PoissonDistribution',
+        title:"PoissonDistribution",
         description:""
     });
 
@@ -671,74 +485,38 @@ var searchModule = function() {
     });
 
     y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/GeometricDistribution',
-        title:"GeometricDistribution",
+        url:'/Troschuetz.Random/api/Troschuetz.Random/IDistribution',
+        title:"IDistribution",
         description:""
     });
 
     y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/IGenerator',
-        title:"IGenerator",
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ExponentialDistribution',
+        title:"ExponentialDistribution",
         description:""
     });
 
     y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/Extensions',
-        title:"Extensions",
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/NR3Q1Generator',
+        title:"NR3Q1Generator",
         description:""
     });
 
     y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/IBetaDistribution_1',
-        title:"IBetaDistribution<TNum>",
+        url:'/Troschuetz.Random/api/Troschuetz.Random/IAlphaDistribution_1',
+        title:"IAlphaDistribution<TNum>",
         description:""
     });
 
     y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/StandardGenerator',
-        title:"StandardGenerator",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/TriangularDistribution',
-        title:"TriangularDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random/TMath',
-        title:"TMath",
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/BetaDistribution',
+        title:"BetaDistribution",
         description:""
     });
 
     y({
         url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/RayleighDistribution',
         title:"RayleighDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/PoissonDistribution',
-        title:"PoissonDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ContinuousUniformDistribution',
-        title:"ContinuousUniformDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ChiDistribution',
-        title:"ChiDistribution",
-        description:""
-    });
-
-    y({
-        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ChiSquareDistribution',
-        title:"ChiSquareDistribution",
         description:""
     });
 
@@ -755,8 +533,230 @@ var searchModule = function() {
     });
 
     y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/IContinuousDistribution',
+        title:"IContinuousDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/XorShift128Generator',
+        title:"XorShift128Generator",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ChiDistribution',
+        title:"ChiDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/IDiscreteDistribution',
+        title:"IDiscreteDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/INuDistribution_1',
+        title:"INuDistribution<TNum>",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/Extensions',
+        title:"Extensions",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/IGenerator',
+        title:"IGenerator",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/BinomialDistribution',
+        title:"BinomialDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/IGammaDistribution_1',
+        title:"IGammaDistribution<TNum>",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/IWeightsDistribution_1',
+        title:"IWeightsDistribution<T>",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ParetoDistribution',
+        title:"ParetoDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions/AbstractDistribution',
+        title:"AbstractDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/StudentsTDistribution',
+        title:"StudentsTDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/LaplaceDistribution',
+        title:"LaplaceDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/NormalDistribution',
+        title:"NormalDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ChiSquareDistribution',
+        title:"ChiSquareDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/ILambdaDistribution_1',
+        title:"ILambdaDistribution<TNum>",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/CauchyDistribution',
+        title:"CauchyDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/StandardGenerator',
+        title:"StandardGenerator",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/IThetaDistribution_1',
+        title:"IThetaDistribution<TNum>",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/BetaPrimeDistribution',
+        title:"BetaPrimeDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/TMath',
+        title:"TMath",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/LogisticDistribution',
+        title:"LogisticDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/DiscreteUniformDistribution',
+        title:"DiscreteUniformDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/ALFGenerator',
+        title:"ALFGenerator",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/IMuDistribution_1',
+        title:"IMuDistribution<TNum>",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/IBetaDistribution_1',
+        title:"IBetaDistribution<TNum>",
+        description:""
+    });
+
+    y({
         url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/FisherTippettDistribution',
         title:"FisherTippettDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/GeometricDistribution',
+        title:"GeometricDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/MT19937Generator',
+        title:"MT19937Generator",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ContinuousUniformDistribution',
+        title:"ContinuousUniformDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/FisherSnedecorDistribution',
+        title:"FisherSnedecorDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/TriangularDistribution',
+        title:"TriangularDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/ISigmaDistribution_1',
+        title:"ISigmaDistribution<TNum>",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random/TRandom',
+        title:"TRandom",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Continuous/ErlangDistribution',
+        title:"ErlangDistribution",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Generators/NR3Q2Generator',
+        title:"NR3Q2Generator",
+        description:""
+    });
+
+    y({
+        url:'/Troschuetz.Random/api/Troschuetz.Random.Distributions.Discrete/BernoulliDistribution',
+        title:"BernoulliDistribution",
         description:""
     });
 
