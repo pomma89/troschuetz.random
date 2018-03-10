@@ -42,8 +42,8 @@ namespace Troschuetz.Random.Generators
         #region Fields
 
         /// <summary>
-        ///   Stores a byte array used to compute the result of <see cref="NextUInt()"/>, starting
-        ///   from the output of <see cref="AbstractGenerator.NextBytes"/>.
+        ///   Stores a byte array used to compute the result of
+        ///   <see cref="NextUIntInclusiveMaxValue()"/>, starting from the output of <see cref="AbstractGenerator.NextBytes"/>.
         /// </summary>
         private byte[] _uintBuffer;
 
@@ -145,7 +145,7 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit unsigned integer greater than or equal to 0, and less than or equal to
         ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 and <see cref="uint.MaxValue"/>.
         /// </returns>
-        public override uint NextUInt()
+        public override uint NextUIntInclusiveMaxValue()
         {
             _generator.NextBytes(_uintBuffer);
             return BitConverter.ToUInt32(_uintBuffer, 0);

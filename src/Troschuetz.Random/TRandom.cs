@@ -1761,6 +1761,15 @@ namespace Troschuetz.Random
         public uint NextUIntExclusiveMaxValue() => Generator.NextUIntExclusiveMaxValue();
 
         /// <summary>
+        ///   Returns an unsigned random number.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to <see cref="uint.MinValue"/> and less
+        ///   than or equal to <see cref="uint.MaxValue"/>.
+        /// </returns>
+        public uint NextUIntInclusiveMaxValue() => Generator.NextUIntInclusiveMaxValue();
+
+        /// <summary>
         ///   Returns an unsigned random number less than the specified maximum.
         /// </summary>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>

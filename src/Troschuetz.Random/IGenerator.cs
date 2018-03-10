@@ -166,6 +166,15 @@ namespace Troschuetz.Random
         uint NextUIntExclusiveMaxValue();
 
         /// <summary>
+        ///   Returns an unsigned random number.
+        /// </summary>
+        /// <returns>
+        ///   A 32-bit unsigned integer greater than or equal to 0, and less than or equal to
+        ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 and <see cref="uint.MaxValue"/>.
+        /// </returns>
+        uint NextUIntInclusiveMaxValue();
+
+        /// <summary>
         ///   Returns an unsigned random number less than the specified maximum.
         /// </summary>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>

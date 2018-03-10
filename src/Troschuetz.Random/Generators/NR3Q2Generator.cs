@@ -202,7 +202,7 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit unsigned integer greater than or equal to 0, and less than or equal to
         ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 and <see cref="uint.MaxValue"/>.
         /// </returns>
-        public override uint NextUInt()
+        public override uint NextUIntInclusiveMaxValue()
         {
             if (_bytesAvailable)
             {

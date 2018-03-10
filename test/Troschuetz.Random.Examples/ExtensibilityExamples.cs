@@ -120,7 +120,7 @@ namespace Troschuetz.Random.Examples
 
         public override double NextDouble() => ++_state * UIntToDoubleMultiplier;
 
-        public override uint NextUInt() => ++_state;
+        public override uint NextUIntInclusiveMaxValue() => ++_state;
     }
 
     // Super silly continuous distribution which is provided as an example on how one can build a new
