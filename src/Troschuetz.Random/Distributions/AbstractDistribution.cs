@@ -38,8 +38,7 @@ namespace Troschuetz.Random.Distributions
         /// <exception cref="ArgumentNullException">Given generator is null.</exception>
         protected AbstractDistribution(IGenerator generator)
         {
-            if (generator == null) throw new ArgumentNullException(nameof(generator), ErrorMessages.NullGenerator);
-            Generator = generator;
+            Generator = generator ?? throw new ArgumentNullException(nameof(generator), ErrorMessages.NullGenerator);
         }
 
         #region IDistribution members
