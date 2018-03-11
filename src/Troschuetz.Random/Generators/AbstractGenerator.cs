@@ -315,10 +315,18 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to 0, and less than or equal to
-        ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 and <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to 0, and less than
+        ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="uint.MaxValue"/>.
         /// </returns>
-        public uint NextUInt() => NextUIntInclusiveMaxValue();
+        public uint NextUInt()
+        {
+            uint result;
+            do result = NextUIntInclusiveMaxValue(); while (result == uint.MaxValue);
+
+            // Postconditions
+            Debug.Assert(result < uint.MaxValue);
+            return result;
+        }
 
         /// <summary>
         ///   Returns an unsigned random number less than <see cref="uint.MaxValue"/>.
@@ -327,15 +335,7 @@ namespace Troschuetz.Random.Generators
         ///   A 32-bit unsigned integer greater than or equal to 0, and less than
         ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="uint.MaxValue"/>.
         /// </returns>
-        public uint NextUIntExclusiveMaxValue()
-        {
-            uint result;
-            do result = NextUInt(); while (result == uint.MaxValue);
-
-            // Postconditions
-            Debug.Assert(result < uint.MaxValue);
-            return result;
-        }
+        public uint NextUIntExclusiveMaxValue() => NextUInt();
 
         /// <summary>
         ///   Returns an unsigned random number.

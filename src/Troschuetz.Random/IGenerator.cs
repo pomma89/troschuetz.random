@@ -151,8 +151,8 @@ namespace Troschuetz.Random
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to 0, and less than or equal to
-        ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 and <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to 0, and less than
+        ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="uint.MaxValue"/>.
         /// </returns>
         uint NextUInt();
 
@@ -163,6 +163,7 @@ namespace Troschuetz.Random
         ///   A 32-bit unsigned integer greater than or equal to 0, and less than
         ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="uint.MaxValue"/>.
         /// </returns>
+        [Obsolete("Please use NextUInt, this method will be removed in v5")]
         uint NextUIntExclusiveMaxValue();
 
         /// <summary>

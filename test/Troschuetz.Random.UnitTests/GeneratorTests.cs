@@ -562,31 +562,31 @@ namespace Troschuetz.Random.Tests
         }
 
         /*=============================================================================
-            NextUIntExclusiveMaxValue
+            NextUInt
         =============================================================================*/
 
         [Test]
         [Repeat(RepetitionCount)]
-        public void NextUIntExclusiveMaxValue_NoMaxValue()
+        public void NextUInt_NoMaxValue()
         {
             for (var i = 0; i < Iterations; ++i)
             {
-                Assert.AreNotEqual(uint.MaxValue, _generator.NextUIntExclusiveMaxValue());
+                Assert.AreNotEqual(uint.MaxValue, _generator.NextUInt());
             }
         }
 
         [Test]
         [Repeat(RepetitionCount)]
-        public void NextUIntExclusiveMaxValue_NoMaxValue_AfterReset()
+        public void NextUInt_NoMaxValue_AfterReset()
         {
             for (var i = 0; i < Iterations; ++i)
             {
-                Assert.AreNotEqual(uint.MaxValue, _generator.NextUIntExclusiveMaxValue());
+                Assert.AreNotEqual(uint.MaxValue, _generator.NextUInt());
             }
             _generator.Reset();
             for (var i = 0; i < Iterations; ++i)
             {
-                Assert.AreNotEqual(uint.MaxValue, _generator.NextUIntExclusiveMaxValue());
+                Assert.AreNotEqual(uint.MaxValue, _generator.NextUInt());
             }
         }
 

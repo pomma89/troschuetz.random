@@ -5,6 +5,8 @@
 * Removed DLL compiled for .NET 4.7.1, it is not necessary.
 * Removed dependency on Thrower.
 * Added NextUIntInclusiveMaxValue to IGenerator (issue #5).
+* Marked IGenerator.NextUIntExclusiveMaxValue as obsolete (issue #5).
+* Changed behavior of IGenerator.NextUInt, now it does not return uint.MaxValue (issue #5).
 
 ## v4.2.0 (2017-10-28)
 
