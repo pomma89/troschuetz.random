@@ -13,5 +13,12 @@ addons:
 
 before_script:
   - chmod a+x ./build.sh
+
 script:
+  - git fetch --unshallow
   - ./build.sh
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
