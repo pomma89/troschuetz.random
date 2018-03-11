@@ -71,7 +71,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                if (IsValidAlpha(value)) throw new ArgumentOutOfRangeException(nameof(Alpha), ErrorMessages.InvalidParams);
+                if (!IsValidAlpha(value)) throw new ArgumentOutOfRangeException(nameof(Alpha), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -173,7 +173,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             : base(generator)
         {
             var vp = IsValidParam;
-            if (vp(alpha)) throw new ArgumentOutOfRangeException(nameof(alpha), ErrorMessages.InvalidParams);
+            if (!vp(alpha)) throw new ArgumentOutOfRangeException(nameof(alpha), ErrorMessages.InvalidParams);
             _alpha = alpha;
         }
 

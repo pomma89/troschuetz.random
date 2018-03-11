@@ -71,7 +71,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _lambda; }
             set
             {
-                if (IsValidLambda(value)) throw new ArgumentOutOfRangeException(nameof(Lambda), ErrorMessages.InvalidParams);
+                if (!IsValidLambda(value)) throw new ArgumentOutOfRangeException(nameof(Lambda), ErrorMessages.InvalidParams);
                 _lambda = value;
             }
         }
@@ -167,7 +167,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public ExponentialDistribution(IGenerator generator, double lambda) : base(generator)
         {
             var vp = IsValidParam;
-            if (vp(lambda)) throw new ArgumentOutOfRangeException(nameof(lambda), ErrorMessages.InvalidParams);
+            if (!vp(lambda)) throw new ArgumentOutOfRangeException(nameof(lambda), ErrorMessages.InvalidParams);
             _lambda = lambda;
         }
 

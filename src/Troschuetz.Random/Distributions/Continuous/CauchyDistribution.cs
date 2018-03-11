@@ -80,7 +80,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                if (IsValidAlpha(value)) throw new ArgumentOutOfRangeException(nameof(Alpha), ErrorMessages.InvalidParams);
+                if (!IsValidAlpha(value)) throw new ArgumentOutOfRangeException(nameof(Alpha), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -100,7 +100,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _gamma; }
             set
             {
-                if (IsValidGamma(value)) throw new ArgumentOutOfRangeException(nameof(Gamma), ErrorMessages.InvalidParams);
+                if (!IsValidGamma(value)) throw new ArgumentOutOfRangeException(nameof(Gamma), ErrorMessages.InvalidParams);
                 _gamma = value;
             }
         }
@@ -216,7 +216,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             : base(generator)
         {
             var vp = AreValidParams;
-            if (vp(alpha, gamma)) throw new ArgumentOutOfRangeException($"{nameof(alpha)}/{nameof(gamma)}", ErrorMessages.InvalidParams);
+            if (!vp(alpha, gamma)) throw new ArgumentOutOfRangeException($"{nameof(alpha)}/{nameof(gamma)}", ErrorMessages.InvalidParams);
             _alpha = alpha;
             _gamma = gamma;
         }

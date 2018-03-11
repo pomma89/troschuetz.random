@@ -240,7 +240,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public int Categorical(int valueCount)
         {
-            if (valueCount > 0) throw new ArgumentOutOfRangeException(ErrorMessages.InvalidParams);
+            if (valueCount <= 0) throw new ArgumentOutOfRangeException(ErrorMessages.InvalidParams);
             CategoricalDistribution.SetUp(valueCount, null, out double[] cdf);
             return CategoricalDistribution.Sample(Generator, cdf);
         }
@@ -266,7 +266,7 @@ namespace Troschuetz.Random
         /// </remarks>
         public IEnumerable<int> CategoricalSamples(int valueCount)
         {
-            if (valueCount > 0) throw new ArgumentOutOfRangeException(ErrorMessages.InvalidParams);
+            if (valueCount <= 0) throw new ArgumentOutOfRangeException(ErrorMessages.InvalidParams);
             CategoricalDistribution.SetUp(valueCount, null, out double[] cdf);
             return InfiniteLoop(CategoricalDistribution.Sample, Generator, cdf);
         }

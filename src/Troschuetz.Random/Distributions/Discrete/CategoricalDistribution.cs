@@ -104,7 +104,7 @@ namespace Troschuetz.Random.Distributions.Discrete
             {
                 if (value == null) throw new ArgumentNullException(nameof(Weights), ErrorMessages.NullWeights);
                 if (value.Count == 0) throw new ArgumentException(ErrorMessages.EmptyList, nameof(Weights));
-                if (AreValidWeights(value)) throw new ArgumentOutOfRangeException(nameof(Weights), ErrorMessages.InvalidParams);
+                if (!AreValidWeights(value)) throw new ArgumentOutOfRangeException(nameof(Weights), ErrorMessages.InvalidParams);
                 _weights = value.ToList();
                 UpdateHelpers();
             }
@@ -274,7 +274,7 @@ namespace Troschuetz.Random.Distributions.Discrete
         {
             if (weights == null) throw new ArgumentNullException(nameof(weights), ErrorMessages.NullWeights);
             if (weights.Count == 0) throw new ArgumentException(ErrorMessages.EmptyList, nameof(weights));
-            if (AreValidWeights(weights)) throw new ArgumentOutOfRangeException(nameof(weights), ErrorMessages.InvalidParams);
+            if (!AreValidWeights(weights)) throw new ArgumentOutOfRangeException(nameof(weights), ErrorMessages.InvalidParams);
             _weights = weights.ToList();
             UpdateHelpers();
         }

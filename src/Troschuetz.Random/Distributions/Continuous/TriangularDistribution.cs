@@ -113,7 +113,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                if (IsValidAlpha(value)) throw new ArgumentOutOfRangeException(nameof(Alpha), ErrorMessages.InvalidParams);
+                if (!IsValidAlpha(value)) throw new ArgumentOutOfRangeException(nameof(Alpha), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -134,7 +134,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _beta; }
             set
             {
-                if (IsValidBeta(value)) throw new ArgumentOutOfRangeException(nameof(Beta), ErrorMessages.InvalidParams);
+                if (!IsValidBeta(value)) throw new ArgumentOutOfRangeException(nameof(Beta), ErrorMessages.InvalidParams);
                 _beta = value;
             }
         }
@@ -155,7 +155,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _gamma; }
             set
             {
-                if (IsValidGamma(value)) throw new ArgumentOutOfRangeException(nameof(Gamma), ErrorMessages.InvalidParams);
+                if (!IsValidGamma(value)) throw new ArgumentOutOfRangeException(nameof(Gamma), ErrorMessages.InvalidParams);
                 _gamma = value;
             }
         }
@@ -288,7 +288,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public TriangularDistribution(IGenerator generator, double alpha, double beta, double gamma) : base(generator)
         {
             var vp = AreValidParams;
-            if (vp(alpha, beta, gamma)) throw new ArgumentOutOfRangeException($"{nameof(alpha)}/{nameof(beta)}/{gamma}", ErrorMessages.InvalidParams);
+            if (!vp(alpha, beta, gamma)) throw new ArgumentOutOfRangeException($"{nameof(alpha)}/{nameof(beta)}/{gamma}", ErrorMessages.InvalidParams);
             _alpha = alpha;
             _beta = beta;
             _gamma = gamma;

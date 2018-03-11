@@ -203,12 +203,12 @@ namespace Troschuetz.Random.Generators
         ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to 0.
+        ///   <paramref name="maxValue"/> must be greater than 0.
         /// </exception>
         public int Next(int maxValue)
         {
             // Preconditions
-            if (maxValue < 0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            if (maxValue <= 0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
 
             var result = (int) (NextDouble() * maxValue);
 
@@ -265,13 +265,13 @@ namespace Troschuetz.Random.Generators
         ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to 0.0.
+        ///   <paramref name="maxValue"/> must be greater than 0.0.
         /// </exception>
         /// <exception cref="ArgumentException"><paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.</exception>
         public double NextDouble(double maxValue)
         {
             // Preconditions
-            if (maxValue < 0.0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            if (maxValue <= 0.0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
             if (double.IsPositiveInfinity(maxValue)) throw new ArgumentException(ErrorMessages.InfiniteMaxValue, nameof(maxValue));
 
             var result = NextDouble() * maxValue;

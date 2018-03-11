@@ -80,7 +80,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _alpha; }
             set
             {
-                if (IsValidAlpha(value)) throw new ArgumentOutOfRangeException(nameof(Alpha), ErrorMessages.InvalidParams);
+                if (!IsValidAlpha(value)) throw new ArgumentOutOfRangeException(nameof(Alpha), ErrorMessages.InvalidParams);
                 _alpha = value;
             }
         }
@@ -99,7 +99,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _beta; }
             set
             {
-                if (IsValidBeta(value)) throw new ArgumentOutOfRangeException(nameof(Beta), ErrorMessages.InvalidParams);
+                if (!IsValidBeta(value)) throw new ArgumentOutOfRangeException(nameof(Beta), ErrorMessages.InvalidParams);
                 _beta = value;
             }
         }
@@ -214,7 +214,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public BetaDistribution(IGenerator generator, double alpha, double beta) : base(generator)
         {
             var vp = AreValidParams;
-            if (vp(alpha, beta)) throw new ArgumentOutOfRangeException($"{nameof(alpha)}/{nameof(beta)}", ErrorMessages.InvalidParams);
+            if (!vp(alpha, beta)) throw new ArgumentOutOfRangeException($"{nameof(alpha)}/{nameof(beta)}", ErrorMessages.InvalidParams);
             _alpha = alpha;
             _beta = beta;
         }

@@ -135,7 +135,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _mu; }
             set
             {
-                if (IsValidMu(value)) throw new ArgumentOutOfRangeException(nameof(Mu), ErrorMessages.InvalidParams);
+                if (!IsValidMu(value)) throw new ArgumentOutOfRangeException(nameof(Mu), ErrorMessages.InvalidParams);
                 _mu = value;
             }
         }
@@ -155,7 +155,7 @@ namespace Troschuetz.Random.Distributions.Continuous
             get { return _sigma; }
             set
             {
-                if (IsValidSigma(value)) throw new ArgumentOutOfRangeException(nameof(Sigma), ErrorMessages.InvalidParams);
+                if (!IsValidSigma(value)) throw new ArgumentOutOfRangeException(nameof(Sigma), ErrorMessages.InvalidParams);
                 _sigma = value;
             }
         }
@@ -265,7 +265,7 @@ namespace Troschuetz.Random.Distributions.Continuous
         public NormalDistribution(IGenerator generator, double mu, double sigma) : base(generator)
         {
             var vp = AreValidParams;
-            if (vp(mu, sigma)) throw new ArgumentOutOfRangeException($"{nameof(mu)}/{nameof(sigma)}", ErrorMessages.InvalidParams);
+            if (!vp(mu, sigma)) throw new ArgumentOutOfRangeException($"{nameof(mu)}/{nameof(sigma)}", ErrorMessages.InvalidParams);
             _mu = mu;
             _sigma = sigma;
         }
