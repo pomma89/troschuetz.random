@@ -208,7 +208,7 @@ namespace Troschuetz.Random.Generators
         public int Next(int maxValue)
         {
             // Preconditions
-            if (maxValue <= 0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            if (maxValue < 0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
 
             var result = (int) (NextDouble() * maxValue);
 
@@ -231,12 +231,12 @@ namespace Troschuetz.Random.Generators
         ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
         public int Next(int minValue, int maxValue)
         {
             // Preconditions
-            if (minValue >= maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            if (minValue > maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanMaxValue);
 
             // The cast to double enables 64 bit arithmetic, which is needed when the condition
             // ((maxValue - minValue) > int.MaxValue) is true.
@@ -271,7 +271,7 @@ namespace Troschuetz.Random.Generators
         public double NextDouble(double maxValue)
         {
             // Preconditions
-            if (maxValue <= 0.0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            if (maxValue < 0.0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
             if (double.IsPositiveInfinity(maxValue)) throw new ArgumentException(ErrorMessages.InfiniteMaxValue, nameof(maxValue));
 
             var result = NextDouble() * maxValue;
@@ -292,7 +292,7 @@ namespace Troschuetz.Random.Generators
         ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
         /// <exception cref="ArgumentException">
         ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
@@ -301,7 +301,7 @@ namespace Troschuetz.Random.Generators
         public double NextDouble(double minValue, double maxValue)
         {
             // Preconditions
-            if (minValue >= maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            if (minValue > maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanMaxValue);
             if (double.IsPositiveInfinity(maxValue - minValue)) throw new ArgumentException(ErrorMessages.InfiniteMaxValueMinusMinValue, nameof(minValue));
 
             var result = minValue + NextDouble() * (maxValue - minValue);
@@ -374,12 +374,12 @@ namespace Troschuetz.Random.Generators
         ///   <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
         public uint NextUInt(uint minValue, uint maxValue)
         {
             // Preconditions
-            if (minValue >= maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            if (minValue > maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanMaxValue);
 
             var result = minValue + (uint) (NextDouble() * (maxValue - minValue));
 

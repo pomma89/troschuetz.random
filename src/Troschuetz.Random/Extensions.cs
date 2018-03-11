@@ -208,7 +208,7 @@ namespace Troschuetz.Random
         ///   includes 0 but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than 0.0.
+        ///   <paramref name="maxValue"/> must be greater than or equal to 0.0.
         /// </exception>
         /// <exception cref="ArgumentException"><paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.</exception>
         public static IEnumerable<double> Doubles<TGen>(this TGen generator, double maxValue)
@@ -216,7 +216,7 @@ namespace Troschuetz.Random
         {
             // Preconditions
             if (generator == null) throw new ArgumentNullException(nameof(generator), ErrorMessages.NullGenerator);
-            if (maxValue <= 0.0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            if (maxValue < 0.0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
             if (double.IsPositiveInfinity(maxValue)) throw new ArgumentException(ErrorMessages.InfiniteMaxValue, nameof(maxValue));
 
             while (true)
@@ -238,7 +238,7 @@ namespace Troschuetz.Random
         ///   is, the range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
         /// <exception cref="ArgumentException">
         ///   The difference between <paramref name="maxValue"/> and <paramref name="minValue"/>
@@ -249,7 +249,7 @@ namespace Troschuetz.Random
         {
             // Preconditions
             if (generator == null) throw new ArgumentNullException(nameof(generator), ErrorMessages.NullGenerator);
-            if (minValue >= maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            if (minValue > maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanMaxValue);
             if (double.IsPositiveInfinity(maxValue - minValue)) throw new ArgumentException(ErrorMessages.InfiniteMaxValueMinusMinValue, nameof(minValue));
 
             while (true)
@@ -291,14 +291,14 @@ namespace Troschuetz.Random
         ///   not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to 1.
+        ///   <paramref name="maxValue"/> must be greater than or equal to 0.
         /// </exception>
         public static IEnumerable<int> Integers<TGen>(this TGen generator, int maxValue)
             where TGen : class, IGenerator
         {
             // Preconditions
             if (generator == null) throw new ArgumentNullException(nameof(generator), ErrorMessages.NullGenerator);
-            if (maxValue <= 0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
+            if (maxValue < 0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
 
             while (true)
             {
@@ -319,14 +319,14 @@ namespace Troschuetz.Random
         ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
         public static IEnumerable<int> Integers<TGen>(this TGen generator, int minValue, int maxValue)
             where TGen : class, IGenerator
         {
             // Preconditions
             if (generator == null) throw new ArgumentNullException(nameof(generator), ErrorMessages.NullGenerator);
-            if (minValue >= maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            if (minValue > maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanMaxValue);
 
             while (true)
             {
@@ -364,14 +364,13 @@ namespace Troschuetz.Random
         ///   not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than or equal to 1.
+        ///   <paramref name="maxValue"/> must be greater than or equal to 0.
         /// </exception>
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator, uint maxValue)
             where TGen : class, IGenerator
         {
             // Preconditions
             if (generator == null) throw new ArgumentNullException(nameof(generator), ErrorMessages.NullGenerator);
-            if (maxValue < 1U) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.MaxValueIsTooSmall);
 
             while (true)
             {
@@ -392,14 +391,14 @@ namespace Troschuetz.Random
         ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///   <paramref name="maxValue"/> must be greater than <paramref name="minValue"/>.
+        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </exception>
         public static IEnumerable<uint> UnsignedIntegers<TGen>(this TGen generator, uint minValue, uint maxValue)
             where TGen : class, IGenerator
         {
             // Preconditions
             if (generator == null) throw new ArgumentNullException(nameof(generator), ErrorMessages.NullGenerator);
-            if (minValue >= maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanOrEqualToMaxValue);
+            if (minValue > maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanMaxValue);
 
             while (true)
             {
