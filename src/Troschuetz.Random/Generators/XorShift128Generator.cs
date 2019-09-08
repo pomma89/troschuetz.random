@@ -89,7 +89,7 @@ namespace Troschuetz.Random.Generators
         ///   The value of this constant is 521288629, left shifted by 32 bits. The right side will
         ///   be filled with the specified seed.
         /// </remarks>
-        public const ulong SeedX = 521288629U << 32;
+        public const ulong SeedX = 521288629UL << 32;
 
         /// <summary>
         ///   Represents the seed for the <see cref="_y"/> variable. This field is constant.
@@ -181,8 +181,12 @@ namespace Troschuetz.Random.Generators
             // "The seed set for xor128 is two 64-bit integers x,y not all 0, ..." (George
             // Marsaglia) To meet that requirement the x, y seeds are constant values greater 0.
             _x = SeedX + seed;
-            _y = SeedY;
+            _y = SeedY * ((ulong)seed << 32);
             _bytesAvailable = false;
+
+            // Discard first result to achieve better randomness.
+            NextUInt();
+
             return true;
         }
 
