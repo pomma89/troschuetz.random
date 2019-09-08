@@ -424,6 +424,23 @@ namespace Troschuetz.Random.Generators
         /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
         public void NextBytes(byte[] buffer)
         {
+#if HAS_SPAN
+            var span = new Span<byte>(buffer);
+            NextBytes(span);
+        }
+
+        /// <summary>
+        ///   Fills the elements of a specified span of bytes with random numbers.
+        /// </summary>
+        /// <remarks>
+        ///   Each element of the array of bytes is set to a random number greater than or equal to
+        ///   0, and less than or equal to <see cref="byte.MaxValue"/>.
+        /// </remarks>
+        /// <param name="buffer">A span of bytes to contain random numbers.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
+        public void NextBytes(Span<byte> buffer)
+        {
+#endif
             // Preconditions
             if (buffer == null) throw new ArgumentNullException(nameof(buffer), ErrorMessages.NullBuffer);
 

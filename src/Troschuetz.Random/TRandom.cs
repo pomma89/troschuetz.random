@@ -1818,6 +1818,22 @@ namespace Troschuetz.Random
             Generator.NextBytes(buffer);
         }
 
+#if HAS_SPAN
+        /// <summary>
+        ///   Fills the elements of a specified span of bytes with random numbers.
+        /// </summary>
+        /// <remarks>
+        ///   Each element of the array of bytes is set to a random number greater than or equal to
+        ///   0, and less than or equal to <see cref="byte.MaxValue"/>.
+        /// </remarks>
+        /// <param name="buffer">A span of bytes to contain random numbers.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
+        public void NextBytes(Span<byte> buffer)
+        {
+            Generator.NextBytes(buffer);
+        }
+#endif
+
         #endregion IGenerator Members
 
         #region Object Members
