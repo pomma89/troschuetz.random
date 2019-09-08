@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Troschuetz.Random - Easy random number generation</AssemblyTitle>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;netstandard2.1;net35;net40;net45;net461</TargetFrameworks>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TargetFrameworks>netstandard1.0;netstandard2.0;netstandard2.1;net35;net40;net45;net461;net472</TargetFrameworks>
     <AssemblyOriginatorKeyFile>../../pomma89.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
@@ -49,5 +48,9 @@
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <DefineConstants>$(DefineConstants);NET46;HAS_SERIALIZABLE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net472' ">
+    <DefineConstants>$(DefineConstants);NET47;HAS_SERIALIZABLE</DefineConstants>
   </PropertyGroup>
 </Project>
