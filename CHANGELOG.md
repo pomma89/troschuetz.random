@@ -3,6 +3,7 @@
 ## v4.3.1 (2019-08-09)
 
 * Added support for Span of bytes (PR #8 by Konstantin Safonov).
+* Fixed issue #6.
 
 ## v4.3.0 (2018-03-11)
 
