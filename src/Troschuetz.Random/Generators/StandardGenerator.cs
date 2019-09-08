@@ -28,8 +28,8 @@ namespace Troschuetz.Random.Generators
     ///   Represents a simple pseudo-random number generator.
     /// </summary>
     /// <remarks>
-    ///   The <see cref="StandardGenerator"/> type internally uses an instance of the
-    ///   <see cref="Random"/> type to generate pseudo-random numbers.
+    ///   The <see cref="StandardGenerator"/> type internally uses an instance of the <see
+    ///   cref="Random"/> type to generate pseudo-random numbers.
     ///
     ///   This generator is NOT thread safe.
     /// </remarks>
@@ -42,8 +42,8 @@ namespace Troschuetz.Random.Generators
         #region Fields
 
         /// <summary>
-        ///   Stores a byte array used to compute the result of
-        ///   <see cref="NextUIntInclusiveMaxValue()"/>, starting from the output of <see cref="AbstractGenerator.NextBytes"/>.
+        ///   Stores a byte array used to compute the result of <see
+        ///   cref="NextUIntInclusiveMaxValue()"/>, starting from the output of <see cref="AbstractGenerator.NextBytes(byte[])"/>.
         /// </summary>
         private byte[] _uintBuffer;
 
@@ -60,7 +60,7 @@ namespace Troschuetz.Random.Generators
         ///   Initializes a new instance of the <see cref="StandardGenerator"/> class, using a
         ///   time-dependent default seed value.
         /// </summary>
-        public StandardGenerator() : this((int) (TMath.Seed() >> 1))
+        public StandardGenerator() : this((int)(TMath.Seed() >> 1))
         {
         }
 
@@ -72,7 +72,7 @@ namespace Troschuetz.Random.Generators
         ///   A number used to calculate a starting value for the pseudo-random number sequence. If a
         ///   negative number is specified, the absolute value of the number is used.
         /// </param>
-        public StandardGenerator(int seed) : base((uint) Math.Abs(seed))
+        public StandardGenerator(int seed) : base((uint)Math.Abs(seed))
         {
         }
 
@@ -98,7 +98,7 @@ namespace Troschuetz.Random.Generators
             base.Reset(seed);
 
             // Create a new Random object using the specified seed.
-            _generator = new Random((int) seed); // Safe cast, seed is always positive.
+            _generator = new Random((int)seed); // Safe cast, seed is always positive.
 
             // Initialize the buffer used to store the bytes required to create an unsigned integer.
             _uintBuffer = new byte[4];
@@ -110,8 +110,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
-        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to <see
+        ///   cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
         public override int NextInclusiveMaxValue()
         {
@@ -142,8 +142,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to 0, and less than or equal to
-        ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 and <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to 0, and less than or equal to <see
+        ///   cref="uint.MaxValue"/>; that is, the range of return values includes 0 and <see cref="uint.MaxValue"/>.
         /// </returns>
         public override uint NextUIntInclusiveMaxValue()
         {

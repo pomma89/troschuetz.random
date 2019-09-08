@@ -27,12 +27,12 @@ namespace Troschuetz.Random.Generators
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    ///   An abstract generator which efficiently implements everything required by the
-    ///   <see cref="IGenerator"/> interface using only few methods: <see cref="NextUInt()"/>,
-    ///   <see cref="NextDouble()"/>, <see cref="NextInclusiveMaxValue()"/>.
+    ///   An abstract generator which efficiently implements everything required by the <see
+    ///   cref="IGenerator"/> interface using only few methods: <see cref="NextUInt()"/>, <see
+    ///   cref="NextDouble()"/>, <see cref="NextInclusiveMaxValue()"/>.
     ///
-    ///   Therefore, in order to build a new generator, one must "simply" override the
-    ///   <see cref="Reset(uint)"/>, which is used to automatically initialize the generator, and the
+    ///   Therefore, in order to build a new generator, one must "simply" override the <see
+    ///   cref="Reset(uint)"/>, which is used to automatically initialize the generator, and the
     ///   generator methods, which, as stated above, are used to generate every kind of random object
     ///   exposed by the interface.
     ///
@@ -148,9 +148,7 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         /// <param name="seed">The seed value used by the generator.</param>
         /// <returns>True if the random number generator was reset; otherwise, false.</returns>
-        /// <remarks>
-        ///   If this method is overridden, always remember to call it inside the override.
-        /// </remarks>
+        /// <remarks>If this method is overridden, always remember to call it inside the override.</remarks>
         public virtual bool Reset(uint seed)
         {
             if (!CanReset)
@@ -172,8 +170,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns a nonnegative random number less than <see cref="int.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than
-        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than <see
+        ///   cref="int.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="int.MaxValue"/>.
         /// </returns>
         public int Next()
         {
@@ -189,8 +187,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns a nonnegative random number less than or equal to <see cref="int.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to
-        ///   <see cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than or equal to <see
+        ///   cref="int.MaxValue"/>; that is, the range of return values includes 0 and <see cref="int.MaxValue"/>.
         /// </returns>
         public abstract int NextInclusiveMaxValue();
 
@@ -199,8 +197,8 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A 32-bit signed integer greater than or equal to 0, and less than
-        ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
+        ///   A 32-bit signed integer greater than or equal to 0, and less than <paramref
+        ///   name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than 0.
@@ -210,7 +208,7 @@ namespace Troschuetz.Random.Generators
             // Preconditions
             if (maxValue < 0) throw new ArgumentOutOfRangeException(nameof(maxValue), ErrorMessages.NegativeMaxValue);
 
-            var result = (int) (NextDouble() * maxValue);
+            var result = (int)(NextDouble() * maxValue);
 
             // Postconditions
             Debug.Assert(result >= 0 && result < maxValue);
@@ -222,8 +220,8 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
         /// <param name="maxValue">
-        ///   The exclusive upper bound of the random number to be generated.
-        ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
+        ///   The exclusive upper bound of the random number to be generated. <paramref
+        ///   name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
         /// </param>
         /// <returns>
         ///   A 32-bit signed integer greater than or equal to <paramref name="minValue"/>, and less
@@ -240,7 +238,7 @@ namespace Troschuetz.Random.Generators
 
             // The cast to double enables 64 bit arithmetic, which is needed when the condition
             // ((maxValue - minValue) > int.MaxValue) is true.
-            var result = minValue + (int) (NextDouble() * (maxValue - (double) minValue));
+            var result = minValue + (int)(NextDouble() * (maxValue - (double)minValue));
 
             // Postconditions
             Debug.Assert((result == minValue && minValue == maxValue) || (result >= minValue && result < maxValue));
@@ -262,12 +260,15 @@ namespace Troschuetz.Random.Generators
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
         ///   A double-precision floating point number greater than or equal to 0.0, and less than
-        ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
+        ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not
+        ///   <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than 0.0.
         /// </exception>
-        /// <exception cref="ArgumentException"><paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.</exception>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="maxValue"/> cannot be <see cref="double.PositiveInfinity"/>.
+        /// </exception>
         public double NextDouble(double maxValue)
         {
             // Preconditions
@@ -287,9 +288,9 @@ namespace Troschuetz.Random.Generators
         /// <param name="minValue">The inclusive lower bound of the random number to be generated.</param>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A double-precision floating point number greater than or equal to
-        ///   <paramref name="minValue"/>, and less than <paramref name="maxValue"/>; that is, the
-        ///   range of return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
+        ///   A double-precision floating point number greater than or equal to <paramref
+        ///   name="minValue"/>, and less than <paramref name="maxValue"/>; that is, the range of
+        ///   return values includes <paramref name="minValue"/> but not <paramref name="maxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   <paramref name="maxValue"/> must be greater than or equal to <paramref name="minValue"/>.
@@ -315,8 +316,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to 0, and less than
-        ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to 0, and less than <see
+        ///   cref="uint.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="uint.MaxValue"/>.
         /// </returns>
         public uint NextUInt()
         {
@@ -332,8 +333,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number less than <see cref="uint.MaxValue"/>.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to 0, and less than
-        ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to 0, and less than <see
+        ///   cref="uint.MaxValue"/>; that is, the range of return values includes 0 but not <see cref="uint.MaxValue"/>.
         /// </returns>
         public uint NextUIntExclusiveMaxValue() => NextUInt();
 
@@ -341,8 +342,8 @@ namespace Troschuetz.Random.Generators
         ///   Returns an unsigned random number.
         /// </summary>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to 0, and less than or equal to
-        ///   <see cref="uint.MaxValue"/>; that is, the range of return values includes 0 and <see cref="uint.MaxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to 0, and less than or equal to <see
+        ///   cref="uint.MaxValue"/>; that is, the range of return values includes 0 and <see cref="uint.MaxValue"/>.
         /// </returns>
         public abstract uint NextUIntInclusiveMaxValue();
 
@@ -351,12 +352,12 @@ namespace Troschuetz.Random.Generators
         /// </summary>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated.</param>
         /// <returns>
-        ///   A 32-bit unsigned integer greater than or equal to 0, and less than
-        ///   <paramref name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
+        ///   A 32-bit unsigned integer greater than or equal to 0, and less than <paramref
+        ///   name="maxValue"/>; that is, the range of return values includes 0 but not <paramref name="maxValue"/>.
         /// </returns>
         public uint NextUInt(uint maxValue)
         {
-            var result = (uint) (NextDouble() * maxValue);
+            var result = (uint)(NextDouble() * maxValue);
 
             // Postconditions
             Debug.Assert(result < maxValue);
@@ -381,7 +382,7 @@ namespace Troschuetz.Random.Generators
             // Preconditions
             if (minValue > maxValue) throw new ArgumentOutOfRangeException(nameof(minValue), ErrorMessages.MinValueGreaterThanMaxValue);
 
-            var result = minValue + (uint) (NextDouble() * (maxValue - minValue));
+            var result = minValue + (uint)(NextDouble() * (maxValue - minValue));
 
             // Postconditions
             Debug.Assert((result == minValue && minValue == maxValue) || (result >= minValue && result < maxValue));
@@ -424,9 +425,11 @@ namespace Troschuetz.Random.Generators
         /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
         public void NextBytes(byte[] buffer)
         {
+            // Preconditions
+            if (buffer == null) throw new ArgumentNullException(nameof(buffer), ErrorMessages.NullBuffer);
+
 #if HAS_SPAN
-            var span = new Span<byte>(buffer);
-            NextBytes(span);
+            NextBytes(new Span<byte>(buffer));
         }
 
         /// <summary>
@@ -441,34 +444,31 @@ namespace Troschuetz.Random.Generators
         public void NextBytes(Span<byte> buffer)
         {
 #endif
-            // Preconditions
-            if (buffer == null) throw new ArgumentNullException(nameof(buffer), ErrorMessages.NullBuffer);
-
             // Fill the buffer with 4 bytes (1 uint) at a time.
             var i = 0;
             while (i < buffer.Length - 3)
             {
                 var u = NextUInt();
-                buffer[i++] = (byte) u;
-                buffer[i++] = (byte) (u >> 8);
-                buffer[i++] = (byte) (u >> 16);
-                buffer[i++] = (byte) (u >> 24);
+                buffer[i++] = (byte)u;
+                buffer[i++] = (byte)(u >> 8);
+                buffer[i++] = (byte)(u >> 16);
+                buffer[i++] = (byte)(u >> 24);
             }
 
             // Fill up any remaining bytes in the buffer.
             if (i < buffer.Length)
             {
                 var u = NextUInt();
-                buffer[i++] = (byte) u;
+                buffer[i++] = (byte)u;
                 if (i < buffer.Length)
                 {
-                    buffer[i++] = (byte) (u >> 8);
+                    buffer[i++] = (byte)(u >> 8);
                     if (i < buffer.Length)
                     {
-                        buffer[i++] = (byte) (u >> 16);
+                        buffer[i++] = (byte)(u >> 16);
                         if (i < buffer.Length)
                         {
-                            buffer[i] = (byte) (u >> 24);
+                            buffer[i] = (byte)(u >> 24);
                         }
                     }
                 }
@@ -498,9 +498,9 @@ namespace Troschuetz.Random.Generators
             {
                 var hash = 1777771;
 #pragma warning disable RECS0025 // Non-readonly field referenced in 'GetHashCode()'
-                hash = hash * 31 + (int) Seed;
+                hash = hash * 31 + (int)Seed;
                 hash = hash * 31 + _bitCount;
-                hash = hash * 31 + (int) _bitBuffer;
+                hash = hash * 31 + (int)_bitBuffer;
 #pragma warning restore RECS0025 // Non-readonly field referenced in 'GetHashCode()'
                 return hash;
             }
